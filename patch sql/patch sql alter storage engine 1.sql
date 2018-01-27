@@ -1,0 +1,4 @@
+ALTER TABLE `tbmcustomer` ENGINE = INNODB;
+ALTER TABLE `tbmpeminta` ENGINE = INNODB;
+ALTER TABLE `tbmpenerima` ENGINE = INNODB;
+ALTER TABLE `tbmutasi` ENGINE = INNODB;
