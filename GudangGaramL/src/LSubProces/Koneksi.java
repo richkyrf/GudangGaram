@@ -9,11 +9,11 @@ import javax.swing.JOptionPane;
 public class Koneksi {
 
     private Connection Con = null;
-    String url = "jdbc:mysql://m4rtono.com/";
+    String url = "jdbc:mysql://127.0.0.1/";
     //String url = "jdbc:mysql://192.168.0.211:1358/";
-    String db = "martono_test";
-    String user = "martono_coba";
-    String pass = "12345678";
+    String db = "dbgaram";
+    String user = "root";
+    String pass = "";
 
     public String GetUrl() {
         return url;
