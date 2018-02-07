@@ -7,8 +7,7 @@ package LSubProces;
 
 /**
  *
- * @author zeppr
+ * @author Martono
  */
 public class LoadJtable {
-
 }

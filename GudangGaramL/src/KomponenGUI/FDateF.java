@@ -8,23 +8,20 @@ import java.util.Date;
 import static java.util.Locale.ENGLISH;
 
 public class FDateF {
+
     public static String datetostr(Date tanggal, String SFromatTanggal) {
-    String Tanggal=null;
-    if (tanggal != null) {
-        try{
+        String Tanggal = null;
+        if (tanggal != null) {
+            try {
                 SimpleDateFormat formattanggal = new SimpleDateFormat(SFromatTanggal);
                 Tanggal = formattanggal.format(tanggal);
+            } catch (Exception e) {
+                LogEror.SaveEror(e);
+            }
+            return Tanggal;
+        } else {
+            return null;
         }
-        catch(Exception e)
-        {
-            LogEror.SaveEror(e);
-        }
-                return Tanggal;
-    }
-    else
-    {
-        return null;
-    }
     }
 
     public static Date strtodate(String tgl, String FormatTanggal) {
@@ -34,7 +31,7 @@ public class FDateF {
                 DateFormat format = new SimpleDateFormat(FormatTanggal, ENGLISH);
                 date = format.parse(tgl);
             } catch (ParseException e) {
-            LogEror.SaveEror(e);
+                LogEror.SaveEror(e);
             }
             return date;
         }

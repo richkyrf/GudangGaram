@@ -5,14 +5,11 @@
  */
 package GlobalVar;
 
-
 /**
  *
- * @author riki
+ * @author Martono
  */
 public class VarL {
-    public static String Username=null;
-    public static String Password=null;
-    public static String Level=null;
-    
+
+    public static String username, password, level;
 }

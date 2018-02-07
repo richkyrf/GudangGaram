@@ -15,7 +15,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
- * @author JACK
+ * @author Martono
  */
 public class DRunSelctOne {
 
@@ -74,10 +74,9 @@ public class DRunSelctOne {
                     con.close();
                 }
             } catch (SQLException ex) {
-            LogEror.SaveEror(ex);
+                LogEror.SaveEror(ex);
             }
         }
         return list;
     }
-
 }

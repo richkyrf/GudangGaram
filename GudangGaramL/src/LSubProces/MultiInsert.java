@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author zeppr
+ * @author Martono
  */
 public class MultiInsert {
 
@@ -28,7 +28,8 @@ public class MultiInsert {
         try {
             con.setAutoCommit(autocomit);
             return true;
-        } catch (Exception e) { Eror.LogEror.SaveEror(e);
+        } catch (Exception e) {
+            Eror.LogEror.SaveEror(e);
             //System.out.println("EX:commit " + e);
             return false;
         }
@@ -44,7 +45,8 @@ public class MultiInsert {
             Koneksi koneksi = new Koneksi();
             con = koneksi.getConnection();
             return true;
-        } catch (Exception e) { Eror.LogEror.SaveEror(e);
+        } catch (Exception e) {
+            Eror.LogEror.SaveEror(e);
             //System.out.println("EX:opencon " + e);
             return false;
         }
@@ -57,13 +59,14 @@ public class MultiInsert {
             //System.out.println("QUESRY INS = " + Query);
             no = pstmt.executeUpdate();
             if (no > 0) {
-                LSubProces.History.simpanhistory(GlobalVar.VarL.Username, " Multi Insert");
+                LSubProces.History.simpanhistory(GlobalVar.VarL.username, " Multi Insert");
                 return true;
             } else {
                 //System.out.println("No   " + no);
                 return false;
             }
-        } catch (SQLException e) { Eror.LogEror.SaveEror(e);
+        } catch (SQLException e) {
+            Eror.LogEror.SaveEror(e);
             //System.out.println("EX:ClosePstmt  " + e);
             return false;
         } finally {
@@ -72,7 +75,7 @@ public class MultiInsert {
                     pstmt.close();
                 }
             } catch (Exception e) {
-                LogEror.SaveString(pstmt.toString()); 
+                LogEror.SaveString(pstmt.toString());
                 Eror.LogEror.SaveEror(e);
                 //System.out.println("EX:ClosePstmt  " + e);
             }
@@ -90,12 +93,13 @@ public class MultiInsert {
                 if (rs.next()) {
                     returnkey = rs.getInt(1);
                 }
-                LSubProces.History.simpanhistory(GlobalVar.VarL.Username, " Multi Insert");
+                LSubProces.History.simpanhistory(GlobalVar.VarL.username, " Multi Insert");
                 return true;
             } else {
                 return false;
             }
-        } catch (SQLException e) { Eror.LogEror.SaveEror(e);
+        } catch (SQLException e) {
+            Eror.LogEror.SaveEror(e);
             //System.out.println("EX:ExcuteWithGenKey " + e);
             return false;
         } finally {
@@ -103,7 +107,7 @@ public class MultiInsert {
                 if (pstmt != null) {
                     pstmt.close();
                 }
-            } catch (Exception e) { 
+            } catch (Exception e) {
                 LogEror.SaveString(pstmt.toString());
                 Eror.LogEror.SaveEror(e);
                 //System.out.println("EX:ExcuteWithGenKey " + e);
@@ -115,7 +119,7 @@ public class MultiInsert {
         try {
             con.commit();
             return true;
-        } catch (Exception e) { 
+        } catch (Exception e) {
             Eror.LogEror.SaveEror(e);
             //System.out.println("EX:Commit " + e);
             return false;
@@ -126,7 +130,8 @@ public class MultiInsert {
         try {
             con.rollback();
             return true;
-        } catch (Exception e) { Eror.LogEror.SaveEror(e);
+        } catch (Exception e) {
+            Eror.LogEror.SaveEror(e);
             //System.out.println("EX:Commit " + e);
             return false;
         }
@@ -137,7 +142,7 @@ public class MultiInsert {
             if (con != null) {
                 con.close();
             }
-        } catch (Exception e) { 
+        } catch (Exception e) {
             Eror.LogEror.SaveEror(e);
             //System.out.println("EX:CloseCon " + e);
         }

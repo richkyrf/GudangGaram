@@ -14,7 +14,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
- * @author zeppr
+ * @author Martono
  */
 public class Update {
 
@@ -30,15 +30,15 @@ public class Update {
             int no = 0;
             no = pstmt.executeUpdate();
             if (no > 0) {
-                LSubProces.History.simpanhistory(GlobalVar.VarL.Username, "Berhasil Ubah Data " + JenisData);
-                showMessageDialog(Parent, "Berhasil Ubah Data " + JenisData);
+                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil " + JenisData);
+                showMessageDialog(Parent, "Berhasil " + JenisData);
                 BerhasilSimpan = true;
             } else {
-                showMessageDialog(Parent, "Gagal Ubah Data " + JenisData);
+                showMessageDialog(Parent, "Gagal " + JenisData);
             }
         } catch (SQLException e) {
-                LogEror.SaveString(pstmt.toString());
-                Eror.LogEror.SaveEror(e);
+            LogEror.SaveString(pstmt.toString());
+            Eror.LogEror.SaveEror(e);
             showMessageDialog(Parent, LSubProces.Parsestringeror.GetErorString(e));
         } finally {
             try {
@@ -48,7 +48,7 @@ public class Update {
                 if (con != null) {
                     con.close();
                 }
-            } catch (SQLException ex) { 
+            } catch (SQLException ex) {
                 Eror.LogEror.SaveEror(ex);
                 //System.out.println("Eror Close Con/Prep");
             }

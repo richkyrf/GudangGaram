@@ -1,4 +1,5 @@
 package KomponenGUI;
+
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -7,9 +8,10 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import javax.swing.JTextField;
+
 public class JtextF extends JTextField {
 
-    static int MaxText = 255;
+    static int MaxText = 250;
 
     public JtextF() {
         setText("");
@@ -38,78 +40,50 @@ public class JtextF extends JTextField {
             }
         });
     }
-    
+
+    public void setMaxText(int length) {
+        MaxText = length;
+    }
+
     public void setribuankomaText(String s) {
         try {
             double n = Double.valueOf(s);
-            DecimalFormat uang = (DecimalFormat) DecimalFormat.getCurrencyInstance();
             DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-            symbols.setCurrencySymbol("");
-            symbols.setGroupingSeparator('.');
-            symbols.setMonetaryDecimalSeparator(',');
-            uang.setDecimalFormatSymbols(symbols);
-            String S = uang.format(n);
+            symbols.setGroupingSeparator(',');
+            DecimalFormat format = new DecimalFormat("#,###.00", symbols);
+            String S = String.format("%14s\n", format.format(n));
             this.setText(S);
         } catch (Exception e) {
-            System.out.println("KomponenGUI.JtextF.setribuankomaText()" + e);
             this.setText("0");
         }
     }
-    
+
+    public void setribuan(String s) {
+        try {
+            double n = Double.valueOf(s);
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+            symbols.setGroupingSeparator(',');
+            DecimalFormat format = new DecimalFormat("#,###", symbols);
+            String S = String.format("%14s\n", format.format(n));
+            this.setText(S);
+        } catch (Exception e) {
+            this.setText("0");
+        }
+    }
+
     public String getribuankomaText() {
         try {
-            return this.getText().replace(".", "").replace(",", ".");
+            return this.getText().replace(",", "");
         } catch (Exception e) {
             return ("0");
         }
     }
 
-    /*public void setribuankomaText(String s) {
-        try{
-        double n = Double.valueOf(s);
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-symbols.setGroupingSeparator(',');
-DecimalFormat format = new DecimalFormat("#,###.00", symbols);
-String S =String.format("%14s\n", format.format(n));
-        this.setText(S);
-        }
-        catch (Exception e)
-        {
-        this.setText("0");
-        }
-    }
-    public void setribuan(String s) {
-        try{
-        double n = Double.valueOf(s);
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-symbols.setGroupingSeparator(',');
-DecimalFormat format = new DecimalFormat("#,###", symbols);
-String S =String.format("%14s\n", format.format(n));
-        this.setText(S);
-        }
-        catch (Exception e)
-        {
-        this.setText("0");
-        }
-    }*/
-    
-    /*public String getribuankomaText() {
-        try{
-        return this.getText().replace(",", "");
-        }
-        catch (Exception e)
-        {
-        return("0");
-        }
-    }*/
-    
     public String getribuan() {
-        try{
-        return this.getText().replace(",", "");
-        }
-        catch (Exception e)
-        {
-        return("0");
+        try {
+            return this.getText().replace(",", "");
+        } catch (Exception e) {
+            return ("0");
         }
     }
 }

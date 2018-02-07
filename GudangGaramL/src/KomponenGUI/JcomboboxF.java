@@ -1,4 +1,3 @@
-
 package KomponenGUI;
 
 import Eror.LogEror;
@@ -12,7 +11,9 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import static javax.swing.JOptionPane.showMessageDialog;
+
 public class JcomboboxF extends JComboBox {
+
     String Query;
 
     public JcomboboxF() {
@@ -59,11 +60,11 @@ public class JcomboboxF extends JComboBox {
                     con.close();
                 }
             } catch (SQLException ex) {
-            LogEror.SaveEror(ex);
+                LogEror.SaveEror(ex);
             }
         }
     }
-    
+
     public void loadall(String query) {
         Query = query;
         DefaultComboBoxModel modelbaru = new DefaultComboBoxModel();
@@ -84,7 +85,7 @@ public class JcomboboxF extends JComboBox {
                 }
             }
             if (!rs.isBeforeFirst()) {
-                //groupNames.add("-");
+                //groupNames.add("ALL");
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(groupNames.toArray());
             setModel(model);
@@ -100,48 +101,7 @@ public class JcomboboxF extends JComboBox {
                     con.close();
                 }
             } catch (SQLException ex) {
-            LogEror.SaveEror(ex);
-            }
-        }
-    }
-    
-    public void loadnull(String query) {
-        Query = query;
-        DefaultComboBoxModel modelbaru = new DefaultComboBoxModel();
-        setModel(modelbaru);
-        ArrayList<String> groupNames = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        try {
-            int autono = 0;
-            Koneksi koneksi = new Koneksi();
-            con = koneksi.getConnection();
-            pstmt = con.prepareStatement(Query);
-            ResultSet rs = pstmt.executeQuery();
-            groupNames.add("");
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    groupNames.add(rs.getString(1));
-                }
-            }
-            if (!rs.isBeforeFirst()) {
-                //groupNames.add("-");
-            }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(groupNames.toArray());
-            setModel(model);
-        } catch (SQLException e) {
-            LogEror.SaveEror(e);
-            showMessageDialog(null, LSubProces.Parsestringeror.GetErorString(e));
-        } finally {
-            try {
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-            LogEror.SaveEror(ex);
+                LogEror.SaveEror(ex);
             }
         }
     }
@@ -186,7 +146,7 @@ public class JcomboboxF extends JComboBox {
                     con.close();
                 }
             } catch (SQLException ex) {
-            LogEror.SaveEror(ex);
+                LogEror.SaveEror(ex);
             }
         }
     }
@@ -214,5 +174,4 @@ public class JcomboboxF extends JComboBox {
             this.setSelectedItem(c);
         }
     }
-
 }

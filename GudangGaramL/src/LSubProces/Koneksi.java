@@ -9,11 +9,13 @@ import javax.swing.JOptionPane;
 public class Koneksi {
 
     private Connection Con = null;
-    String url = "jdbc:mysql://127.0.0.1/";
-    //String url = "jdbc:mysql://192.168.0.211:1358/";
-    String db = "dbgaram";
+    //String url = "jdbc:mysql://192.168.1.20:1358/";
+    //String user = "databasedo";
+    //String pass = "Win32&serVer";
+    String url = "jdbc:mysql://localhost/";
     String user = "root";
     String pass = "";
+    String db = "dbgaram";
 
     public String GetUrl() {
         return url;
@@ -37,8 +39,8 @@ public class Koneksi {
             Con = DriverManager.getConnection(url + db, user, pass);
         } catch (ClassNotFoundException | SQLException ex) {
             LogEror.SaveEror(ex);
-            JOptionPane.showMessageDialog(null, "Eror Tidak Dapat Terhubung Dengan Server !!!");
-           
+            JOptionPane.showMessageDialog(null, "Koneksi Ke Server Database Gagal !!!");
+
         }
         return Con;
     }

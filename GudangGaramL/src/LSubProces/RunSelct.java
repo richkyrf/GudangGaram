@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author JACK
+ * @author Martono
  */
 public class RunSelct {
 
@@ -28,7 +28,7 @@ public class RunSelct {
         rs = null;
         int rowsUpdated = 0;
         pstmt = con.prepareStatement(SQL);
-       ////System.out.println(pstmt);
+        ////System.out.println(pstmt);
         rs = pstmt.executeQuery();
         if (!rs.isBeforeFirst()) {
             iskosong = true;

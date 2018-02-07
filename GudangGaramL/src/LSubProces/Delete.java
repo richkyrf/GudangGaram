@@ -17,7 +17,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
- * @author zeppr
+ * @author Martono
  */
 public class Delete {
 
@@ -26,7 +26,7 @@ public class Delete {
         Koneksi koneksi = new Koneksi();
         con = koneksi.getConnection();
         boolean berhasilhapus = false;
-        int reply = showConfirmDialog(Parent, "Apakah Anda Yakin Mau Menghapus Data " + JenisData + " Dengan " + ID, "konfirmasi", YES_NO_OPTION);
+        int reply = showConfirmDialog(Parent, "Apakah Anda Yakin Akan " + JenisData + " Dengan ID " + ID + " ?", "Konfirmasi", YES_NO_OPTION);
         if (reply == YES_OPTION) {
             PreparedStatement pstmt = null;
             try {
@@ -34,11 +34,11 @@ public class Delete {
                 int no = 0;
                 no = pstmt.executeUpdate();
                 if (no > 0) {
-                    LSubProces.History.simpanhistory(GlobalVar.VarL.Username, "Berhasil menghapus  data " + JenisData);
-                    showMessageDialog(Parent, "Berhasil menghapus  data " + JenisData);
+                    LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil " + JenisData);
+                    showMessageDialog(Parent, "Berhasil " + JenisData);
                     berhasilhapus = true;
                 }
-            } catch (SQLException e) { 
+            } catch (SQLException e) {
                 LogEror.SaveString(pstmt.toString());
                 Eror.LogEror.SaveEror(e);
                 showMessageDialog(Parent, LSubProces.Parsestringeror.GetErorString(e));
@@ -50,14 +50,14 @@ public class Delete {
                     if (con != null) {
                         con.close();
                     }
-                } catch (SQLException ex) { Eror.LogEror.SaveEror(ex);
+                } catch (SQLException ex) {
+                    Eror.LogEror.SaveEror(ex);
                     //System.out.println("Eror Close Con/Prep");
                 }
             }
         } else {
-            showMessageDialog(null, "Batal Menghapus Data " + JenisData);
+            showMessageDialog(null, "Batal " + JenisData);
         }
         return berhasilhapus;
     }
-
 }

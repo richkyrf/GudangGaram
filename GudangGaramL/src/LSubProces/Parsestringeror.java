@@ -1,7 +1,9 @@
 package LSubProces;
 
 import java.sql.SQLException;
+
 public class Parsestringeror {
+
     public static String GetErorString(SQLException e) {
         int eror1 = e.getErrorCode();
         e.printStackTrace();

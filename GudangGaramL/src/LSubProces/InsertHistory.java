@@ -14,7 +14,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
- * @author zeppr
+ * @author Martono
  */
 public class InsertHistory {
 
@@ -36,12 +36,12 @@ public class InsertHistory {
             int no = 0;
             no = pstmt.executeUpdate();
             if (no > 0) {
-                LSubProces.History.simpanhistory(GlobalVar.VarL.Username, "Berhasil menghapus  data " + JenisData);
+                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil menghapus data " + JenisData);
                 BerhasilSimpan = true;
             } else {
             }
-        } catch (SQLException e) { 
-                LogEror.SaveString(pstmt.toString());
+        } catch (SQLException e) {
+            LogEror.SaveString(pstmt.toString());
             Eror.LogEror.SaveEror(e);
             showMessageDialog(Parent, LSubProces.Parsestringeror.GetErorString(e));
         } finally {
@@ -52,7 +52,8 @@ public class InsertHistory {
                 if (con != null) {
                     con.close();
                 }
-            } catch (SQLException ex) { Eror.LogEror.SaveEror(ex);
+            } catch (SQLException ex) {
+                Eror.LogEror.SaveEror(ex);
                 //System.out.println("Eror Close Con/Prep");
             }
         }

@@ -16,8 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -25,7 +25,7 @@ import javax.swing.table.TableColumnModel;
 
 /**
  *
- * @author JACK
+ * @author Martono
  */
 public class JtableF extends JTable {
 
@@ -46,17 +46,6 @@ public class JtableF extends JTable {
         setRowHeight(20);
         setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null);
         setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null);
-    }
-
-    public String getValueBy(String value, int column) {
-        for (int i = 0; i < this.getModel().getRowCount(); i++) {
-            for (int j = 0; j < this.getModel().getColumnCount(); j++) {
-                if (this.getModel().getValueAt(i, j).equals(value)) {
-                    return this.getValueAt(i, column).toString();
-                }
-            }
-        }
-        return "";
     }
 
     public void setQuery(String Query) {
@@ -86,10 +75,7 @@ public class JtableF extends JTable {
                 m.getColumn(x).setCellRenderer(FNumberRenderer.getCurrencyRenderer());
             }
             if ("Number".equals(Type)) {
-                m.getColumn(x).setCellRenderer(FNumberRenderer.getNumberRenderer());
-            }
-            if ("Decimal".equals(Type)) {
-                m.getColumn(x).setCellRenderer(FNumberRenderer.getDecimalRenderer());
+                m.getColumn(x).setCellRenderer(FNumberRenderer.getumberrender());
             }
         } catch (Exception e) {
             LogEror.SaveEror(e);
@@ -162,13 +148,18 @@ public class JtableF extends JTable {
                         }
                         return java.lang.Object.class;
                     }
+
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return columnIndex == booleanfield;
+                    }
                 };
             }
             setModel(model);
             for (int column = 0; column < getColumnCount(); column++) {
                 TableColumn tableColumn = getColumnModel().getColumn(column);
                 int preferredWidth = 50;
-                int maxWidth = 400;
+                int maxWidth = 1000;
 
                 for (int row = 0; row < getRowCount(); row++) {
                     TableCellRenderer cellRenderer = getCellRenderer(row, column);
@@ -200,6 +191,10 @@ public class JtableF extends JTable {
                 LogEror.SaveEror(ex);
             }
         }
+    }
+
+    public Vector getcoloumname() {
+        return columnNames;
     }
 
     public Vector loaddata(Vector row, ResultSet rs, int i) throws SQLException {

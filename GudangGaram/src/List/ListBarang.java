@@ -218,7 +218,7 @@ public class ListBarang extends javax.swing.JFrame {
 
     public void load() {
         jcomCari1.setQuery("SELECT `IdBarang` as 'ID', `AliasBarang` as 'Alias', `NamaBarang` as 'Nama', `JenisBarang` as 'Jenis', `Satuan`, `Harga`, `UpahPacking` as 'Upah', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmbarang`a JOIN `tbsmjenisbarang`b ON a.`IdJenisBarang`=b.`IdJenisBarang` WHERE 1");
-        jcomCari1.Tampilkan();
+        jcomCari1.tampilkan();
     }
 
 }

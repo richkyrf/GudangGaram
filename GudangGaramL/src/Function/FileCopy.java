@@ -14,7 +14,7 @@ import java.nio.channels.FileChannel;
 
 /**
  *
- * @author zeppr
+ * @author Martono
  */
 public class FileCopy {
 

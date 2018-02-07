@@ -19,7 +19,7 @@ import static net.sf.jasperreports.view.JasperViewer.viewReport;
 
 /**
  *
- * @author JACK
+ * @author Martono
  */
 public class FLaporan {
 

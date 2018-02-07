@@ -198,7 +198,7 @@ public class ListPenjualan extends javax.swing.JFrame {
     
     public void load(){
         jcomCari1.setQuery("SELECT `IdPenjualan` as 'ID', `NoTransaksi` as 'No Transaksi', DATE_FORMAT(`Tanggal`, '%d-%m-%Y') as 'Tanggal', `JenisPenjualan` as 'Jenis Penjualan', `Plat`, `JenisKendaraan` as 'Kendaraan', IFNULL(`Gudang`, IFNULL(`Penerima`, '')) as 'Tujuan', a.`Keterangan` FROM `tbpenjualan`a JOIN `tbsmjenispenjualan`b ON a.`IdJenisPenjualan`=b.`IdJenisPenjualan` JOIN `tbmkendaraan`c ON a.`IdKendaraan`=c.`IdKendaraan` LEFT JOIN `tbmgudang`d on a.`IdGudang`=d.`IdGudang` LEFT JOIN `tbmpenerima`e ON a.`IdPenerima`=e.`IdPenerima` WHERE 1");
-        jcomCari1.Tampilkan();
+        jcomCari1.tampilkan();
     }
 
 }

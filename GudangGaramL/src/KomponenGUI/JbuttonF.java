@@ -1,7 +1,7 @@
-
 package KomponenGUI;
 
 import javax.swing.JButton;
+
 public class JbuttonF extends JButton {
 
     public JbuttonF() {

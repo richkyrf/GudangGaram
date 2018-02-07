@@ -15,7 +15,7 @@ import java.security.CodeSource;
 
 /**
  *
- * @author zeppr
+ * @author Martono
  */
 public class LogEror {
 
@@ -38,6 +38,7 @@ public class LogEror {
             //System.out.println("Eror.LogEror.SaveEror()" + ee);
         }
     }
+
     public static void SaveString(String e) {
         try {
             //System.out.println("Eror.LogEror.SaveEror()" + e);
@@ -49,7 +50,7 @@ public class LogEror {
             pw.print("\r\n");
             pw.print("==============================================================");
             pw.print("\r\n");
-            pw.print("STRING = "+e);
+            pw.print("STRING = " + e);
             pw.print("\r\n");
             pw.print("==============================================================");
             pw.print("\r\n");

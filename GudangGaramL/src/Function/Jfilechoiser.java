@@ -7,9 +7,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author JACK
+ * @author Martono
  */
 public class Jfilechoiser {
+
     public static String GetSaveLocationFile(String FileType, String ExstensionFile) {
         String FileLocation = null;
         JFrame parentFrame = new JFrame();
@@ -25,6 +26,7 @@ public class Jfilechoiser {
         }
         return FileLocation;
     }
+
     public static String GetLoadLocationFile(String FileType, String ExstensionFile) {
         String FileLocation = null;
         JFrame parentFrame = new JFrame();

@@ -17,38 +17,69 @@ public class JcomCari extends javax.swing.JPanel {
     Component parent = null;
     public String Query = "", Order = "";
     public ArrayList<String> DbColomName = new ArrayList<>();
-    public Integer selectedComboboxIndex = 1;
-    
-    public Object getValueAt(int row, int col){
-        return jtablef.getValueAt(row, col);
-    }
+    Object SelectedValue = null;
+    int selectedIndex = 1;
 
     public Object GetIDTable() {
         return jtablef.getValueAt(jtablef.getSelectedRow(), 0);
     }
-    
+
+    public int getSelectedRows() {
+        int row = 0;
+        for (int i = 0; i < jtablef.getRowCount(); i++) {
+            if (jtablef.getValueAt(i, jtablef.getColumnCount() - 1).toString().equals("true")) {
+                row++;
+            }
+        }
+        return row;
+    }
+
+    public Object[] getSelectedIDs() {
+        Object[] a = new Object[getSelectedRows()];
+        int row = 0;
+        for (int i = 0; i < jtablef.getRowCount(); i++) {
+            if (jtablef.getValueAt(i, jtablef.getColumnCount() - 1).toString().equals("true")) {
+                a[row] = jtablef.getValueAt(i, 0);
+                row++;
+            }
+        }
+        return a;
+    }
+
+    public Object GetIDTable1() {
+        return jtablef.getValueAt(jtablef.getSelectedRow(), 1);
+    }
+
+    public Object GetIDTable3() {
+        return jtablef.getValueAt(jtablef.getSelectedRow(), 3);
+    }
+
     public int getSelectedRow() {
         return jtablef.getSelectedRow();
     }
-    
-     public String getselected11() {
-        return jtablef.getValueAt(jtablef.getSelectedRow(), 1).toString();
-    }
-    
-    public void setSelectedComboboxIndex(int index){
-        selectedComboboxIndex = index;
+
+    public int getselectedcolumn() {
+        return jtablef.getSelectedColumn();
     }
 
-    public void refresh(){
+    public Object getSelectedValue() {
+        return jtablef.getValueAt(jtablef.getSelectedRow(), jtablef.getSelectedColumn());
+    }
+
+    public String getselected11() {
+        return jtablef.getValueAt(jtablef.getSelectedRow(), 1).toString();
+    }
+
+    public void refresh() {
         jtextF1.setText("");
-        jcomboboxF1.setSelectedIndex(selectedComboboxIndex);
+        jcomboboxF1.setSelectedIndex(1);
         jcomboboxF2.setSelectedIndex(3);
     }
-    
+
     public void Clear() {
         jtextF1.setText("");
-        jcomboboxF1.setSelectedIndex(selectedComboboxIndex);
-        jcomboboxF2.setSelectedIndex(3);
+        jcomboboxF1.setSelectedIndex(0);
+        jcomboboxF2.setSelectedIndex(0);
     }
 
     public JcomCari() {
@@ -59,18 +90,23 @@ public class JcomCari extends javax.swing.JPanel {
     public void setQuery(String query) {
         Query = query;
     }
-    
-    public void setOrder(String order){
+
+    public void setOrder(String order) {
         Order = order;
     }
 
+    public void setSelectedIndex(int index) {
+        selectedIndex = index;
+    }
+
     @SuppressWarnings("unchecked")
-    public void Tampilkan() {
+    public void tampilkan() {
         if (JcomCari.jcomboboxF1.getSelectedItem().toString().equals("-")) {
             getjcombobox();
         }
-        this.jtablef.setQuery(this.Query + this.Order);
+        this.jtablef.setQuery(this.Query + " " + this.Order);
         this.jtablef.tampilkan();
+        jtextF1.requestFocus();
     }
 
     @SuppressWarnings("unchecked")
@@ -117,7 +153,7 @@ public class JcomCari extends javax.swing.JPanel {
                 //System.out.println("Eror Close Con/Prep");
             }
         }
-        jcomboboxF1.setSelectedIndex(selectedComboboxIndex);
+        jcomboboxF1.setSelectedIndex(selectedIndex);
     }
 
     @SuppressWarnings("unchecked")
@@ -186,22 +222,22 @@ public class JcomCari extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcomboboxF1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcomboboxF1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcomboboxF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtextF1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jtextF1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcomboboxF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,7 +247,7 @@ public class JcomCari extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-public void Cari() {
+    public void Cari() {
         try {
             this.jtablef.setQuery(this.Query + " HAVING " + this.DbColomName.get(JcomCari.jcomboboxF1.getSelectedIndex()) + getjcomtypecari() + this.Order);
             this.jtablef.tampilkan();
@@ -228,11 +264,16 @@ public void Cari() {
             case 2:
                 return " Like '%" + jtextF1.getText() + "' ";
             case 3:
-                return " Like '%" + jtextF1.getText() + "%' ";
+                if (jtextF1.getText().equals("")) {
+                    return " Like '%" + jtextF1.getText() + "%' ";
+                } else {
+                    return " REGEXP '" + jtextF1.getText().replace(" ", ".+") + "' ";
+                }
             default:
                 return "EROR";
         }
     }
+
     private void jtextF1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextF1KeyReleased
         Cari();
     }//GEN-LAST:event_jtextF1KeyReleased

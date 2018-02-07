@@ -216,7 +216,7 @@ public class ListKaryawan extends javax.swing.JFrame {
 
     public void load() {
         jcomCari1.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama', `JenisKaryawan` as 'Jenis', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1");
-        jcomCari1.Tampilkan();
+        jcomCari1.tampilkan();
     }
 
 }

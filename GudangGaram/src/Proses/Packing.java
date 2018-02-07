@@ -519,7 +519,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF11.setText(":");
 
-        JCNamaKaryawan1.loadnull("SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
+        JCNamaKaryawan1.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
         JCNamaKaryawan1.setSelectedItem("AMBAR");
         JCNamaKaryawan1.setNextFocusableComponent(JCNamaKaryawan2);
         JCNamaKaryawan1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -540,7 +540,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF29.setText(":");
 
-        JCNamaKaryawan2.loadnull("SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
+        JCNamaKaryawan2.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
         JCNamaKaryawan2.setSelectedItem("MUSLINA");
         JCNamaKaryawan2.setNextFocusableComponent(JTJumlahHasil1);
         JCNamaKaryawan2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -549,7 +549,7 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        JCNamaKaryawan3.loadnull("SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
+        JCNamaKaryawan3.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
         JCNamaKaryawan3.setSelectedItem("SINAP");
         JCNamaKaryawan3.setNextFocusableComponent(JCNamaKaryawan4);
         JCNamaKaryawan3.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -558,7 +558,7 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        JCNamaKaryawan4.loadnull("SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
+        JCNamaKaryawan4.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
         JCNamaKaryawan4.setSelectedItem("KAYATI");
         JCNamaKaryawan4.setNextFocusableComponent(JTJumlahHasil2);
         JCNamaKaryawan4.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -722,7 +722,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF34.setText(":");
 
-        JCNamaBahan2.loadnull("SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1");
+        JCNamaBahan2.load("SELECT '' as 'AliasBarang' UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1");
         JCNamaBahan2.setNextFocusableComponent(JTJumlahBahan2);
         JCNamaBahan2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {

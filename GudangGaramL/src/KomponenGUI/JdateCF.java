@@ -1,7 +1,7 @@
-
 package KomponenGUI;
 
 import com.toedter.calendar.JDateChooser;
+
 public class JdateCF extends JDateChooser {
 
     public JdateCF() {
@@ -9,5 +9,4 @@ public class JdateCF extends JDateChooser {
         this.setDateFormatString("dd/MM/yyyy");
         this.setSize(140, 22);
     }
-
 }

@@ -1,12 +1,14 @@
 package KomponenGUI;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
+
 public class JtextFnoSelect extends JTextField {
 
-    static int MaxText = 255;
+    static int MaxText = 250;
 
     public JtextFnoSelect() {
         setText("");
@@ -32,5 +34,9 @@ public class JtextFnoSelect extends JTextField {
                 }
             }
         });
+    }
+    
+    public void setMaxText(int length) {
+        MaxText = length;
     }
 }

@@ -14,7 +14,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
- * @author JACK
+ * @author Martono
  */
 public class DrunChekDuplicate {
 
@@ -22,10 +22,10 @@ public class DrunChekDuplicate {
     Connection con;
     String Erorm;
     boolean iskosong = false;
-    
-    public boolean IsNotDuplicate(String Query,String ErorM) {
-        SQL=Query;
-        Erorm=ErorM;
+
+    public boolean IsNotDuplicate(String Query, String ErorM) {
+        SQL = Query;
+        Erorm = ErorM;
         Koneksi koneksi = new Koneksi();
         con = koneksi.getConnection();
         PreparedStatement pstmt = null;
@@ -33,7 +33,8 @@ public class DrunChekDuplicate {
         try {
             pstmt = con.prepareStatement(SQL);
             rs = pstmt.executeQuery();
-            if (!rs.isBeforeFirst()) {iskosong=true;
+            if (!rs.isBeforeFirst()) {
+                iskosong = true;
             }
         } catch (SQLException sqle) {
             LogEror.SaveString(pstmt.toString());
@@ -50,10 +51,9 @@ public class DrunChekDuplicate {
                     con.close();
                 }
             } catch (SQLException ex) {
-            LogEror.SaveEror(ex);
+                LogEror.SaveEror(ex);
             }
         }
         return iskosong;
     }
-
 }

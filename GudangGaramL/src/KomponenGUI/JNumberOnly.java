@@ -5,6 +5,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
+
 public class JNumberOnly extends JTextField {
 
     int MaxText = 20;
@@ -50,8 +51,8 @@ public class JNumberOnly extends JTextField {
         } else {
             super.setText(s);
         }
-    }    
-    
+    }
+
     public Integer getNum() {
         return Integer.parseInt(this.getText());
     }

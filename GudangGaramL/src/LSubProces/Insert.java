@@ -14,7 +14,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
- * @author zeppr
+ * @author Martono
  */
 public class Insert {
 
@@ -36,14 +36,14 @@ public class Insert {
             int no = 0;
             no = pstmt.executeUpdate();
             if (no > 0) {
-                LSubProces.History.simpanhistory(GlobalVar.VarL.Username, "Berhasil menghapus  data " + JenisData);
-                showMessageDialog(Parent, "Berhasil Tambah Data " + JenisData);
+                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil " + JenisData);
+                showMessageDialog(Parent, "Berhasil " + JenisData);
                 BerhasilSimpan = true;
             } else {
-                showMessageDialog(Parent, "Gagal Tambah Data " + JenisData);
+                showMessageDialog(Parent, "Gagal " + JenisData);
             }
-        } catch (SQLException e) { 
-                LogEror.SaveString(pstmt.toString());
+        } catch (SQLException e) {
+            LogEror.SaveString(pstmt.toString());
             Eror.LogEror.SaveEror(e);
             showMessageDialog(Parent, LSubProces.Parsestringeror.GetErorString(e));
         } finally {
@@ -54,7 +54,8 @@ public class Insert {
                 if (con != null) {
                     con.close();
                 }
-            } catch (SQLException ex) { Eror.LogEror.SaveEror(ex);
+            } catch (SQLException ex) {
+                Eror.LogEror.SaveEror(ex);
                 //System.out.println("Eror Close Con/Prep");
             }
         }

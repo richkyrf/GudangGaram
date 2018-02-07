@@ -348,17 +348,17 @@ public class ListSubMaster extends javax.swing.JFrame {
 
     public void refreshJenisKaryawan() {
         jcomCari1.setQuery("SELECT `IdJenisKaryawan` as 'ID', `JenisKaryawan` as 'Jenis', `Keterangan` FROM `tbsmjeniskaryawan` WHERE 1");
-        jcomCari1.Tampilkan();
+        jcomCari1.tampilkan();
     }
     
     public void refreshJenisBarang() {
         jcomCari1.setQuery("SELECT `IdJenisBarang` as 'ID', `JenisBarang` as 'Jenis', `Keterangan` FROM `tbsmjenisbarang` WHERE 1");
-        jcomCari1.Tampilkan();
+        jcomCari1.tampilkan();
     }
     
     public void refreshJenisPenjualan() {
         jcomCari1.setQuery("SELECT `IdJenisPenjualan` as 'ID', `JenisPenjualan` as 'Jenis', `Keterangan` FROM `tbsmjenispenjualan` WHERE 1");
-        jcomCari1.Tampilkan();
+        jcomCari1.tampilkan();
     }
 
 }

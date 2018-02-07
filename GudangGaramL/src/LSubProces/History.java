@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author JACK
+ * @author Martono
  */
 public class History {
 
@@ -22,16 +22,14 @@ public class History {
 
         Koneksi koneksi = new Koneksi();
         Connection con = koneksi.getConnection();
-        PreparedStatement pstmt=null;
+        PreparedStatement pstmt = null;
         try {
-            pstmt = con.prepareStatement("INSERT INTO `tbhistory`( `Username`, `Activity`, `DateAndTime`) VALUES ('" + hysNamaUser + "','" + hysActivity + "',NOW())");
+            pstmt = con.prepareStatement("INSERT INTO `tbhistory`(`Username`, `Activity`, `DateAndTime`) VALUES ('" + hysNamaUser + "','" + hysActivity + "',NOW())");
             pstmt.executeUpdate();
-        } 
-        catch (SQLException e) { 
+        } catch (SQLException e) {
             LogEror.SaveString(pstmt.toString());
             Eror.LogEror.SaveEror(e);
-        }
-            finally {
+        } finally {
             try {
                 if (pstmt != null) {
                     pstmt.close();
@@ -39,7 +37,7 @@ public class History {
                 if (con != null) {
                     con.close();
                 }
-            } catch (SQLException ex) { 
+            } catch (SQLException ex) {
                 Eror.LogEror.SaveEror(ex);
                 //System.out.println("Eror Close Con/Prep");
             }
