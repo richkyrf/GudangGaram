@@ -1,0 +1,7 @@
+1 tanggal, ada beberapa bahan dan beberapa hasil. 
+
+Query Perhitungan Upah
+=================
+SELECT a.`NoPacking`, `Tanggal`, d.`NamaBarang`, `JumlahBahan`, c.`NoBak`, `NoPas`, `NoKolom`, e.`NamaKaryawan`, f.`NamaBarang`, `JumlahHasil`, `UpahPerPak`, c.`Keterangan` FROM `tbpacking`a JOIN `tbpackingbahan`b ON a.`NoPacking`=b.`NoPacking` JOIN `tbpackinghasil`c ON a.`NoPacking`=c.`NoPacking` JOIN `tbmbarang`d ON b.`IdBarangBahan`=d.`IdBarang` JOIN `tbmkaryawan`e ON c.`IdKaryawan`=e.`IdKaryawan` JOIN `tbmbarang`f ON c.`IdBarangHasil`=f.`IdBarang` WHERE 1 GROUP BY `NamaKaryawan` ORDER BY c.`IdKaryawan`
+
+
