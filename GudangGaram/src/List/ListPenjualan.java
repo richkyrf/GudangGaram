@@ -176,8 +176,8 @@ public class ListPenjualan extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void refreshAll(){
-        load();
         jcomCari1.Clear();
+        load();
     }
     
     void hapus(){
