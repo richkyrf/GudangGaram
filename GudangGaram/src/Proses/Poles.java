@@ -221,8 +221,8 @@ public class Poles extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -528,10 +528,6 @@ public class Poles extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JDTanggalPropertyChange
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        GlobalVar.Var.poles = null;
-    }//GEN-LAST:event_formWindowClosing
-
     private void JTNoPoles1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNoPoles1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTNoPoles1KeyPressed
@@ -547,6 +543,10 @@ public class Poles extends javax.swing.JFrame {
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
 
     }//GEN-LAST:event_jbuttonF1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        GlobalVar.Var.poles = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

@@ -425,13 +425,7 @@ public class Penyesuaian extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
-        if (IdPenyesuaian == null) {
-            GlobalVar.Var.tambahPenyesuaian.dispose();
-            GlobalVar.Var.tambahPenyesuaian = null;
-        } else {
-            GlobalVar.Var.ubahPenyesuaian.dispose();
-            GlobalVar.Var.ubahPenyesuaian = null;
-        }
+        dispose();
     }//GEN-LAST:event_jbuttonF3ActionPerformed
 
     private void JTKomaSakKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKomaSakKeyPressed
@@ -503,11 +497,6 @@ public class Penyesuaian extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Penyesuaian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

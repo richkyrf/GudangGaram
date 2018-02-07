@@ -110,8 +110,8 @@ public class MasterBarang extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -359,22 +359,8 @@ public class MasterBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF3ActionPerformed
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
-        if (IdEdit == null) {
-            GlobalVar.Var.tambahBarang.dispose();
-            GlobalVar.Var.tambahBarang = null;
-        } else {
-            GlobalVar.Var.ubahBarang.dispose();
-            GlobalVar.Var.ubahBarang = null;
-        }
+        dispose();
     }//GEN-LAST:event_jbuttonF4ActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (IdEdit == null) {
-            GlobalVar.Var.tambahBarang = null;
-        } else {
-            GlobalVar.Var.ubahBarang = null;
-        }
-    }//GEN-LAST:event_formWindowClosing
 
     private void JTNamaBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNamaBarangKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -421,6 +407,14 @@ public class MasterBarang extends javax.swing.JFrame {
             JTUpahPacking.requestFocus();
         }
     }//GEN-LAST:event_JTHargaKeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if (IdEdit == null) {
+            GlobalVar.Var.tambahBarang = null;
+        } else {
+            GlobalVar.Var.ubahBarang = null;
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -496,8 +490,7 @@ public class MasterBarang extends javax.swing.JFrame {
             Boolean berhasil = insert.simpan("INSERT INTO `tbmbarang`(`AliasBarang`, `NamaBarang`, `IdJenisBarang`, `Satuan`, `Harga`, `UpahPacking`, `Keterangan`, `Status`) VALUES ('" + JTAliasBarang.getText() + "','" + JTNamaBarang.getText() + "',(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "'),'" + JTSatuan.getText() + "','" + JTHarga.getText() + "','" + JTUpahPacking.getText() + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Barang", this);
             if (berhasil) {
                 if (tutup) {
-                    GlobalVar.Var.tambahBarang.dispose();
-                    GlobalVar.Var.tambahBarang = null;
+                    dispose();
                 } else {
                     JTNamaBarang.setText("");
                     JTAliasBarang.setText("");
@@ -508,7 +501,7 @@ public class MasterBarang extends javax.swing.JFrame {
                     JTNamaBarang.requestFocus();
                 }
                 if (GlobalVar.Var.listBarang != null) {
-                    GlobalVar.Var.listBarang.refresh();
+                    GlobalVar.Var.listBarang.load();
                 }
             }
         }
@@ -519,9 +512,10 @@ public class MasterBarang extends javax.swing.JFrame {
             Update update = new Update();
             Boolean berhasil = update.Ubah("UPDATE `tbmbarang` SET `AliasBarang`='" + JTAliasBarang.getText() + "',`NamaBarang`='" + JTNamaBarang.getText() + "',`IdJenisBarang`=(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "'),`Satuan`='" + JTSatuan.getText() + "',`Harga`='" + JTHarga.getText() + "',`UpahPacking`='" + JTUpahPacking.getText() + "',`Keterangan`='" + JTAKeterangan.getText() + "',`Status`=" + JCBStatus.isSelected() + " WHERE `IdBarang` = " + IdEdit, "Barang", this);
             if (berhasil) {
-                GlobalVar.Var.listBarang.refresh();
-                GlobalVar.Var.ubahBarang.dispose();
-                GlobalVar.Var.ubahBarang = null;
+                dispose();
+                if (GlobalVar.Var.listBarang != null) {
+                    GlobalVar.Var.listBarang.load();
+                }
             }
         }
     }

@@ -67,12 +67,11 @@ public class MenuUtama extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem22 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jMenu1.setText("File");
 
@@ -108,7 +107,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
         jMenu5.setText("Master");
 
-        jMenuItem4.setText("Tambah Karyawan");
+        jMenuItem4.setText("Master Karyawan");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -116,7 +115,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem4);
 
-        jMenuItem6.setText("Tambah Barang");
+        jMenuItem6.setText("Master Barang");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -125,6 +124,7 @@ public class MenuUtama extends javax.swing.JFrame {
         jMenu5.add(jMenuItem6);
 
         jMenu6.setText("Sub Master");
+        jMenu6.setEnabled(false);
 
         jMenuItem14.setText("Jenis Karyawan");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
@@ -251,22 +251,6 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem20);
 
-        jMenuItem5.setText("List Karyawan");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem5);
-
-        jMenuItem7.setText("List Barang");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem7);
-
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Laporan");
@@ -287,11 +271,11 @@ public class MenuUtama extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 329, Short.MAX_VALUE)
+            .addGap(0, 579, Short.MAX_VALUE)
         );
 
         pack();
@@ -314,28 +298,16 @@ public class MenuUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        if (GlobalVar.Var.tambahKaryawan == null) {
-            GlobalVar.Var.tambahKaryawan = new MasterKaryawan();
-        }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         if (GlobalVar.Var.listKaryawan == null) {
             GlobalVar.Var.listKaryawan = new ListKaryawan();
         }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        if (GlobalVar.Var.tambahBarang == null) {
-            GlobalVar.Var.tambahBarang = new MasterBarang();
-        }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         if (GlobalVar.Var.listBarang == null) {
             GlobalVar.Var.listBarang = new ListBarang();
         }
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         if (GlobalVar.Var.tambahPenerimaan == null) {
@@ -494,9 +466,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables

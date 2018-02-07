@@ -853,7 +853,7 @@ public class Penerimaan extends javax.swing.JFrame {
                     }
                 }
                 if (GlobalVar.Var.listPenerimaan != null) {
-                    GlobalVar.Var.listPenerimaan.refresh();
+                    GlobalVar.Var.listPenerimaan.load();
                 }
             }
         }
@@ -864,7 +864,7 @@ public class Penerimaan extends javax.swing.JFrame {
             Update update = new Update();
             Boolean berhasil = update.Ubah("UPDATE `tbpenerimaan` SET `NoPenerimaan`='" + JTNoPenerimaan.getText() + "', `IdPeminta`=(SELECT `IdPeminta` FROM `tbmpeminta` WHERE `Peminta` = '" + JCTujuan.getSelectedItem() + "'), `NoTimbang`='" + JTNoTimbang.getText() + "',`Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdBarang`=(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'),`BruttoPelita`='" + JTBruttoPelita.getInt() + "',`TaraPelita`='" + JTTaraPelita.getInt() + "',`NettoPelita`='" + JTNettoPelita.getInt() + "',`NettoPenjual`='" + JTNettoPenjual.getInt() + "',`Karung`='" + JTJumlahKarung.getInt() + "',`Plat`='" + JCPlat.getSelectedItem() + "',`IdCustomer`=(SELECT `Customer` FROM `tbmcustomer` WHERE `Customer` = '" + JCCustomer.getSelectedItem() + "'),`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdPenerimaan` = " + IdEdit, "Penerimaan", this);
             if (berhasil) {
-                GlobalVar.Var.listPenerimaan.refresh();
+                GlobalVar.Var.listPenerimaan.load();
                 GlobalVar.Var.ubahPenerimaan.dispose();
                 GlobalVar.Var.ubahPenerimaan = null;
             }

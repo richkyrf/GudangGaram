@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package List;
+
 import LSubProces.Delete;
 import Master.*;
 
@@ -22,7 +23,7 @@ public class ListKaryawan extends javax.swing.JFrame {
         setTitle("List Karyawan");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        refresh();
+        refreshAll();
     }
 
     /**
@@ -39,11 +40,12 @@ public class ListKaryawan extends javax.swing.JFrame {
         jbuttonF3 = new KomponenGUI.JbuttonF();
         jbuttonF4 = new KomponenGUI.JbuttonF();
         jcomCari1 = new KomponenGUI.JcomCari();
+        jbuttonF5 = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -75,34 +77,42 @@ public class ListKaryawan extends javax.swing.JFrame {
             }
         });
 
+        jbuttonF5.setText("Tambah");
+        jbuttonF5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbuttonF5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jcomCari1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+            .addComponent(jcomCari1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jcomCari1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jcomCari1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -114,21 +124,24 @@ public class ListKaryawan extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF1ActionPerformed
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
-        GlobalVar.Var.listKaryawan.dispose();
-        GlobalVar.Var.listKaryawan = null;
+        dispose();
     }//GEN-LAST:event_jbuttonF4ActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        GlobalVar.Var.listKaryawan = null;
-    }//GEN-LAST:event_formWindowClosing
 
     private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
         hapus();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
 
     private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
-        refreshall();
+        refreshAll();
     }//GEN-LAST:event_jbuttonF3ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        GlobalVar.Var.listKaryawan = null;
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
+        tambah();
+    }//GEN-LAST:event_jbuttonF5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,31 +183,38 @@ public class ListKaryawan extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF jbuttonF2;
     private KomponenGUI.JbuttonF jbuttonF3;
     private KomponenGUI.JbuttonF jbuttonF4;
+    private KomponenGUI.JbuttonF jbuttonF5;
     private KomponenGUI.JcomCari jcomCari1;
     // End of variables declaration//GEN-END:variables
 
-    void refreshall(){
-        refresh();
+    void refreshAll() {
+        load();
         jcomCari1.Clear();
     }
     
-    void hapus(){
-        if (jcomCari1.getSelectedRow() != -1){
+    void tambah(){
+        if (GlobalVar.Var.tambahKaryawan == null){
+            GlobalVar.Var.tambahKaryawan = new MasterKaryawan();
+        }
+    }
+
+    void hapus() {
+        if (jcomCari1.getSelectedRow() != -1) {
             Delete delete = new Delete();
-            Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbmkaryawan` WHERE `IdKaryawan` = "+jcomCari1.GetIDTable(), "Karyawan", this);
-            if (berhasil){
-                refresh();
+            Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbmkaryawan` WHERE `IdKaryawan` = " + jcomCari1.GetIDTable(), "Karyawan", this);
+            if (berhasil) {
+                refreshAll();
             }
         }
     }
-    
-    void ubah(){
-        if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahKaryawan == null){
+
+    void ubah() {
+        if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahKaryawan == null) {
             GlobalVar.Var.ubahKaryawan = new MasterKaryawan(jcomCari1.GetIDTable());
         }
     }
-    
-    public void refresh(){
+
+    public void load() {
         jcomCari1.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama', `JenisKaryawan` as 'Jenis', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1");
         jcomCari1.Tampilkan();
     }

@@ -31,6 +31,7 @@ public class SubMaster extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jbuttonF3.setVisible(false);
+        jlableF1.setText(Title);
     }
 
     public SubMaster(Object idEdit, String title) {
@@ -43,13 +44,20 @@ public class SubMaster extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jbuttonF1.setVisible(false);
         jbuttonF2.setVisible(false);
-        if (Title.equals("Jenis Karyawan")) {
-            loadeditdatajeniskaryawan();
-        } else if (Title.equals("Jenis Barang")) {
-            loadeditdatajenisbarang();
-        } else if (Title.equals("Jenis Penjualan")) {
-            loadeditdatajenispenjualan();
+        switch (Title) {
+            case "Jenis Karyawan":
+                loadeditdatajeniskaryawan();
+                break;
+            case "Jenis Barang":
+                loadeditdatajenisbarang();
+                break;
+            case "Jenis Penjualan":
+                loadeditdatajenispenjualan();
+                break;
+            default:
+                break;
         }
+        jlableF1.setText(Title);
     }
 
     void loadeditdatajeniskaryawan() {
@@ -78,7 +86,7 @@ public class SubMaster extends javax.swing.JFrame {
 
     Boolean checkInput() {
         if (jtextF1.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Jenis Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, Title + " Tidak Boleh Kosong");
             return false;
         }
         return true;
@@ -107,8 +115,8 @@ public class SubMaster extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -267,74 +275,8 @@ public class SubMaster extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF3ActionPerformed
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
-        if (IdEdit == null) {
-            switch (Title) {
-                case "Jenis Karyawan":
-                    GlobalVar.Var.tambahJenisKaryawan.dispose();
-                    GlobalVar.Var.tambahJenisKaryawan = null;
-                    break;
-                case "Jenis Barang":
-                    GlobalVar.Var.tambahJenisBarang.dispose();
-                    GlobalVar.Var.tambahJenisBarang = null;
-                    break;
-                case "Jenis Penjualan":
-                    GlobalVar.Var.tambahJenisPenjualan.dispose();
-                    GlobalVar.Var.tambahJenisPenjualan = null;
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            switch (Title) {
-                case "Jenis Karyawan":
-                    GlobalVar.Var.ubahJenisKaryawan.dispose();
-                    GlobalVar.Var.ubahJenisKaryawan = null;
-                    break;
-                case "Jenis Barang":
-                    GlobalVar.Var.ubahJenisBarang.dispose();
-                    GlobalVar.Var.ubahJenisBarang = null;
-                    break;
-                case "Jenis Penjualan":
-                    GlobalVar.Var.ubahJenisPenjualan.dispose();
-                    GlobalVar.Var.ubahJenisPenjualan = null;
-                    break;
-                default:
-                    break;
-            }
-        }
+        dispose();
     }//GEN-LAST:event_jbuttonF4ActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (IdEdit == null) {
-            switch (Title) {
-                case "Jenis Karyawan":
-                    GlobalVar.Var.tambahJenisKaryawan = null;
-                    break;
-                case "Jenis Barang":
-                    GlobalVar.Var.tambahJenisBarang = null;
-                    break;
-                case "Jenis Penjualan":
-                    GlobalVar.Var.tambahJenisPenjualan = null;
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            switch (Title) {
-                case "Jenis Karyawan":
-                    GlobalVar.Var.ubahJenisKaryawan = null;
-                    break;
-                case "Jenis Barang":
-                    GlobalVar.Var.ubahJenisBarang = null;
-                    break;
-                case "Jenis Penjualan":
-                    GlobalVar.Var.ubahJenisPenjualan = null;
-                    break;
-                default:
-                    break;
-            }
-        }
-    }//GEN-LAST:event_formWindowClosing
 
     private void jtextF1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextF1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -375,6 +317,38 @@ public class SubMaster extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jTextAreaF1KeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if (IdEdit == null) {
+            switch (Title) {
+                case "Jenis Karyawan":
+                    GlobalVar.Var.tambahJenisKaryawan = null;
+                    break;
+                case "Jenis Barang":
+                    GlobalVar.Var.tambahJenisBarang = null;
+                    break;
+                case "Jenis Penjualan":
+                    GlobalVar.Var.tambahJenisPenjualan = null;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (Title) {
+                case "Jenis Karyawan":
+                    GlobalVar.Var.ubahJenisKaryawan = null;
+                    break;
+                case "Jenis Barang":
+                    GlobalVar.Var.ubahJenisBarang = null;
+                    break;
+                case "Jenis Penjualan":
+                    GlobalVar.Var.ubahJenisPenjualan = null;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -432,8 +406,7 @@ public class SubMaster extends javax.swing.JFrame {
             Boolean berhasil = insert.simpan("INSERT INTO `tbsmjeniskaryawan`(`JenisKaryawan`, `Keterangan`) VALUES ('" + jtextF1.getText() + "','" + jTextAreaF1.getText() + "')", "Jenis Karyawan", this);
             if (berhasil) {
                 if (tutup) {
-                    GlobalVar.Var.tambahJenisKaryawan.dispose();
-                    GlobalVar.Var.tambahJenisKaryawan = null;
+                    dispose();
                 } else {
                     jtextF1.setText("");
                     jTextAreaF1.setText("");
@@ -452,8 +425,7 @@ public class SubMaster extends javax.swing.JFrame {
             Boolean berhasil = insert.simpan("INSERT INTO `tbsmjenisbarang`(`JenisBarang`, `Keterangan`) VALUES ('" + jtextF1.getText() + "','" + jTextAreaF1.getText() + "')", "Jenis Barang", this);
             if (berhasil) {
                 if (tutup) {
-                    GlobalVar.Var.tambahJenisBarang.dispose();
-                    GlobalVar.Var.tambahJenisBarang = null;
+                    dispose();
                 } else {
                     jtextF1.setText("");
                     jTextAreaF1.setText("");
@@ -472,8 +444,7 @@ public class SubMaster extends javax.swing.JFrame {
             Boolean berhasil = insert.simpan("INSERT INTO `tbsmjenispenjualan`(`JenisPenjualan`, `Keterangan`) VALUES ('" + jtextF1.getText() + "','" + jTextAreaF1.getText() + "')", "Jenis Penjualan", this);
             if (berhasil) {
                 if (tutup) {
-                    GlobalVar.Var.tambahJenisPenjualan.dispose();
-                    GlobalVar.Var.tambahJenisPenjualan = null;
+                    dispose();
                 } else {
                     jtextF1.setText("");
                     jTextAreaF1.setText("");
@@ -491,9 +462,10 @@ public class SubMaster extends javax.swing.JFrame {
             Update update = new Update();
             Boolean berhasil = update.Ubah("UPDATE `tbsmjeniskaryawan` SET `JenisKaryawan`='" + jtextF1.getText() + "',`Keterangan`='" + jTextAreaF1.getText() + "' WHERE `IdJenisKaryawan` = " + IdEdit, "Jenis Karyawan", this);
             if (berhasil) {
+                dispose();
+            }
+            if (GlobalVar.Var.listJenisKaryawan != null) {
                 GlobalVar.Var.listJenisKaryawan.refreshJenisKaryawan();
-                GlobalVar.Var.ubahJenisKaryawan.dispose();
-                GlobalVar.Var.ubahJenisKaryawan = null;
             }
         }
     }
@@ -503,9 +475,10 @@ public class SubMaster extends javax.swing.JFrame {
             Update update = new Update();
             Boolean berhasil = update.Ubah("UPDATE `tbsmjenisbarang` SET `JenisBarang`='" + jtextF1.getText() + "',`Keterangan`='" + jTextAreaF1.getText() + "' WHERE `IdJenisBarang` = " + IdEdit, "Jenis Barang", this);
             if (berhasil) {
+                dispose();
+            }
+            if (GlobalVar.Var.listJenisBarang != null) {
                 GlobalVar.Var.listJenisBarang.refreshJenisBarang();
-                GlobalVar.Var.ubahJenisBarang.dispose();
-                GlobalVar.Var.ubahJenisBarang = null;
             }
         }
     }
@@ -515,9 +488,10 @@ public class SubMaster extends javax.swing.JFrame {
             Update update = new Update();
             Boolean berhasil = update.Ubah("UPDATE `tbsmjenispenjualan` SET `JenisPenjualan`='" + jtextF1.getText() + "',`Keterangan`='" + jTextAreaF1.getText() + "' WHERE `IdJenisPenjualan` = " + IdEdit, "Jenis Penjualan", this);
             if (berhasil) {
+                dispose();
+            }
+            if (GlobalVar.Var.listJenisPenjualan != null) {
                 GlobalVar.Var.listJenisPenjualan.refreshJenisPenjualan();
-                GlobalVar.Var.ubahJenisPenjualan.dispose();
-                GlobalVar.Var.ubahJenisPenjualan = null;
             }
         }
     }

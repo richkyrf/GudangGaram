@@ -25,7 +25,7 @@ public class ListPenerimaan extends javax.swing.JFrame {
         setTitle("List Penerimaan");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        refresh();
+        refreshAll();
     }
 
     /**
@@ -46,8 +46,8 @@ public class ListPenerimaan extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -91,26 +91,24 @@ public class ListPenerimaan extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jcomCari1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 353, Short.MAX_VALUE)
+                .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addComponent(jcomCari1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jcomCari1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jcomCari1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,20 +126,15 @@ public class ListPenerimaan extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF1ActionPerformed
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
-        GlobalVar.Var.listPenerimaan.dispose();
-        GlobalVar.Var.listPenerimaan = null;
+        dispose();
     }//GEN-LAST:event_jbuttonF4ActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        GlobalVar.Var.listPenerimaan = null;
-    }//GEN-LAST:event_formWindowClosing
 
     private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
         hapus();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
 
     private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
-        refresh();
+        refreshAll();
     }//GEN-LAST:event_jbuttonF3ActionPerformed
 
     private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
@@ -149,6 +142,10 @@ public class ListPenerimaan extends javax.swing.JFrame {
             GlobalVar.Var.printTPB = new PrintTPB(jcomCari1.getselected11());
         }
     }//GEN-LAST:event_jbuttonF5ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        GlobalVar.Var.listPenerimaan = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -195,12 +192,17 @@ public class ListPenerimaan extends javax.swing.JFrame {
     private KomponenGUI.JcomCari jcomCari1;
     // End of variables declaration//GEN-END:variables
 
+    void refreshAll(){
+        load();
+        jcomCari1.Clear();
+    }
+    
     void hapus() {
         if (jcomCari1.getSelectedRow() != -1) {
             Delete delete = new Delete();
             Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbpenerimaan` WHERE `IdPenerimaan` = " + jcomCari1.GetIDTable(), "Penerimaan", this);
             if (berhasil) {
-                refresh();
+                refreshAll();
             }
         }
     }
@@ -211,7 +213,7 @@ public class ListPenerimaan extends javax.swing.JFrame {
         }
     }
 
-    public void refresh() {
+    public void load() {
         jcomCari1.setQuery("SELECT `IdPenerimaan` as 'ID', `NoPenerimaan` as 'No. Penerimaan', `NoTimbang` as 'No. Timbang', `Peminta`, DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaBarang` as 'Nama Barang', `BruttoPelita` as 'Brutto PLT', `TaraPelita` as 'Tara PLT', `NettoPelita` as 'Netto PLT', `NettoPenjual` as 'Netto PJL', `Karung`, `Plat`, `Customer`, a.`Keterangan` FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmpeminta`c ON a.`IdPeminta`=c.`IdPeminta` JOIN `tbmcustomer`d on a.`IdCustomer`=d.`IdCustomer` WHERE 1");
         jcomCari1.setOrder(" ORDER BY `NoPenerimaan` DESC");
         jcomCari1.Tampilkan();

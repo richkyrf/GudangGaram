@@ -5,18 +5,8 @@
  */
 package Proses;
 
-import LSubProces.RunSelct;
-import KomponenGUI.JtextF;
-import java.awt.Component;
 import java.awt.event.KeyEvent;
-import static java.lang.System.out;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import static javax.swing.JOptionPane.showMessageDialog;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 
 /**
  *

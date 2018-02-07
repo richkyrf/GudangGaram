@@ -5,12 +5,7 @@
  */
 package Proses;
 
-import GlobalVar.Terbilang;
-import KomponenGUI.FDateF;
-import static KomponenGUI.FDateF.datetostr;
-import LSubProces.DRunSelctOne;
 import LSubProces.RunSelct;
-import static Proses.Penggajian.directprinting;
 import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -21,8 +16,6 @@ import static java.lang.System.out;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import static javax.print.DocFlavor.INPUT_STREAM.AUTOSENSE;
@@ -103,8 +96,8 @@ public class PrintTPB extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -240,13 +233,8 @@ public class PrintTPB extends javax.swing.JFrame {
     }//GEN-LAST:event_JTNoPenerimaanKeyPressed
 
     private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
-        GlobalVar.Var.printTPB.dispose();
-        GlobalVar.Var.printTPB = null;
+        dispose();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        GlobalVar.Var.printTPB = null;
-    }//GEN-LAST:event_formWindowClosing
 
     private void JTCustomerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTCustomerKeyPressed
         // TODO add your handling code here:
@@ -259,6 +247,10 @@ public class PrintTPB extends javax.swing.JFrame {
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
         printing();
     }//GEN-LAST:event_jbuttonF1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        GlobalVar.Var.printTPB = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -427,7 +419,6 @@ public class PrintTPB extends javax.swing.JFrame {
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
-        System.out.println(OutFormat);
         directprinting(OutFormat);
     }
     

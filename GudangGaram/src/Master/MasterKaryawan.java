@@ -91,8 +91,8 @@ public class MasterKaryawan extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -248,44 +248,38 @@ public class MasterKaryawan extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF3ActionPerformed
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
-        if (IdEdit == null) {
-            GlobalVar.Var.tambahKaryawan.dispose();
-            GlobalVar.Var.tambahKaryawan = null;
-        } else {
-            GlobalVar.Var.ubahKaryawan.dispose();
-            GlobalVar.Var.ubahKaryawan = null;
-        }
+        dispose();
     }//GEN-LAST:event_jbuttonF4ActionPerformed
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (IdEdit == null) {
-            GlobalVar.Var.tambahKaryawan = null;
-        } else {
-            GlobalVar.Var.ubahKaryawan = null;
-        }
-    }//GEN-LAST:event_formWindowClosing
-
     private void jtextF1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextF1KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jcomboboxF1.requestFocus();
         }
     }//GEN-LAST:event_jtextF1KeyPressed
 
     private void jcomboboxF1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcomboboxF1KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jTextAreaF1.requestFocus();
         }
     }//GEN-LAST:event_jcomboboxF1KeyPressed
 
     private void jTextAreaF1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaF1KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-            if (IdEdit==null){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (IdEdit == null) {
                 tambahData(false);
             } else {
                 ubahData();
             }
         }
     }//GEN-LAST:event_jTextAreaF1KeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if (IdEdit == null) {
+            GlobalVar.Var.tambahKaryawan = null;
+        } else {
+            GlobalVar.Var.ubahKaryawan = null;
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -348,15 +342,11 @@ public class MasterKaryawan extends javax.swing.JFrame {
             Boolean berhasil = insert.simpan("INSERT INTO `tbmkaryawan`(`NamaKaryawan`, `IdJenisKaryawan`, `Keterangan`, `Status`) VALUES ('" + jtextF1.getText() + "',(SELECT `IdJenisKaryawan` FROM `tbsmjeniskaryawan` WHERE `JenisKaryawan` = '" + jcomboboxF1.getSelectedItem() + "'),'" + jTextAreaF1.getText() + "'," + jCheckBoxF1.isSelected() + ")", "Karyawan", this);
             if (berhasil) {
                 if (tutup) {
-                    GlobalVar.Var.tambahKaryawan.dispose();
-                    GlobalVar.Var.tambahKaryawan = null;
+                    dispose();
                 } else {
                     jtextF1.setText("");
                     jTextAreaF1.setText("");
                     jtextF1.requestFocus();
-                }
-                if (GlobalVar.Var.listKaryawan != null) {
-                    GlobalVar.Var.listKaryawan.refresh();
                 }
             }
         }
@@ -367,9 +357,10 @@ public class MasterKaryawan extends javax.swing.JFrame {
             Update update = new Update();
             Boolean berhasil = update.Ubah("UPDATE `tbmkaryawan` SET `NamaKaryawan`='" + jtextF1.getText() + "',`IdJenisKaryawan`=(SELECT `IdJenisKaryawan` FROM `tbsmjeniskaryawan` WHERE `JenisKaryawan` = '" + jcomboboxF1.getSelectedItem() + "'),`Keterangan`='" + jTextAreaF1.getText() + "',`Status`=" + jCheckBoxF1.isSelected() + " WHERE `IdKaryawan` = " + IdEdit, "Karyawan", this);
             if (berhasil) {
-                GlobalVar.Var.listKaryawan.refresh();
-                GlobalVar.Var.ubahKaryawan.dispose();
-                GlobalVar.Var.ubahKaryawan = null;
+                dispose();
+                if (GlobalVar.Var.listKaryawan != null) {
+                    GlobalVar.Var.listKaryawan.load();
+                }
             }
         }
     }

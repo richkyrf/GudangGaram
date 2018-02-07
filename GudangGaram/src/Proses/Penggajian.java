@@ -134,8 +134,8 @@ public class Penggajian extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -362,10 +362,6 @@ public class Penggajian extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JDTanggal2PropertyChange
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        GlobalVar.Var.penggajian = null;
-    }//GEN-LAST:event_formWindowClosing
-
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
         if (getJenisKaryawan().toLowerCase().equals("harian")) {
 
@@ -375,9 +371,12 @@ public class Penggajian extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF1ActionPerformed
 
     private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
-        GlobalVar.Var.penggajian.dispose();
-        GlobalVar.Var.penggajian = null;
+        dispose();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        GlobalVar.Var.penggajian = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -570,7 +569,6 @@ public class Penggajian extends javax.swing.JFrame {
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
-        System.out.println(OutFormat);
         directprinting(OutFormat);
     }
 

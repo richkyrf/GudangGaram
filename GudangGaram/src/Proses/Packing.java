@@ -1425,7 +1425,7 @@ public class Packing extends javax.swing.JFrame {
                         JCNamaKaryawan1.requestFocus();
                     }
                     if (GlobalVar.Var.listPacking != null) {
-                        GlobalVar.Var.listPacking.refresh();
+                        GlobalVar.Var.listPacking.load();
                     }
                 }
             }
@@ -1466,7 +1466,7 @@ public class Packing extends javax.swing.JFrame {
                         GlobalVar.Var.ubahPacking.dispose();
                         GlobalVar.Var.ubahPacking = null;
                         if (GlobalVar.Var.listPacking != null) {
-                            GlobalVar.Var.listPacking.refresh();
+                            GlobalVar.Var.listPacking.load();
                         }
                     }
                 }

@@ -6,19 +6,9 @@
 package Proses;
 
 import KomponenGUI.FDateF;
-import LSubProces.Insert;
 import LSubProces.MultiInsert;
-import LSubProces.RunSelct;
-import java.awt.Component;
-import static java.lang.System.out;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showMessageDialog;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -43,7 +33,6 @@ public class Absen extends javax.swing.JFrame {
         JTable.setbooleanfield(3);
         JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', 1 as 'Hadir', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1");
         JTable.tampilkan();
-
     }
 
     /**
@@ -66,8 +55,8 @@ public class Absen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -179,13 +168,8 @@ public class Absen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        GlobalVar.Var.absen = null;
-    }//GEN-LAST:event_formWindowClosing
-
     private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
-        GlobalVar.Var.absen.dispose();
-        GlobalVar.Var.absen = null;
+        dispose();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
 
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
@@ -195,6 +179,10 @@ public class Absen extends javax.swing.JFrame {
     private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
         tambahData(true);
     }//GEN-LAST:event_jbuttonF3ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        GlobalVar.Var.absen = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -264,8 +252,7 @@ public class Absen extends javax.swing.JFrame {
             multiInsert.Commit();
             multiInsert.closecon();
             if (tutup) {
-                GlobalVar.Var.absen.dispose();
-                GlobalVar.Var.absen = null;
+                dispose();
             }
         }
     }

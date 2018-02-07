@@ -1164,7 +1164,7 @@ public class Penjualan extends javax.swing.JFrame {
                     JTNoTransaksi.setText(getNoPenjualan());
                 }
                 if (GlobalVar.Var.listPenjualan != null) {
-                    GlobalVar.Var.listPenjualan.refresh();
+                    GlobalVar.Var.listPenjualan.load();
                 }
             }
         }
@@ -1204,7 +1204,7 @@ public class Penjualan extends javax.swing.JFrame {
                     GlobalVar.Var.ubahPenjualan.dispose();
                     GlobalVar.Var.ubahPenjualan = null;
                     if (GlobalVar.Var.listPenjualan != null) {
-                        GlobalVar.Var.listPenjualan.refresh();
+                        GlobalVar.Var.listPenjualan.load();
                     }
                 }
             }
