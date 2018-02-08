@@ -36,11 +36,11 @@ public class Insert {
             int no = 0;
             no = pstmt.executeUpdate();
             if (no > 0) {
-                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil " + JenisData);
-                showMessageDialog(Parent, "Berhasil " + JenisData);
+                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil Tambah Data " + JenisData);
+                showMessageDialog(Parent, "Berhasil Tambah Data " + JenisData);
                 BerhasilSimpan = true;
             } else {
-                showMessageDialog(Parent, "Gagal " + JenisData);
+                showMessageDialog(Parent, "Gagal Tambah Data " + JenisData);
             }
         } catch (SQLException e) {
             LogEror.SaveString(pstmt.toString());

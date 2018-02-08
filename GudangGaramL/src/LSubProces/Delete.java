@@ -26,7 +26,7 @@ public class Delete {
         Koneksi koneksi = new Koneksi();
         con = koneksi.getConnection();
         boolean berhasilhapus = false;
-        int reply = showConfirmDialog(Parent, "Apakah Anda Yakin Akan " + JenisData + " Dengan ID " + ID + " ?", "Konfirmasi", YES_NO_OPTION);
+        int reply = showConfirmDialog(Parent, "Apakah Anda Yakin Akan Menghapus Data " + JenisData + " Dengan ID " + ID + " ?", "Konfirmasi", YES_NO_OPTION);
         if (reply == YES_OPTION) {
             PreparedStatement pstmt = null;
             try {
@@ -34,8 +34,8 @@ public class Delete {
                 int no = 0;
                 no = pstmt.executeUpdate();
                 if (no > 0) {
-                    LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil " + JenisData);
-                    showMessageDialog(Parent, "Berhasil " + JenisData);
+                    LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil Menghapus Data " + JenisData);
+                    showMessageDialog(Parent, "Berhasil Menghapus Data " + JenisData);
                     berhasilhapus = true;
                 }
             } catch (SQLException e) {
@@ -56,7 +56,7 @@ public class Delete {
                 }
             }
         } else {
-            showMessageDialog(null, "Batal " + JenisData);
+            //showMessageDialog(null, "Batal Hapus Data " + JenisData);
         }
         return berhasilhapus;
     }
