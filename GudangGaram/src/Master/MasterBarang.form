@@ -3,6 +3,7 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -29,18 +30,18 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="14" max="32767" attributes="0"/>
-                              <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -61,31 +62,22 @@
                                   <Component id="jlableF9" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="JTNamaBarang" min="-2" pref="306" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="JTNamaBarang" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                                   <Component id="JCBStatus" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="JTUpahPacking" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <Component id="JTAliasBarang" min="-2" pref="306" max="-2" attributes="0"/>
+                                  <Component id="JTAliasBarang" max="32767" attributes="0"/>
+                                  <Component id="JTUpahPacking" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jlableF14" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jlableF13" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jlableF11" alignment="0" pref="136" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jlableF17" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jlableF14" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jlableF13" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jlableF11" alignment="0" pref="136" max="32767" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JCJenisBarang" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="jlableF16" min="-2" max="-2" attributes="0"/>
@@ -95,12 +87,24 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jlableF15" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JTSatuan" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="JTSatuan" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCJenisBarang" min="-2" pref="306" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jlableF18" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCPemasok" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jbuttonF5" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -129,6 +133,13 @@
                   <Component id="JCJenisBarang" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlableF17" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF18" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JCPemasok" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbuttonF5" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jlableF13" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF15" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -160,14 +171,14 @@
                   <Component id="JCBStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="6" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -308,6 +319,7 @@
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCJenisBarang">
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCJenisBarangItemStateChanged"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCJenisBarangKeyPressed"/>
       </Events>
       <AuxValues>
@@ -316,7 +328,7 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF13">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Satuan"/>
+        <Property name="text" type="java.lang.String" value="KG / SAK"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF14">
@@ -345,6 +357,32 @@
     <Component class="KomponenGUI.JRibuanTextField" name="JTHarga">
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTHargaKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF17">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pemasok"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF18">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JcomboboxF" name="JCPemasok">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCPemasokKeyPressed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPemasok.load(&quot;SELECT `Pemasok` FROM `tbmpemasok` &quot;);"/>
+      </AuxValues>
+    </Component>
+    <Component class="KomponenGUI.JbuttonF" name="jbuttonF5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="+"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF5ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

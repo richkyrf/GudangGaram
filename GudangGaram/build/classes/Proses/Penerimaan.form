@@ -504,6 +504,9 @@
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCPlat">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPlat.load(&quot;SELECT `Plat` FROM `tbmkendaraan`&quot;);"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

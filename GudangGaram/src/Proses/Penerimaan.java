@@ -436,6 +436,8 @@ public class Penerimaan extends javax.swing.JFrame {
             }
         });
 
+        JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

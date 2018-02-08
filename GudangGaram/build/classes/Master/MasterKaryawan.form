@@ -44,11 +44,11 @@
                           <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jtextF1" min="-2" pref="306" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jtextF1" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           <Component id="jCheckBoxF1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jcomboboxF1" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="jcomboboxF1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
