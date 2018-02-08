@@ -30,8 +30,8 @@ public class SubMaster extends javax.swing.JFrame {
         setTitle("Sub Master " + Title);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        jbuttonF3.setVisible(false);
-        jlableF1.setText(Title);
+        JBUbah.setVisible(false);
+        JLNama.setText(Title);
     }
 
     public SubMaster(Object idEdit, String title) {
@@ -42,8 +42,8 @@ public class SubMaster extends javax.swing.JFrame {
         setTitle("Ubah Sub Master " + Title);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        jbuttonF1.setVisible(false);
-        jbuttonF2.setVisible(false);
+        JBTambah.setVisible(false);
+        JBTambahTutup.setVisible(false);
         switch (Title) {
             case "Jenis Karyawan":
                 loadeditdatajeniskaryawan();
@@ -57,35 +57,35 @@ public class SubMaster extends javax.swing.JFrame {
             default:
                 break;
         }
-        jlableF1.setText(Title);
+        JLNama.setText(Title);
     }
 
     void loadeditdatajeniskaryawan() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.setQuery("SELECT `IdJenisKaryawan` as 'ID', `JenisKaryawan` as 'Jenis', `Keterangan` FROM `tbsmjeniskaryawan` WHERE `IdJenisKaryawan` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
-        jtextF1.setText(list.get(1));
-        jTextAreaF1.setText(list.get(2));
+        JTNama.setText(list.get(1));
+        JTKeterangan.setText(list.get(2));
     }
 
     void loadeditdatajenisbarang() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.setQuery("SELECT `IdJenisBarang` as 'ID', `JenisBarang` as 'Jenis', `Keterangan` FROM `tbsmjenisbarang` WHERE `IdJenisBarang` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
-        jtextF1.setText(list.get(1));
-        jTextAreaF1.setText(list.get(2));
+        JTNama.setText(list.get(1));
+        JTKeterangan.setText(list.get(2));
     }
 
     void loadeditdatajenispenjualan() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.setQuery("SELECT `IdJenisPenjualan` as 'ID', `JenisPenjualan` as 'Jenis', `Keterangan` FROM `tbsmjenispenjualan` WHERE `IdJenisPenjualan` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
-        jtextF1.setText(list.get(1));
-        jTextAreaF1.setText(list.get(2));
+        JTNama.setText(list.get(1));
+        JTKeterangan.setText(list.get(2));
     }
 
     Boolean checkInput() {
-        if (jtextF1.getText().replace(" ", "").equals("")) {
+        if (JTNama.getText().replace(" ", "").equals("")) {
             JOptionPane.showMessageDialog(null, Title + " Tidak Boleh Kosong");
             return false;
         }
@@ -101,17 +101,17 @@ public class SubMaster extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jlableF1 = new KomponenGUI.JlableF();
-        jlableF3 = new KomponenGUI.JlableF();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaF1 = new KomponenGUI.JTextAreaF();
-        jtextF1 = new KomponenGUI.JtextF();
-        jbuttonF1 = new KomponenGUI.JbuttonF();
-        jbuttonF2 = new KomponenGUI.JbuttonF();
-        jbuttonF4 = new KomponenGUI.JbuttonF();
-        jlableF6 = new KomponenGUI.JlableF();
-        jlableF8 = new KomponenGUI.JlableF();
-        jbuttonF3 = new KomponenGUI.JbuttonF();
+        JLNama = new KomponenGUI.JlableF();
+        JLNama2 = new KomponenGUI.JlableF();
+        JTNama = new KomponenGUI.JtextF();
+        JLKeterangan = new KomponenGUI.JlableF();
+        JLKeterangan2 = new KomponenGUI.JlableF();
+        JSPKeterangan = new javax.swing.JScrollPane();
+        JTKeterangan = new KomponenGUI.JTextAreaF();
+        JBTambah = new KomponenGUI.JbuttonF();
+        JBTambahTutup = new KomponenGUI.JbuttonF();
+        JBKembali = new KomponenGUI.JbuttonF();
+        JBUbah = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -120,54 +120,54 @@ public class SubMaster extends javax.swing.JFrame {
             }
         });
 
-        jlableF1.setText("Nama Karyawan");
+        JLNama.setText("Nama Karyawan");
 
-        jlableF3.setText("Keterangan");
+        JLNama2.setText(":");
 
-        jTextAreaF1.setColumns(20);
-        jTextAreaF1.setRows(5);
-        jTextAreaF1.addKeyListener(new java.awt.event.KeyAdapter() {
+        JTNama.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextAreaF1KeyPressed(evt);
+                JTNamaKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTextAreaF1);
 
-        jtextF1.addKeyListener(new java.awt.event.KeyAdapter() {
+        JLKeterangan.setText("Keterangan");
+
+        JLKeterangan2.setText(":");
+
+        JTKeterangan.setColumns(20);
+        JTKeterangan.setRows(5);
+        JTKeterangan.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtextF1KeyPressed(evt);
+                JTKeteranganKeyPressed(evt);
+            }
+        });
+        JSPKeterangan.setViewportView(JTKeterangan);
+
+        JBTambah.setText("Tambah");
+        JBTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTambahActionPerformed(evt);
             }
         });
 
-        jbuttonF1.setText("Tambah");
-        jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
+        JBTambahTutup.setText("Tambah & Tutup");
+        JBTambahTutup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF1ActionPerformed(evt);
+                JBTambahTutupActionPerformed(evt);
             }
         });
 
-        jbuttonF2.setText("Tambah & Tutup");
-        jbuttonF2.addActionListener(new java.awt.event.ActionListener() {
+        JBKembali.setText("Kembali");
+        JBKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF2ActionPerformed(evt);
+                JBKembaliActionPerformed(evt);
             }
         });
 
-        jbuttonF4.setText("Kembali");
-        jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
+        JBUbah.setText("Ubah");
+        JBUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF4ActionPerformed(evt);
-            }
-        });
-
-        jlableF6.setText(":");
-
-        jlableF8.setText(":");
-
-        jbuttonF3.setText("Ubah");
-        jbuttonF3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF3ActionPerformed(evt);
+                JBUbahActionPerformed(evt);
             }
         });
 
@@ -180,24 +180,24 @@ public class SubMaster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(JLNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JLKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JLNama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtextF1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(JTNama, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JSPKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -205,28 +205,28 @@ public class SubMaster extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtextF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLNama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(JLKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JSPKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
+    private void JBTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahActionPerformed
         switch (Title) {
             case "Jenis Karyawan":
                 tambahDataJenisKaryawan(false);
@@ -240,9 +240,9 @@ public class SubMaster extends javax.swing.JFrame {
             default:
                 break;
         }
-    }//GEN-LAST:event_jbuttonF1ActionPerformed
+    }//GEN-LAST:event_JBTambahActionPerformed
 
-    private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
+    private void JBTambahTutupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahTutupActionPerformed
         switch (Title) {
             case "Jenis Karyawan":
                 tambahDataJenisKaryawan(true);
@@ -256,9 +256,9 @@ public class SubMaster extends javax.swing.JFrame {
             default:
                 break;
         }
-    }//GEN-LAST:event_jbuttonF2ActionPerformed
+    }//GEN-LAST:event_JBTambahTutupActionPerformed
 
-    private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
+    private void JBUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBUbahActionPerformed
         switch (Title) {
             case "Jenis Karyawan":
                 ubahDataJenisKaryawan();
@@ -272,19 +272,19 @@ public class SubMaster extends javax.swing.JFrame {
             default:
                 break;
         }
-    }//GEN-LAST:event_jbuttonF3ActionPerformed
+    }//GEN-LAST:event_JBUbahActionPerformed
 
-    private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
+    private void JBKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBKembaliActionPerformed
         dispose();
-    }//GEN-LAST:event_jbuttonF4ActionPerformed
+    }//GEN-LAST:event_JBKembaliActionPerformed
 
-    private void jtextF1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextF1KeyPressed
+    private void JTNamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNamaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jTextAreaF1.requestFocus();
+            JTKeterangan.requestFocus();
         }
-    }//GEN-LAST:event_jtextF1KeyPressed
+    }//GEN-LAST:event_JTNamaKeyPressed
 
-    private void jTextAreaF1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaF1KeyPressed
+    private void JTKeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKeteranganKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (IdEdit == null) {
                 switch (Title) {
@@ -316,7 +316,7 @@ public class SubMaster extends javax.swing.JFrame {
                 }
             }
         }
-    }//GEN-LAST:event_jTextAreaF1KeyPressed
+    }//GEN-LAST:event_JTKeteranganKeyPressed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         if (IdEdit == null) {
@@ -387,30 +387,30 @@ public class SubMaster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private KomponenGUI.JTextAreaF jTextAreaF1;
-    private KomponenGUI.JbuttonF jbuttonF1;
-    private KomponenGUI.JbuttonF jbuttonF2;
-    private KomponenGUI.JbuttonF jbuttonF3;
-    private KomponenGUI.JbuttonF jbuttonF4;
-    private KomponenGUI.JlableF jlableF1;
-    private KomponenGUI.JlableF jlableF3;
-    private KomponenGUI.JlableF jlableF6;
-    private KomponenGUI.JlableF jlableF8;
-    private KomponenGUI.JtextF jtextF1;
+    private KomponenGUI.JbuttonF JBKembali;
+    private KomponenGUI.JbuttonF JBTambah;
+    private KomponenGUI.JbuttonF JBTambahTutup;
+    private KomponenGUI.JbuttonF JBUbah;
+    private KomponenGUI.JlableF JLKeterangan;
+    private KomponenGUI.JlableF JLKeterangan2;
+    private KomponenGUI.JlableF JLNama;
+    private KomponenGUI.JlableF JLNama2;
+    private javax.swing.JScrollPane JSPKeterangan;
+    private KomponenGUI.JTextAreaF JTKeterangan;
+    private KomponenGUI.JtextF JTNama;
     // End of variables declaration//GEN-END:variables
 
     void tambahDataJenisKaryawan(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjeniskaryawan`(`JenisKaryawan`, `Keterangan`) VALUES ('" + jtextF1.getText() + "','" + jTextAreaF1.getText() + "')", "Jenis Karyawan", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjeniskaryawan`(`JenisKaryawan`, `Keterangan`) VALUES ('" + JTNama.getText() + "','" + JTKeterangan.getText() + "')", "Jenis Karyawan", this);
             if (berhasil) {
                 if (tutup) {
                     dispose();
                 } else {
-                    jtextF1.setText("");
-                    jTextAreaF1.setText("");
-                    jtextF1.requestFocus();
+                    JTNama.setText("");
+                    JTKeterangan.setText("");
+                    JTNama.requestFocus();
                 }
                 if (GlobalVar.Var.listJenisKaryawan != null) {
                     GlobalVar.Var.listJenisKaryawan.refreshJenisKaryawan();
@@ -422,14 +422,14 @@ public class SubMaster extends javax.swing.JFrame {
     void tambahDataJenisBarang(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjenisbarang`(`JenisBarang`, `Keterangan`) VALUES ('" + jtextF1.getText() + "','" + jTextAreaF1.getText() + "')", "Jenis Barang", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjenisbarang`(`JenisBarang`, `Keterangan`) VALUES ('" + JTNama.getText() + "','" + JTKeterangan.getText() + "')", "Jenis Barang", this);
             if (berhasil) {
                 if (tutup) {
                     dispose();
                 } else {
-                    jtextF1.setText("");
-                    jTextAreaF1.setText("");
-                    jtextF1.requestFocus();
+                    JTNama.setText("");
+                    JTKeterangan.setText("");
+                    JTNama.requestFocus();
                 }
                 if (GlobalVar.Var.listJenisBarang != null) {
                     GlobalVar.Var.listJenisBarang.refreshJenisBarang();
@@ -441,14 +441,14 @@ public class SubMaster extends javax.swing.JFrame {
     void tambahDataJenisPenjualan(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjenispenjualan`(`JenisPenjualan`, `Keterangan`) VALUES ('" + jtextF1.getText() + "','" + jTextAreaF1.getText() + "')", "Jenis Penjualan", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjenispenjualan`(`JenisPenjualan`, `Keterangan`) VALUES ('" + JTNama.getText() + "','" + JTKeterangan.getText() + "')", "Jenis Penjualan", this);
             if (berhasil) {
                 if (tutup) {
                     dispose();
                 } else {
-                    jtextF1.setText("");
-                    jTextAreaF1.setText("");
-                    jtextF1.requestFocus();
+                    JTNama.setText("");
+                    JTKeterangan.setText("");
+                    JTNama.requestFocus();
                 }
                 if (GlobalVar.Var.listJenisPenjualan != null) {
                     GlobalVar.Var.listJenisPenjualan.refreshJenisPenjualan();
@@ -460,7 +460,7 @@ public class SubMaster extends javax.swing.JFrame {
     void ubahDataJenisKaryawan() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbsmjeniskaryawan` SET `JenisKaryawan`='" + jtextF1.getText() + "',`Keterangan`='" + jTextAreaF1.getText() + "' WHERE `IdJenisKaryawan` = " + IdEdit, "Jenis Karyawan", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbsmjeniskaryawan` SET `JenisKaryawan`='" + JTNama.getText() + "',`Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisKaryawan` = " + IdEdit, "Jenis Karyawan", this);
             if (berhasil) {
                 dispose();
             }
@@ -473,7 +473,7 @@ public class SubMaster extends javax.swing.JFrame {
     void ubahDataJenisBarang() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbsmjenisbarang` SET `JenisBarang`='" + jtextF1.getText() + "',`Keterangan`='" + jTextAreaF1.getText() + "' WHERE `IdJenisBarang` = " + IdEdit, "Jenis Barang", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbsmjenisbarang` SET `JenisBarang`='" + JTNama.getText() + "',`Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisBarang` = " + IdEdit, "Jenis Barang", this);
             if (berhasil) {
                 dispose();
             }
@@ -486,7 +486,7 @@ public class SubMaster extends javax.swing.JFrame {
     void ubahDataJenisPenjualan() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbsmjenispenjualan` SET `JenisPenjualan`='" + jtextF1.getText() + "',`Keterangan`='" + jTextAreaF1.getText() + "' WHERE `IdJenisPenjualan` = " + IdEdit, "Jenis Penjualan", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbsmjenispenjualan` SET `JenisPenjualan`='" + JTNama.getText() + "',`Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisPenjualan` = " + IdEdit, "Jenis Penjualan", this);
             if (berhasil) {
                 dispose();
             }
@@ -495,5 +495,4 @@ public class SubMaster extends javax.swing.JFrame {
             }
         }
     }
-
 }

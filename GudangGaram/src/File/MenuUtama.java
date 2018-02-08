@@ -44,6 +44,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMMaster = new javax.swing.JMenu();
         JMIMasterKaryawan = new javax.swing.JMenuItem();
         JMIMasterBarang = new javax.swing.JMenuItem();
+        JMIMasterKendaraan = new javax.swing.JMenuItem();
         JMISubMaster = new javax.swing.JMenu();
         JMIJenisKaryawan = new javax.swing.JMenuItem();
         JMIJenisBarang = new javax.swing.JMenuItem();
@@ -129,6 +130,14 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMMaster.add(JMIMasterBarang);
+
+        JMIMasterKendaraan.setText("Master Kendaraan");
+        JMIMasterKendaraan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIMasterKendaraanActionPerformed(evt);
+            }
+        });
+        JMMaster.add(JMIMasterKendaraan);
 
         JMISubMaster.setText("Sub Master");
         JMISubMaster.setEnabled(false);
@@ -472,6 +481,15 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JMIResetPasswordUserActionPerformed
 
+    private void JMIMasterKendaraanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIMasterKendaraanActionPerformed
+        if (GlobalVar.Var.listKendaraan == null) {
+            GlobalVar.Var.listKendaraan = new ListKendaraan();
+        } else {
+            GlobalVar.Var.listKendaraan.setState(NORMAL);
+            GlobalVar.Var.listKendaraan.toFront();
+        }
+    }//GEN-LAST:event_JMIMasterKendaraanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -522,6 +540,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIListPoles;
     private javax.swing.JMenuItem JMIMasterBarang;
     private javax.swing.JMenuItem JMIMasterKaryawan;
+    private javax.swing.JMenuItem JMIMasterKendaraan;
     private javax.swing.JMenuItem JMIProsesAbsenKaryawan;
     private javax.swing.JMenuItem JMIProsesPacking;
     private javax.swing.JMenuItem JMIProsesPenerimaan;
