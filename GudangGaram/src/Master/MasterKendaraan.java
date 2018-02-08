@@ -24,10 +24,10 @@ public class MasterKendaraan extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         idEdit = id.toString();
         if (idEdit.equals("0")) {
-            setTitle("Tambah Master Kendaraan");
+            setTitle("Tambah Kendaraan");
             JBUbah.setVisible(false);
         } else {
-            setTitle("Ubah Master Kendaraan");
+            setTitle("Ubah Kendaraan");
             loadData();
             JBTambah.setVisible(false);
             JBTambahTutup.setVisible(false);
@@ -117,7 +117,7 @@ public class MasterKendaraan extends javax.swing.JFrame {
             }
         });
 
-        JBTambahTutup.setText("Tambah dan Tutup");
+        JBTambahTutup.setText("Tambah & Tutup");
         JBTambahTutup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBTambahTutupActionPerformed(evt);

@@ -27,8 +27,7 @@ public class Var {
     public static MasterKaryawan tambahKaryawan,ubahKaryawan;
     public static MasterBarang tambahBarang,ubahBarang;
     public static MasterKendaraan tambahKendaraan, ubahKendaraan;
-    
-    public static SubMaster tambahJenisKaryawan, ubahJenisKaryawan, tambahJenisBarang, ubahJenisBarang, tambahJenisPenjualan, ubahJenisPenjualan;
+    public static Masters tambahGudang, ubahGudang, tambahPemasok, ubahPemasok, tambahPeminta, ubahPeminta, tambahPenerima, ubahPenerima, tambahJenisKaryawan, ubahJenisKaryawan, tambahJenisBarang, ubahJenisBarang, tambahJenisPenjualan, ubahJenisPenjualan;
     
     public static Absen absen;
     public static Penerimaan tambahPenerimaan, ubahPenerimaan;
@@ -43,12 +42,11 @@ public class Var {
     public static ListKaryawan listKaryawan;
     public static ListBarang listBarang;
     public static ListKendaraan listKendaraan;
+    public static ListMasters listGudang, listPemasok, listPeminta, listPenerima, listJenisKaryawan, listJenisBarang, listJenisPenjualan;
     public static ListPenerimaan listPenerimaan;
     public static ListPacking listPacking;
     public static ListPenjualan listPenjualan;
     public static ListPenyesuaian listPenyesuaian;
-    
-    public static ListSubMaster listJenisKaryawan, listJenisBarang, listJenisPenjualan;
     
     public static LaporanStokHarian laporanStokHarian;
     
