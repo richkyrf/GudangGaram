@@ -84,38 +84,29 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterKendaraanActionPerformed"/>
               </Events>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="JMISubMaster">
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterGudang">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Sub Master"/>
-                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="Master Gudang"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="JMIJenisKaryawan">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Jenis Karyawan"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIJenisKaryawanActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="JMIJenisBarang">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Jenis Barang"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIJenisBarangActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="JMIJenisPenjualan">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Jenis Penjualan"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIJenisPenjualanActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterGudangActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPemasok">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Master Pemasok"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPeminta">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Master Peminta"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPenerima">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Master Penerima"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="JMProses">

@@ -16,80 +16,54 @@ import javax.swing.JOptionPane;
  *
  * @author richky
  */
-public class SubMaster extends javax.swing.JFrame {
+public class Masters extends javax.swing.JFrame {
 
     /**
-     * Creates new form MasterKaryawan
+     * Creates new form Masters
      */
     String IdEdit, Title;
 
-    public SubMaster(String title) {
-        Title = title;
+    public Masters(Object idEdit, String title) {
         initComponents();
-        setVisible(true);
-        setTitle("Sub Master " + Title);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        JBUbah.setVisible(false);
-        JLNama.setText(Title);
-    }
-
-    public SubMaster(Object idEdit, String title) {
         IdEdit = idEdit.toString();
         Title = title;
-        initComponents();
+        JLNama.setText("Nama " + Title);
+        if (IdEdit.equals("0")) {
+            setTitle("Tambah " + Title);
+            JBUbah.setVisible(false);
+        } else {
+            setTitle("Ubah " + Title);
+            switch (Title) {
+                case "Gudang":
+                    loadData("Gudang");
+                    break;
+                case "Pemasok":
+                    loadData("Pemasok");
+                    break;
+                case "Peminta":
+                    loadData("Peminta");
+                    break;
+                case "Penerima":
+                    loadData("Penerima");
+                    break;
+                case "Jenis Karyawan":
+                    loadData("Jenis Karyawan");
+                    break;
+                case "Jenis Barang":
+                    loadData("Jenis Barang");
+                    break;
+                case "Jenis Penjualan":
+                    loadData("Jenis Penjualan");
+                    break;
+                default:
+                    break;
+            }
+            JBTambah.setVisible(false);
+            JBTambahTutup.setVisible(false);
+        }
         setVisible(true);
-        setTitle("Ubah Sub Master " + Title);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        JBTambah.setVisible(false);
-        JBTambahTutup.setVisible(false);
-        switch (Title) {
-            case "Jenis Karyawan":
-                loadeditdatajeniskaryawan();
-                break;
-            case "Jenis Barang":
-                loadeditdatajenisbarang();
-                break;
-            case "Jenis Penjualan":
-                loadeditdatajenispenjualan();
-                break;
-            default:
-                break;
-        }
-        JLNama.setText(Title);
-    }
-
-    void loadeditdatajeniskaryawan() {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdJenisKaryawan` as 'ID', `JenisKaryawan` as 'Jenis', `Keterangan` FROM `tbsmjeniskaryawan` WHERE `IdJenisKaryawan` = " + IdEdit);
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTNama.setText(list.get(1));
-        JTKeterangan.setText(list.get(2));
-    }
-
-    void loadeditdatajenisbarang() {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdJenisBarang` as 'ID', `JenisBarang` as 'Jenis', `Keterangan` FROM `tbsmjenisbarang` WHERE `IdJenisBarang` = " + IdEdit);
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTNama.setText(list.get(1));
-        JTKeterangan.setText(list.get(2));
-    }
-
-    void loadeditdatajenispenjualan() {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdJenisPenjualan` as 'ID', `JenisPenjualan` as 'Jenis', `Keterangan` FROM `tbsmjenispenjualan` WHERE `IdJenisPenjualan` = " + IdEdit);
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTNama.setText(list.get(1));
-        JTKeterangan.setText(list.get(2));
-    }
-
-    Boolean checkInput() {
-        if (JTNama.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, Title + " Tidak Boleh Kosong");
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -108,19 +82,20 @@ public class SubMaster extends javax.swing.JFrame {
         JLKeterangan2 = new KomponenGUI.JlableF();
         JSPKeterangan = new javax.swing.JScrollPane();
         JTKeterangan = new KomponenGUI.JTextAreaF();
+        JBKembali = new KomponenGUI.JbuttonF();
         JBTambah = new KomponenGUI.JbuttonF();
         JBTambahTutup = new KomponenGUI.JbuttonF();
-        JBKembali = new KomponenGUI.JbuttonF();
         JBUbah = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
         });
 
-        JLNama.setText("Nama Karyawan");
+        JLNama.setText("Nama Penerima");
 
         JLNama2.setText(":");
 
@@ -143,6 +118,13 @@ public class SubMaster extends javax.swing.JFrame {
         });
         JSPKeterangan.setViewportView(JTKeterangan);
 
+        JBKembali.setText("Kembali");
+        JBKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBKembaliActionPerformed(evt);
+            }
+        });
+
         JBTambah.setText("Tambah");
         JBTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,13 +136,6 @@ public class SubMaster extends javax.swing.JFrame {
         JBTambahTutup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBTambahTutupActionPerformed(evt);
-            }
-        });
-
-        JBKembali.setText("Kembali");
-        JBKembali.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBKembaliActionPerformed(evt);
             }
         });
 
@@ -177,28 +152,28 @@ public class SubMaster extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JLNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JLKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(JLNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JLNama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(JLNama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JTNama, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JSPKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(JTNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(JLKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JSPKeterangan))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,8 +181,8 @@ public class SubMaster extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JLNama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLNama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -216,10 +191,10 @@ public class SubMaster extends javax.swing.JFrame {
                     .addComponent(JSPKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -367,38 +342,23 @@ public class SubMaster extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SubMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Masters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SubMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Masters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SubMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Masters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SubMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Masters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SubMaster("").setVisible(true);
+                new Masters("0", "");
             }
         });
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private KomponenGUI.JbuttonF JBKembali;
-    private KomponenGUI.JbuttonF JBTambah;
-    private KomponenGUI.JbuttonF JBTambahTutup;
-    private KomponenGUI.JbuttonF JBUbah;
-    private KomponenGUI.JlableF JLKeterangan;
-    private KomponenGUI.JlableF JLKeterangan2;
-    private KomponenGUI.JlableF JLNama;
-    private KomponenGUI.JlableF JLNama2;
-    private javax.swing.JScrollPane JSPKeterangan;
-    private KomponenGUI.JTextAreaF JTKeterangan;
-    private KomponenGUI.JtextF JTNama;
-    // End of variables declaration//GEN-END:variables
 
     void tambahDataJenisKaryawan(Boolean tutup) {
         if (checkInput()) {
@@ -457,6 +417,48 @@ public class SubMaster extends javax.swing.JFrame {
         }
     }
 
+    void loadData(String data) {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal Menampilkan Data " + data);
+        dRunSelctOne.setQuery("SELECT `IdKendaraan`, `Plat`, `JenisKendaraan`, `Keterangan` FROM `tbmkendaraan` WHERE `IdKendaraan`='" + idEdit + "'");
+        ArrayList<String> list = dRunSelctOne.excute();
+        JTPlatKendaraan.setText(list.get(1));
+        JTJenisKendaraan.setText(list.get(2));
+        JTKeterangan.setText(list.get(3));
+    }
+
+    void loadeditdatajeniskaryawan() {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.setQuery("SELECT `IdJenisKaryawan` as 'ID', `JenisKaryawan` as 'Jenis', `Keterangan` FROM `tbsmjeniskaryawan` WHERE `IdJenisKaryawan` = " + IdEdit);
+        ArrayList<String> list = dRunSelctOne.excute();
+        JTNama.setText(list.get(1));
+        JTKeterangan.setText(list.get(2));
+    }
+
+    void loadeditdatajenisbarang() {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.setQuery("SELECT `IdJenisBarang` as 'ID', `JenisBarang` as 'Jenis', `Keterangan` FROM `tbsmjenisbarang` WHERE `IdJenisBarang` = " + IdEdit);
+        ArrayList<String> list = dRunSelctOne.excute();
+        JTNama.setText(list.get(1));
+        JTKeterangan.setText(list.get(2));
+    }
+
+    void loadeditdatajenispenjualan() {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.setQuery("SELECT `IdJenisPenjualan` as 'ID', `JenisPenjualan` as 'Jenis', `Keterangan` FROM `tbsmjenispenjualan` WHERE `IdJenisPenjualan` = " + IdEdit);
+        ArrayList<String> list = dRunSelctOne.excute();
+        JTNama.setText(list.get(1));
+        JTKeterangan.setText(list.get(2));
+    }
+
+    Boolean checkInput() {
+        if (JTNama.getText().replace(" ", "").equals("")) {
+            JOptionPane.showMessageDialog(null, Title + " Tidak Boleh Kosong");
+            return false;
+        }
+        return true;
+    }
+
     void ubahDataJenisKaryawan() {
         if (checkInput()) {
             Update update = new Update();
@@ -495,4 +497,18 @@ public class SubMaster extends javax.swing.JFrame {
             }
         }
     }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private KomponenGUI.JbuttonF JBKembali;
+    private KomponenGUI.JbuttonF JBTambah;
+    private KomponenGUI.JbuttonF JBTambahTutup;
+    private KomponenGUI.JbuttonF JBUbah;
+    private KomponenGUI.JlableF JLKeterangan;
+    private KomponenGUI.JlableF JLKeterangan2;
+    private KomponenGUI.JlableF JLNama;
+    private KomponenGUI.JlableF JLNama2;
+    private javax.swing.JScrollPane JSPKeterangan;
+    private KomponenGUI.JTextAreaF JTKeterangan;
+    private KomponenGUI.JtextF JTNama;
+    // End of variables declaration//GEN-END:variables
 }

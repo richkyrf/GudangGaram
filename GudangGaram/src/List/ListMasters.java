@@ -12,14 +12,14 @@ import Master.*;
  *
  * @author richky
  */
-public class ListSubMaster extends javax.swing.JFrame {
+public class ListMasters extends javax.swing.JFrame {
 
     /**
      * Creates new form ListKaryawan
      */
     String Title;
 
-    public ListSubMaster(String title) {
+    public ListMasters(String title) {
         Title = title;
         initComponents();
         setVisible(true);
@@ -250,14 +250,18 @@ public class ListSubMaster extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListSubMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListMasters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListSubMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListMasters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListSubMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListMasters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListSubMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListMasters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -266,7 +270,7 @@ public class ListSubMaster extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListSubMaster("").setVisible(true);
+                new ListMasters("").setVisible(true);
             }
         });
     }
@@ -282,19 +286,19 @@ public class ListSubMaster extends javax.swing.JFrame {
 
     void tambahJenisKaryawan() {
         if (GlobalVar.Var.tambahJenisKaryawan == null){
-            GlobalVar.Var.tambahJenisKaryawan = new SubMaster("Jenis Karyawan");
+            GlobalVar.Var.tambahJenisKaryawan = new Masters("Jenis Karyawan");
         }
     }
     
     void tambahJenisBarang() {
         if (GlobalVar.Var.tambahJenisBarang == null){
-            GlobalVar.Var.tambahJenisBarang = new SubMaster("Jenis Barang");
+            GlobalVar.Var.tambahJenisBarang = new Masters("Jenis Barang");
         }
     }
     
     void tambahJenisPenjualan() {
         if (GlobalVar.Var.tambahJenisPenjualan == null){
-            GlobalVar.Var.tambahJenisPenjualan = new SubMaster("Jenis Penjualan");
+            GlobalVar.Var.tambahJenisPenjualan = new Masters("Jenis Penjualan");
         }
     }
     
@@ -330,19 +334,19 @@ public class ListSubMaster extends javax.swing.JFrame {
 
     void ubahJenisKaryawan() {
         if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisKaryawan == null) {
-            GlobalVar.Var.ubahJenisKaryawan = new SubMaster(jcomCari1.GetIDTable(), "Jenis Karyawan");
+            GlobalVar.Var.ubahJenisKaryawan = new Masters(jcomCari1.GetIDTable(), "Jenis Karyawan");
         }
     }
     
     void ubahJenisBarang() {
         if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisBarang == null) {
-            GlobalVar.Var.ubahJenisBarang = new SubMaster(jcomCari1.GetIDTable(), "Jenis Barang");
+            GlobalVar.Var.ubahJenisBarang = new Masters(jcomCari1.GetIDTable(), "Jenis Barang");
         }
     }
     
     void ubahJenisPenjualan() {
         if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisPenjualan == null) {
-            GlobalVar.Var.ubahJenisPenjualan = new SubMaster(jcomCari1.GetIDTable(), "Jenis Penjualan");
+            GlobalVar.Var.ubahJenisPenjualan = new Masters(jcomCari1.GetIDTable(), "Jenis Penjualan");
         }
     }
 

@@ -3,6 +3,7 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -28,34 +29,32 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="JLNama" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="JLKeterangan" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
-                      </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="JLNama" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="JLKeterangan2" min="-2" max="-2" attributes="0"/>
-                          <Component id="JLNama2" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="JLNama2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="JTNama" min="-2" pref="306" max="-2" attributes="0"/>
-                          <Component id="JSPKeterangan" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="JTNama" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="JLKeterangan" min="-2" pref="123" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JLKeterangan2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JSPKeterangan" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="JBKembali" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="JBUbah" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <Component id="JBTambah" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="JBTambahTutup" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JBTambah" min="-2" max="-2" attributes="0"/>
+                      <Component id="JBUbah" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,10 +64,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="JLNama" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTNama" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JLNama2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTNama" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="JLKeterangan" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -76,12 +75,12 @@
                   </Group>
                   <Component id="JSPKeterangan" min="-2" pref="150" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="JBKembali" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JBTambah" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JBTambahTutup" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JBUbah" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JBTambahTutup" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JBTambah" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JBKembali" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -91,7 +90,7 @@
   <SubComponents>
     <Component class="KomponenGUI.JlableF" name="JLNama">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama Karyawan"/>
+        <Property name="text" type="java.lang.String" value="Nama Penerima"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="JLNama2">
@@ -132,6 +131,14 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="KomponenGUI.JbuttonF" name="JBKembali">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kembali"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBKembaliActionPerformed"/>
+      </Events>
+    </Component>
     <Component class="KomponenGUI.JbuttonF" name="JBTambah">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tambah"/>
@@ -146,14 +153,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBTambahTutupActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="KomponenGUI.JbuttonF" name="JBKembali">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Kembali"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBKembaliActionPerformed"/>
       </Events>
     </Component>
     <Component class="KomponenGUI.JbuttonF" name="JBUbah">

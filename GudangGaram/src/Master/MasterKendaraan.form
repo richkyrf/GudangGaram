@@ -191,7 +191,7 @@
     </Component>
     <Component class="KomponenGUI.JbuttonF" name="JBTambahTutup">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tambah dan Tutup"/>
+        <Property name="text" type="java.lang.String" value="Tambah &amp; Tutup"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBTambahTutupActionPerformed"/>
