@@ -96,16 +96,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Master Pemasok"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPemasokActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPeminta">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Master Peminta"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPemintaActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPenerima">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Master Penerima"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPenerimaActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
