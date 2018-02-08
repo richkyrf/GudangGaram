@@ -478,7 +478,12 @@ public class MasterBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_JCJenisBarangItemStateChanged
 
     private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
-
+        if (GlobalVar.Var.tambahPemasok == null){
+            GlobalVar.Var.tambahPemasok = new Masters("0", "Pemasok");
+        } else {
+            GlobalVar.Var.tambahPemasok.setState(NORMAL);
+            GlobalVar.Var.tambahPemasok.toFront();
+        }
     }//GEN-LAST:event_jbuttonF5ActionPerformed
 
     /**

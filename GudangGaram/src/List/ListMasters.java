@@ -7,6 +7,7 @@ package List;
 
 import LSubProces.Delete;
 import Master.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -290,48 +291,54 @@ public class ListMasters extends javax.swing.JFrame {
             if (berhasil) {
                 refresh();
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu");
         }
     }
 
     void ubah() {
-        switch (Title) {
-            case "Gudang":
-                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahGudang == null) {
-                    GlobalVar.Var.ubahGudang = new Masters(jcomCari1.GetIDTable(), "Gudang");
-                }
-                break;
-            case "Pemasok":
-                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahPemasok == null) {
-                    GlobalVar.Var.ubahPemasok = new Masters(jcomCari1.GetIDTable(), "Pemasok");
-                }
-                break;
-            case "Peminta":
-                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahPeminta == null) {
-                    GlobalVar.Var.ubahPeminta = new Masters(jcomCari1.GetIDTable(), "Peminta");
-                }
-                break;
-            case "Penerima":
-                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahPenerima == null) {
-                    GlobalVar.Var.ubahPenerima = new Masters(jcomCari1.GetIDTable(), "Penerima");
-                }
-                break;
-            case "Jenis Karyawan":
-                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisKaryawan == null) {
-                    GlobalVar.Var.ubahJenisKaryawan = new Masters(jcomCari1.GetIDTable(), "Jenis Karyawan");
-                }
-                break;
-            case "Jenis Barang":
-                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisBarang == null) {
-                    GlobalVar.Var.ubahJenisBarang = new Masters(jcomCari1.GetIDTable(), "Jenis Barang");
-                }
-                break;
-            case "Jenis Penjualan":
-                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisPenjualan == null) {
-                    GlobalVar.Var.ubahJenisPenjualan = new Masters(jcomCari1.GetIDTable(), "Jenis Penjualan");
-                }
-                break;
-            default:
-                break;
+        if (jcomCari1.getSelectedRow() != -1) {
+            switch (Title) {
+                case "Gudang":
+                    if (GlobalVar.Var.ubahGudang == null) {
+                        GlobalVar.Var.ubahGudang = new Masters(jcomCari1.GetIDTable(), "Gudang");
+                    }
+                    break;
+                case "Pemasok":
+                    if (GlobalVar.Var.ubahPemasok == null) {
+                        GlobalVar.Var.ubahPemasok = new Masters(jcomCari1.GetIDTable(), "Pemasok");
+                    }
+                    break;
+                case "Peminta":
+                    if (GlobalVar.Var.ubahPeminta == null) {
+                        GlobalVar.Var.ubahPeminta = new Masters(jcomCari1.GetIDTable(), "Peminta");
+                    }
+                    break;
+                case "Penerima":
+                    if (GlobalVar.Var.ubahPenerima == null) {
+                        GlobalVar.Var.ubahPenerima = new Masters(jcomCari1.GetIDTable(), "Penerima");
+                    }
+                    break;
+                case "Jenis Karyawan":
+                    if (GlobalVar.Var.ubahJenisKaryawan == null) {
+                        GlobalVar.Var.ubahJenisKaryawan = new Masters(jcomCari1.GetIDTable(), "Jenis Karyawan");
+                    }
+                    break;
+                case "Jenis Barang":
+                    if (GlobalVar.Var.ubahJenisBarang == null) {
+                        GlobalVar.Var.ubahJenisBarang = new Masters(jcomCari1.GetIDTable(), "Jenis Barang");
+                    }
+                    break;
+                case "Jenis Penjualan":
+                    if (GlobalVar.Var.ubahJenisPenjualan == null) {
+                        GlobalVar.Var.ubahJenisPenjualan = new Masters(jcomCari1.GetIDTable(), "Jenis Penjualan");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu");
         }
     }
 
