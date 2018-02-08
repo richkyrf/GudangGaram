@@ -23,22 +23,10 @@ public class ListMasters extends javax.swing.JFrame {
         Title = title;
         initComponents();
         setVisible(true);
-        setTitle("List Sub Master " + Title);
+        setTitle("List Master " + Title);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        switch (Title) {
-            case "Jenis Karyawan":
-                refreshJenisKaryawan();
-                break;
-            case "Jenis Barang":
-                refreshJenisBarang();
-                break;
-            case "Jenis Penjualan":
-                refreshJenisPenjualan();
-                break;
-            default:
-                break;
-        }
+        refresh();
     }
 
     /**
@@ -59,8 +47,8 @@ public class ListMasters extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -135,103 +123,52 @@ public class ListMasters extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
-        switch (Title) {
-            case "Jenis Karyawan":
-                ubahJenisKaryawan();
-                break;
-            case "Jenis Barang":
-                ubahJenisBarang();
-                break;
-            case "Jenis Penjualan":
-                ubahJenisPenjualan();
-                break;
-            default:
-                break;
-        }
+        ubah();
     }//GEN-LAST:event_jbuttonF1ActionPerformed
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
-        switch (Title) {
-            case "Jenis Karyawan":
-                GlobalVar.Var.listJenisKaryawan.dispose();
-                GlobalVar.Var.listJenisKaryawan = null;
-                break;
-            case "Jenis Barang":
-                GlobalVar.Var.listJenisBarang.dispose();
-                GlobalVar.Var.listJenisBarang = null;
-                break;
-            case "Jenis Penjualan":
-                GlobalVar.Var.listJenisPenjualan.dispose();
-                GlobalVar.Var.listJenisPenjualan = null;
-                break;
-            default:
-                break;
-        }
+        dispose();
     }//GEN-LAST:event_jbuttonF4ActionPerformed
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        switch (Title) {
-            case "Jenis Karyawan":
-                GlobalVar.Var.listJenisKaryawan = null;
-                break;
-            case "Jenis Barang":
-                GlobalVar.Var.listJenisBarang = null;
-                break;
-            case "Jenis Penjualan":
-                GlobalVar.Var.listJenisPenjualan = null;
-                break;
-            default:
-                break;
-        }
-    }//GEN-LAST:event_formWindowClosing
-
     private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
-        switch (Title) {
-            case "Jenis Karyawan":
-                hapusJenisKaryawan();
-                break;
-            case "Jenis Barang":
-                hapusJenisBarang();
-                break;
-            case "Jenis Penjualan":
-                hapusJenisPenjualan();
-                break;
-            default:
-                break;
-        }
+        hapus();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
 
     private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
-        switch (Title) {
-            case "Jenis Karyawan":
-                refreshJenisKaryawan();
-                break;
-            case "Jenis Barang":
-                refreshJenisBarang();
-                break;
-            case "Jenis Penjualan":
-                refreshJenisPenjualan();
-                break;
-            default:
-                break;
-        }
+        refresh();
     }//GEN-LAST:event_jbuttonF3ActionPerformed
 
     private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
+        tambah();
+    }//GEN-LAST:event_jbuttonF5ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         switch (Title) {
+            case "Gudang":
+                GlobalVar.Var.listGudang = null;
+                break;
+            case "Pemasok":
+                GlobalVar.Var.listPemasok = null;
+                break;
+            case "Peminta":
+                GlobalVar.Var.listPeminta = null;
+                break;
+            case "Penerima":
+                GlobalVar.Var.listPenerima = null;
+                break;
             case "Jenis Karyawan":
-                tambahJenisKaryawan();
+                GlobalVar.Var.listJenisKaryawan = null;
                 break;
             case "Jenis Barang":
-                tambahJenisBarang();
+                GlobalVar.Var.listJenisBarang = null;
                 break;
             case "Jenis Penjualan":
-                tambahJenisPenjualan();
+                GlobalVar.Var.listJenisPenjualan = null;
                 break;
             default:
                 break;
         }
-    }//GEN-LAST:event_jbuttonF5ActionPerformed
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -261,11 +198,6 @@ public class ListMasters extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -284,84 +216,151 @@ public class ListMasters extends javax.swing.JFrame {
     private KomponenGUI.JcomCari jcomCari1;
     // End of variables declaration//GEN-END:variables
 
-    void tambahJenisKaryawan() {
-        if (GlobalVar.Var.tambahJenisKaryawan == null){
-            GlobalVar.Var.tambahJenisKaryawan = new Masters("Jenis Karyawan");
+    void tambah() {
+        switch (Title) {
+            case "Gudang":
+                if (GlobalVar.Var.tambahGudang == null) {
+                    GlobalVar.Var.tambahGudang = new Masters("0", "Gudang");
+                }
+                break;
+            case "Pemasok":
+                if (GlobalVar.Var.tambahPemasok == null) {
+                    GlobalVar.Var.tambahPemasok = new Masters("0", "Pemasok");
+                }
+                break;
+            case "Peminta":
+                if (GlobalVar.Var.tambahPeminta == null) {
+                    GlobalVar.Var.tambahPeminta = new Masters("0", "Peminta");
+                }
+                break;
+            case "Penerima":
+                if (GlobalVar.Var.tambahPenerima == null) {
+                    GlobalVar.Var.tambahPenerima = new Masters("0", "Penerima");
+                }
+                break;
+            case "Jenis Karyawan":
+                if (GlobalVar.Var.tambahJenisKaryawan == null) {
+                    GlobalVar.Var.tambahJenisKaryawan = new Masters("0", "Jenis Karyawan");
+                }
+                break;
+            case "Jenis Barang":
+                if (GlobalVar.Var.tambahJenisBarang == null) {
+                    GlobalVar.Var.tambahJenisBarang = new Masters("0", "Jenis Barang");
+                }
+                break;
+            case "Jenis Penjualan":
+                if (GlobalVar.Var.tambahJenisPenjualan == null) {
+                    GlobalVar.Var.tambahJenisPenjualan = new Masters("0", "Jenis Penjualan");
+                }
+                break;
+            default:
+                break;
         }
     }
-    
-    void tambahJenisBarang() {
-        if (GlobalVar.Var.tambahJenisBarang == null){
-            GlobalVar.Var.tambahJenisBarang = new Masters("Jenis Barang");
-        }
-    }
-    
-    void tambahJenisPenjualan() {
-        if (GlobalVar.Var.tambahJenisPenjualan == null){
-            GlobalVar.Var.tambahJenisPenjualan = new Masters("Jenis Penjualan");
-        }
-    }
-    
-    void hapusJenisKaryawan() {
+
+    void hapus() {
         if (jcomCari1.getSelectedRow() != -1) {
             Delete delete = new Delete();
-            Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbsmjeniskaryawan` WHERE `IdJenisKaryawan` = " + jcomCari1.GetIDTable(), "Jenis Karyawan", this);
-            if (berhasil) {
-                refreshJenisKaryawan();
+            boolean berhasil = false;
+            switch (Title) {
+                case "Gudang":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmgudang` WHERE `IdGudang` = " + jcomCari1.GetIDTable(), "Gudang", this);
+                    break;
+                case "Pemasok":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmpemasok` WHERE `IdPemasok` = " + jcomCari1.GetIDTable(), "Pemasok", this);
+                    break;
+                case "Peminta":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmpeminta` WHERE `IdPeminta` = " + jcomCari1.GetIDTable(), "Peminta", this);
+                    break;
+                case "Penerima":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmpenerima` WHERE `IdPenerima` = " + jcomCari1.GetIDTable(), "Penerima", this);
+                    break;
+                case "Jenis Karyawan":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbsmjeniskaryawan` WHERE `IdJenisKaryawan` = " + jcomCari1.GetIDTable(), "Jenis Karyawan", this);
+                    break;
+                case "Jenis Barang":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbsmjenisbarang` WHERE `IdJenisBarang` = " + jcomCari1.GetIDTable(), "Jenis Barang", this);
+                    break;
+                case "Jenis Penjualan":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbsmjenispenjualan` WHERE `IdJenisPenjualan` = " + jcomCari1.GetIDTable(), "Jenis Penjualan", this);
+                    break;
+                default:
+                    break;
             }
-        }
-    }
-    
-    void hapusJenisBarang() {
-        if (jcomCari1.getSelectedRow() != -1) {
-            Delete delete = new Delete();
-            Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbsmjenisbarang` WHERE `IdJenisBarang` = " + jcomCari1.GetIDTable(), "Jenis Barang", this);
             if (berhasil) {
-                refreshJenisBarang();
-            }
-        }
-    }
-    
-    void hapusJenisPenjualan() {
-        if (jcomCari1.getSelectedRow() != -1) {
-            Delete delete = new Delete();
-            Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbsmjenispenjualan` WHERE `IdJenisPenjualan` = " + jcomCari1.GetIDTable(), "Jenis Penjualan", this);
-            if (berhasil) {
-                refreshJenisPenjualan();
+                refresh();
             }
         }
     }
 
-    void ubahJenisKaryawan() {
-        if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisKaryawan == null) {
-            GlobalVar.Var.ubahJenisKaryawan = new Masters(jcomCari1.GetIDTable(), "Jenis Karyawan");
-        }
-    }
-    
-    void ubahJenisBarang() {
-        if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisBarang == null) {
-            GlobalVar.Var.ubahJenisBarang = new Masters(jcomCari1.GetIDTable(), "Jenis Barang");
-        }
-    }
-    
-    void ubahJenisPenjualan() {
-        if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisPenjualan == null) {
-            GlobalVar.Var.ubahJenisPenjualan = new Masters(jcomCari1.GetIDTable(), "Jenis Penjualan");
+    void ubah() {
+        switch (Title) {
+            case "Gudang":
+                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahGudang == null) {
+                    GlobalVar.Var.ubahGudang = new Masters(jcomCari1.GetIDTable(), "Gudang");
+                }
+                break;
+            case "Pemasok":
+                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahPemasok == null) {
+                    GlobalVar.Var.ubahPemasok = new Masters(jcomCari1.GetIDTable(), "Pemasok");
+                }
+                break;
+            case "Peminta":
+                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahPeminta == null) {
+                    GlobalVar.Var.ubahPeminta = new Masters(jcomCari1.GetIDTable(), "Peminta");
+                }
+                break;
+            case "Penerima":
+                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahPenerima == null) {
+                    GlobalVar.Var.ubahPenerima = new Masters(jcomCari1.GetIDTable(), "Penerima");
+                }
+                break;
+            case "Jenis Karyawan":
+                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisKaryawan == null) {
+                    GlobalVar.Var.ubahJenisKaryawan = new Masters(jcomCari1.GetIDTable(), "Jenis Karyawan");
+                }
+                break;
+            case "Jenis Barang":
+                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisBarang == null) {
+                    GlobalVar.Var.ubahJenisBarang = new Masters(jcomCari1.GetIDTable(), "Jenis Barang");
+                }
+                break;
+            case "Jenis Penjualan":
+                if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.ubahJenisPenjualan == null) {
+                    GlobalVar.Var.ubahJenisPenjualan = new Masters(jcomCari1.GetIDTable(), "Jenis Penjualan");
+                }
+                break;
+            default:
+                break;
         }
     }
 
-    public void refreshJenisKaryawan() {
-        jcomCari1.setQuery("SELECT `IdJenisKaryawan` as 'ID', `JenisKaryawan` as 'Jenis', `Keterangan` FROM `tbsmjeniskaryawan` WHERE 1");
-        jcomCari1.tampilkan();
-    }
-    
-    public void refreshJenisBarang() {
-        jcomCari1.setQuery("SELECT `IdJenisBarang` as 'ID', `JenisBarang` as 'Jenis', `Keterangan` FROM `tbsmjenisbarang` WHERE 1");
-        jcomCari1.tampilkan();
-    }
-    
-    public void refreshJenisPenjualan() {
-        jcomCari1.setQuery("SELECT `IdJenisPenjualan` as 'ID', `JenisPenjualan` as 'Jenis', `Keterangan` FROM `tbsmjenispenjualan` WHERE 1");
+    public void refresh() {
+        switch (Title) {
+            case "Gudang":
+                jcomCari1.setQuery("SELECT `IdGudang` as 'ID', `Gudang`, `Keterangan` FROM `tbmgudang` WHERE 1");
+                break;
+            case "Pemasok":
+                jcomCari1.setQuery("SELECT `IdPemasok` as 'ID', `Pemasok`, `Keterangan` FROM `tbmpemasok` WHERE 1");
+                break;
+            case "Peminta":
+                jcomCari1.setQuery("SELECT `IdPeminta` as 'ID', `Peminta`, `Keterangan` FROM `tbmpeminta` WHERE 1");
+                break;
+            case "Penerima":
+                jcomCari1.setQuery("SELECT `IdPenerima` as 'ID', `Penerima`, `Keterangan` FROM `tbmpenerima` WHERE 1");
+                break;
+            case "Jenis Karyawan":
+                jcomCari1.setQuery("SELECT `IdJenisKaryawan` as 'ID', `JenisKaryawan` as 'Jenis', `Keterangan` FROM `tbsmjeniskaryawan` WHERE 1");
+                break;
+            case "Jenis Barang":
+                jcomCari1.setQuery("SELECT `IdJenisBarang` as 'ID', `JenisBarang` as 'Jenis', `Keterangan` FROM `tbsmjenisbarang` WHERE 1");
+                break;
+            case "Jenis Penjualan":
+                jcomCari1.setQuery("SELECT `IdJenisPenjualan` as 'ID', `JenisPenjualan` as 'Jenis', `Keterangan` FROM `tbsmjenispenjualan` WHERE 1");
+                break;
+            default:
+                break;
+        }
         jcomCari1.tampilkan();
     }
 
