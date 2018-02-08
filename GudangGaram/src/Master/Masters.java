@@ -75,6 +75,7 @@ public class Masters extends javax.swing.JFrame {
 
         JLNama2.setText(":");
 
+        JTNama.setMaxText(50);
         JTNama.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 JTNamaKeyReleased(evt);
@@ -130,7 +131,7 @@ public class Masters extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(JLNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JLNama, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JLNama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -343,37 +344,37 @@ public class Masters extends javax.swing.JFrame {
                 switch (Title) {
                     case "Gudang":
                         if (GlobalVar.Var.listGudang != null) {
-                            GlobalVar.Var.listGudang.refresh(Title);
+                            GlobalVar.Var.listGudang.refresh();
                         }
                         break;
                     case "Pemasok":
                         if (GlobalVar.Var.listPemasok != null) {
-                            GlobalVar.Var.listPemasok.refresh(Title);
+                            GlobalVar.Var.listPemasok.refresh();
                         }
                         break;
                     case "Peminta":
                         if (GlobalVar.Var.listPeminta != null) {
-                            GlobalVar.Var.listPeminta.refresh(Title);
+                            GlobalVar.Var.listPeminta.refresh();
                         }
                         break;
                     case "Penerima":
                         if (GlobalVar.Var.listPenerima != null) {
-                            GlobalVar.Var.listPenerima.refresh(Title);
+                            GlobalVar.Var.listPenerima.refresh();
                         }
                         break;
                     case "Jenis Karyawan":
                         if (GlobalVar.Var.listJenisKaryawan != null) {
-                            GlobalVar.Var.listJenisKaryawan.refresh(Title);
+                            GlobalVar.Var.listJenisKaryawan.refresh();
                         }
                         break;
                     case "Jenis Barang":
                         if (GlobalVar.Var.listJenisBarang != null) {
-                            GlobalVar.Var.listJenisBarang.refresh(Title);
+                            GlobalVar.Var.listJenisBarang.refresh();
                         }
                         break;
                     case "Jenis Penjualan":
                         if (GlobalVar.Var.listJenisPenjualan != null) {
-                            GlobalVar.Var.listJenisPenjualan.refresh(Title);
+                            GlobalVar.Var.listJenisPenjualan.refresh();
                         }
                         break;
                     default:

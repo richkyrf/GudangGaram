@@ -148,12 +148,27 @@ public class MenuUtama extends javax.swing.JFrame {
         JMMaster.add(JMIMasterGudang);
 
         JMIMasterPemasok.setText("Master Pemasok");
+        JMIMasterPemasok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIMasterPemasokActionPerformed(evt);
+            }
+        });
         JMMaster.add(JMIMasterPemasok);
 
         JMIMasterPeminta.setText("Master Peminta");
+        JMIMasterPeminta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIMasterPemintaActionPerformed(evt);
+            }
+        });
         JMMaster.add(JMIMasterPeminta);
 
         JMIMasterPenerima.setText("Master Penerima");
+        JMIMasterPenerima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIMasterPenerimaActionPerformed(evt);
+            }
+        });
         JMMaster.add(JMIMasterPenerima);
 
         jMenuBar1.add(JMMaster);
@@ -453,12 +468,39 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void JMIMasterGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIMasterGudangActionPerformed
         if (GlobalVar.Var.listGudang == null) {
-            GlobalVar.Var.listKendaraan = new ListKendaraan();
+            GlobalVar.Var.listGudang = new ListMasters("Gudang");
         } else {
-            GlobalVar.Var.listKendaraan.setState(NORMAL);
-            GlobalVar.Var.listKendaraan.toFront();
+            GlobalVar.Var.listGudang.setState(NORMAL);
+            GlobalVar.Var.listGudang.toFront();
         }
     }//GEN-LAST:event_JMIMasterGudangActionPerformed
+
+    private void JMIMasterPemasokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIMasterPemasokActionPerformed
+        if (GlobalVar.Var.listPemasok == null) {
+            GlobalVar.Var.listPemasok = new ListMasters("Pemasok");
+        } else {
+            GlobalVar.Var.listPemasok.setState(NORMAL);
+            GlobalVar.Var.listPemasok.toFront();
+        }
+    }//GEN-LAST:event_JMIMasterPemasokActionPerformed
+
+    private void JMIMasterPemintaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIMasterPemintaActionPerformed
+        if (GlobalVar.Var.listPeminta == null) {
+            GlobalVar.Var.listPeminta = new ListMasters("Peminta");
+        } else {
+            GlobalVar.Var.listPeminta.setState(NORMAL);
+            GlobalVar.Var.listPeminta.toFront();
+        }
+    }//GEN-LAST:event_JMIMasterPemintaActionPerformed
+
+    private void JMIMasterPenerimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIMasterPenerimaActionPerformed
+        if (GlobalVar.Var.listPenerima == null) {
+            GlobalVar.Var.listPenerima = new ListMasters("Penerima");
+        } else {
+            GlobalVar.Var.listPenerima.setState(NORMAL);
+            GlobalVar.Var.listPenerima.toFront();
+        }
+    }//GEN-LAST:event_JMIMasterPenerimaActionPerformed
 
     /**
      * @param args the command line arguments
