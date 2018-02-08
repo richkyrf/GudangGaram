@@ -27,10 +27,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="JBKembali" min="-2" pref="110" max="-2" attributes="0"/>
                       <EmptySpace pref="33" max="32767" attributes="0"/>
                       <Component id="JBTambah" min="-2" pref="115" max="-2" attributes="0"/>
@@ -39,24 +39,33 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="JBUbah" min="-2" pref="110" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="JLJenisBarang" pref="108" max="32767" attributes="0"/>
+                          <Component id="JLJenisKendaraan" max="32767" attributes="0"/>
+                          <Component id="JLPlatKendaraan" max="32767" attributes="0"/>
                           <Component id="JLKeterangan" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="JLJenisBarang2" min="-2" max="-2" attributes="0"/>
-                          <Component id="JLKeterangan2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="JSPKeterangan" max="32767" attributes="0"/>
-                          <Component id="JTJenisBarang" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="JLPlatKendaraan2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="JTPlatKendaraan" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="JLKeterangan2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="JSPKeterangan" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="JLJenisKendaraan2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="JTJenisKendaraan" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,16 +74,22 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="JLJenisBarang" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JLJenisBarang2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTJenisBarang" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JLPlatKendaraan" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JLPlatKendaraan2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTPlatKendaraan" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="JLJenisKendaraan" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JLJenisKendaraan2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTJenisKendaraan" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JLKeterangan2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="JLKeterangan" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JLKeterangan2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -93,22 +108,40 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="KomponenGUI.JlableF" name="JLJenisBarang">
+    <Component class="KomponenGUI.JlableF" name="JLPlatKendaraan">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Jenis Barang"/>
+        <Property name="text" type="java.lang.String" value="Plat Kendaraan"/>
       </Properties>
     </Component>
-    <Component class="KomponenGUI.JlableF" name="JLJenisBarang2">
+    <Component class="KomponenGUI.JlableF" name="JLPlatKendaraan2">
       <Properties>
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="KomponenGUI.JtextF" name="JTJenisBarang">
+    <Component class="KomponenGUI.JtextF" name="JTPlatKendaraan">
       <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJenisBarangKeyReleased"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTPlatKendaraanKeyReleased"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="JTJenisBarang.setMaxText(50);"/>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="JTPlatKendaraan.setMaxText(12);"/>
+      </AuxValues>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="JLJenisKendaraan">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jenis Kendaraan"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="JLJenisKendaraan2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JtextF" name="JTJenisKendaraan">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJenisKendaraanKeyReleased"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="JTJenisKendaraan.setMaxText(50);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="JLKeterangan">

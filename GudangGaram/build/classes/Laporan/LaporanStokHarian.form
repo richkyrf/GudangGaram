@@ -26,9 +26,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="jbuttonF1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jlableF1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -36,9 +37,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="JDTanggal" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jbuttonF1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="239" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,15 +47,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="JDTanggal" min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jlableF1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlableF2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="JDTanggal" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="36" max="32767" attributes="0"/>
-              <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -84,7 +84,7 @@
     </Component>
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="TAMPILKAN"/>
+        <Property name="text" type="java.lang.String" value="Tampilkan"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF1ActionPerformed"/>

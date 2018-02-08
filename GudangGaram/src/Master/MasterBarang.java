@@ -520,7 +520,7 @@ public class MasterBarang extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private KomponenGUI.JCheckBoxF JCBStatus;
     private KomponenGUI.JcomboboxF JCJenisBarang;
-    private KomponenGUI.JcomboboxF JCPemasok;
+    public KomponenGUI.JcomboboxF JCPemasok;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JtextF JTAliasBarang;
     private KomponenGUI.JRibuanTextField JTHarga;
@@ -557,7 +557,7 @@ public class MasterBarang extends javax.swing.JFrame {
         if (JCPemasok.isVisible()) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
             dRunSelctOne.seterorm("Gagal Get ID Pemasok");
-            dRunSelctOne.setQuery("SELECT `IdPemasok` FROm `tbmpemasok` WHERE `NamaPemasok` = '" + JCPemasok.getSelectedItem() + "'");
+            dRunSelctOne.setQuery("SELECT `IdPemasok` FROm `tbmpemasok` WHERE `Pemasok` = '" + JCPemasok.getSelectedItem() + "'");
             ArrayList<String> list = dRunSelctOne.excute();
             return list.get(0);
         } else {
@@ -570,6 +570,21 @@ public class MasterBarang extends javax.swing.JFrame {
             Insert insert = new Insert();
             Boolean berhasil = insert.simpan("INSERT INTO `tbmbarang`(`AliasBarang`, `NamaBarang`, `IdJenisBarang`, `IdPemasok`, `Satuan`, `Harga`, `UpahPacking`, `Keterangan`, `Status`) VALUES ('" + JTAliasBarang.getText() + "','" + JTNamaBarang.getText() + "',(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "')," + getIdPemasok() + ",'" + JTSatuan.getText() + "','" + JTHarga.getText() + "','" + JTUpahPacking.getText() + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Barang", this);
             if (berhasil) {
+                if (GlobalVar.Var.listKendaraan != null) {
+                    GlobalVar.Var.listKendaraan.load();
+                }
+                if (GlobalVar.Var.tambahPenerimaan != null) {
+                    GlobalVar.Var.tambahPenerimaan.JCPemasok.setSelectedItem(JCPemasok.getSelectedItem());
+                    GlobalVar.Var.tambahPenerimaan.JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`a LEFT JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbsmjenisbarang`c ON a.`IdJenisBarang`=c.`IdJenisBarang` WHERE `JenisBarang` = 'Bahan' AND `Pemasok` = '" + JCPemasok.getSelectedItem() + "'");
+                    GlobalVar.Var.tambahPenerimaan.JCNamaBarang.setSelectedItem(JTNamaBarang.getText());
+                    GlobalVar.Var.tambahPenerimaan.JCNamaBarang.requestFocus();
+                }
+                if (GlobalVar.Var.ubahPenerimaan != null) {
+                    GlobalVar.Var.ubahPenerimaan.JCPemasok.setSelectedItem(JCPemasok.getSelectedItem());
+                    GlobalVar.Var.ubahPenerimaan.JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`a LEFT JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbsmjenisbarang`c ON a.`IdJenisBarang`=c.`IdJenisBarang` WHERE `JenisBarang` = 'Bahan' AND `Pemasok` = '" + JCPemasok.getSelectedItem() + "'");
+                    GlobalVar.Var.ubahPenerimaan.JCNamaBarang.setSelectedItem(JTNamaBarang.getText());
+                    GlobalVar.Var.ubahPenerimaan.JCNamaBarang.requestFocus();
+                }
                 if (tutup) {
                     dispose();
                 } else {

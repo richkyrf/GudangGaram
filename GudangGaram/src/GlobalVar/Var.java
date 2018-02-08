@@ -42,6 +42,7 @@ public class Var {
     
     public static ListKaryawan listKaryawan;
     public static ListBarang listBarang;
+    public static ListKendaraan listKendaraan;
     public static ListPenerimaan listPenerimaan;
     public static ListPacking listPacking;
     public static ListPenjualan listPenjualan;

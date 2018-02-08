@@ -7,6 +7,7 @@ package List;
 
 import javax.swing.JOptionPane;
 import LSubProces.Delete;
+import Master.MasterKendaraan;
 
 /**
  *
@@ -15,7 +16,7 @@ import LSubProces.Delete;
 public class ListKendaraan extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewJFrame
+     * Creates new form ListKendaraan
      */
     public ListKendaraan() {
         initComponents();
@@ -140,7 +141,7 @@ public class ListKendaraan extends javax.swing.JFrame {
     }//GEN-LAST:event_JBHapusActionPerformed
 
     private void JBKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBKembaliActionPerformed
-        GlobalVar.Var.listMasterJenisBarang.dispose();
+        dispose();
     }//GEN-LAST:event_JBKembaliActionPerformed
 
     private void JBTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahActionPerformed
@@ -148,7 +149,7 @@ public class ListKendaraan extends javax.swing.JFrame {
     }//GEN-LAST:event_JBTambahActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        GlobalVar.Var.listMasterJenisBarang = null;
+        GlobalVar.Var.listKendaraan = null;
     }//GEN-LAST:event_formWindowClosed
 
     /**
@@ -177,7 +178,6 @@ public class ListKendaraan extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ListKendaraan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -188,16 +188,16 @@ public class ListKendaraan extends javax.swing.JFrame {
     }
 
     public void load() {
-        JComCari.setQuery("SELECT `IdJenisBarang` AS 'ID', `JenisBarang` AS 'Jenis Barang', `Keterangan` FROM `tbmjenisbarang`");
+        JComCari.setQuery("SELECT `IdKendaraan` AS 'ID', `Plat`, `JenisKendaraan` AS 'Jenis Kendaraan', `Keterangan` FROM `tbmkendaraan`");
         JComCari.tampilkan();
     }
 
     void tambah() {
-        if (GlobalVar.Var.tambahMasterJenisBarang == null) {
-            GlobalVar.Var.tambahMasterJenisBarang = new MasterJenisBarang("0");
+        if (GlobalVar.Var.tambahKendaraan == null) {
+            GlobalVar.Var.tambahKendaraan = new MasterKendaraan("0");
         } else {
-            GlobalVar.Var.tambahMasterJenisBarang.setState(NORMAL);
-            GlobalVar.Var.tambahMasterJenisBarang.toFront();
+            GlobalVar.Var.tambahKendaraan.setState(NORMAL);
+            GlobalVar.Var.tambahKendaraan.toFront();
         }
     }
 
@@ -205,11 +205,11 @@ public class ListKendaraan extends javax.swing.JFrame {
         if (JComCari.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if (GlobalVar.Var.editMasterJenisBarang == null) {
-                GlobalVar.Var.editMasterJenisBarang = new MasterJenisBarang(JComCari.GetIDTable());
+            if (GlobalVar.Var.ubahKendaraan == null) {
+                GlobalVar.Var.ubahKendaraan = new MasterKendaraan(JComCari.GetIDTable());
             } else {
-                GlobalVar.Var.editMasterJenisBarang.setState(NORMAL);
-                GlobalVar.Var.editMasterJenisBarang.toFront();
+                GlobalVar.Var.ubahKendaraan.setState(NORMAL);
+                GlobalVar.Var.ubahKendaraan.toFront();
             }
         }
     }
@@ -219,7 +219,7 @@ public class ListKendaraan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
             Delete delete = new LSubProces.Delete();
-            if (delete.Hapus(JComCari.GetIDTable(), "DELETE FROM `tbmjenisbarang` WHERE `IdJenisBarang`=" + JComCari.GetIDTable(), "Hapus Data Master Jenis Barang", this)) {
+            if (delete.Hapus(JComCari.GetIDTable(), "DELETE FROM `tbmkendaraan` WHERE `IdKendaraan`=" + JComCari.GetIDTable(), "Hapus Data Master Kendaraan", this)) {
                 load();
             }
         }

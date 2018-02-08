@@ -30,11 +30,11 @@ public class Update {
             int no = 0;
             no = pstmt.executeUpdate();
             if (no > 0) {
-                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil " + JenisData);
-                showMessageDialog(Parent, "Berhasil " + JenisData);
+                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil Ubah Data " + JenisData);
+                showMessageDialog(Parent, "Berhasil Ubah Data " + JenisData);
                 BerhasilSimpan = true;
             } else {
-                showMessageDialog(Parent, "Gagal " + JenisData);
+                showMessageDialog(Parent, "Gagal Ubah Data " + JenisData);
             }
         } catch (SQLException e) {
             LogEror.SaveString(pstmt.toString());
