@@ -219,7 +219,7 @@ public class ListKendaraan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
             Delete delete = new LSubProces.Delete();
-            if (delete.Hapus(JComCari.GetIDTable(), "DELETE FROM `tbmkendaraan` WHERE `IdKendaraan`=" + JComCari.GetIDTable(), "Hapus Data Master Kendaraan", this)) {
+            if (delete.Hapus(JComCari.GetIDTable(), "DELETE FROM `tbmkendaraan` WHERE `IdKendaraan`=" + JComCari.GetIDTable(), "Master Kendaraan", this)) {
                 load();
             }
         }

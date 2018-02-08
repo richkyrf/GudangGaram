@@ -240,7 +240,7 @@ public class TambahUser extends javax.swing.JFrame {
             JCLevel.showPopup();
         } else {
             Insert insert = new LSubProces.Insert();
-            boolean simpan = insert.simpan("INSERT INTO `tbuser`(`Username`, `Password`, `Level`) VALUES ('" + JTUsername.getText() + "', '" + getMD5(new String(JTPassword.getPassword())) + "', '" + JCLevel.getSelectedItem() + "')", "Tambah User", this);
+            boolean simpan = insert.simpan("INSERT INTO `tbuser`(`Username`, `Password`, `Level`) VALUES ('" + JTUsername.getText() + "', '" + getMD5(new String(JTPassword.getPassword())) + "', '" + JCLevel.getSelectedItem() + "')", "User", this);
             if (simpan) {
                 GlobalVar.Var.tambahUser.dispose();
             }

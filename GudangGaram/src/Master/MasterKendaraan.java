@@ -298,7 +298,7 @@ public class MasterKendaraan extends javax.swing.JFrame {
     void tambah(boolean tutup) {
         if (checkInput()) {
             Insert insert = new LSubProces.Insert();
-            boolean simpan = insert.simpan("INSERT INTO `tbmkendaraan`(`Plat`, `JenisKendaraan`, `Keterangan`) VALUES ('" + JTPlatKendaraan.getText() + "', '" + JTJenisKendaraan.getText() + "', '" + JTKeterangan.getText() + "')", "Tambah Data Master Kendaraan", this);
+            boolean simpan = insert.simpan("INSERT INTO `tbmkendaraan`(`Plat`, `JenisKendaraan`, `Keterangan`) VALUES ('" + JTPlatKendaraan.getText() + "', '" + JTJenisKendaraan.getText() + "', '" + JTKeterangan.getText() + "')", "Master Kendaraan", this);
             if (simpan) {
                 if (GlobalVar.Var.listKendaraan != null) {
                     GlobalVar.Var.listKendaraan.load();
@@ -342,7 +342,7 @@ public class MasterKendaraan extends javax.swing.JFrame {
     void ubah() {
         if (checkInput()) {
             Update update = new LSubProces.Update();
-            boolean ubah = update.Ubah("UPDATE `tbmkendaraan` SET `Plat`='" + JTPlatKendaraan.getText() + "', `JenisKendaraan`='" + JTJenisKendaraan.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisBarang`=" + idEdit, "Ubah Data Master Kendaraan", this);
+            boolean ubah = update.Ubah("UPDATE `tbmkendaraan` SET `Plat`='" + JTPlatKendaraan.getText() + "', `JenisKendaraan`='" + JTJenisKendaraan.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisBarang`=" + idEdit, "Master Kendaraan", this);
             if (ubah) {
                 dispose();
                 GlobalVar.Var.listKendaraan.load();
