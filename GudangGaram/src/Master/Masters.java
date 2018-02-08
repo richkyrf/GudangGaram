@@ -35,31 +35,7 @@ public class Masters extends javax.swing.JFrame {
             JBUbah.setVisible(false);
         } else {
             setTitle("Ubah " + Title);
-            switch (Title) {
-                case "Gudang":
-                    loadData("Gudang");
-                    break;
-                case "Pemasok":
-                    loadData("Pemasok");
-                    break;
-                case "Peminta":
-                    loadData("Peminta");
-                    break;
-                case "Penerima":
-                    loadData("Penerima");
-                    break;
-                case "Jenis Karyawan":
-                    loadData("Jenis Karyawan");
-                    break;
-                case "Jenis Barang":
-                    loadData("Jenis Barang");
-                    break;
-                case "Jenis Penjualan":
-                    loadData("Jenis Penjualan");
-                    break;
-                default:
-                    break;
-            }
+            loadData();
             JBTambah.setVisible(false);
             JBTambahTutup.setVisible(false);
         }
@@ -100,8 +76,8 @@ public class Masters extends javax.swing.JFrame {
         JLNama2.setText(":");
 
         JTNama.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTNamaKeyPressed(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTNamaKeyReleased(evt);
             }
         });
 
@@ -202,100 +178,46 @@ public class Masters extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahActionPerformed
-        switch (Title) {
-            case "Jenis Karyawan":
-                tambahDataJenisKaryawan(false);
-                break;
-            case "Jenis Barang":
-                tambahDataJenisBarang(false);
-                break;
-            case "Jenis Penjualan":
-                tambahDataJenisPenjualan(false);
-                break;
-            default:
-                break;
-        }
+        tambah(false);
     }//GEN-LAST:event_JBTambahActionPerformed
 
     private void JBTambahTutupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahTutupActionPerformed
-        switch (Title) {
-            case "Jenis Karyawan":
-                tambahDataJenisKaryawan(true);
-                break;
-            case "Jenis Barang":
-                tambahDataJenisBarang(true);
-                break;
-            case "Jenis Penjualan":
-                tambahDataJenisPenjualan(true);
-                break;
-            default:
-                break;
-        }
+        tambah(true);
     }//GEN-LAST:event_JBTambahTutupActionPerformed
 
     private void JBUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBUbahActionPerformed
-        switch (Title) {
-            case "Jenis Karyawan":
-                ubahDataJenisKaryawan();
-                break;
-            case "Jenis Barang":
-                ubahDataJenisBarang();
-                break;
-            case "Jenis Penjualan":
-                ubahDataJenisPenjualan();
-                break;
-            default:
-                break;
-        }
+        ubah();
     }//GEN-LAST:event_JBUbahActionPerformed
 
     private void JBKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBKembaliActionPerformed
         dispose();
     }//GEN-LAST:event_JBKembaliActionPerformed
 
-    private void JTNamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNamaKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTKeterangan.requestFocus();
-        }
-    }//GEN-LAST:event_JTNamaKeyPressed
-
     private void JTKeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKeteranganKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (IdEdit == null) {
-                switch (Title) {
-                    case "Jenis Karyawan":
-                        tambahDataJenisKaryawan(false);
-                        break;
-                    case "Jenis Barang":
-                        tambahDataJenisBarang(false);
-                        break;
-                    case "Jenis Penjualan":
-                        tambahDataJenisPenjualan(false);
-                        break;
-                    default:
-                        break;
-                }
+            if (JBTambah.isVisible()) {
+                tambah(false);
             } else {
-                switch (Title) {
-                    case "Jenis Karyawan":
-                        ubahDataJenisKaryawan();
-                        break;
-                    case "Jenis Barang":
-                        ubahDataJenisBarang();
-                        break;
-                    case "Jenis Penjualan":
-                        ubahDataJenisPenjualan();
-                        break;
-                    default:
-                        break;
-                }
+                ubah();
             }
         }
     }//GEN-LAST:event_JTKeteranganKeyPressed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        if (IdEdit == null) {
+        if (JBTambah.isVisible()) {
             switch (Title) {
+                case "Gudang":
+                    GlobalVar.Var.tambahGudang = null;
+                    break;
+                case "Pemasok":
+                    GlobalVar.Var.tambahPemasok = null;
+                    break;
+                case "Peminta":
+                    GlobalVar.Var.tambahPeminta = null;
+                    break;
+                case "Penerima":
+                    GlobalVar.Var.tambahPenerima = null;
+                    break;
                 case "Jenis Karyawan":
                     GlobalVar.Var.tambahJenisKaryawan = null;
                     break;
@@ -310,6 +232,18 @@ public class Masters extends javax.swing.JFrame {
             }
         } else {
             switch (Title) {
+                case "Gudang":
+                    GlobalVar.Var.ubahGudang = null;
+                    break;
+                case "Pemasok":
+                    GlobalVar.Var.ubahPemasok = null;
+                    break;
+                case "Peminta":
+                    GlobalVar.Var.ubahPeminta = null;
+                    break;
+                case "Penerima":
+                    GlobalVar.Var.ubahPenerima = null;
+                    break;
                 case "Jenis Karyawan":
                     GlobalVar.Var.ubahJenisKaryawan = null;
                     break;
@@ -324,6 +258,12 @@ public class Masters extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formWindowClosed
+
+    private void JTNamaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNamaKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTKeterangan.requestFocus();
+        }
+    }//GEN-LAST:event_JTNamaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -360,140 +300,201 @@ public class Masters extends javax.swing.JFrame {
         });
     }
 
-    void tambahDataJenisKaryawan(Boolean tutup) {
-        if (checkInput()) {
-            Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjeniskaryawan`(`JenisKaryawan`, `Keterangan`) VALUES ('" + JTNama.getText() + "','" + JTKeterangan.getText() + "')", "Jenis Karyawan", this);
-            if (berhasil) {
-                if (tutup) {
-                    dispose();
-                } else {
-                    JTNama.setText("");
-                    JTKeterangan.setText("");
-                    JTNama.requestFocus();
-                }
-                if (GlobalVar.Var.listJenisKaryawan != null) {
-                    GlobalVar.Var.listJenisKaryawan.refreshJenisKaryawan();
-                }
-            }
-        }
-    }
-
-    void tambahDataJenisBarang(Boolean tutup) {
-        if (checkInput()) {
-            Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjenisbarang`(`JenisBarang`, `Keterangan`) VALUES ('" + JTNama.getText() + "','" + JTKeterangan.getText() + "')", "Jenis Barang", this);
-            if (berhasil) {
-                if (tutup) {
-                    dispose();
-                } else {
-                    JTNama.setText("");
-                    JTKeterangan.setText("");
-                    JTNama.requestFocus();
-                }
-                if (GlobalVar.Var.listJenisBarang != null) {
-                    GlobalVar.Var.listJenisBarang.refreshJenisBarang();
-                }
-            }
-        }
-    }
-
-    void tambahDataJenisPenjualan(Boolean tutup) {
-        if (checkInput()) {
-            Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbsmjenispenjualan`(`JenisPenjualan`, `Keterangan`) VALUES ('" + JTNama.getText() + "','" + JTKeterangan.getText() + "')", "Jenis Penjualan", this);
-            if (berhasil) {
-                if (tutup) {
-                    dispose();
-                } else {
-                    JTNama.setText("");
-                    JTKeterangan.setText("");
-                    JTNama.requestFocus();
-                }
-                if (GlobalVar.Var.listJenisPenjualan != null) {
-                    GlobalVar.Var.listJenisPenjualan.refreshJenisPenjualan();
-                }
-            }
-        }
-    }
-
-    void loadData(String data) {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.seterorm("Gagal Menampilkan Data " + data);
-        dRunSelctOne.setQuery("SELECT `IdKendaraan`, `Plat`, `JenisKendaraan`, `Keterangan` FROM `tbmkendaraan` WHERE `IdKendaraan`='" + idEdit + "'");
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTPlatKendaraan.setText(list.get(1));
-        JTJenisKendaraan.setText(list.get(2));
-        JTKeterangan.setText(list.get(3));
-    }
-
-    void loadeditdatajeniskaryawan() {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdJenisKaryawan` as 'ID', `JenisKaryawan` as 'Jenis', `Keterangan` FROM `tbsmjeniskaryawan` WHERE `IdJenisKaryawan` = " + IdEdit);
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTNama.setText(list.get(1));
-        JTKeterangan.setText(list.get(2));
-    }
-
-    void loadeditdatajenisbarang() {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdJenisBarang` as 'ID', `JenisBarang` as 'Jenis', `Keterangan` FROM `tbsmjenisbarang` WHERE `IdJenisBarang` = " + IdEdit);
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTNama.setText(list.get(1));
-        JTKeterangan.setText(list.get(2));
-    }
-
-    void loadeditdatajenispenjualan() {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdJenisPenjualan` as 'ID', `JenisPenjualan` as 'Jenis', `Keterangan` FROM `tbsmjenispenjualan` WHERE `IdJenisPenjualan` = " + IdEdit);
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTNama.setText(list.get(1));
-        JTKeterangan.setText(list.get(2));
-    }
-
-    Boolean checkInput() {
-        if (JTNama.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, Title + " Tidak Boleh Kosong");
+    boolean checkInput() {
+        if (JTNama.getText().replace(" ", "").isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama " + Title + " Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JTNama.requestFocus();
             return false;
-        }
-        return true;
-    }
-
-    void ubahDataJenisKaryawan() {
-        if (checkInput()) {
-            Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbsmjeniskaryawan` SET `JenisKaryawan`='" + JTNama.getText() + "',`Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisKaryawan` = " + IdEdit, "Jenis Karyawan", this);
-            if (berhasil) {
-                dispose();
-            }
-            if (GlobalVar.Var.listJenisKaryawan != null) {
-                GlobalVar.Var.listJenisKaryawan.refreshJenisKaryawan();
-            }
+        } else {
+            return true;
         }
     }
 
-    void ubahDataJenisBarang() {
+    void tambah(boolean tutup) {
         if (checkInput()) {
-            Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbsmjenisbarang` SET `JenisBarang`='" + JTNama.getText() + "',`Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisBarang` = " + IdEdit, "Jenis Barang", this);
-            if (berhasil) {
-                dispose();
+            Insert insert = new LSubProces.Insert();
+            boolean simpan = false;
+            switch (Title) {
+                case "Gudang":
+                    simpan = insert.simpan("INSERT INTO `tbmgudang`(`Gudang`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
+                    break;
+                case "Pemasok":
+                    simpan = insert.simpan("INSERT INTO `tbmpemasok`(`Pemasok`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
+                    break;
+                case "Peminta":
+                    simpan = insert.simpan("INSERT INTO `tbmpeminta`(`Peminta`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
+                    break;
+                case "Penerima":
+                    simpan = insert.simpan("INSERT INTO `tbmpenerima`(`Penerima`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
+                    break;
+                case "Jenis Karyawan":
+                    simpan = insert.simpan("INSERT INTO `tbsmjeniskaryawan`(`JenisKaryawan`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
+                    break;
+                case "Jenis Barang":
+                    simpan = insert.simpan("INSERT INTO `tbsmjenisbarang`(`JenisBarang`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
+                    break;
+                case "Jenis Penjualan":
+                    simpan = insert.simpan("INSERT INTO `tbsmjenispenjualan`(`JenisPenjualan`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
+                    break;
+                default:
+                    break;
             }
-            if (GlobalVar.Var.listJenisBarang != null) {
-                GlobalVar.Var.listJenisBarang.refreshJenisBarang();
+            if (simpan) {
+                switch (Title) {
+                    case "Gudang":
+                        if (GlobalVar.Var.listGudang != null) {
+                            GlobalVar.Var.listGudang.refresh(Title);
+                        }
+                        break;
+                    case "Pemasok":
+                        if (GlobalVar.Var.listPemasok != null) {
+                            GlobalVar.Var.listPemasok.refresh(Title);
+                        }
+                        break;
+                    case "Peminta":
+                        if (GlobalVar.Var.listPeminta != null) {
+                            GlobalVar.Var.listPeminta.refresh(Title);
+                        }
+                        break;
+                    case "Penerima":
+                        if (GlobalVar.Var.listPenerima != null) {
+                            GlobalVar.Var.listPenerima.refresh(Title);
+                        }
+                        break;
+                    case "Jenis Karyawan":
+                        if (GlobalVar.Var.listJenisKaryawan != null) {
+                            GlobalVar.Var.listJenisKaryawan.refresh(Title);
+                        }
+                        break;
+                    case "Jenis Barang":
+                        if (GlobalVar.Var.listJenisBarang != null) {
+                            GlobalVar.Var.listJenisBarang.refresh(Title);
+                        }
+                        break;
+                    case "Jenis Penjualan":
+                        if (GlobalVar.Var.listJenisPenjualan != null) {
+                            GlobalVar.Var.listJenisPenjualan.refresh(Title);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                /*
+                if (GlobalVar.Var.tambahPenerimaan != null) {
+                    GlobalVar.Var.tambahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.tambahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    GlobalVar.Var.tambahPenerimaan.JCPlat.requestFocus();
+                }
+                if (GlobalVar.Var.ubahPenerimaan != null) {
+                    GlobalVar.Var.ubahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.ubahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    GlobalVar.Var.ubahPenerimaan.JCPlat.requestFocus();
+                }
+                 */
+                if (tutup) {
+                    dispose();
+                } else {
+                    clearText();
+                    JTNama.requestFocus();
+                }
             }
         }
     }
 
-    void ubahDataJenisPenjualan() {
+    void clearText() {
+        JTNama.setText("");
+        JTKeterangan.setText("");
+    }
+
+    void loadData() {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal Menampilkan Data " + Title);
+        switch (Title) {
+            case "Gudang":
+                dRunSelctOne.setQuery("SELECT `IdGudang`, `Gudang`, `Keterangan` FROM `tbmgudang` WHERE `IdGudang`='" + IdEdit + "'");
+                break;
+            case "Pemasok":
+                dRunSelctOne.setQuery("SELECT `IdPemasok`, `Pemasok`, `Keterangan` FROM `tbmpemasok` WHERE `IdPemasok`='" + IdEdit + "'");
+                break;
+            case "Peminta":
+                dRunSelctOne.setQuery("SELECT `IdPeminta`, `Peminta`, `Keterangan` FROM `tbmpeminta` WHERE `IdPeminta`='" + IdEdit + "'");
+                break;
+            case "Penerima":
+                dRunSelctOne.setQuery("SELECT `IdPenerima`, `Penerima`, `Keterangan` FROM `tbmpenerima` WHERE `IdPenerima`='" + IdEdit + "'");
+                break;
+            case "Jenis Karyawan":
+                dRunSelctOne.setQuery("SELECT `IdJenisKaryawan`, `JenisKaryawan`, `Keterangan` FROM `tbsmjeniskaryawan` WHERE `IdJenisKaryawan`='" + IdEdit + "'");
+                break;
+            case "Jenis Barang":
+                dRunSelctOne.setQuery("SELECT `IdJenisBarang`, `JenisBarang`, `Keterangan` FROM `tbsmjenisbarang` WHERE `IdJenisBarang`='" + IdEdit + "'");
+                break;
+            case "Jenis Penjualan":
+                dRunSelctOne.setQuery("SELECT `IdJenisPenjualan`, `JenisPenjualan`, `Keterangan` FROM `tbsmjenispenjualan` WHERE `IdJenisPenjualan`='" + IdEdit + "'");
+                break;
+            default:
+                break;
+        }
+        ArrayList<String> list = dRunSelctOne.excute();
+        JTNama.setText(list.get(1));
+        JTKeterangan.setText(list.get(2));
+    }
+
+    void ubah() {
         if (checkInput()) {
-            Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbsmjenispenjualan` SET `JenisPenjualan`='" + JTNama.getText() + "',`Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisPenjualan` = " + IdEdit, "Jenis Penjualan", this);
-            if (berhasil) {
-                dispose();
+            Update update = new LSubProces.Update();
+            boolean ubah = false;
+            switch (Title) {
+                case "Gudang":
+                    ubah = update.Ubah("UPDATE `tbmgudang` SET `Gudang`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdGudang`=" + IdEdit, Title, this);
+                    break;
+                case "Pemasok":
+                    ubah = update.Ubah("UPDATE `tbmpemasok` SET `Pemasok`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdPemasok`=" + IdEdit, Title, this);
+                    break;
+                case "Peminta":
+                    ubah = update.Ubah("UPDATE `tbmpeminta` SET `Peminta`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdPeminta`=" + IdEdit, Title, this);
+                    break;
+                case "Penerima":
+                    ubah = update.Ubah("UPDATE `tbmpenerima` SET `Penerima`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdPenerima`=" + IdEdit, Title, this);
+                    break;
+                case "Jenis Karyawan":
+                    ubah = update.Ubah("UPDATE `tbsmjeniskaryawan` SET `JenisKaryawan`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisKaryawan`=" + IdEdit, Title, this);
+                    break;
+                case "Jenis Barang":
+                    ubah = update.Ubah("UPDATE `tbsmjenisbarang` SET `JenisBarang`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisBarang`=" + IdEdit, Title, this);
+                    break;
+                case "Jenis Penjualan":
+                    ubah = update.Ubah("UPDATE `tbsmjenispenjualan` SET `JenisPenjualan`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisPenjualan`=" + IdEdit, Title, this);
+                    break;
+                default:
+                    break;
             }
-            if (GlobalVar.Var.listJenisPenjualan != null) {
-                GlobalVar.Var.listJenisPenjualan.refreshJenisPenjualan();
+            if (ubah) {
+                dispose();
+                switch (Title) {
+                    case "Gudang":
+                        GlobalVar.Var.listGudang.refresh();
+                        break;
+                    case "Pemasok":
+                        GlobalVar.Var.listPemasok.refresh();
+                        break;
+                    case "Peminta":
+                        GlobalVar.Var.listPeminta.refresh();
+                        break;
+                    case "Penerima":
+                        GlobalVar.Var.listPenerima.refresh();
+                        break;
+                    case "Jenis Karyawan":
+                        GlobalVar.Var.listJenisKaryawan.refresh();
+                        break;
+                    case "Jenis Barang":
+                        GlobalVar.Var.listJenisBarang.refresh();
+                        break;
+                    case "Jenis Penjualan":
+                        GlobalVar.Var.listJenisPenjualan.refresh();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
