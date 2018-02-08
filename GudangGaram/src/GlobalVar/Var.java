@@ -21,6 +21,7 @@ public class Var {
     
     public static Login login;
     public static TambahUser tambahUser;
+    public static ResetPasswordUser resetPasswordUser;
     public static GantiPassword gantiPassword;
     
     public static MasterKaryawan tambahKaryawan,ubahKaryawan;

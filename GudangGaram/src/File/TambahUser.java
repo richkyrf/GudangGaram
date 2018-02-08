@@ -5,17 +5,14 @@
  */
 package File;
 
-import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
-import LSubProces.Update;
 import static File.EncMD5.getMD5;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author riki
+ * @author Martono
  */
 public class TambahUser extends javax.swing.JFrame {
 
@@ -24,9 +21,9 @@ public class TambahUser extends javax.swing.JFrame {
      */
     public TambahUser() {
         initComponents();
-        setTitle("Tambah User");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setTitle("Tambah User");
         setVisible(true);
     }
 
@@ -39,31 +36,40 @@ public class TambahUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jlableF4 = new KomponenGUI.JlableF();
-        jlableF3 = new KomponenGUI.JlableF();
-        jlableF2 = new KomponenGUI.JlableF();
-        jlableF1 = new KomponenGUI.JlableF();
-        JTPassword = new KomponenGUI.JpasswordT();
-        jlableF5 = new KomponenGUI.JlableF();
-        jbuttonF2 = new KomponenGUI.JbuttonF();
+        JLUsername = new KomponenGUI.JlableF();
+        JLUsername2 = new KomponenGUI.JlableF();
         JTUsername = new KomponenGUI.JtextF();
-        JTLevel = new KomponenGUI.JtextF();
-        jbuttonF3 = new KomponenGUI.JbuttonF();
+        JLPassword = new KomponenGUI.JlableF();
+        JLPassword2 = new KomponenGUI.JlableF();
+        JTPassword = new KomponenGUI.JpasswordT();
+        JLLevel = new KomponenGUI.JlableF();
+        JLLevel2 = new KomponenGUI.JlableF();
+        JCLevel = new KomponenGUI.JcomboboxF();
+        JBTambah = new KomponenGUI.JbuttonF();
+        JBBatal = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
-        jlableF4.setText("Password");
+        JLUsername.setText("Username");
 
-        jlableF3.setText("Username");
+        JLUsername2.setText(":");
 
-        jlableF2.setText(GlobalVar.VarL.username);
+        JTUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTUsernameKeyReleased(evt);
+            }
+        });
+        JTUsername.setMaxText(25);
 
-        jlableF1.setText("Tambah User");
+        JLPassword.setText("Password");
+
+        JLPassword2.setText(":");
 
         JTPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -71,31 +77,28 @@ public class TambahUser extends javax.swing.JFrame {
             }
         });
 
-        jlableF5.setText("Level");
+        JLLevel.setText("Level");
 
-        jbuttonF2.setText("TAMBAH");
-        jbuttonF2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF2ActionPerformed(evt);
-            }
-        });
+        JLLevel2.setText(":");
 
-        JTUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+        JCLevel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Pilih Level User --", "Administrator", "Operator" }));
+        JCLevel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTUsernameKeyReleased(evt);
+                JCLevelKeyReleased(evt);
             }
         });
 
-        JTLevel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTLevelKeyReleased(evt);
-            }
-        });
-
-        jbuttonF3.setText("Kembali");
-        jbuttonF3.addActionListener(new java.awt.event.ActionListener() {
+        JBTambah.setText("Tambah");
+        JBTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF3ActionPerformed(evt);
+                JBTambahActionPerformed(evt);
+            }
+        });
+
+        JBBatal.setText("Batal");
+        JBBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBBatalActionPerformed(evt);
             }
         });
 
@@ -107,51 +110,50 @@ public class TambahUser extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(40, 40, 40))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jlableF4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jlableF3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JTPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(JTUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(JTLevel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbuttonF2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(JLUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JLUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JLLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JLLevel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JLPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JLPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JBTambah, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JBBatal, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JTPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JTUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JCLevel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JTPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLLevel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JCLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JBBatal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -160,18 +162,14 @@ public class TambahUser extends javax.swing.JFrame {
 
     private void JTPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPasswordKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTLevel.requestFocus();
+            JCLevel.requestFocus();
+            JCLevel.showPopup();
         }
     }//GEN-LAST:event_JTPasswordKeyReleased
 
-    private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
-        Insert insert = new LSubProces.Insert();
-        boolean simpan = insert.simpan("INSERT INTO `tblogin` (`Username`, `Password`, `Level`) VALUES ('" + JTUsername.getText() + "', '" + getMD5(new String(JTPassword.getPassword())) + "', '" + JTLevel.getText() + "')", " Tambah User Baru", this);
-        if (simpan) {
-            GlobalVar.Var.tambahUser.dispose();
-            GlobalVar.Var.tambahUser = null;
-        }
-    }//GEN-LAST:event_jbuttonF2ActionPerformed
+    private void JBTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahActionPerformed
+        tambah();
+    }//GEN-LAST:event_JBTambahActionPerformed
 
     private void JTUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTUsernameKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -179,18 +177,23 @@ public class TambahUser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JTUsernameKeyReleased
 
-    private void JTLevelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTLevelKeyReleased
-
-    }//GEN-LAST:event_JTLevelKeyReleased
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        GlobalVar.Var.tambahUser = null;
-    }//GEN-LAST:event_formWindowClosing
-
-    private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
+    private void JBBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBatalActionPerformed
         GlobalVar.Var.tambahUser.dispose();
+    }//GEN-LAST:event_JBBatalActionPerformed
+
+    private void JCLevelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCLevelKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (JCLevel.getSelectedIndex() == 0) {
+                JCLevel.showPopup();
+            } else {
+                tambah();
+            }
+        }
+    }//GEN-LAST:event_JCLevelKeyReleased
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         GlobalVar.Var.tambahUser = null;
-    }//GEN-LAST:event_jbuttonF3ActionPerformed
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -218,61 +221,43 @@ public class TambahUser extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TambahUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TambahUser().setVisible(true);
+                new TambahUser();
             }
         });
     }
 
-    boolean Checkpassword() {
-        DRunSelctOne dRunSelctOne = new LSubProces.DRunSelctOne();
-        dRunSelctOne.seterorm("Gagal Ubah Passsword");
-        dRunSelctOne.setQuerynolimit("SELECT `Username`, `Password`, `Level` FROM `tblogin` WHERE Username='" + GlobalVar.VarL.username + "' and `Password` = '" + getMD5(new String(JTPassword.getPassword())) + "'");
-        ArrayList<String> list = dRunSelctOne.excute();
-        try {
-            //////System.out.println(list.get(1));
-            if (list.get(0) != null) {
-                return true;
-            } else {
-                JOptionPane.showMessageDialog(this, "Gagal Ubah Passsword \n password Lama Salah");
-                return false;
+    void tambah() {
+        if (JTUsername.getText().replace(" ", "").isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JTUsername.requestFocus();
+        } else if (JCLevel.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Level User Harus Dipilih", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JCLevel.requestFocus();
+            JCLevel.showPopup();
+        } else {
+            Insert insert = new LSubProces.Insert();
+            boolean simpan = insert.simpan("INSERT INTO `tbuser`(`Username`, `Password`, `Level`) VALUES ('" + JTUsername.getText() + "', '" + getMD5(new String(JTPassword.getPassword())) + "', '" + JCLevel.getSelectedItem() + "')", "Tambah User", this);
+            if (simpan) {
+                GlobalVar.Var.tambahUser.dispose();
             }
-        } catch (Exception e) {
-            Eror.LogEror.SaveEror(e);
-            //////System.out.println(e);
-            JOptionPane.showMessageDialog(this, "Gagal Ubah Password");
-            return false;
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private KomponenGUI.JtextF JTLevel;
+    private KomponenGUI.JbuttonF JBBatal;
+    private KomponenGUI.JbuttonF JBTambah;
+    private KomponenGUI.JcomboboxF JCLevel;
+    private KomponenGUI.JlableF JLLevel;
+    private KomponenGUI.JlableF JLLevel2;
+    private KomponenGUI.JlableF JLPassword;
+    private KomponenGUI.JlableF JLPassword2;
+    private KomponenGUI.JlableF JLUsername;
+    private KomponenGUI.JlableF JLUsername2;
     private KomponenGUI.JpasswordT JTPassword;
     private KomponenGUI.JtextF JTUsername;
-    private KomponenGUI.JbuttonF jbuttonF2;
-    private KomponenGUI.JbuttonF jbuttonF3;
-    private KomponenGUI.JlableF jlableF1;
-    private KomponenGUI.JlableF jlableF2;
-    private KomponenGUI.JlableF jlableF3;
-    private KomponenGUI.JlableF jlableF4;
-    private KomponenGUI.JlableF jlableF5;
     // End of variables declaration//GEN-END:variables
 }
