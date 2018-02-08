@@ -5,8 +5,8 @@
  */
 package File;
 
-import LSubProces.DRunSelctOne;
 import static File.EncMD5.getMD5;
+import LSubProces.DRunSelctOne;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.BindException;
@@ -14,12 +14,11 @@ import static java.net.InetAddress.getLocalHost;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showMessageDialog;
 import static javax.swing.UIManager.setLookAndFeel;
 
 /**
  *
- * @author riki
+ * @author Martono
  */
 public class Login extends javax.swing.JFrame {
 
@@ -29,7 +28,6 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Silahkan Login");
         setVisible(true);
     }
@@ -55,8 +53,8 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -69,14 +67,15 @@ public class Login extends javax.swing.JFrame {
                 JTUsernameKeyReleased(evt);
             }
         });
+        JTUsername.setMaxText(25);
 
         JLPassword.setText("Password");
 
         JLPassword2.setText(":");
 
         JTPassword.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTPasswordKeyPressed(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTPasswordKeyReleased(evt);
             }
         });
 
@@ -100,23 +99,24 @@ public class Login extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(JLPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JLPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JLUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(JLUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JLPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(JLUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JTUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(JLPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JLUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(JBLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBExit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(JTUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JTPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JBLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JBExit, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(JTPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -126,31 +126,21 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JLUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JTUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JLPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JLPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JBExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
-    }//GEN-LAST:event_formWindowClosing
-
-    private void JTUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTUsernameKeyReleased
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTPassword.requestFocus();
-        }
-    }//GEN-LAST:event_JTUsernameKeyReleased
 
     private void JBExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBExitActionPerformed
         System.exit(0);
@@ -160,11 +150,21 @@ public class Login extends javax.swing.JFrame {
         login();
     }//GEN-LAST:event_JBLoginActionPerformed
 
-    private void JTPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPasswordKeyPressed
+    private void JTUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTUsernameKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTPassword.requestFocus();
+        }
+    }//GEN-LAST:event_JTUsernameKeyReleased
+
+    private void JTPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPasswordKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             login();
         }
-    }//GEN-LAST:event_JTPasswordKeyPressed
+    }//GEN-LAST:event_JTPasswordKeyReleased
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        GlobalVar.Var.login = null;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -178,33 +178,32 @@ public class Login extends javax.swing.JFrame {
             ServerSocket serverSocket = new ServerSocket(65535, 1, getLocalHost());
             new Login();
         } catch (BindException ex) {
-            showMessageDialog(null, "Aplikasi Sudah Terbuka . . . \n");
+            JOptionPane.showMessageDialog(null, "Aplikasi Sudah Terbuka !!!", "Information", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         } catch (IOException ex) {
-            showMessageDialog(null, "Aplikasi Sudah Terbuka . . . \n");
+            JOptionPane.showMessageDialog(null, "Aplikasi Sudah Terbuka !!!", "Information", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
     }
 
     void login() {
         DRunSelctOne dRunSelctOne = new LSubProces.DRunSelctOne();
-        dRunSelctOne.seterorm("System Eror Gagal Login DataBase");
-        dRunSelctOne.setQuerynolimit("SELECT `Username`, `Password`, `Level` FROM `tblogin` WHERE Username='" + JTUsername.getText() + "' and `Password` = '" + getMD5(new String(JTPassword.getPassword())) + "'");
+        dRunSelctOne.seterorm("Koneksi Ke Server Database Gagal !!!");
+        dRunSelctOne.setQuerynolimit("SELECT `Username`, `Password`, `Level` FROM `tbuser` WHERE `Username`='" + JTUsername.getText() + "' AND `Password`='" + getMD5(new String(JTPassword.getPassword())) + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         try {
-            GlobalVar.Var.Username = list.get(0);
-            GlobalVar.Var.Password = list.get(1);
-            GlobalVar.Var.Level = list.get(2);
+            GlobalVar.VarL.username = list.get(0);
+            GlobalVar.VarL.password = list.get(1);
+            GlobalVar.VarL.level = list.get(2);
             if (list.get(0) != null) {
-                new MenuUtama().setVisible(true);
+                new MenuUtama();
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Gagal Login");
+                JOptionPane.showMessageDialog(this, "Gagal Login. Silahkan Ulangi . . .", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             Eror.LogEror.SaveEror(e);
-            System.out.println("MenuUtama.Login.login()");
-            JOptionPane.showMessageDialog(this, "Gagal Login");
+            JOptionPane.showMessageDialog(this, "Gagal Login. Silahkan Ulangi . . .", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

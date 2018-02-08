@@ -19,12 +19,13 @@ import Master.*;
 
 public class Var {
     
-    public static String Username, Password, Level;
+    public static Login login;
     public static TambahUser tambahUser;
     public static GantiPassword gantiPassword;
     
     public static MasterKaryawan tambahKaryawan,ubahKaryawan;
     public static MasterBarang tambahBarang,ubahBarang;
+    public static MasterKendaraan tambahKendaraan, ubahKendaraan;
     
     public static SubMaster tambahJenisKaryawan, ubahJenisKaryawan, tambahJenisBarang, ubahJenisBarang, tambahJenisPenjualan, ubahJenisPenjualan;
     
