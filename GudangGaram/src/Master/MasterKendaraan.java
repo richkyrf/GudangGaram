@@ -24,10 +24,10 @@ public class MasterKendaraan extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         idEdit = id.toString();
         if (idEdit.equals("0")) {
-            setTitle("Tambah Master Jenis Barang");
+            setTitle("Tambah Master Kendaraan");
             JBUbah.setVisible(false);
         } else {
-            setTitle("Ubah Master Jenis Barang");
+            setTitle("Ubah Master Kendaraan");
             loadData();
             JBTambah.setVisible(false);
             JBTambahTutup.setVisible(false);
@@ -44,9 +44,12 @@ public class MasterKendaraan extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JLJenisBarang = new KomponenGUI.JlableF();
-        JLJenisBarang2 = new KomponenGUI.JlableF();
-        JTJenisBarang = new KomponenGUI.JtextF();
+        JLPlatKendaraan = new KomponenGUI.JlableF();
+        JLPlatKendaraan2 = new KomponenGUI.JlableF();
+        JTPlatKendaraan = new KomponenGUI.JtextF();
+        JLJenisKendaraan = new KomponenGUI.JlableF();
+        JLJenisKendaraan2 = new KomponenGUI.JlableF();
+        JTJenisKendaraan = new KomponenGUI.JtextF();
         JLKeterangan = new KomponenGUI.JlableF();
         JLKeterangan2 = new KomponenGUI.JlableF();
         JSPKeterangan = new javax.swing.JScrollPane();
@@ -64,16 +67,27 @@ public class MasterKendaraan extends javax.swing.JFrame {
             }
         });
 
-        JLJenisBarang.setText("Jenis Barang");
+        JLPlatKendaraan.setText("Plat Kendaraan");
 
-        JLJenisBarang2.setText(":");
+        JLPlatKendaraan2.setText(":");
 
-        JTJenisBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+        JTPlatKendaraan.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTJenisBarangKeyReleased(evt);
+                JTPlatKendaraanKeyReleased(evt);
             }
         });
-        JTJenisBarang.setMaxText(50);
+        JTPlatKendaraan.setMaxText(12);
+
+        JLJenisKendaraan.setText("Jenis Kendaraan");
+
+        JLJenisKendaraan2.setText(":");
+
+        JTJenisKendaraan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTJenisKendaraanKeyReleased(evt);
+            }
+        });
+        JTJenisKendaraan.setMaxText(50);
 
         JLKeterangan.setText("Keterangan");
 
@@ -134,16 +148,23 @@ public class MasterKendaraan extends javax.swing.JFrame {
                         .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JLJenisBarang, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                            .addComponent(JLJenisKendaraan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JLPlatKendaraan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(JLKeterangan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(JLJenisBarang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JSPKeterangan)
-                            .addComponent(JTJenisBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JLPlatKendaraan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JTPlatKendaraan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JSPKeterangan))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JLJenisKendaraan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JTJenisKendaraan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
@@ -151,15 +172,20 @@ public class MasterKendaraan extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JLJenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JLJenisBarang2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTJenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLPlatKendaraan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLPlatKendaraan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTPlatKendaraan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLJenisKendaraan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLJenisKendaraan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTJenisKendaraan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JLKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(JLKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(JSPKeterangan, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -183,22 +209,18 @@ public class MasterKendaraan extends javax.swing.JFrame {
     }//GEN-LAST:event_JBTambahActionPerformed
 
     private void JBKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBKembaliActionPerformed
-        if (idEdit.equals("0")) {
-            GlobalVar.Var.tambahMasterJenisBarang.dispose();
-        } else {
-            GlobalVar.Var.editMasterJenisBarang.dispose();
-        }
+        dispose();
     }//GEN-LAST:event_JBKembaliActionPerformed
 
     private void JBUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBUbahActionPerformed
         ubah();
     }//GEN-LAST:event_JBUbahActionPerformed
 
-    private void JTJenisBarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTJenisBarangKeyReleased
+    private void JTPlatKendaraanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPlatKendaraanKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTKeterangan.requestFocus();
+            JTJenisKendaraan.requestFocus();
         }
-    }//GEN-LAST:event_JTJenisBarangKeyReleased
+    }//GEN-LAST:event_JTPlatKendaraanKeyReleased
 
     private void JTKeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKeteranganKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -212,11 +234,17 @@ public class MasterKendaraan extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         if (idEdit.equals("0")) {
-            GlobalVar.Var.tambahMasterJenisBarang = null;
+            GlobalVar.Var.tambahKendaraan = null;
         } else {
-            GlobalVar.Var.editMasterJenisBarang = null;
+            GlobalVar.Var.ubahKendaraan = null;
         }
     }//GEN-LAST:event_formWindowClosed
+
+    private void JTJenisKendaraanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTJenisKendaraanKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTKeterangan.requestFocus();
+        }
+    }//GEN-LAST:event_JTJenisKendaraanKeyReleased
 
     /**
      * @param args the command line arguments
@@ -244,7 +272,6 @@ public class MasterKendaraan extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MasterKendaraan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -255,9 +282,13 @@ public class MasterKendaraan extends javax.swing.JFrame {
     }
 
     boolean checkInput() {
-        if (JTJenisBarang.getText().replace(" ", "").isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Jenis Barang Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
-            JTJenisBarang.requestFocus();
+        if (JTPlatKendaraan.getText().replace(" ", "").isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Plat Kendaraan Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JTPlatKendaraan.requestFocus();
+            return false;
+        } else if (JTJenisKendaraan.getText().replace(" ", "").isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Jenis Kendaraan Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JTJenisKendaraan.requestFocus();
             return false;
         } else {
             return true;
@@ -267,72 +298,54 @@ public class MasterKendaraan extends javax.swing.JFrame {
     void tambah(boolean tutup) {
         if (checkInput()) {
             Insert insert = new LSubProces.Insert();
-            boolean simpan = insert.Simpan("INSERT INTO `tbmjenisbarang`(`JenisBarang`, `Keterangan`) VALUES ('" + JTJenisBarang.getText() + "', '" + JTKeterangan.getText() + "')", "Tambah Data Master Jenis Barang", this);
+            boolean simpan = insert.simpan("INSERT INTO `tbmkendaraan`(`Plat`, `JenisKendaraan`, `Keterangan`) VALUES ('" + JTPlatKendaraan.getText() + "', '" + JTJenisKendaraan.getText() + "', '" + JTKeterangan.getText() + "')", "Tambah Data Master Kendaraan", this);
             if (simpan) {
-                if (GlobalVar.Var.listMasterJenisBarang != null) {
-                    GlobalVar.Var.listMasterJenisBarang.load();
+                if (GlobalVar.Var.listKendaraan != null) {
+                    GlobalVar.Var.listKendaraan.load();
                 }
-                if (GlobalVar.Var.tambahMasterKategoriBarang != null) {
-                    GlobalVar.Var.tambahMasterKategoriBarang.JCJenisBarang.load("SELECT '-- Pilih Jenis Barang --' AS `JenisBarang` UNION SELECT `JenisBarang` FROM `tbmjenisbarang`");
-                    GlobalVar.Var.tambahMasterKategoriBarang.JCJenisBarang.setSelectedItem(JTJenisBarang.getText());
-                    GlobalVar.Var.tambahMasterKategoriBarang.JCJenisBarang.requestFocus();
+                if (GlobalVar.Var.tambahPenerimaan != null) {
+                    GlobalVar.Var.tambahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.tambahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    GlobalVar.Var.tambahPenerimaan.JCPlat.requestFocus();
                 }
-                if (GlobalVar.Var.editMasterKategoriBarang != null) {
-                    GlobalVar.Var.editMasterKategoriBarang.JCJenisBarang.load("SELECT '-- Pilih Jenis Barang --' AS `JenisBarang` UNION SELECT `JenisBarang` FROM `tbmjenisbarang`");
-                    GlobalVar.Var.editMasterKategoriBarang.JCJenisBarang.setSelectedItem(JTJenisBarang.getText());
-                    GlobalVar.Var.editMasterKategoriBarang.JCJenisBarang.requestFocus();
-                }
-                if (GlobalVar.Var.tambahMasterBarang != null) {
-                    GlobalVar.Var.tambahMasterBarang.JCJenisBarang.load("SELECT '-- Pilih Jenis Barang --' AS `JenisBarang` UNION SELECT `JenisBarang` FROM `tbmjenisbarang`");
-                    GlobalVar.Var.tambahMasterBarang.JCJenisBarang.setSelectedItem(JTJenisBarang.getText());
-                    GlobalVar.Var.tambahMasterBarang.JCJenisBarang.requestFocus();
-                }
-                if (GlobalVar.Var.editMasterBarang != null) {
-                    GlobalVar.Var.editMasterBarang.JCJenisBarang.load("SELECT '-- Pilih Jenis Barang --' AS `JenisBarang` UNION SELECT `JenisBarang` FROM `tbmjenisbarang`");
-                    GlobalVar.Var.editMasterBarang.JCJenisBarang.setSelectedItem(JTJenisBarang.getText());
-                    GlobalVar.Var.editMasterBarang.JCJenisBarang.requestFocus();
-                }
-                if (GlobalVar.Var.tambahBarangRusak != null) {
-                    GlobalVar.Var.tambahBarangRusak.JCJenisBarang.load("SELECT '-- Pilih Jenis Barang --' AS `JenisBarang` UNION SELECT `JenisBarang` FROM `tbmjenisbarang`");
-                    GlobalVar.Var.tambahBarangRusak.JCJenisBarang.setSelectedItem(JTJenisBarang.getText());
-                    GlobalVar.Var.tambahBarangRusak.JCJenisBarang.requestFocus();
-                }
-                if (GlobalVar.Var.editBarangRusak != null) {
-                    GlobalVar.Var.editBarangRusak.JCJenisBarang.load("SELECT '-- Pilih Jenis Barang --' AS `JenisBarang` UNION SELECT `JenisBarang` FROM `tbmjenisbarang`");
-                    GlobalVar.Var.editBarangRusak.JCJenisBarang.setSelectedItem(JTJenisBarang.getText());
-                    GlobalVar.Var.editBarangRusak.JCJenisBarang.requestFocus();
+                if (GlobalVar.Var.ubahPenerimaan != null) {
+                    GlobalVar.Var.ubahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.ubahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    GlobalVar.Var.ubahPenerimaan.JCPlat.requestFocus();
                 }
                 if (tutup) {
-                    GlobalVar.Var.tambahMasterJenisBarang.dispose();
+                    dispose();
                 } else {
                     clearText();
-                    JTJenisBarang.requestFocus();
+                    JTPlatKendaraan.requestFocus();
                 }
             }
         }
     }
 
     void clearText() {
-        JTJenisBarang.setText("");
+        JTPlatKendaraan.setText("");
+        JTJenisKendaraan.setText("");
         JTKeterangan.setText("");
     }
 
     void loadData() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.seterorm("Gagal Menampilkan Data Master Jenis Barang");
-        dRunSelctOne.setQuery("SELECT `IdJenisBarang`, `JenisBarang`, `Keterangan` FROM `tbmjenisbarang` WHERE `IdJenisBarang`='" + idEdit + "'");
+        dRunSelctOne.seterorm("Gagal Menampilkan Data Master Kendaraan");
+        dRunSelctOne.setQuery("SELECT `IdKendaraan`, `Plat`, `JenisKendaraan`, `Keterangan` FROM `tbmkendaraan` WHERE `IdKendaraan`='" + idEdit + "'");
         ArrayList<String> list = dRunSelctOne.excute();
-        JTJenisBarang.setText(list.get(1));
-        JTKeterangan.setText(list.get(2));
+        JTPlatKendaraan.setText(list.get(1));
+        JTJenisKendaraan.setText(list.get(2));
+        JTKeterangan.setText(list.get(3));
     }
 
     void ubah() {
         if (checkInput()) {
             Update update = new LSubProces.Update();
-            boolean ubah = update.Ubah("UPDATE `tbmjenisbarang` SET `JenisBarang`='" + JTJenisBarang.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisBarang`=" + idEdit, "Ubah Data Master Jenis Barang", this);
+            boolean ubah = update.Ubah("UPDATE `tbmkendaraan` SET `Plat`='" + JTPlatKendaraan.getText() + "', `JenisKendaraan`='" + JTJenisKendaraan.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisBarang`=" + idEdit, "Ubah Data Master Kendaraan", this);
             if (ubah) {
-                GlobalVar.Var.editMasterJenisBarang.dispose();
-                GlobalVar.Var.listMasterJenisBarang.load();
+                dispose();
+                GlobalVar.Var.listKendaraan.load();
             }
         }
     }
@@ -342,12 +355,15 @@ public class MasterKendaraan extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF JBTambah;
     private KomponenGUI.JbuttonF JBTambahTutup;
     private KomponenGUI.JbuttonF JBUbah;
-    private KomponenGUI.JlableF JLJenisBarang;
-    private KomponenGUI.JlableF JLJenisBarang2;
+    private KomponenGUI.JlableF JLJenisKendaraan;
+    private KomponenGUI.JlableF JLJenisKendaraan2;
     private KomponenGUI.JlableF JLKeterangan;
     private KomponenGUI.JlableF JLKeterangan2;
+    private KomponenGUI.JlableF JLPlatKendaraan;
+    private KomponenGUI.JlableF JLPlatKendaraan2;
     private javax.swing.JScrollPane JSPKeterangan;
-    private KomponenGUI.JtextF JTJenisBarang;
+    private KomponenGUI.JtextF JTJenisKendaraan;
     private KomponenGUI.JTextAreaF JTKeterangan;
+    private KomponenGUI.JtextF JTPlatKendaraan;
     // End of variables declaration//GEN-END:variables
 }
