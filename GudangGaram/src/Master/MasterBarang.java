@@ -51,7 +51,9 @@ public class MasterBarang extends javax.swing.JFrame {
         JTAliasBarang.setText(list.get(1));
         JTNamaBarang.setText(list.get(2));
         JCJenisBarang.setSelectedItem(list.get(3));
-        if (list.get(3).equals("Bahan")) list.get(4);
+        if (list.get(3).equals("Bahan")) {
+            list.get(4);
+        }
         JTSatuan.setText(list.get(5));
         JTHarga.setText(list.get(6));
         JTUpahPacking.setText(list.get(7));

@@ -26,7 +26,7 @@ public class ListPenyesuaian extends javax.swing.JFrame {
         setVisible(true);
         BtnUbahBarang.setEnabled(false);
         refresh();
-        if (!"2".equals(GlobalVar.Var.Level)) {
+        if (!"2".equals(GlobalVar.VarL.level)) {
             BtnHapusBarang.setEnabled(false);
         }
     }

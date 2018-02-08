@@ -75,7 +75,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
-        if(GlobalVar.Var.Level.equals("2")){
+        if(GlobalVar.VarL.level.equals("2")){
             jMenuItem1.setText("Tambah User");
         } else {
             jMenuItem1.setEnabled(false);
@@ -434,7 +434,7 @@ public class MenuUtama extends javax.swing.JFrame {
             public void run() {
                 //GlobalVar.Var.Username = "";
                 //GlobalVar.Var.Password = "";
-                //GlobalVar.Var.Level = "2";
+                //GlobalVar.VarL.level = "2";
                 new MenuUtama().setVisible(true);
             }
         });

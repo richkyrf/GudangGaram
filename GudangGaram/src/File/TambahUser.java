@@ -61,7 +61,7 @@ public class TambahUser extends javax.swing.JFrame {
 
         jlableF3.setText("Username");
 
-        jlableF2.setText(GlobalVar.Var.Username);
+        jlableF2.setText(GlobalVar.VarL.username);
 
         jlableF1.setText("Tambah User");
 
@@ -245,7 +245,7 @@ public class TambahUser extends javax.swing.JFrame {
     boolean Checkpassword() {
         DRunSelctOne dRunSelctOne = new LSubProces.DRunSelctOne();
         dRunSelctOne.seterorm("Gagal Ubah Passsword");
-        dRunSelctOne.setQuerynolimit("SELECT `Username`, `Password`, `Level` FROM `tblogin` WHERE Username='" + GlobalVar.Var.Username + "' and `Password` = '" + getMD5(new String(JTPassword.getPassword())) + "'");
+        dRunSelctOne.setQuerynolimit("SELECT `Username`, `Password`, `Level` FROM `tblogin` WHERE Username='" + GlobalVar.VarL.username + "' and `Password` = '" + getMD5(new String(JTPassword.getPassword())) + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         try {
             //////System.out.println(list.get(1));

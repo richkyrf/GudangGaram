@@ -65,7 +65,7 @@ public class GantiPassword extends javax.swing.JFrame {
 
         JLUsername2.setText(":");
 
-        JLUsername3.setText(GlobalVar.Var.Username);
+        JLUsername3.setText(GlobalVar.VarL.username);
 
         JLPasswordLama.setText("Password Lama");
 
@@ -183,7 +183,7 @@ public class GantiPassword extends javax.swing.JFrame {
     private void JBGantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGantiActionPerformed
         if (checkInput()) {
             Update update = new LSubProces.Update();
-            boolean simpan = update.Ubah("UPDATE `tblogin` SET `Password`='" + getMD5(new String(JTPasswordBaru.getPassword())) + "' WHERE `Username`='" + GlobalVar.Var.Username + "'", " Password", this);
+            boolean simpan = update.Ubah("UPDATE `tblogin` SET `Password`='" + getMD5(new String(JTPasswordBaru.getPassword())) + "' WHERE `Username`='" + GlobalVar.VarU.username + "'", " Password", this);
             if (simpan) {
                 GlobalVar.Var.gantiPassword.dispose();
                 GlobalVar.Var.gantiPassword = null;
@@ -208,7 +208,7 @@ public class GantiPassword extends javax.swing.JFrame {
             JTKonfirmasiPassword.requestFocus();
             if (checkInput()) {
                 Update update = new LSubProces.Update();
-                boolean simpan = update.Ubah("UPDATE `tblogin` SET `Password`='" + getMD5(new String(JTPasswordBaru.getPassword())) + "' WHERE `Username`='" + GlobalVar.Var.Username + "'", "Ganti Password", this);
+                boolean simpan = update.Ubah("UPDATE `tblogin` SET `Password`='" + getMD5(new String(JTPasswordBaru.getPassword())) + "' WHERE `Username`='" + GlobalVar.VarL.username + "'", "Ganti Password", this);
                 if (simpan) {
                     dispose();
                 }
