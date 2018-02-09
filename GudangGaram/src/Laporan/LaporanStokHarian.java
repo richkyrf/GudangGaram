@@ -10,6 +10,8 @@ import LSubProces.FLaporan;
 import LSubProces.History;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import net.sf.jasperreports.engine.JRParameter;
 
 /**
  *
@@ -112,6 +114,8 @@ public class LaporanStokHarian extends javax.swing.JFrame {
         hashs.put("Title", "LAPORAN STOK HARIAN");
         hashs.put("Tgl", FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd"));
         hashs.put("FormatTgl", FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy"));
+        java.util.Locale locale = new Locale("id", "ID");
+        hashs.put(JRParameter.REPORT_LOCALE, locale);
         fLaporan.sethashmap(hashs);
         fLaporan.setfilename("StokHarian");
         fLaporan.setErorm("Gagal Menampilkan Laporan " + this.getTitle());

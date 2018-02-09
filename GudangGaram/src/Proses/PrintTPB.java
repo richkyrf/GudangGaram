@@ -310,7 +310,7 @@ public class PrintTPB extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, `Karung`, `NettoPenjual`, `NettoPelita`, a.`Keterangan`, DATE_FORMAT(`Tanggal`, '%d-%m-%Y') as 'Tanggal', `Customer` FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmcustomer`c ON a.`IdCustomer`=c.`IdCustomer` WHERE `NoPenerimaan` = '" + NoTPB + "' ORDER BY `IdPenerimaan` ASC");
+        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, `KarungPelita`, `NettoPenjual`, `NettoPelita`, a.`Keterangan`, DATE_FORMAT(`Tanggal`, '%d-%m-%Y') as 'Tanggal', `Customer` FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmcustomer`c ON a.`IdCustomer`=c.`IdCustomer` WHERE `NoPenerimaan` = '" + NoTPB + "' ORDER BY `IdPenerimaan` ASC");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
