@@ -524,8 +524,8 @@ public class MasterBarang extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private KomponenGUI.JCheckBoxF JCBStatus;
-    private KomponenGUI.JcomboboxF JCJenisBarang;
-    public KomponenGUI.JcomboboxF JCPemasok;
+    public static KomponenGUI.JcomboboxF JCJenisBarang;
+    public static KomponenGUI.JcomboboxF JCPemasok;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JtextF JTAliasBarang;
     private KomponenGUI.JRibuanTextField JTHarga;

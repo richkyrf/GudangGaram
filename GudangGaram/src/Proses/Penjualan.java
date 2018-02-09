@@ -1042,10 +1042,10 @@ public class Penjualan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private KomponenGUI.JcomboboxF JCJenisPenjualan;
+    public static KomponenGUI.JcomboboxF JCJenisPenjualan;
     private KomponenGUI.JcomboboxF JCNamaBarang;
     private KomponenGUI.JcomboboxF JCPlat;
-    private KomponenGUI.JcomboboxF JCTujuan;
+    public static KomponenGUI.JcomboboxF JCTujuan;
     private KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JRibuanTextField JTGrandTotal;
@@ -1058,7 +1058,7 @@ public class Penjualan extends javax.swing.JFrame {
     private KomponenGUI.JRibuanTextField JTSubTotal;
     private KomponenGUI.JtableF JTable;
     private KomponenGUI.JlableF LBNoTransaksi;
-    private KomponenGUI.JlableF LBTujuan;
+    public static KomponenGUI.JlableF LBTujuan;
     private KomponenGUI.JbuttonF hapustable;
     private KomponenGUI.JbuttonF hapustable1;
     private javax.swing.JScrollPane jScrollPane1;

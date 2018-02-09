@@ -828,7 +828,12 @@ public class Penerimaan extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
-
+        if (GlobalVar.Var.tambahPemasok == null){
+            GlobalVar.Var.tambahPemasok = new Masters("0", "Pemasok");
+        } else {
+            GlobalVar.Var.tambahPemasok.setState(NORMAL);
+            GlobalVar.Var.tambahPemasok.toFront();
+        }
     }//GEN-LAST:event_jbuttonF5ActionPerformed
 
     private void jbuttonF6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF6ActionPerformed
@@ -910,8 +915,8 @@ public class Penerimaan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public KomponenGUI.JcomboboxF JCNamaBarang;
-    public KomponenGUI.JcomboboxF JCPemasok;
-    private KomponenGUI.JcomboboxF JCPeminta;
+    public static KomponenGUI.JcomboboxF JCPemasok;
+    public static KomponenGUI.JcomboboxF JCPeminta;
     public KomponenGUI.JcomboboxF JCPlat;
     private static KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JTextAreaF JTAKeterangan;

@@ -324,7 +324,7 @@ public class MasterKaryawan extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF jbuttonF2;
     private KomponenGUI.JbuttonF jbuttonF3;
     private KomponenGUI.JbuttonF jbuttonF4;
-    private KomponenGUI.JcomboboxF jcomboboxF1;
+    public static KomponenGUI.JcomboboxF jcomboboxF1;
     private KomponenGUI.JlableF jlableF1;
     private KomponenGUI.JlableF jlableF2;
     private KomponenGUI.JlableF jlableF3;

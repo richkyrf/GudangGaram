@@ -8,6 +8,8 @@ package Master;
 import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
 import LSubProces.Update;
+import List.ListMasters;
+import Proses.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -346,52 +348,80 @@ public class Masters extends javax.swing.JFrame {
                         if (GlobalVar.Var.listGudang != null) {
                             GlobalVar.Var.listGudang.refresh();
                         }
+                        if (GlobalVar.Var.tambahPenjualan != null || GlobalVar.Var.ubahPenjualan != null) {
+                            Penjualan.JCTujuan.load("SELECT `Gudang` FROM `tbmgudang`");
+                            Penjualan.JCTujuan.setSelectedItem(JTNama.getText());
+                            Penjualan.JCTujuan.requestFocus();
+                        }
                         break;
                     case "Pemasok":
                         if (GlobalVar.Var.listPemasok != null) {
                             GlobalVar.Var.listPemasok.refresh();
+                        }
+                        if (GlobalVar.Var.tambahBarang != null || GlobalVar.Var.ubahBarang != null) {
+                            MasterBarang.JCPemasok.load("SELECT `Pemasok` FROM `tbmpemasok`");
+                            MasterBarang.JCPemasok.setSelectedItem(JTNama.getText());
+                            MasterBarang.JCPemasok.requestFocus();
+                        }
+                        if (GlobalVar.Var.tambahPenerimaan != null || GlobalVar.Var.ubahPenerimaan != null) {
+                            Penerimaan.JCPemasok.load("SELECT `Pemasok` FROM `tbmpemasok`");
+                            Penerimaan.JCPemasok.setSelectedItem(JTNama.getText());
+                            Penerimaan.JCPemasok.requestFocus();
                         }
                         break;
                     case "Peminta":
                         if (GlobalVar.Var.listPeminta != null) {
                             GlobalVar.Var.listPeminta.refresh();
                         }
+                        if (GlobalVar.Var.tambahPenerimaan != null || GlobalVar.Var.ubahPenerimaan != null) {
+                            Penerimaan.JCPeminta.load("SELECT `Peminta` FROM `tbmpeminta`");
+                            Penerimaan.JCPeminta.setSelectedItem(JTNama.getText());
+                            Penerimaan.JCPeminta.requestFocus();
+                        }
                         break;
                     case "Penerima":
                         if (GlobalVar.Var.listPenerima != null) {
                             GlobalVar.Var.listPenerima.refresh();
+                        }
+                        if (GlobalVar.Var.tambahPenjualan != null || GlobalVar.Var.ubahPenjualan != null) {
+                            Penjualan.JCTujuan.load("SELECT `Penerima` FROM `tbmpenerima`");
+                            Penjualan.JCTujuan.setSelectedItem(JTNama.getText());
+                            Penjualan.JCTujuan.requestFocus();
                         }
                         break;
                     case "Jenis Karyawan":
                         if (GlobalVar.Var.listJenisKaryawan != null) {
                             GlobalVar.Var.listJenisKaryawan.refresh();
                         }
+                        if (GlobalVar.Var.tambahKaryawan != null || GlobalVar.Var.ubahKaryawan != null) {
+                            MasterKaryawan.jcomboboxF1.load("SELECT `JenisKaryawan` FROM `tbsmjeniskaryawan`");
+                            MasterKaryawan.jcomboboxF1.setSelectedItem(JTNama.getText());
+                            MasterKaryawan.jcomboboxF1.requestFocus();
+                        }
                         break;
                     case "Jenis Barang":
                         if (GlobalVar.Var.listJenisBarang != null) {
                             GlobalVar.Var.listJenisBarang.refresh();
+                        }
+                        if (GlobalVar.Var.tambahBarang != null || GlobalVar.Var.ubahBarang != null) {
+                            MasterBarang.JCJenisBarang.load("SELECT `JenisBarang` FROM `tbsmjenisbarang`");
+                            MasterBarang.JCJenisBarang.setSelectedItem(JTNama.getText());
+                            MasterBarang.JCJenisBarang.requestFocus();
                         }
                         break;
                     case "Jenis Penjualan":
                         if (GlobalVar.Var.listJenisPenjualan != null) {
                             GlobalVar.Var.listJenisPenjualan.refresh();
                         }
+                        if (GlobalVar.Var.tambahPenjualan != null || GlobalVar.Var.ubahPenjualan != null) {
+                            Penjualan.JCJenisPenjualan.load("SELECT `JenisPenjualan` FROM `tbsmjenispenjualan`");
+                            Penjualan.JCJenisPenjualan.setSelectedItem(JTNama.getText());
+                            Penjualan.JCJenisPenjualan.requestFocus();
+                        }
                         break;
                     default:
                         break;
                 }
-                /*
-                if (GlobalVar.Var.tambahPenerimaan != null) {
-                    GlobalVar.Var.tambahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
-                    GlobalVar.Var.tambahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
-                    GlobalVar.Var.tambahPenerimaan.JCPlat.requestFocus();
-                }
-                if (GlobalVar.Var.ubahPenerimaan != null) {
-                    GlobalVar.Var.ubahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
-                    GlobalVar.Var.ubahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
-                    GlobalVar.Var.ubahPenerimaan.JCPlat.requestFocus();
-                }
-                 */
                 if (tutup) {
                     dispose();
                 } else {

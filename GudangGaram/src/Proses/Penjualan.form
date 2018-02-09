@@ -355,6 +355,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCJenisPenjualan.load(&quot;SELECT `JenisPenjualan` FROM `tbsmjenispenjualan`&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF19">
@@ -607,6 +608,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Kepada"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF9">
       <Properties>
@@ -619,6 +623,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="if (JCJenisPenjualan.getSelectedItem().equals(&quot;PENJUALAN&quot;)) {&#xa;    JCTujuan.load(&quot;SELECT `Penerima` FROM `tbmpenerima` &quot;);&#xa;} else if (JCJenisPenjualan.getSelectedItem().equals(&quot;MUTASI GUDANG&quot;)) {&#xa;    JCTujuan.load(&quot;SELECT `Gudang` FROM `tbmgudang` &quot;);&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCPlat">
