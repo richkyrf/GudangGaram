@@ -248,7 +248,7 @@ public class GantiPassword extends javax.swing.JFrame {
             try {
                 if (list.get(0) != null) {
                     Update update = new LSubProces.Update();
-                    boolean ubah = update.Ubah("UPDATE `tbuser` SET `Password`='" + getMD5(new String(JTPasswordBaru.getPassword())) + "' WHERE `Username`='" + GlobalVar.VarL.username + "'", "Ganti Password", this);
+                    boolean ubah = update.Ubah("UPDATE `tbuser` SET `Password`='" + getMD5(new String(JTPasswordBaru.getPassword())) + "' WHERE `Username`='" + GlobalVar.VarL.username + "'", "Password", this);
                     if (ubah) {
                         GlobalVar.Var.gantiPassword.dispose();
                     }

@@ -207,7 +207,7 @@ public class ResetPasswordUser extends javax.swing.JFrame {
             JCUsername.showPopup();
         } else {
             Update update = new LSubProces.Update();
-            boolean ubah = update.Ubah("UPDATE `tbuser` SET `Password`='" + getMD5(new String(JTPasswordBaru.getPassword())) + "' WHERE `Username`='" + JCUsername.getSelectedItem() + "'", "Reset Password User", this);
+            boolean ubah = update.Ubah("UPDATE `tbuser` SET `Password`='" + getMD5(new String(JTPasswordBaru.getPassword())) + "' WHERE `Username`='" + JCUsername.getSelectedItem() + "'", "Password User", this);
             if (ubah) {
                 GlobalVar.Var.resetPasswordUser.dispose();
             }
