@@ -8,7 +8,6 @@ package Master;
 import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
 import LSubProces.Update;
-import List.ListMasters;
 import Proses.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
