@@ -837,7 +837,12 @@ public class Penerimaan extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF5ActionPerformed
 
     private void jbuttonF6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF6ActionPerformed
-        // TODO add your handling code here:
+        if (GlobalVar.Var.tambahPeminta == null){
+            GlobalVar.Var.tambahPeminta = new Masters("0", "Peminta");
+        } else {
+            GlobalVar.Var.tambahPeminta.setState(NORMAL);
+            GlobalVar.Var.tambahPeminta.toFront();
+        }
     }//GEN-LAST:event_jbuttonF6ActionPerformed
 
     private void jbuttonF7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF7ActionPerformed

@@ -313,6 +313,16 @@ public class MasterKendaraan extends javax.swing.JFrame {
                     GlobalVar.Var.ubahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
                     GlobalVar.Var.ubahPenerimaan.JCPlat.requestFocus();
                 }
+                if (GlobalVar.Var.tambahPenjualan != null) {
+                    GlobalVar.Var.tambahPenjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.tambahPenjualan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    GlobalVar.Var.tambahPenjualan.JCPlat.requestFocus();
+                }
+                if (GlobalVar.Var.ubahPenjualan != null) {
+                    GlobalVar.Var.ubahPenjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.ubahPenjualan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    GlobalVar.Var.ubahPenjualan.JCPlat.requestFocus();
+                }
                 if (tutup) {
                     dispose();
                 } else {
