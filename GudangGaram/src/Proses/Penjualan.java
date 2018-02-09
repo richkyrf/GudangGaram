@@ -1542,23 +1542,10 @@ public class Penjualan extends javax.swing.JFrame {
     void setStok() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.seterorm("Gagal setStok()");
-        dRunSelctOne.setQuery("SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok', SUM(`KG`) as 'KG' FROM (\n" +
-"SELECT `IdBarang`, `NamaBarang`, 0 as 'Stok', 0 as 'KG' FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n" +
-"UNION ALL\n" +
-"SELECT a.`IdBarang`, `NamaBarang`, ifnull(`KarungPelita`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'KG' FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n" +
-"UNION ALL\n" +
-"SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'KG' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbpenjualan`c ON a.`NoTransaksi`=c.`NoTransaksi` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n" +
-"UNION ALL\n" +
-"SELECT  `IdBarangBahan`, `NamaBarang`, (ROUND(`JumlahBahan` * 10) / 10 )*-1 AS 'Stok', `JumlahBahan`*`Satuan`*-1 AS 'KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangBahan`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n" +
-"UNION ALL\n" +
-"SELECT  `IdBarangHasil`, `NamaBarang`, (ROUND(`JumlahHasil` * 10 ) / 10) AS 'Stok', `JumlahHasil`*`Satuan` AS 'KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n" +
-"UNION ALL\n" +
-"SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0) AS 'Stok', ifnull(`Jumlah`,0) AS 'KG' FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n" +
-") as tbTemp GROUP BY `IdBarang`");
         dRunSelctOne.setQuery("SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok', SUM(`KG`) as 'KG' FROM (\n"
                 + "SELECT `IdBarang`, `NamaBarang`, 0 as 'Stok', 0 as 'KG' FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
                 + "UNION ALL\n"
-                + "SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Karung`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'KG' FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
+                + "SELECT a.`IdBarang`, `NamaBarang`, ifnull(`KarungPelita`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'KG' FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
                 + "UNION ALL\n"
                 + "SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'KG' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbpenjualan`c ON a.`NoTransaksi`=c.`NoTransaksi` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
                 + "UNION ALL\n"
