@@ -1027,11 +1027,11 @@ public class Penjualan extends javax.swing.JFrame {
 
     private void jbuttonF6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF6ActionPerformed
         if (JCJenisPenjualan.getSelectedItem().equals("PENJUALAN")) {
-            if (GlobalVar.Var.tambahPeminta == null) {
-                GlobalVar.Var.tambahPeminta = new Masters("0", "Penerima");
+            if (GlobalVar.Var.tambahPenerima == null) {
+                GlobalVar.Var.tambahPenerima = new Masters("0", "Penerima");
             } else {
-                GlobalVar.Var.tambahPeminta.setState(NORMAL);
-                GlobalVar.Var.tambahPeminta.toFront();
+                GlobalVar.Var.tambahPenerima.setState(NORMAL);
+                GlobalVar.Var.tambahPenerima.toFront();
             }
         } else if (JCJenisPenjualan.getSelectedItem().equals("MUTASI GUDANG")) {
             if (GlobalVar.Var.tambahGudang == null) {
