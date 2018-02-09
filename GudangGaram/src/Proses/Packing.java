@@ -122,7 +122,7 @@ public class Packing extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Plat Tidak Boleh Kosong");
             return false;
         } else if (jtextF3.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Nama Customer Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, "Nama Pemasok Tidak Boleh Kosong");
             return false;
         }*/ else {
             return true;
@@ -911,7 +911,7 @@ public class Packing extends javax.swing.JFrame {
                                 .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                        .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

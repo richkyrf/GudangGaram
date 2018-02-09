@@ -91,7 +91,7 @@ public class PrintTPB extends javax.swing.JFrame {
         JTable = new KomponenGUI.JtableF();
         jbuttonF1 = new KomponenGUI.JbuttonF();
         jbuttonF2 = new KomponenGUI.JbuttonF();
-        JTCustomer = new KomponenGUI.JtextF();
+        JTPemasok = new KomponenGUI.JtextF();
         JTTanggal = new KomponenGUI.JtextF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -118,7 +118,7 @@ public class PrintTPB extends javax.swing.JFrame {
 
         jlableF27.setText(":");
 
-        LBNoTransaksi1.setText("Customer");
+        LBNoTransaksi1.setText("Pemasok");
 
         LBNoTransaksi2.setText("TANDA PENERIMAAN BARANG");
 
@@ -148,10 +148,10 @@ public class PrintTPB extends javax.swing.JFrame {
             }
         });
 
-        JTCustomer.setEnabled(false);
-        JTCustomer.addKeyListener(new java.awt.event.KeyAdapter() {
+        JTPemasok.setEnabled(false);
+        JTPemasok.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTCustomerKeyPressed(evt);
+                JTPemasokKeyPressed(evt);
             }
         });
 
@@ -177,7 +177,7 @@ public class PrintTPB extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(JTPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(LBNoTransaksi2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -214,7 +214,7 @@ public class PrintTPB extends javax.swing.JFrame {
                     .addComponent(jlableF23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBNoTransaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
@@ -236,9 +236,9 @@ public class PrintTPB extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
 
-    private void JTCustomerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTCustomerKeyPressed
+    private void JTPemasokKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPemasokKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTCustomerKeyPressed
+    }//GEN-LAST:event_JTPemasokKeyPressed
 
     private void JTTanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTTanggalKeyPressed
         // TODO add your handling code here:
@@ -288,8 +288,8 @@ public class PrintTPB extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private KomponenGUI.JtextF JTCustomer;
     private KomponenGUI.JtextF JTNoPenerimaan;
+    private KomponenGUI.JtextF JTPemasok;
     private KomponenGUI.JtextF JTTanggal;
     private KomponenGUI.JtableF JTable;
     private KomponenGUI.JlableF LBNoTransaksi;
@@ -306,17 +306,17 @@ public class PrintTPB extends javax.swing.JFrame {
 
     void load() {
         String Tanggal = null;
-        String Customer = null;
+        String Pemasok = null;
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, `KarungPelita`, `NettoPenjual`, `NettoPelita`, a.`Keterangan`, DATE_FORMAT(`Tanggal`, '%d-%m-%Y') as 'Tanggal', `Customer` FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmcustomer`c ON a.`IdCustomer`=c.`IdCustomer` WHERE `NoPenerimaan` = '" + NoTPB + "' ORDER BY `IdPenerimaan` ASC");
+        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, `KarungPelita`, `NettoPenjual`, `NettoPelita`, a.`Keterangan`, DATE_FORMAT(`Tanggal`, '%d-%m-%Y') as 'Tanggal', `Pemasok` FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmpemasok`c ON a.`IdPemasok`=c.`IdPemasok` WHERE `NoPenerimaan` = '" + NoTPB + "' ORDER BY `IdPenerimaan` ASC");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
             while (rs.next()) {
                 Tanggal = rs.getString(7);
-                Customer = rs.getString(8);
+                Pemasok = rs.getString(8);
                 model.addRow(new Object[]{" ", " ", "", "", "", "", ""});
                 JTable.setValueAt(row + 1, row, 0);
                 JTable.setValueAt(rs.getString(1), row, 1);
@@ -328,7 +328,7 @@ public class PrintTPB extends javax.swing.JFrame {
                 row++;
             }
             JTTanggal.setText(Tanggal);
-            JTCustomer.setText(Customer);
+            JTPemasok.setText(Pemasok);
         } catch (SQLException e) {
             out.println("E6" + e);
             showMessageDialog(null, "Gagal Panggil Data Print TPB");
@@ -356,11 +356,11 @@ public class PrintTPB extends javax.swing.JFrame {
         JTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         JTable.getTableHeader().setReorderingAllowed(false);
     }
-    
+
     void printing() {
         String Tanggal = JTTanggal.getText();
         String NoPenerimaan = JTNoPenerimaan.getText();
-        String Customer = JTCustomer.getText();
+        String Pemasok = JTPemasok.getText();
         String[] No = new String[JTable.getRowCount()];
         String[] Barang = new String[JTable.getRowCount()];
         String[] Plat = new String[JTable.getRowCount()];
@@ -383,18 +383,18 @@ public class PrintTPB extends javax.swing.JFrame {
             NettoPLTS[i] = Intformatdigit(NettoPLT[i]);
             Ket[i] = JTable.getValueAt(i, 6).toString();
         }
-        
+
         Integer TotalPJL = getTotalPJL();
         String TotalPJLS = Intformatdigit(TotalPJL);
         Integer TotalPLT = getTotalPLT();
         String TotalPLTS = Intformatdigit(TotalPLT);
-        
+
         String leftAlignFormat = "%-5s%-25s%-13s%-6s%-9s%-9s%-12s%-1s%n";
         String OutFormat = "";
         OutFormat += format("%-80s%n", " _____________________________________________________________________________");
         OutFormat += format("%-80s%n", " Tanda Penerimaan Barang");
         OutFormat += format("%-53s%-27s%n", " ", "No Penerimaan: " + NoPenerimaan);
-        OutFormat += format("%-53s%-27s%n", " Customer: "+Customer, "     Tanggal : " + Tanggal);
+        OutFormat += format("%-53s%-27s%n", " Pemasok : " + Pemasok, "     Tanggal : " + Tanggal);
         //                              12345678901234567890123456789012345678901234567890123456789012345678901234567890
         //                              12341234567890123456789012345678901234567890123456712345678912345671234567890123
         OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
@@ -421,7 +421,7 @@ public class PrintTPB extends javax.swing.JFrame {
         OutFormat += format("%n", "");
         directprinting(OutFormat);
     }
-    
+
     public static void directprinting(String Teks) {
         String testprint = Teks;
         String defaultPrinter
@@ -525,7 +525,7 @@ public class PrintTPB extends javax.swing.JFrame {
         }
         return GrandTotal;
     }
-    
+
     Integer getTotalPJL() {
         int GrandTotal = 0;
         for (int x = 0; x < JTable.getRowCount(); x++) {

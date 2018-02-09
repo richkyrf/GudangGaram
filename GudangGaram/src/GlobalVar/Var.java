@@ -33,7 +33,7 @@ public class Var {
     public static Penerimaan tambahPenerimaan, ubahPenerimaan;
     public static Packing tambahPacking, ubahPacking;
     public static Penjualan tambahPenjualan, ubahPenjualan;
-    public static Penyesuaian tambahPenyesuaian, ubahPenyesuaian;
+    public static Penyesuaiann tambahPenyesuaian, ubahPenyesuaian;
     
     public static Penggajian penggajian;
     public static PrintTPB printTPB;

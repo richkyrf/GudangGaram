@@ -7,7 +7,7 @@ package List;
 
 import LSubProces.Delete;
 import Master.MasterBarang;
-import Proses.Penyesuaian;
+import Proses.Penyesuaiann;
 
 /**
  *
@@ -195,7 +195,7 @@ public class ListPenyesuaian extends javax.swing.JFrame {
     }
 
     void ubah() {
-        GlobalVar.Var.ubahPenyesuaian = new Penyesuaian(jcomCariBarang.GetIDTable());
+        GlobalVar.Var.ubahPenyesuaian = new Penyesuaiann(jcomCariBarang.GetIDTable());
     }
 
     public void refresh() {

@@ -37,7 +37,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jlableF27" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JTCustomer" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="JTPemasok" min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
                           <Component id="LBNoTransaksi2" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -85,7 +85,7 @@
                   <Component id="jlableF23" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LBNoTransaksi1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF27" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTCustomer" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTPemasok" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTTanggal" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -136,7 +136,7 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="LBNoTransaksi1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Customer"/>
+        <Property name="text" type="java.lang.String" value="Pemasok"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="LBNoTransaksi2">
@@ -229,12 +229,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF2ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="KomponenGUI.JtextF" name="JTCustomer">
+    <Component class="KomponenGUI.JtextF" name="JTPemasok">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTCustomerKeyPressed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTPemasokKeyPressed"/>
       </Events>
     </Component>
     <Component class="KomponenGUI.JtextF" name="JTTanggal">
