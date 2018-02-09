@@ -20,7 +20,7 @@ public class ListKaryawan extends javax.swing.JFrame {
     public ListKaryawan() {
         initComponents();
         setVisible(true);
-        setTitle("List Karyawan");
+        setTitle("List Master Karyawan");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         refreshAll();
