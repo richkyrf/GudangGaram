@@ -20,7 +20,7 @@ public class ListBarang extends javax.swing.JFrame {
     public ListBarang() {
         initComponents();
         setVisible(true);
-        setTitle("List Barang");
+        setTitle("List Master Barang");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         refreshAll();
