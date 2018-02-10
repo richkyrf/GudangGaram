@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StokHarian" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="acc8509b-a836-4b53-b178-b496671fd8c2">
-	<property name="ireport.zoom" value="1.1"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="207"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Title" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["Laporan Permintaan Barang"]]></defaultValueExpression>
@@ -23,7 +23,7 @@
 
 (SELECT `IdBarang`, `NamaBarang` FROM `tbmbarang` WHERE 1 ) a
     LEFT JOIN
-(SELECT `IdBarang`, SUM(`Karung`) as 'Beli' FROM `tbpenerimaan` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarang`) b
+(SELECT `IdBarang`, SUM(`KarungPelita`) as 'Beli' FROM `tbpenerimaan` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarang`) b
     ON a.`IdBarang`=b.`IdBarang`
     LEFT JOIN
 (SELECT `IdBarang`, SUM(`Jumlah`) as 'Jual' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` WHERE 1 AND `Tanggal` = $P{Tgl} AND b.`NoTransaksi` LIKE '%-PJ' GROUP BY `IdBarang`) c
@@ -44,7 +44,7 @@
 (SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok Awal', SUM(`Stokkg`) as 'Stok Awal Kg' FROM (
 SELECT `IdBarang`, `NamaBarang`, 0 as 'Stok', 0 as 'Stokkg' FROM `tbmbarang` WHERE 1
 UNION ALL
-SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Karung`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'Stokkg' FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE 1 AND `Tanggal` < $P{Tgl}
+SELECT a.`IdBarang`, `NamaBarang`, ifnull(`KarungPelita`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'Stokkg' FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE 1 AND `Tanggal` < $P{Tgl}
 UNION ALL
 SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'Stokkg' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbpenjualan`c ON a.`NoTransaksi`=c.`NoTransaksi` WHERE 1 AND `Tanggal` < $P{Tgl}
 UNION ALL
@@ -71,7 +71,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 	<field name="Mutasi" class="java.math.BigDecimal"/>
 	<field name="Bahan" class="java.math.BigDecimal"/>
 	<field name="Hasil" class="java.math.BigDecimal"/>
-	<field name="Penyesuaian" class="java.lang.Integer"/>
+	<field name="Penyesuaian" class="java.math.BigDecimal"/>
 	<field name="Total Masuk" class="java.math.BigDecimal"/>
 	<field name="Total Keluar" class="java.math.BigDecimal"/>
 	<variable name="Stok Akhir" class="java.lang.String"/>
@@ -132,7 +132,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[NO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="37" y="21" width="144" height="30" uuid="d55267f8-2242-4796-9db0-be59e7ecd769"/>
+				<reportElement x="37" y="21" width="143" height="30" uuid="d55267f8-2242-4796-9db0-be59e7ecd769"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -146,8 +146,8 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Nama Barang]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="181" y="21" width="91" height="15" uuid="5acbf8a5-880f-4599-86c3-4baf94cd0b86"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+				<reportElement x="180" y="21" width="91" height="15" uuid="5acbf8a5-880f-4599-86c3-4baf94cd0b86"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -155,13 +155,13 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Stok Awal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="21" width="55" height="30" uuid="227ac288-b524-4ffa-ac65-443075c2b247"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+				<reportElement x="271" y="36" width="55" height="15" uuid="227ac288-b524-4ffa-ac65-443075c2b247"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -169,13 +169,13 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Beli]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="327" y="21" width="35" height="30" uuid="9b1baa38-29e7-4e06-ad08-e8cffa2f61aa"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+				<reportElement x="326" y="36" width="55" height="15" uuid="4cd64545-d689-4688-b974-c0812ffb97cc"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -183,13 +183,125 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="36" width="55" height="15" uuid="7b95076e-8ad0-4791-9352-10416d8e20a2"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="601" y="36" width="55" height="15" uuid="84d42651-95ef-40d1-b478-f7763ee53ca9"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="36" width="36" height="15" uuid="95e00c02-1a28-4f67-879b-68a4ae422036"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sak]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="36" width="55" height="15" uuid="8bf825e2-a2fd-42ad-ac89-c6d5b6e24c85"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="747" y="36" width="55" height="15" uuid="c0b9e89b-4889-4946-b68b-b83d5f85d02c"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="711" y="21" width="91" height="15" uuid="2e4c4f40-5aa1-40c8-87f2-5c01bfc70b44"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stok Akhir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="711" y="36" width="36" height="15" uuid="73ac6cf2-c464-4cc2-9888-d044ac4abfec"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sak]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="436" y="36" width="55" height="15" uuid="9b1baa38-29e7-4e06-ad08-e8cffa2f61aa"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Jual]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="21" width="35" height="30" uuid="8dc01f54-16d2-42ef-be87-659efba2142d"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+				<reportElement x="491" y="36" width="55" height="15" uuid="8dc01f54-16d2-42ef-be87-659efba2142d"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -202,8 +314,8 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Mutasi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="397" y="21" width="50" height="30" uuid="f3cc74ef-6a3e-437e-acac-bb58b12010e0"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+				<reportElement x="546" y="36" width="55" height="15" uuid="f3cc74ef-6a3e-437e-acac-bb58b12010e0"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -211,26 +323,12 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Bahan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="447" y="21" width="50" height="30" uuid="4cd64545-d689-4688-b974-c0812ffb97cc"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Hasil]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="497" y="21" width="50" height="30" uuid="34ee593d-1965-4e8f-aac5-ca2d65b0e71c"/>
+				<reportElement x="656" y="21" width="55" height="30" uuid="34ee593d-1965-4e8f-aac5-ca2d65b0e71c"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -244,8 +342,8 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Penye suaian]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="547" y="21" width="55" height="30" uuid="7b95076e-8ad0-4791-9352-10416d8e20a2"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+				<reportElement x="271" y="21" width="165" height="15" uuid="82d3f962-e7dd-4b27-89ce-fd8719e32632"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -253,13 +351,13 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Masuk]]></text>
+				<text><![CDATA[Penerimaan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="602" y="21" width="55" height="30" uuid="84d42651-95ef-40d1-b478-f7763ee53ca9"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+				<reportElement x="436" y="21" width="220" height="15" uuid="eb5e581d-764d-4dbe-bff5-e14f0fb6d6d7"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -267,79 +365,9 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Keluar]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="181" y="36" width="30" height="15" uuid="95e00c02-1a28-4f67-879b-68a4ae422036"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Sak]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="211" y="36" width="61" height="15" uuid="8bf825e2-a2fd-42ad-ac89-c6d5b6e24c85"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[KG]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="687" y="36" width="61" height="15" uuid="c0b9e89b-4889-4946-b68b-b83d5f85d02c"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[KG]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="657" y="21" width="91" height="15" uuid="2e4c4f40-5aa1-40c8-87f2-5c01bfc70b44"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Stok Akhir]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="657" y="36" width="30" height="15" uuid="73ac6cf2-c464-4cc2-9888-d044ac4abfec"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Sak]]></text>
+				<text><![CDATA[Pengeluaran]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -360,7 +388,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="37" y="0" width="144" height="20" uuid="41b24620-97c5-4dfc-9776-84893a7d9f14"/>
+				<reportElement x="37" y="0" width="143" height="20" uuid="41b24620-97c5-4dfc-9776-84893a7d9f14"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -372,7 +400,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{NamaBarang}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="181" y="0" width="30" height="20" uuid="3af16aba-ad8e-44c9-8a38-b98029b19620"/>
+				<reportElement x="180" y="0" width="36" height="20" uuid="3af16aba-ad8e-44c9-8a38-b98029b19620"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -384,7 +412,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Stok Awal}==0?null:$F{Stok Awal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="272" y="0" width="55" height="20" uuid="23902b6f-995f-483b-9513-4fee5e4298c6"/>
+				<reportElement x="271" y="0" width="55" height="20" uuid="23902b6f-995f-483b-9513-4fee5e4298c6"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -396,43 +424,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Beli}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="327" y="0" width="35" height="20" uuid="f19d82b3-39ed-4c10-ac48-ccf4145602cf"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Jual}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="362" y="0" width="35" height="20" uuid="936190cb-9c9a-4d88-be37-4b575c74dcce"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Mutasi}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="397" y="0" width="50" height="20" uuid="950f7005-3b47-429a-a22b-475498f40ba7"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Bahan}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="447" y="0" width="50" height="20" uuid="9f287f6f-bb5f-497f-8187-65fe172cb999"/>
+				<reportElement x="326" y="0" width="55" height="20" uuid="9f287f6f-bb5f-497f-8187-65fe172cb999"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -444,7 +436,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Hasil}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="547" y="0" width="55" height="20" uuid="b759fb8c-176b-41ef-bdca-2d89e70693e1"/>
+				<reportElement x="381" y="0" width="55" height="20" uuid="b759fb8c-176b-41ef-bdca-2d89e70693e1"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -456,7 +448,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Total Masuk}==0?null:$F{Total Masuk}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="602" y="0" width="55" height="20" uuid="7ac5446b-ef93-48f0-8a4e-1027227ad389"/>
+				<reportElement x="601" y="0" width="55" height="20" uuid="7ac5446b-ef93-48f0-8a4e-1027227ad389"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -468,19 +460,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Total Keluar}==0?null:$F{Total Keluar}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="497" y="0" width="50" height="20" uuid="dcf37082-abf8-4ba8-91d3-8d77cf5805a6"/>
-				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Penyesuaian}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="657" y="0" width="30" height="20" uuid="b99a844d-2bd0-456e-a326-a4caedaa160c"/>
+				<reportElement x="711" y="0" width="36" height="20" uuid="b99a844d-2bd0-456e-a326-a4caedaa160c"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -492,7 +472,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})==0?null:($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="211" y="0" width="61" height="20" uuid="4c9c41bb-18e9-409d-98e0-1e8ed519b25f"/>
+				<reportElement x="216" y="0" width="55" height="20" uuid="4c9c41bb-18e9-409d-98e0-1e8ed519b25f"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -504,7 +484,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Stok Awal KG}==0?null:$F{Stok Awal KG}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="687" y="0" width="61" height="20" uuid="b332a3a5-62ea-40c3-bf2d-d8c3d84510c5"/>
+				<reportElement x="747" y="0" width="55" height="20" uuid="b332a3a5-62ea-40c3-bf2d-d8c3d84510c5"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -515,12 +495,60 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[(($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})*($F{Stok Awal}==0?null:($F{Stok Awal KG}/$F{Stok Awal})))==0?null:(($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})*($F{Stok Awal}==0?null:($F{Stok Awal KG}/$F{Stok Awal})))]]></textFieldExpression>
 			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="436" y="0" width="55" height="20" uuid="f19d82b3-39ed-4c10-ac48-ccf4145602cf"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Jual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="491" y="0" width="55" height="20" uuid="936190cb-9c9a-4d88-be37-4b575c74dcce"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Mutasi}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="546" y="0" width="55" height="20" uuid="950f7005-3b47-429a-a22b-475498f40ba7"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Bahan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="656" y="0" width="55" height="20" uuid="dcf37082-abf8-4ba8-91d3-8d77cf5805a6"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Penyesuaian}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="105" splitType="Stretch">
 			<staticText>
-				<reportElement x="619" y="13" width="86" height="20" uuid="bf654a98-41fd-417b-ad19-f6a3282f207c"/>
+				<reportElement x="655" y="13" width="86" height="20" uuid="bf654a98-41fd-417b-ad19-f6a3282f207c"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 				<textElement>
 					<font isBold="true"/>
@@ -528,7 +556,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Dilaporkan Oleh:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="619" y="75" width="86" height="20" uuid="c4e7aeb4-656a-4ae0-9220-53d60d5fb3eb"/>
+				<reportElement x="655" y="75" width="86" height="20" uuid="c4e7aeb4-656a-4ae0-9220-53d60d5fb3eb"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>

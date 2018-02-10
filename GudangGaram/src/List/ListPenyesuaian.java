@@ -6,8 +6,9 @@
 package List;
 
 import LSubProces.Delete;
-import Master.MasterBarang;
 import Proses.Penyesuaiann;
+import static java.awt.Frame.NORMAL;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,8 +27,9 @@ public class ListPenyesuaian extends javax.swing.JFrame {
         setVisible(true);
         BtnUbahBarang.setEnabled(false);
         refresh();
-        if (!"2".equals(GlobalVar.VarL.level)) {
-            BtnHapusBarang.setEnabled(false);
+        if (!GlobalVar.VarL.level.equals("Administrator")) {
+            BtnHapusBarang.setVisible(false);
+            BtnUbahBarang.setVisible(false);
         }
     }
 
@@ -88,29 +90,31 @@ public class ListPenyesuaian extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcomCariBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jcomCariBarang, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 428, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BtnRefreshBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnHapusBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnUbahBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jcomCariBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jcomCariBarang, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(BtnHapusBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(BtnUbahBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(BtnRefreshBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnHapusBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnUbahBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnRefreshBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -188,14 +192,27 @@ public class ListPenyesuaian extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void delete() {
-        Delete delete = new LSubProces.Delete();
-        if (delete.Hapus(jcomCariBarang.GetIDTable(), "DELETE FROM `tbpenyesuaian` WHERE `IdPenyesuaian` = " + jcomCariBarang.GetIDTable(), "Penyesuaian", this)) {
-            refresh();
+        if (jcomCariBarang.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            Delete delete = new LSubProces.Delete();
+            if (delete.Hapus(jcomCariBarang.GetIDTable(), "DELETE FROM `tbpenyesuaian` WHERE `IdPenyesuaian` = " + jcomCariBarang.GetIDTable(), "Penyesuaian", this)) {
+                refresh();
+            }
         }
     }
 
     void ubah() {
-        GlobalVar.Var.ubahPenyesuaian = new Penyesuaiann(jcomCariBarang.GetIDTable());
+        if (jcomCariBarang.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (GlobalVar.Var.ubahPenyesuaian == null) {
+                GlobalVar.Var.ubahPenyesuaian = new Penyesuaiann(jcomCariBarang.GetIDTable());
+            } else {
+                GlobalVar.Var.ubahPenyesuaian.setState(NORMAL);
+                GlobalVar.Var.ubahPenyesuaian.toFront();
+            }
+        }
     }
 
     public void refresh() {
