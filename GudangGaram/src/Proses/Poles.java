@@ -5,21 +5,18 @@
  */
 package Proses;
 
-import GlobalVar.Terbilang;
 import static KomponenGUI.FDateF.datetostr;
 import LSubProces.DRunSelctOne;
 import LSubProces.RunSelct;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import static java.lang.Integer.parseInt;
 import static java.lang.Math.abs;
 import static java.lang.String.format;
 import static java.lang.System.out;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +38,6 @@ import static javax.print.attribute.standard.MediaSize.findMedia;
 import static javax.print.attribute.standard.OrientationRequested.LANDSCAPE;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
-import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
 
@@ -60,60 +56,24 @@ public class Poles extends javax.swing.JFrame {
         setTitle("Poles");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        JTNoPoles.setText(generateNoPoles());
-    }
-
-    public static String generateNoPoles() {
-        NumberFormat nf = new DecimalFormat("000000");
-        String NoPoles = null;
-        RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoPoles` FROM `tbpoles` ORDER BY `NoPoles` DESC LIMIT 1");
-        try {
-            ResultSet rs = runSelct.excute();
-            if (!rs.isBeforeFirst()) {
-                NoPoles = "GG-" + "000001" + "-PO";
-            }
-            while (rs.next()) {
-                String nopenjualan = rs.getString("NoPoles");
-                String number = nopenjualan.substring(3, 9);
-                //String month = nopenjualan.substring(8, 10);
-                int p = 1 + parseInt(number);
-                /*if (month.equals(FDateF.datetostr(new Date(), "MM"))) {
-                    p = 1 + parseInt(number);
-                } else {
-                    p = 1;
-                }*/
-                if (p != 999999) {
-                    NoPoles = "GG-" + nf.format(p) + "-PO";
-                } else if (p == 999999) {
-                    p = 1;
-                    NoPoles = "GG-" + nf.format(p) + "-PO";
-                }
-            }
-        } catch (SQLException e) {
-            out.println("E6" + e);
-            showMessageDialog(null, "Gagal Generate Nomor Poles");
-        } finally {
-            runSelct.closecon();
-        }
-        return NoPoles;
     }
 
     void loadBahan() {
         DefaultTableModel model = (DefaultTableModel) JTableBahan.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT b.`NamaBarang`, ROUND(SUM(`JumlahBahan`)) as 'Jumlah', b.`Satuan`, ROUND(ROUND(SUM(`JumlahBahan`)) * b.`Satuan`) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangBahan` = b.`IdBarang` WHERE `Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`NamaBarang` ORDER BY `NoPacking` DESC");
+        runSelct.setQuery("SELECT `NoPoles`, b.`NamaBarang`, FORMAT(ROUND(SUM(`JumlahBahan`)),0) as 'Jumlah', b.`Satuan`, FORMAT(ROUND(ROUND(SUM(`JumlahBahan`)) * b.`Satuan`),0) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangBahan` = b.`IdBarang` WHERE `Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`NamaBarang` ORDER BY `NoPacking` DESC");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
             while (rs.next()) {
                 model.addRow(new Object[]{"", "", "", "", ""});
                 JTableBahan.setValueAt(row + 1, row, 0);
-                JTableBahan.setValueAt(rs.getString(1), row, 1);
-                JTableBahan.setValueAt(rs.getString(2), row, 2);
-                JTableBahan.setValueAt(rs.getString(3).replace(".", ","), row, 3);
-                JTableBahan.setValueAt(rs.getString(4), row, 4);
+                JTNoPoles.setText(rs.getString(1));
+                JTableBahan.setValueAt(rs.getString(2), row, 1);
+                JTableBahan.setValueAt(rs.getString(3).replace(",","."), row, 2);
+                JTableBahan.setValueAt(rs.getString(4).replace(".", ","), row, 3);
+                JTableBahan.setValueAt(rs.getString(5).replace(",","."), row, 4);
                 row++;
             }
         } catch (SQLException e) {
@@ -128,7 +88,7 @@ public class Poles extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTableHasil.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT b.`NamaBarang`, ROUND(SUM(`JumlahHasil`)) as 'Jumlah', b.`Satuan`, ROUND(ROUND(SUM(`JumlahHasil`)) * b.`Satuan`) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil` = b.`IdBarang` WHERE `Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`NamaBarang` ORDER BY `NoPacking` DESC");
+        runSelct.setQuery("SELECT b.`NamaBarang`, FORMAT(ROUND(SUM(`JumlahHasil`)),0) as 'Jumlah', b.`Satuan`, FORMAT(ROUND(ROUND(SUM(`JumlahHasil`)) * b.`Satuan`),0) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil` = b.`IdBarang` WHERE `Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`NamaBarang` ORDER BY `NoPacking` DESC");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -136,9 +96,9 @@ public class Poles extends javax.swing.JFrame {
                 model.addRow(new Object[]{"", "", "", "", ""});
                 JTableHasil.setValueAt(row + 1, row, 0);
                 JTableHasil.setValueAt(rs.getString(1), row, 1);
-                JTableHasil.setValueAt(rs.getString(2), row, 2);
+                JTableHasil.setValueAt(rs.getString(2).replace(",","."), row, 2);
                 JTableHasil.setValueAt(rs.getString(3).replace(".", ","), row, 3);
-                JTableHasil.setValueAt(rs.getString(4), row, 4);
+                JTableHasil.setValueAt(rs.getString(4).replace(",","."), row, 4);
                 row++;
             }
         } catch (SQLException e) {
@@ -152,7 +112,7 @@ public class Poles extends javax.swing.JFrame {
     Integer getTotalBahan() {
         int TotalBahan = 0;
         for (int x = 0; x < JTableBahan.getRowCount(); x++) {
-            TotalBahan = TotalBahan + Integer.valueOf(JTableBahan.getValueAt(x, 4).toString().replace(",", ""));
+            TotalBahan = TotalBahan + Integer.valueOf(JTableBahan.getValueAt(x, 4).toString().replace(".", "").replace(",", "."));
         }
         return TotalBahan;
     }
@@ -160,7 +120,7 @@ public class Poles extends javax.swing.JFrame {
     Integer getTotalHasil() {
         int TotalHasil = 0;
         for (int x = 0; x < JTableHasil.getRowCount(); x++) {
-            TotalHasil = TotalHasil + Integer.valueOf(JTableHasil.getValueAt(x, 4).toString().replace(",", ""));
+            TotalHasil = TotalHasil + Integer.valueOf(JTableHasil.getValueAt(x, 4).toString().replace(".", "").replace(",","."));
         }
         return TotalHasil;
     }
@@ -213,13 +173,13 @@ public class Poles extends javax.swing.JFrame {
         jlableF5 = new KomponenGUI.JlableF();
         jlableF12 = new KomponenGUI.JlableF();
         JTSusut = new KomponenGUI.JRibuanTextField();
-        jbuttonF1 = new KomponenGUI.JbuttonF();
         jlableF13 = new KomponenGUI.JlableF();
         jlableF14 = new KomponenGUI.JlableF();
         jlableF15 = new KomponenGUI.JlableF();
         jbuttonF2 = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -230,7 +190,6 @@ public class Poles extends javax.swing.JFrame {
 
         jlableF1.setText("No Poles");
 
-        JTNoPoles.setText("GG-000001-PO");
         JTNoPoles.setEnabled(false);
         JTNoPoles.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -260,7 +219,7 @@ public class Poles extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No", "Nama Barang", "Jumlah", "Satuan (KG)", "Jumlah KG"
+                "No", "Nama Barang", "Jumlah Sak", "Satuan", "Jumlah KG"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -289,13 +248,16 @@ public class Poles extends javax.swing.JFrame {
             JTableBahan.getColumnModel().getColumn(4).setPreferredWidth(120);
             JTableBahan.getColumnModel().getColumn(4).setMaxWidth(120);
         }
+        JTableBahan.setrender(2, "Number");
+        JTableBahan.setrender(3, "Number");
+        JTableBahan.setrender(4, "Number");
 
         JTableHasil.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No", "Nama Barang", "Jumlah", "Satuan (KG)", "Jumlah Kg"
+                "No", "Nama Barang", "Jumlah Sak", "Satuan", "Jumlah KG"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -324,6 +286,9 @@ public class Poles extends javax.swing.JFrame {
             JTableHasil.getColumnModel().getColumn(4).setPreferredWidth(120);
             JTableHasil.getColumnModel().getColumn(4).setMaxWidth(120);
         }
+        JTableHasil.setrender(2, "Number");
+        JTableHasil.setrender(3, "Number");
+        JTableHasil.setrender(4, "Number");
 
         JTNoPoles1.setText("Bahan Poles :");
         JTNoPoles1.setEnabled(false);
@@ -366,13 +331,6 @@ public class Poles extends javax.swing.JFrame {
         jlableF12.setText(":");
 
         JTSusut.setEnabled(false);
-
-        jbuttonF1.setText("Simpan");
-        jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF1ActionPerformed(evt);
-            }
-        });
 
         jlableF13.setText("Kg");
 
@@ -419,35 +377,33 @@ public class Poles extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jlableF5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlableF12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTSusut, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jlableF2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlableF10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(JTTotalBahan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(JTTotalHasil, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(2, 2, 2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlableF14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jlableF5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jlableF12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JTSusut, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jlableF2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlableF10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(JTTotalBahan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(JTTotalHasil, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(2, 2, 2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlableF14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jbuttonF2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -473,16 +429,10 @@ public class Poles extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jlableF11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlableF11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JTTotalBahan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -501,8 +451,9 @@ public class Poles extends javax.swing.JFrame {
                             .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlableF12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -539,10 +490,6 @@ public class Poles extends javax.swing.JFrame {
     private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
         printing();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
-
-    private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
-
-    }//GEN-LAST:event_jbuttonF1ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         GlobalVar.Var.poles = null;
@@ -597,7 +544,6 @@ public class Poles extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private KomponenGUI.JbuttonF jbuttonF1;
     private KomponenGUI.JbuttonF jbuttonF2;
     private KomponenGUI.JlableF jlableF1;
     private KomponenGUI.JlableF jlableF10;

@@ -9,6 +9,7 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
     <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
   </Events>
   <AuxValues>
@@ -29,49 +30,6 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="486" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jlableF33" max="32767" attributes="0"/>
-                                  <Component id="jlableF27" min="-2" pref="136" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jlableF26" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jlableF36" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="JCNamaKaryawan3" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="JTNoPas2" min="-2" pref="30" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jlableF28" min="-2" pref="136" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlableF29" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JCNamaKaryawan4" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jlableF15" min="-2" pref="136" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlableF16" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JTJumlahHasil2" min="-2" pref="100" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jlableF21" min="-2" pref="136" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlableF22" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JTKeterangan2" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="252" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
@@ -105,27 +63,6 @@
                                       <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jlableF4" min="-2" pref="136" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JCNamaHasil" min="-2" pref="330" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jlableF32" min="-2" pref="136" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF35" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JTNoPas1" min="-2" pref="30" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jlableF5" min="-2" pref="136" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF11" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JCNamaKaryawan1" min="-2" pref="200" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="jlableF12" min="-2" pref="136" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jlableF25" min="-2" max="-2" attributes="0"/>
@@ -146,29 +83,50 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="JTKeterangan1" min="-2" pref="200" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jlableF18" min="-2" pref="136" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF17" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JTUpahPerPack" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jlableF18" min="-2" pref="136" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jlableF17" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="JTUpahPerPack" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jlableF4" min="-2" pref="136" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="JCNamaHasil" min="-2" pref="330" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jlableF23" max="32767" attributes="0"/>
+                                      <Component id="jlableF23" min="-2" pref="93" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jlableF24" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="JDTanggal" min="-2" pref="200" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jlableF1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="jlableF1" max="32767" attributes="0"/>
+                                          <Component id="jlableF37" max="32767" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF9" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JTNoPacking" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jlableF9" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JTNoPacking" min="-2" pref="200" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="jlableF38" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JTNoPoles" min="-2" pref="200" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                               </Group>
                           </Group>
@@ -188,8 +146,60 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jlableF5" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jlableF11" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCNamaKaryawan1" min="-2" pref="200" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="JTNoPas1" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="JTNoPas2" alignment="1" min="-2" pref="352" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="486" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jlableF27" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jlableF26" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCNamaKaryawan3" min="-2" pref="200" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jlableF28" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jlableF29" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCNamaKaryawan4" min="-2" pref="200" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jlableF15" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jlableF16" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JTJumlahHasil2" min="-2" pref="100" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jlableF21" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jlableF22" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JTKeterangan2" min="-2" pref="200" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="252" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -233,13 +243,9 @@
                           <Component id="jlableF17" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="JTUpahPerPack" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jlableF32" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlableF35" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="JTNoPas1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlableF33" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlableF36" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="JTNoPas2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -254,8 +260,14 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jlableF1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JTNoPacking" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlableF38" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JTNoPoles" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jlableF37" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jlableF9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JTNoPacking" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -295,7 +307,7 @@
                   <Component id="jlableF22" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTKeterangan2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="tambahtable" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -304,7 +316,7 @@
                   <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="184" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="179" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -320,7 +332,7 @@
   <SubComponents>
     <Component class="KomponenGUI.JlableF" name="jlableF2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama Bahan 1"/>
+        <Property name="text" type="java.lang.String" value="Bahan Packing 1"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF1">
@@ -370,7 +382,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBahan1KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan1.load(&quot;SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan1.load(&quot;SELECT &apos;-- Pilih Bahan Ke 1 --&apos;  as &apos;AliasBarang&apos; UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JRibuanTextField" name="JTJumlahBahan1">
@@ -406,7 +418,7 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama Hasil"/>
+        <Property name="text" type="java.lang.String" value="Hasil Packing"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF8">
@@ -430,7 +442,7 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama Karyawan"/>
+        <Property name="text" type="java.lang.String" value="Karyawan Ke-1"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF11">
@@ -445,6 +457,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JCNamaKaryawan1FocusGained"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan1KeyPressed"/>
       </Events>
       <AuxValues>
@@ -453,7 +466,7 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF12">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama Karyawan"/>
+        <Property name="text" type="java.lang.String" value="Karyawan Ke-2"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF25">
@@ -468,12 +481,12 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF27">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama Karyawan"/>
+        <Property name="text" type="java.lang.String" value="Karyawan Ke-3"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF28">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama Karyawan"/>
+        <Property name="text" type="java.lang.String" value="Karyawan Ke-4"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF29">
@@ -488,6 +501,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JCNamaKaryawan2FocusGained"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan2KeyPressed"/>
       </Events>
       <AuxValues>
@@ -501,6 +515,8 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JCNamaKaryawan3FocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JCNamaKaryawan3FocusLost"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan3KeyPressed"/>
       </Events>
       <AuxValues>
@@ -514,6 +530,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JCNamaKaryawan4FocusGained"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan4KeyPressed"/>
       </Events>
       <AuxValues>
@@ -522,7 +539,7 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF13">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Jumlah Hasil"/>
+        <Property name="text" type="java.lang.String" value="Hasil Packing"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF14">
@@ -542,7 +559,7 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF15">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Jumlah Hasil"/>
+        <Property name="text" type="java.lang.String" value="Hasil Packing"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF16">
@@ -733,6 +750,9 @@
     </Component>
     <Component class="KomponenGUI.JRibuanTextField" name="JTNoBak">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="c7" red="0" type="rgb"/>
+        </Property>
         <Property name="horizontalAlignment" type="int" value="10"/>
         <Property name="text" type="java.lang.String" value="1"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -746,44 +766,9 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTNoBakKeyPressed"/>
       </Events>
     </Component>
-    <Component class="KomponenGUI.JlableF" name="jlableF32">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Pasangan No."/>
-      </Properties>
-    </Component>
-    <Component class="KomponenGUI.JRibuanTextField" name="JTNoPas1">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="1"/>
-        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="JCNamaKaryawan1"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTNoPas1KeyPressed"/>
-      </Events>
-    </Component>
-    <Component class="KomponenGUI.JlableF" name="jlableF33">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Pasangan No."/>
-      </Properties>
-    </Component>
-    <Component class="KomponenGUI.JRibuanTextField" name="JTNoPas2">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="2"/>
-        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="JCNamaKaryawan3"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JTNoPas2FocusLost"/>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTNoPas2KeyPressed"/>
-      </Events>
-    </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF31">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama Bahan 2"/>
+        <Property name="text" type="java.lang.String" value="Bahan Packing 2"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF34">
@@ -802,7 +787,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBahan2KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan2.load(&quot;SELECT &apos;&apos; as &apos;AliasBarang&apos; UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan2.load(&quot;SELECT &apos;-- Pilih Bahan Ke 2 Jika Campuran --&apos; as &apos;AliasBarang&apos; UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JRibuanTextField" name="JTJumlahBahan2">
@@ -814,16 +799,6 @@
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJumlahBahan2KeyPressed"/>
       </Events>
-    </Component>
-    <Component class="KomponenGUI.JlableF" name="jlableF35">
-      <Properties>
-        <Property name="text" type="java.lang.String" value=":"/>
-      </Properties>
-    </Component>
-    <Component class="KomponenGUI.JlableF" name="jlableF36">
-      <Properties>
-        <Property name="text" type="java.lang.String" value=":"/>
-      </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF3">
       <Properties>
@@ -837,7 +812,7 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="No. Packing"/>
+        <Property name="text" type="java.lang.String" value="No. Poles"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF9">
@@ -868,6 +843,38 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tambahtable1ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF37">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="No. Packing"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF38">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JtextF" name="JTNoPoles">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTNoPolesKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JtextF" name="JTNoPas1">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Pasangan Ke-1"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JtextF" name="JTNoPas2">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Pasangan Ke-2"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

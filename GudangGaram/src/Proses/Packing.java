@@ -47,6 +47,7 @@ public class Packing extends javax.swing.JFrame {
         jbuttonF3.setVisible(false);
         JTNoBak.requestFocus();
         JTNoPacking.setText(generateNoPacking());
+        JTNoPoles.setText(generateNoPoles());
     }
 
     public Packing(Object noPacking) {
@@ -67,24 +68,25 @@ public class Packing extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoPacking`, DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, `NamaKaryawan` as 'Nama', c.`AliasBarang` as 'Bahan', `JumlahBahan`, d.`AliasBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmbarang`c ON a.`IdBarangBahan`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE `NoPacking` = '" + NoPacking + "' ORDER BY `NoPacking`, `NoIndi`");
+        runSelct.setQuery("SELECT `NoPoles`, `NoPacking`, DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, `NamaKaryawan` as 'Nama', c.`AliasBarang` as 'Bahan', `JumlahBahan`, d.`AliasBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmbarang`c ON a.`IdBarangBahan`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE `NoPacking` = '" + NoPacking + "' ORDER BY `NoPacking`, `NoIndi`");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
             while (rs.next()) {
-                JTNoPacking.setText(rs.getString(1));
-                JDTanggal.setDate(FDateF.strtodate(rs.getString(2), "dd-MM-yyyy"));
+                JTNoPoles.setText(rs.getString(1));
+                JTNoPacking.setText(rs.getString(2));
+                JDTanggal.setDate(FDateF.strtodate(rs.getString(3), "dd-MM-yyyy"));
                 model.addRow(new Object[]{"", "", "", "", "", "", "", "", "", "", ""});
-                JTable.setValueAt(rs.getString(3), row, 0);
-                JTable.setValueAt(rs.getString(4), row, 1);
-                JTable.setValueAt(rs.getString(5), row, 2);
-                JTable.setValueAt(rs.getString(6), row, 3);
-                JTable.setValueAt(rs.getString(7), row, 4);
-                JTable.setValueAt(rs.getString(8), row, 6);
-                JTable.setValueAt(rs.getString(9), row, 7);
-                JTable.setValueAt(rs.getString(10), row, 8);
-                JTable.setValueAt(rs.getString(11), row, 9);
-                JTable.setValueAt(rs.getString(12), row, 10);
+                JTable.setValueAt(rs.getString(4), row, 0);
+                JTable.setValueAt(rs.getString(5), row, 1);
+                JTable.setValueAt(rs.getString(6), row, 2);
+                JTable.setValueAt(rs.getString(7), row, 3);
+                JTable.setValueAt(rs.getString(8), row, 4);
+                JTable.setValueAt(rs.getString(9), row, 6);
+                JTable.setValueAt(rs.getString(10), row, 7);
+                JTable.setValueAt(rs.getString(11), row, 8);
+                JTable.setValueAt(rs.getString(12), row, 9);
+                JTable.setValueAt(rs.getString(13), row, 10);
                 row++;
             }
         } catch (SQLException e) {
@@ -98,80 +100,105 @@ public class Packing extends javax.swing.JFrame {
 
     Boolean checkInput() {
         if (JDTanggal.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Tanggal Terima Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Tanggal Yang Benar");
+            JDTanggal.requestFocus();
             return false;
-        }/* else if (jtextF1.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "No. Timbang Tidak Boleh Kosong");
+        } else if (JTNoPoles.getText().replace(" ", "").equals("")) {
+            JOptionPane.showMessageDialog(this, "Nomor Poles Tidak Boleh Kosong");
             return false;
-        } else if (JTJumlahBahan.getText().replace("0", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Brutto Pelita Tidak Boleh Kosong");
+        } else if (JTNoPacking.getText().replace(" ", "").equals("")) {
+            JOptionPane.showMessageDialog(this, "Nomor Packing Tidak Boleh Kosong");
             return false;
-        } else if (jRibuanTextField2.getText().replace("0", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Tara Pelita Tidak Boleh Kosong");
-            return false;
-        } else if (JTUpahPerPack.getText().replace("0", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Netto Pelita Tidak Boleh Kosong");
-            return false;
-        } else if (jRibuanTextField4.getText().replace("0", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Netto Penjual Tidak Boleh Kosong");
-            return false;
-        } else if (jRibuanTextField5.getText().replace("0", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Jumlah Karung Tidak Boleh Kosong");
-            return false;
-        } else if (jtextF2.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Plat Tidak Boleh Kosong");
-            return false;
-        } else if (jtextF3.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Nama Pemasok Tidak Boleh Kosong");
-            return false;
-        }*/ else {
+        } else {
             return true;
         }
     }
 
     boolean checkTable() {
-        if (checkSameItem()) {
-            if (JTJumlahBahan1.getInt() == 0) {
-                JOptionPane.showMessageDialog(this, "Jumlah Bahan Tidak Boleh Kosong");
-                JTJumlahBahan1.requestFocus();
-                return false;
-            } else if (JTJumlahHasil1.getInt() == 0) {
-                JOptionPane.showMessageDialog(this, "Jumlah Hasil Pasangan No. " + JTNoPas1.getText() + " Tidak Boleh Kosong");
-                JTJumlahHasil1.requestFocus();
-                return false;
-            } else if (JTJumlahHasil2.getInt() == 0 && !"".equals(JCNamaKaryawan3.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, "Jumlah Hasil Pasangan No. " + JTNoPas2.getText() + " Tidak Boleh Kosong");
-                JTJumlahHasil2.requestFocus();
-                return false;
-            } else if ((JTNoPas1.getText().equals("0") || JTNoPas1.getText().equals("")) && (getJumlahKiri() == 1 || getJumlahKiri() == 2)) {
-                JOptionPane.showMessageDialog(this, "Silahkan Isi No. Pasangan Sebelah Kiri");
-                JTNoPas1.requestFocus();
-                return false;
-            } else if ((JTNoPas2.getText().equals("0") || JTNoPas2.getText().equals("")) && (getJumlahKanan() == 1 || getJumlahKanan() == 2)) {
-                JOptionPane.showMessageDialog(this, "Silahkan Isi No. Pasangan Sebelah Kanan");
-                JTNoPas2.requestFocus();
-                return false;
-            } else if (JCNamaKaryawan1.getSelectedItem().equals("") && !"".equals(JCNamaKaryawan2.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, "Harap Pindahkan Karyawan No. 2 ke Karyawan No. 1");
-                JCNamaKaryawan2.requestFocus();
-                return false;
-            } else if (JCNamaKaryawan3.getSelectedItem().equals("") && !"".equals(JCNamaKaryawan4.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, "Harap Pindahkan Karyawan No. 4 ke Karyawan No. 3");
-                JCNamaKaryawan4.requestFocus();
-                return false;
-            } else {
-                return true;
-            }
+        if (JCNamaBahan1.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Bahan Ke 1 Terlebih Dahulu");
+            JCNamaBahan1.requestFocus();
+            return false;
+        } else if (JTJumlahBahan1.getInt() == 0) {
+            JOptionPane.showMessageDialog(this, "Jumlah Bahan Ke 1 Tidak Boleh Kosong");
+            JTJumlahBahan1.requestFocus();
+            return false;
+        } else if (JTJumlahBahan2.getInt() == 0 && JCNamaBahan2.getSelectedIndex() != 0) {
+            JOptionPane.showMessageDialog(this, "Jumlah Bahan Ke 2 Tidak Boleh Kosong");
+            JTJumlahBahan1.requestFocus();
+            return false;
+        } else if (JCNamaHasil.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Hasil Packing Terlebih Dahulu");
+            JCNamaHasil.requestFocus();
+            return false;
+        } else if (JTJumlahHasil1.getInt() == 0) {
+            JOptionPane.showMessageDialog(this, "Hasil Packing Pasangan Ke-1 Tidak Boleh Kosong");
+            JTJumlahHasil1.requestFocus();
+            return false;
+        } else if (JTJumlahHasil2.getInt() == 0 && !"".equals(JCNamaKaryawan3.getSelectedItem())) {
+            JOptionPane.showMessageDialog(this, "Hasil Packing Pasangan Ke-2 Tidak Boleh Kosong");
+            JTJumlahHasil2.requestFocus();
+            return false;
+        } else if (JCNamaKaryawan1.getSelectedItem().equals("") && !"".equals(JCNamaKaryawan2.getSelectedItem())) {
+            JOptionPane.showMessageDialog(this, "Harap Pindahkan Karyawan No. 2 ke Karyawan No. 1");
+            JCNamaKaryawan2.requestFocus();
+            return false;
+        } else if (JCNamaKaryawan1.getSelectedItem().equals("") && !"".equals(JCNamaKaryawan3.getSelectedItem())) {
+            JOptionPane.showMessageDialog(this, "Harap Pindahkan Karyawan No. 3 ke Karyawan No. 1");
+            JCNamaKaryawan3.requestFocus();
+            return false;
+        } else if (JCNamaKaryawan3.getSelectedItem().equals("") && !"".equals(JCNamaKaryawan4.getSelectedItem())) {
+            JOptionPane.showMessageDialog(this, "Harap Pindahkan Karyawan No. 4 ke Karyawan No. 3");
+            JCNamaKaryawan4.requestFocus();
+            return false;
+        } else if (JCNamaKaryawan1.getSelectedItem().equals("")) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Karyawan No. 1 ke Karyawan No. 3");
+            JCNamaKaryawan4.requestFocus();
+            return false;
+        } else {
+            return true;
         }
-        return false;
     }
 
     void RefreshTbl() {
         JTable.clearSelection();
-        /*JTJumlah.setText("0");
-        JTHargaSatuan.setText("");
-        JTKeterangan.setText("");
-        JTStock.setText("0,00");*/
+    }
+
+    public String generateNoPoles() {
+        NumberFormat nf = new DecimalFormat("000000");
+        String NoPoles = null;
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.setQuery("SELECT `NoPoles` FROM `tbpacking` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' ORDER BY `NoPoles` ");
+        ArrayList<String> list = dRunSelctOne.excute();
+        if (list.get(0) != null) {
+            NoPoles = list.get(0);
+        } else {
+            RunSelct runSelct = new RunSelct();
+            runSelct.setQuery("SELECT `NoPoles` FROM `tbpacking` ORDER BY `NoPoles` DESC LIMIT 1");
+            try {
+                ResultSet rs = runSelct.excute();
+                if (!rs.isBeforeFirst()) {
+                    NoPoles = "GG-" + "000001" + "-PO";
+                }
+                while (rs.next()) {
+                    NoPoles = rs.getString("NoPoles");
+                    String number = NoPoles.substring(3, 9);
+                    int p = 1 + parseInt(number);
+                    if (p != 999999) {
+                        NoPoles = "GG-" + nf.format(p) + "-PO";
+                    } else if (p == 999999) {
+                        p = 1;
+                        NoPoles = "GG-" + nf.format(p) + "-PO";
+                    }
+                }
+            } catch (SQLException e) {
+                out.println("E6" + e);
+                showMessageDialog(null, "Gagal Generate Nomor Poles");
+            } finally {
+                runSelct.closecon();
+            }
+        }
+        return NoPoles;
     }
 
     public String generateNoPacking() {
@@ -215,7 +242,6 @@ public class Packing extends javax.swing.JFrame {
         JCNamaBahan1.setSelectedItem(JTable.getValueAt(0, 4));
         JCNamaHasil.setSelectedItem(JTable.getValueAt(0, 7));
         JTUpahPerPack.setText(JTable.getValueAt(0, 9).toString().replace(".", ""));
-        JTNoPas1.setText(JTable.getValueAt(0, 1).toString());
         JCNamaKaryawan1.setSelectedItem(JTable.getValueAt(0, 3));
         JTKeterangan1.setText(JTable.getValueAt(0, 10).toString());
         //====================================================================//
@@ -225,7 +251,6 @@ public class Packing extends javax.swing.JFrame {
             JTJumlahBahan2.setText("0");
             JCNamaKaryawan2.setSelectedItem("");
             JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()))));
-            JTNoPas2.setText("0");
             JCNamaKaryawan3.setSelectedItem("");
             JCNamaKaryawan4.setSelectedItem("");
             JTJumlahHasil2.setText("0");
@@ -240,13 +265,11 @@ public class Packing extends javax.swing.JFrame {
                 if (JTable.getValueAt(1, 2).equals("2")) {
                     JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(1, 3));
                     JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                    JTNoPas2.setText("0");
                     JCNamaKaryawan3.setSelectedItem("");
                     JTJumlahHasil2.setText("0");
                 } else if (JTable.getValueAt(1, 2).equals("3")) {
                     JCNamaKaryawan2.setSelectedItem("");
                     JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()))));
-                    JTNoPas2.setText(JTable.getValueAt(1, 1).toString());
                     JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(1, 3));
                     JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 8).toString()))));
                 }
@@ -258,7 +281,6 @@ public class Packing extends javax.swing.JFrame {
                 JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()))));
                 JCNamaKaryawan2.setSelectedItem("");
                 JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                JTNoPas2.setText("0");
                 JCNamaKaryawan3.setSelectedItem("");
                 JCNamaKaryawan4.setSelectedItem("");
                 JTJumlahHasil2.setText("0");
@@ -282,7 +304,6 @@ public class Packing extends javax.swing.JFrame {
                 JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(2, 3));
                 JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()))));
             }
-            JTNoPas2.setText(JTable.getValueAt(2, 1).toString());
             JTKeterangan2.setText(JTable.getValueAt(2, 10).toString());
         } //==================================================================//
         else if (JTable.getRowCount() == 4) {
@@ -292,7 +313,6 @@ public class Packing extends javax.swing.JFrame {
                 JTJumlahBahan2.setText("0");
                 JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(1, 3));
                 JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                JTNoPas2.setText(JTable.getValueAt(3, 1).toString());
                 JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
                 JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(3, 3));
                 JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
@@ -304,14 +324,12 @@ public class Packing extends javax.swing.JFrame {
                 if (JTable.getValueAt(2, 2).equals("2")) {
                     JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(2, 3));
                     JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
-                    JTNoPas2.setText("0");
                     JCNamaKaryawan3.setSelectedItem("");
                     JTJumlahHasil2.setText("0");
                     JTKeterangan2.setText("");
                 } else if (JTable.getValueAt(2, 2).equals("3")) {
                     JCNamaKaryawan2.setSelectedItem("");
                     JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                    JTNoPas2.setText(JTable.getValueAt(3, 1).toString());
                     JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
                     JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
                     JTKeterangan2.setText(JTable.getValueAt(3, 10).toString());
@@ -336,7 +354,6 @@ public class Packing extends javax.swing.JFrame {
                 JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(4, 3));
                 JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()) + Double.valueOf(JTable.getValueAt(4, 8).toString()) + Double.valueOf(JTable.getValueAt(5, 8).toString()))));
             }
-            JTNoPas2.setText(JTable.getValueAt(5, 1).toString());
             JTKeterangan2.setText(JTable.getValueAt(5, 10).toString());
         } //==================================================================//
         else if (JTable.getRowCount() == 8) {
@@ -345,7 +362,6 @@ public class Packing extends javax.swing.JFrame {
             JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()) + Double.valueOf(JTable.getValueAt(5, 6).toString()) + Double.valueOf(JTable.getValueAt(7, 6).toString()))));
             JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(2, 3));
             JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
-            JTNoPas2.setText(JTable.getValueAt(7, 1).toString());
             JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(4, 3));
             JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(6, 3));
             JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(4, 8).toString()) + Double.valueOf(JTable.getValueAt(5, 8).toString()) + Double.valueOf(JTable.getValueAt(6, 8).toString()) + Double.valueOf(JTable.getValueAt(7, 8).toString()))));
@@ -414,16 +430,10 @@ public class Packing extends javax.swing.JFrame {
         JTKeterangan2 = new KomponenGUI.JtextF();
         jlableF30 = new KomponenGUI.JlableF();
         JTNoBak = new KomponenGUI.JRibuanTextField();
-        jlableF32 = new KomponenGUI.JlableF();
-        JTNoPas1 = new KomponenGUI.JRibuanTextField();
-        jlableF33 = new KomponenGUI.JlableF();
-        JTNoPas2 = new KomponenGUI.JRibuanTextField();
         jlableF31 = new KomponenGUI.JlableF();
         jlableF34 = new KomponenGUI.JlableF();
         JCNamaBahan2 = new KomponenGUI.JcomboboxF();
         JTJumlahBahan2 = new KomponenGUI.JRibuanTextField();
-        jlableF35 = new KomponenGUI.JlableF();
-        jlableF36 = new KomponenGUI.JlableF();
         jlableF3 = new KomponenGUI.JlableF();
         jlableF6 = new KomponenGUI.JlableF();
         jlableF1 = new KomponenGUI.JlableF();
@@ -431,15 +441,23 @@ public class Packing extends javax.swing.JFrame {
         JTNoPacking = new KomponenGUI.JtextF();
         jlableF10 = new KomponenGUI.JlableF();
         tambahtable1 = new KomponenGUI.JbuttonF();
+        jlableF37 = new KomponenGUI.JlableF();
+        jlableF38 = new KomponenGUI.JlableF();
+        JTNoPoles = new KomponenGUI.JtextF();
+        JTNoPas1 = new KomponenGUI.JtextF();
+        JTNoPas2 = new KomponenGUI.JtextF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        jlableF2.setText("Nama Bahan 1");
+        jlableF2.setText("Bahan Packing 1");
 
         jbuttonF1.setText("Simpan");
         jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
@@ -471,7 +489,7 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        JCNamaBahan1.load("SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1");
+        JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'AliasBarang' UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1");
         JCNamaBahan1.setNextFocusableComponent(JTJumlahBahan1);
         JCNamaBahan1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -498,7 +516,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF24.setText(":");
 
-        jlableF4.setText("Nama Hasil");
+        jlableF4.setText("Hasil Packing");
 
         jlableF8.setText(":");
 
@@ -515,34 +533,44 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        jlableF5.setText("Nama Karyawan");
+        jlableF5.setText("Karyawan Ke-1");
 
         jlableF11.setText(":");
 
         JCNamaKaryawan1.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
         JCNamaKaryawan1.setSelectedItem("AMBAR");
         JCNamaKaryawan1.setNextFocusableComponent(JCNamaKaryawan2);
+        JCNamaKaryawan1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JCNamaKaryawan1FocusGained(evt);
+            }
+        });
         JCNamaKaryawan1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JCNamaKaryawan1KeyPressed(evt);
             }
         });
 
-        jlableF12.setText("Nama Karyawan");
+        jlableF12.setText("Karyawan Ke-2");
 
         jlableF25.setText(":");
 
         jlableF26.setText(":");
 
-        jlableF27.setText("Nama Karyawan");
+        jlableF27.setText("Karyawan Ke-3");
 
-        jlableF28.setText("Nama Karyawan");
+        jlableF28.setText("Karyawan Ke-4");
 
         jlableF29.setText(":");
 
         JCNamaKaryawan2.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
         JCNamaKaryawan2.setSelectedItem("MUSLINA");
         JCNamaKaryawan2.setNextFocusableComponent(JTJumlahHasil1);
+        JCNamaKaryawan2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JCNamaKaryawan2FocusGained(evt);
+            }
+        });
         JCNamaKaryawan2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JCNamaKaryawan2KeyPressed(evt);
@@ -552,6 +580,14 @@ public class Packing extends javax.swing.JFrame {
         JCNamaKaryawan3.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
         JCNamaKaryawan3.setSelectedItem("SINAP");
         JCNamaKaryawan3.setNextFocusableComponent(JCNamaKaryawan4);
+        JCNamaKaryawan3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JCNamaKaryawan3FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JCNamaKaryawan3FocusLost(evt);
+            }
+        });
         JCNamaKaryawan3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JCNamaKaryawan3KeyPressed(evt);
@@ -561,13 +597,18 @@ public class Packing extends javax.swing.JFrame {
         JCNamaKaryawan4.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
         JCNamaKaryawan4.setSelectedItem("KAYATI");
         JCNamaKaryawan4.setNextFocusableComponent(JTJumlahHasil2);
+        JCNamaKaryawan4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JCNamaKaryawan4FocusGained(evt);
+            }
+        });
         JCNamaKaryawan4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JCNamaKaryawan4KeyPressed(evt);
             }
         });
 
-        jlableF13.setText("Jumlah Hasil");
+        jlableF13.setText("Hasil Packing");
 
         jlableF14.setText(":");
 
@@ -578,7 +619,7 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        jlableF15.setText("Jumlah Hasil");
+        jlableF15.setText("Hasil Packing");
 
         jlableF16.setText(":");
 
@@ -681,6 +722,7 @@ public class Packing extends javax.swing.JFrame {
         jlableF30.setText("Bak No.");
         jlableF30.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
+        JTNoBak.setForeground(new java.awt.Color(0, 199, 0));
         JTNoBak.setHorizontalAlignment(javax.swing.JTextField.LEADING);
         JTNoBak.setText("1");
         JTNoBak.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -691,38 +733,11 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        jlableF32.setText("Pasangan No.");
-
-        JTNoPas1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        JTNoPas1.setText("1");
-        JTNoPas1.setNextFocusableComponent(JCNamaKaryawan1);
-        JTNoPas1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTNoPas1KeyPressed(evt);
-            }
-        });
-
-        jlableF33.setText("Pasangan No.");
-
-        JTNoPas2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        JTNoPas2.setText("2");
-        JTNoPas2.setNextFocusableComponent(JCNamaKaryawan3);
-        JTNoPas2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                JTNoPas2FocusLost(evt);
-            }
-        });
-        JTNoPas2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTNoPas2KeyPressed(evt);
-            }
-        });
-
-        jlableF31.setText("Nama Bahan 2");
+        jlableF31.setText("Bahan Packing 2");
 
         jlableF34.setText(":");
 
-        JCNamaBahan2.load("SELECT '' as 'AliasBarang' UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1");
+        JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campuran --' as 'AliasBarang' UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1");
         JCNamaBahan2.setNextFocusableComponent(JTJumlahBahan2);
         JCNamaBahan2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -742,15 +757,11 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        jlableF35.setText(":");
-
-        jlableF36.setText(":");
-
         jlableF3.setText("Sak");
 
         jlableF6.setText("Sak");
 
-        jlableF1.setText("No. Packing");
+        jlableF1.setText("No. Poles");
 
         jlableF9.setText(":");
 
@@ -771,6 +782,25 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
+        jlableF37.setText("No. Packing");
+
+        jlableF38.setText(":");
+
+        JTNoPoles.setEnabled(false);
+        JTNoPoles.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTNoPolesKeyPressed(evt);
+            }
+        });
+
+        JTNoPas1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JTNoPas1.setText("Pasangan Ke-1");
+        JTNoPas1.setEnabled(false);
+
+        JTNoPas2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JTNoPas2.setText("Pasangan Ke-2");
+        JTNoPas2.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -778,40 +808,6 @@ public class Packing extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(486, 486, 486)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jlableF33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlableF36, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JCNamaKaryawan3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JTNoPas2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF28, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlableF29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JCNamaKaryawan4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTJumlahHasil2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(252, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
@@ -842,24 +838,6 @@ public class Packing extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JCNamaHasil, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlableF32, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JTNoPas1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JCNamaKaryawan1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jlableF12, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jlableF25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -877,26 +855,41 @@ public class Packing extends javax.swing.JFrame {
                                         .addComponent(jlableF20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(JTKeterangan1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JTUpahPerPack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(JTUpahPerPack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(JCNamaHasil, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jlableF23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jlableF23, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jlableF24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(JDTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jlableF1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jlableF37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JTNoPacking, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(JTNoPacking, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jlableF38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(JTNoPoles, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -910,8 +903,49 @@ public class Packing extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10))))
+                                .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jlableF11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JCNamaKaryawan1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(JTNoPas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(10, 10, 10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JTNoPas2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(486, 486, 486)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JCNamaKaryawan3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF28, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jlableF29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JCNamaKaryawan4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JTJumlahHasil2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JTKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap(252, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -946,13 +980,9 @@ public class Packing extends javax.swing.JFrame {
                             .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTUpahPerPack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlableF32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTNoPas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTNoPas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -963,8 +993,13 @@ public class Packing extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JTNoPacking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jlableF38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JTNoPoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlableF37, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JTNoPacking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -997,14 +1032,14 @@ public class Packing extends javax.swing.JFrame {
                     .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tambahtable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(tambahtable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1030,21 +1065,11 @@ public class Packing extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF3ActionPerformed
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
-        if (NoPacking == null) {
-            GlobalVar.Var.tambahPacking.dispose();
-            GlobalVar.Var.tambahPacking = null;
-        } else {
-            GlobalVar.Var.ubahPacking.dispose();
-            GlobalVar.Var.ubahPacking = null;
-        }
+        dispose();
     }//GEN-LAST:event_jbuttonF4ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (NoPacking == null) {
-            GlobalVar.Var.tambahPacking = null;
-        } else {
-            GlobalVar.Var.ubahPacking = null;
-        }
+        
     }//GEN-LAST:event_formWindowClosing
 
     private void JCNamaBahan1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaBahan1KeyPressed
@@ -1067,7 +1092,7 @@ public class Packing extends javax.swing.JFrame {
 
     private void JCNamaHasilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaHasilKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTNoPas1.requestFocus();
+            JCNamaKaryawan1.requestFocus();
         }
     }//GEN-LAST:event_JCNamaHasilKeyPressed
 
@@ -1089,7 +1114,11 @@ public class Packing extends javax.swing.JFrame {
 
     private void JCNamaKaryawan3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaKaryawan3KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCNamaKaryawan4.requestFocus();
+            if (JCNamaKaryawan3.getSelectedItem().equals("")) {
+                tambahtable.requestFocus();
+            } else {
+                JCNamaKaryawan4.requestFocus();
+            }
         } else if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getKeyCode() == KeyEvent.VK_DELETE) {
             JCNamaKaryawan3.setSelectedItem("");
         }
@@ -1139,18 +1168,6 @@ public class Packing extends javax.swing.JFrame {
         loadUpah();
     }//GEN-LAST:event_JCNamaHasilItemStateChanged
 
-    private void JTNoPas1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNoPas1KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCNamaKaryawan1.requestFocus();
-        }
-    }//GEN-LAST:event_JTNoPas1KeyPressed
-
-    private void JTNoPas2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNoPas2KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCNamaKaryawan3.requestFocus();
-        }
-    }//GEN-LAST:event_JTNoPas2KeyPressed
-
     private void JCNamaBahan2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaBahan2KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             JTJumlahBahan2.requestFocus();
@@ -1167,7 +1184,7 @@ public class Packing extends javax.swing.JFrame {
 
     private void JTKeterangan1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKeterangan1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTNoPas2.requestFocus();
+            JCNamaKaryawan3.requestFocus();
         }
     }//GEN-LAST:event_JTKeterangan1KeyPressed
 
@@ -1181,15 +1198,6 @@ public class Packing extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JTNoPackingKeyPressed
 
-    private void JTNoPas2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTNoPas2FocusLost
-        if (JTNoPas2.getText().equals("0")) {
-            JCNamaKaryawan3.setSelectedItem("");
-            JCNamaKaryawan4.setSelectedItem("");
-            JTJumlahHasil2.setText("0");
-            JTKeterangan2.setText("");
-        }
-    }//GEN-LAST:event_JTNoPas2FocusLost
-
     private void tambahtable1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahtable1ActionPerformed
         DefaultTableModel dm = (DefaultTableModel) JTable.getModel();
         int rowCount = dm.getRowCount();
@@ -1200,10 +1208,58 @@ public class Packing extends javax.swing.JFrame {
     }//GEN-LAST:event_tambahtable1ActionPerformed
 
     private void JCNamaBahan2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBahan2ItemStateChanged
-        if (JCNamaBahan2.getSelectedItem().equals("")) {
+        if (JCNamaBahan2.getSelectedIndex() == 0) {
             JTJumlahBahan2.setText("0");
         }
     }//GEN-LAST:event_JCNamaBahan2ItemStateChanged
+
+    private void JCNamaKaryawan1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan1FocusGained
+        String NamaKaryawan = JCNamaKaryawan1.getSelectedItem().toString();
+        JCNamaKaryawan1.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ");
+        JCNamaKaryawan1.setSelectedItem(NamaKaryawan);
+        JCNamaKaryawan1.showPopup();
+    }//GEN-LAST:event_JCNamaKaryawan1FocusGained
+
+    private void JCNamaKaryawan2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan2FocusGained
+        String NamaKaryawan = JCNamaKaryawan2.getSelectedItem().toString();
+        JCNamaKaryawan2.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ");
+        JCNamaKaryawan2.setSelectedItem(NamaKaryawan);
+        JCNamaKaryawan2.showPopup();
+    }//GEN-LAST:event_JCNamaKaryawan2FocusGained
+
+    private void JCNamaKaryawan3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan3FocusGained
+        String NamaKaryawan = JCNamaKaryawan3.getSelectedItem().toString();
+        JCNamaKaryawan3.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ");
+        JCNamaKaryawan3.setSelectedItem(NamaKaryawan);
+        JCNamaKaryawan3.showPopup();
+    }//GEN-LAST:event_JCNamaKaryawan3FocusGained
+
+    private void JCNamaKaryawan4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan4FocusGained
+        String NamaKaryawan = JCNamaKaryawan4.getSelectedItem().toString();
+        JCNamaKaryawan4.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' ");
+        JCNamaKaryawan4.setSelectedItem(NamaKaryawan);
+        JCNamaKaryawan4.showPopup();
+    }//GEN-LAST:event_JCNamaKaryawan4FocusGained
+
+    private void JTNoPolesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNoPolesKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTNoPolesKeyPressed
+
+    private void JCNamaKaryawan3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan3FocusLost
+        if (JCNamaKaryawan3.getSelectedItem().equals("")) {
+            JCNamaKaryawan4.setSelectedIndex(0);
+            JTJumlahHasil2.setText("0");
+            JTKeterangan2.setText("");
+        }
+    }//GEN-LAST:event_JCNamaKaryawan3FocusLost
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if (NoPacking == null) {
+            GlobalVar.Var.tambahPacking = null;
+        } else {
+            GlobalVar.Var.ubahPacking = null;
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -1219,16 +1275,24 @@ public class Packing extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Packing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Packing.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Packing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Packing.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Packing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Packing.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Packing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Packing.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -1260,8 +1324,9 @@ public class Packing extends javax.swing.JFrame {
     private KomponenGUI.JtextF JTKeterangan2;
     private KomponenGUI.JRibuanTextField JTNoBak;
     private KomponenGUI.JtextF JTNoPacking;
-    private KomponenGUI.JRibuanTextField JTNoPas1;
-    private KomponenGUI.JRibuanTextField JTNoPas2;
+    private KomponenGUI.JtextF JTNoPas1;
+    private KomponenGUI.JtextF JTNoPas2;
+    private KomponenGUI.JtextF JTNoPoles;
     private KomponenGUI.JRibuanTextField JTUpahPerPack;
     private KomponenGUI.JtableF JTable;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1294,11 +1359,9 @@ public class Packing extends javax.swing.JFrame {
     private KomponenGUI.JlableF jlableF3;
     private KomponenGUI.JlableF jlableF30;
     private KomponenGUI.JlableF jlableF31;
-    private KomponenGUI.JlableF jlableF32;
-    private KomponenGUI.JlableF jlableF33;
     private KomponenGUI.JlableF jlableF34;
-    private KomponenGUI.JlableF jlableF35;
-    private KomponenGUI.JlableF jlableF36;
+    private KomponenGUI.JlableF jlableF37;
+    private KomponenGUI.JlableF jlableF38;
     private KomponenGUI.JlableF jlableF4;
     private KomponenGUI.JlableF jlableF5;
     private KomponenGUI.JlableF jlableF6;
@@ -1312,52 +1375,52 @@ public class Packing extends javax.swing.JFrame {
     void TambahTabel() {
         if (checkTable()) {
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
-            if ("".equals(JCNamaBahan2.getSelectedItem())) {
+            if (JCNamaBahan2.getSelectedIndex() == 0) {
 
                 //1
                 if (!"".equals(JCNamaKaryawan1.getSelectedItem())) {
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas1.getText(), 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri(), JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri(), JTUpahPerPack.getText(), JTKeterangan1.getText(),});
                 }
 
                 if (!"".equals(JCNamaKaryawan2.getSelectedItem())) {
                     //2
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas1.getText(), 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri(), JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri(), JTUpahPerPack.getText(), JTKeterangan1.getText(),});
                 }
 
                 if (!"".equals(JCNamaKaryawan3.getSelectedItem())) {
                     //3
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas2.getText(), 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan(), JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan(), JTUpahPerPack.getText(), JTKeterangan2.getText(),});
                 }
 
                 if (!"".equals(JCNamaKaryawan4.getSelectedItem())) {
                     //4
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas2.getText(), 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan(), JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan(), JTUpahPerPack.getText(), JTKeterangan2.getText(),});
                 }
 
             } else {
                 if (!"".equals(JCNamaKaryawan1.getSelectedItem())) {
                     //1
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas1.getText(), 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
                     //2
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas1.getText(), 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
                 }
                 if (!"".equals(JCNamaKaryawan2.getSelectedItem())) {
                     //3
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas1.getText(), 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
                     //4
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas1.getText(), 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
                 }
                 if (!"".equals(JCNamaKaryawan3.getSelectedItem())) {
                     //5
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas2.getText(), 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
                     //6
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas2.getText(), 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
                 }
                 if (!"".equals(JCNamaKaryawan4.getSelectedItem())) {
                     //7
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas2.getText(), 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
                     //8
-                    model.addRow(new Object[]{JTNoBak.getText(), JTNoPas2.getText(), 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
                 }
             }
             JOptionPane.showMessageDialog(this, "Berhasil Hitung");
@@ -1383,7 +1446,7 @@ public class Packing extends javax.swing.JFrame {
                     Berhasil = multiInsert.setautocomit(false);
                     if (Berhasil) {
                         for (int i = 0; i < JTable.getRowCount(); i++) {
-                            Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4) + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
+                            Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4) + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                         }
                     }
                 }
@@ -1397,12 +1460,9 @@ public class Packing extends javax.swing.JFrame {
                     multiInsert.Commit();
                     multiInsert.closecon();
                     if (tutup) {
-                        GlobalVar.Var.tambahPacking.dispose();
-                        GlobalVar.Var.tambahPacking = null;
+                        dispose();
                     } else {
                         JTNoBak.setText(String.valueOf(Integer.valueOf(JTNoBak.getText()) + 1));
-                        JTNoPas1.setText(String.valueOf(Integer.valueOf(JTNoPas1.getText()) + 2));
-                        JTNoPas2.setText(String.valueOf(Integer.valueOf(JTNoPas2.getText()) + 2));
                         JTable.setModel(new javax.swing.table.DefaultTableModel(
                                 new Object[][]{},
                                 new String[]{
@@ -1421,6 +1481,7 @@ public class Packing extends javax.swing.JFrame {
                         JTable.getColumnModel().getColumn(8).setPreferredWidth(80);
                         JTable.getColumnModel().getColumn(9).setPreferredWidth(50);
                         tambahtable.setEnabled(true);
+                        JTNoPoles.setText(generateNoPoles());
                         JTNoPacking.setText(generateNoPacking());
                         JCNamaKaryawan1.requestFocus();
                     }
@@ -1442,15 +1503,11 @@ public class Packing extends javax.swing.JFrame {
                 Berhasil = multiInsert.OpenConnection();
                 if (Berhasil) {
                     Berhasil = multiInsert.setautocomit(false);
-                    // query insert luar table
-                    //query insert dalam table ( ketentuan Hasil Harus True Baru jalan
-                    //cek inset gagal / berhasil 
-                    // jalankan koding di if paling bawah
                     if (Berhasil) {
                         Berhasil = multiInsert.Excute("DELETE FROM `tbpacking` WHERE `NoPacking` = '" + NoPacking + "'", null);
                         if (Berhasil) {
                             for (int i = 0; i < JTable.getRowCount(); i++) {
-                                Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4) + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4) + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                             }
                         }
                     }
@@ -1463,8 +1520,7 @@ public class Packing extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Berhasil Ubah Data Packing");
                         multiInsert.Commit();
                         multiInsert.closecon();
-                        GlobalVar.Var.ubahPacking.dispose();
-                        GlobalVar.Var.ubahPacking = null;
+                        dispose();
                         if (GlobalVar.Var.listPacking != null) {
                             GlobalVar.Var.listPacking.load();
                         }
@@ -1515,8 +1571,8 @@ public class Packing extends javax.swing.JFrame {
 
     void loadUpah() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `UpahPacking` FROM `tbmbarang` WHERE `AliasBarang` = '" + JCNamaHasil.getSelectedItem() + "'");
         dRunSelctOne.seterorm("Gagal Load Upah");
+        dRunSelctOne.setQuery("SELECT `UpahPacking` FROM `tbmbarang` WHERE `AliasBarang` = '" + JCNamaHasil.getSelectedItem() + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         JTUpahPerPack.setText(list.get(0));
     }
@@ -1526,7 +1582,7 @@ public class Packing extends javax.swing.JFrame {
         String b = JCNamaKaryawan2.getSelectedItem().toString();
         String c = JCNamaKaryawan3.getSelectedItem().toString();
         String d = JCNamaKaryawan4.getSelectedItem().toString();
-        if ((a.equals(b) || a.equals(c) || a.equals(d) || b.equals(c) || b.equals(d) || c.equals(d)) && !"".equals(a) && !"".equals(b) && !"".equals(c) && !"".equals(d)) {
+        if (a.equals(b) || a.equals(c) || a.equals(d) || b.equals(c) || b.equals(d) || c.equals(d)) {
             JOptionPane.showMessageDialog(rootPane, "Nama Tidak Boleh Sama");
             return false;
         } else {

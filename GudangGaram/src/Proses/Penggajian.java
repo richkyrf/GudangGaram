@@ -450,7 +450,7 @@ public class Penggajian extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT DATE_FORMAT(`Tanggal`,'%d-%m-%y') as 'Tanggal', c.`NamaBarang`, `JumlahHasil`, `UpahPerPak`, `JumlahHasil`*`UpahPerPak` as 'SubTotal' FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`Idkaryawan` JOIN `tbmbarang`c ON a.`IdBarangHasil`=c.`IdBarang`  WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `NamaKaryawan` = '" + jcomboboxF1.getSelectedItem() + "' ORDER BY `Tanggal` DESC");
+        runSelct.setQuery("SELECT DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', c.`NamaBarang`, FORMAT(`JumlahHasil`,2) as 'JumlahHasil', FORMAT(`UpahPerPak`,0) as 'UpahPerPak', FORMAT(`JumlahHasil`*`UpahPerPak`,0) as 'SubTotal' FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`Idkaryawan` JOIN `tbmbarang`c ON a.`IdBarangHasil`=c.`IdBarang`  WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `NamaKaryawan` = '" + jcomboboxF1.getSelectedItem() + "' ORDER BY `Tanggal` DESC");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -459,9 +459,9 @@ public class Penggajian extends javax.swing.JFrame {
                 JTable.setValueAt(row + 1, row, 0);
                 JTable.setValueAt(rs.getString(1), row, 1);
                 JTable.setValueAt(rs.getString(2), row, 2);
-                JTable.setValueAt(rs.getString(3), row, 3);
-                JTable.setValueAt(rs.getString(4), row, 4);
-                JTable.setValueAt(rs.getString(5), row, 5);
+                JTable.setValueAt(rs.getString(3).replace(",","."), row, 3);
+                JTable.setValueAt(rs.getString(4).replace(",","."), row, 4);
+                JTable.setValueAt(rs.getString(5).replace(",","."), row, 5);
                 row++;
             }
         } catch (SQLException e) {

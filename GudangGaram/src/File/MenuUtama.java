@@ -419,7 +419,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void JMIProsesPenyesuaianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIProsesPenyesuaianActionPerformed
         if (GlobalVar.Var.tambahPenyesuaian == null) {
-            GlobalVar.Var.tambahPenyesuaian = new Penyesuaiann();
+            GlobalVar.Var.tambahPenyesuaian = new Penyesuaian();
         } else {
             GlobalVar.Var.tambahPenyesuaian.setState(NORMAL);
             GlobalVar.Var.tambahPenyesuaian.toFront();

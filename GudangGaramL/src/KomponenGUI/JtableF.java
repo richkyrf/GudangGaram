@@ -77,6 +77,9 @@ public class JtableF extends JTable {
             if ("Number".equals(Type)) {
                 m.getColumn(x).setCellRenderer(FNumberRenderer.getumberrender());
             }
+            if ("Decimal".equals(Type)) {
+                m.getColumn(x).setCellRenderer(FNumberRenderer.getdecimalrender());
+            }
         } catch (Exception e) {
             LogEror.SaveEror(e);
         }

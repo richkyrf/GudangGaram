@@ -3,6 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -57,43 +58,42 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane3" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jlableF5" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JTSusut" min="-2" pref="71" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jlableF2" max="32767" attributes="0"/>
-                                  <Component id="jlableF3" min="-2" pref="95" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jlableF10" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jlableF9" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="JTTotalBahan" max="32767" attributes="0"/>
-                                  <Component id="JTTotalHasil" min="-2" pref="71" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jlableF14" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlableF13" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlableF15" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jlableF5" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JTSusut" min="-2" pref="71" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="jlableF2" max="32767" attributes="0"/>
+                                          <Component id="jlableF3" min="-2" pref="95" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jlableF10" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jlableF9" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="JTTotalBahan" max="32767" attributes="0"/>
+                                          <Component id="JTTotalHasil" min="-2" pref="71" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jlableF14" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlableF13" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlableF15" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jbuttonF2" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -126,20 +126,11 @@
               <Component id="jScrollPane2" min="-2" pref="84" max="-2" attributes="0"/>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jlableF4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jlableF11" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jlableF4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlableF11" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="JTTotalBahan" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -161,10 +152,11 @@
                           <Component id="jlableF12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jlableF15" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -182,7 +174,6 @@
     </Component>
     <Component class="KomponenGUI.JtextF" name="JTNoPoles">
       <Properties>
-        <Property name="text" type="java.lang.String" value="GG-000001-PO"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -224,12 +215,12 @@
               <Table columnCount="5" rowCount="0">
                 <Column editable="false" title="No" type="java.lang.Object"/>
                 <Column editable="false" title="Nama Barang" type="java.lang.Object"/>
-                <Column editable="false" title="Jumlah" type="java.lang.Object"/>
-                <Column editable="false" title="Satuan (KG)" type="java.lang.Object"/>
+                <Column editable="false" title="Jumlah Sak" type="java.lang.Object"/>
+                <Column editable="false" title="Satuan" type="java.lang.Object"/>
                 <Column editable="false" title="Jumlah KG" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableBahan.setrender(2, &quot;Number&quot;);&#xa;JTableBahan.setrender(3, &quot;Number&quot;);&#xa;JTableBahan.setrender(4, &quot;Number&quot;);">
               <TableColumnModel selectionModel="1">
                 <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                   <Title/>
@@ -279,12 +270,12 @@
               <Table columnCount="5" rowCount="0">
                 <Column editable="false" title="No" type="java.lang.Object"/>
                 <Column editable="false" title="Nama Barang" type="java.lang.Object"/>
-                <Column editable="false" title="Jumlah" type="java.lang.Object"/>
-                <Column editable="false" title="Satuan (KG)" type="java.lang.Object"/>
-                <Column editable="false" title="Jumlah Kg" type="java.lang.Object"/>
+                <Column editable="false" title="Jumlah Sak" type="java.lang.Object"/>
+                <Column editable="false" title="Satuan" type="java.lang.Object"/>
+                <Column editable="false" title="Jumlah KG" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableHasil.setrender(2, &quot;Number&quot;);&#xa;JTableHasil.setrender(3, &quot;Number&quot;);&#xa;JTableHasil.setrender(4, &quot;Number&quot;);">
               <TableColumnModel selectionModel="1">
                 <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                   <Title/>
@@ -408,14 +399,6 @@
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-    </Component>
-    <Component class="KomponenGUI.JbuttonF" name="jbuttonF1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Simpan"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF1ActionPerformed"/>
-      </Events>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF13">
       <Properties>
