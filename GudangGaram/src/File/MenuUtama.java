@@ -260,6 +260,11 @@ public class MenuUtama extends javax.swing.JFrame {
         JMList.add(JMIListPacking);
 
         JMIListPoles.setText("List Poles");
+        JMIListPoles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIListPolesActionPerformed(evt);
+            }
+        });
         JMList.add(JMIListPoles);
 
         JMIListPenyesuaian.setText("List Penyesuaian");
@@ -501,6 +506,10 @@ public class MenuUtama extends javax.swing.JFrame {
             GlobalVar.Var.listPenerima.toFront();
         }
     }//GEN-LAST:event_JMIMasterPenerimaActionPerformed
+
+    private void JMIListPolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIListPolesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JMIListPolesActionPerformed
 
     /**
      * @param args the command line arguments
