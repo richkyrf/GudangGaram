@@ -46,13 +46,13 @@ public class MasterBarang extends javax.swing.JFrame {
 
     void loadeditdata() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdBarang` as 'ID', `AliasBarang` as 'Alias', `NamaBarang` as 'Nama', `JenisBarang` as 'Jenis', `Pemasok`, `Satuan`, `Harga`, `UpahPacking` as 'Upah', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmbarang`a JOIN `tbsmjenisbarang`b ON a.`IdJenisBarang`=b.`IdJenisBarang` JOIN `tbmpemasok`c ON a.`IdPemasok`=c.`IdPemasok` WHERE `IdBarang` = " + IdEdit);
+        dRunSelctOne.setQuery("SELECT `IdBarang` as 'ID', `AliasBarang` as 'Alias', `NamaBarang` as 'Nama', `JenisBarang` as 'Jenis', `Pemasok`, `Satuan`, `Harga`, `UpahPacking` as 'Upah', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmbarang`a JOIN `tbsmjenisbarang`b ON a.`IdJenisBarang`=b.`IdJenisBarang` LEFT JOIN `tbmpemasok`c ON a.`IdPemasok`=c.`IdPemasok` WHERE `IdBarang` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
         JTAliasBarang.setText(list.get(1));
         JTNamaBarang.setText(list.get(2));
         JCJenisBarang.setSelectedItem(list.get(3));
-        if (list.get(3).equals("Bahan")) {
-            list.get(4);
+        if (list.get(3).toUpperCase().equals("BAHAN")) {
+            JCPemasok.setSelectedItem(list.get(4));
         }
         JTSatuan.setText(list.get(5));
         JTHarga.setText(list.get(6));
@@ -323,7 +323,7 @@ public class MasterBarang extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
