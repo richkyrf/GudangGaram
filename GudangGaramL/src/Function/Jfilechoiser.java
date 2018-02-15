@@ -5,10 +5,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- *
- * @author Martono
- */
 public class Jfilechoiser {
 
     public static String GetSaveLocationFile(String FileType, String ExstensionFile) {

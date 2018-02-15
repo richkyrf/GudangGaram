@@ -23,10 +23,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-/**
- *
- * @author Martono
- */
 public class JtableF extends JTable {
 
     String SQL = "";

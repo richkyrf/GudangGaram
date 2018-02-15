@@ -35,7 +35,7 @@ public class JtextFnoSelect extends JTextField {
             }
         });
     }
-    
+
     public void setMaxText(int length) {
         MaxText = length;
     }

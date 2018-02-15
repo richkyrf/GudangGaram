@@ -22,7 +22,7 @@ public class FNumberRenderer extends FJtableFormatRender {
         DecimalFormat df = new DecimalFormat("#,###,###,###");
         return new FNumberRenderer(df);
     }
-    
+
     public static FNumberRenderer getdecimalrender() {
         DecimalFormat df = new DecimalFormat("#,###,###,###.00");
         return new FNumberRenderer(df);
