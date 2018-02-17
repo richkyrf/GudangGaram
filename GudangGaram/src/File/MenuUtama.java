@@ -53,6 +53,7 @@ public class MenuUtama extends javax.swing.JFrame {
         SMaster3 = new javax.swing.JPopupMenu.Separator();
         JMIMasterKaryawan = new javax.swing.JMenuItem();
         JMProses = new javax.swing.JMenu();
+        JMIProsesPartai = new javax.swing.JMenuItem();
         JMIProsesPenerimaan = new javax.swing.JMenuItem();
         JMIProsesPacking = new javax.swing.JMenuItem();
         JMIProsesPoles = new javax.swing.JMenuItem();
@@ -63,6 +64,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIProsesAbsenKaryawan = new javax.swing.JMenuItem();
         JMIProsesPenggajianKaryawan = new javax.swing.JMenuItem();
         JMList = new javax.swing.JMenu();
+        JMIListPartai = new javax.swing.JMenuItem();
         JMIListPenerimaan = new javax.swing.JMenuItem();
         JMIListPacking = new javax.swing.JMenuItem();
         JMIListPoles = new javax.swing.JMenuItem();
@@ -184,6 +186,9 @@ public class MenuUtama extends javax.swing.JFrame {
 
         JMProses.setText("Proses");
 
+        JMIProsesPartai.setText("Proses Partai");
+        JMProses.add(JMIProsesPartai);
+
         JMIProsesPenerimaan.setText("Proses Penerimaan");
         JMIProsesPenerimaan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,6 +250,9 @@ public class MenuUtama extends javax.swing.JFrame {
         JMenuBar.add(JMProses);
 
         JMList.setText("List");
+
+        JMIListPartai.setText("List Partai");
+        JMList.add(JMIListPartai);
 
         JMIListPenerimaan.setText("List Penerimaan");
         JMIListPenerimaan.addActionListener(new java.awt.event.ActionListener() {
@@ -564,6 +572,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIGantiPassword;
     private javax.swing.JMenuItem JMILaporanStokHarian;
     private javax.swing.JMenuItem JMIListPacking;
+    private javax.swing.JMenuItem JMIListPartai;
     private javax.swing.JMenuItem JMIListPenerimaan;
     private javax.swing.JMenuItem JMIListPenjualan;
     private javax.swing.JMenuItem JMIListPenyesuaianStok;
@@ -577,6 +586,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIMasterPenerima;
     private javax.swing.JMenuItem JMIProsesAbsenKaryawan;
     private javax.swing.JMenuItem JMIProsesPacking;
+    private javax.swing.JMenuItem JMIProsesPartai;
     private javax.swing.JMenuItem JMIProsesPenerimaan;
     private javax.swing.JMenuItem JMIProsesPenggajianKaryawan;
     private javax.swing.JMenuItem JMIProsesPenjualan;

@@ -129,6 +129,11 @@
             <Property name="text" type="java.lang.String" value="Proses"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPartai">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Proses Partai"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenerimaan">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Proses Penerimaan"/>
@@ -196,6 +201,11 @@
             <Property name="text" type="java.lang.String" value="List"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIListPartai">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="List Partai"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIListPenerimaan">
               <Properties>
                 <Property name="text" type="java.lang.String" value="List Penerimaan"/>
