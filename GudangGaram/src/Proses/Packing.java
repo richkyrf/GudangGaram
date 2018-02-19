@@ -68,7 +68,7 @@ public class Packing extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoPoles`, `NoPacking`, DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, `NamaKaryawan` as 'Nama', c.`AliasBarang` as 'Bahan', `JumlahBahan`, d.`AliasBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmbarang`c ON a.`IdBarangBahan`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE `NoPacking` = '" + NoPacking + "' ORDER BY `NoPacking`, `NoIndi`");
+        runSelct.setQuery("SELECT `NoPoles`, `NoPacking`, DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, `NamaKaryawan` as 'Nama', CONCAT(c.`AliasBarang`,' (PARTAI ',a.`IdPartai`,')') as 'Bahan', `JumlahBahan`, d.`AliasBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmbarang`c ON a.`IdBarangBahan`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` JOIN `tbmpartai`e ON a.`IdBarangBahan`=e.`IdBarang` AND a.`IdPartai`=e.`IdPartai` WHERE `NoPacking` = '" + NoPacking + "' ORDER BY `NoPacking`, `NoIndi`");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -489,8 +489,13 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'AliasBarang' UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1");
+        JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'AliasBarang' UNION (SELECT CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') as 'AliasBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `AliasBarang`)");
         JCNamaBahan1.setNextFocusableComponent(JTJumlahBahan1);
+        JCNamaBahan1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCNamaBahan1ItemStateChanged(evt);
+            }
+        });
         JCNamaBahan1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JCNamaBahan1KeyPressed(evt);
@@ -737,7 +742,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF34.setText(":");
 
-        JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campuran --' as 'AliasBarang' UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1");
+        JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campuran --'  as 'AliasBarang' UNION (SELECT CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') as 'AliasBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') != '"+JCNamaBahan1.getSelectedItem()+"' GROUP BY `AliasBarang`)");
         JCNamaBahan2.setNextFocusableComponent(JTJumlahBahan2);
         JCNamaBahan2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -751,6 +756,14 @@ public class Packing extends javax.swing.JFrame {
         });
 
         JTJumlahBahan2.setNextFocusableComponent(JCNamaHasil);
+        JTJumlahBahan2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JTJumlahBahan2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JTJumlahBahan2FocusLost(evt);
+            }
+        });
         JTJumlahBahan2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JTJumlahBahan2KeyPressed(evt);
@@ -1069,7 +1082,7 @@ public class Packing extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF4ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
+
     }//GEN-LAST:event_formWindowClosing
 
     private void JCNamaBahan1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaBahan1KeyPressed
@@ -1208,9 +1221,7 @@ public class Packing extends javax.swing.JFrame {
     }//GEN-LAST:event_tambahtable1ActionPerformed
 
     private void JCNamaBahan2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBahan2ItemStateChanged
-        if (JCNamaBahan2.getSelectedIndex() == 0) {
-            JTJumlahBahan2.setText("0");
-        }
+
     }//GEN-LAST:event_JCNamaBahan2ItemStateChanged
 
     private void JCNamaKaryawan1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan1FocusGained
@@ -1260,6 +1271,24 @@ public class Packing extends javax.swing.JFrame {
             GlobalVar.Var.ubahPacking = null;
         }
     }//GEN-LAST:event_formWindowClosed
+
+    private void JCNamaBahan1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBahan1ItemStateChanged
+        if (JCNamaBahan1.getSelectedIndex() != 0) {
+            JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campur --'  as 'AliasBarang' UNION (SELECT CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') as 'AliasBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') != '" + JCNamaBahan1.getSelectedItem() + "' GROUP BY `AliasBarang`)");
+        }
+    }//GEN-LAST:event_JCNamaBahan1ItemStateChanged
+
+    private void JTJumlahBahan2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTJumlahBahan2FocusGained
+        if (JCNamaBahan2.getSelectedIndex() == 0) {
+            JTJumlahBahan2.setText("0");
+        }
+    }//GEN-LAST:event_JTJumlahBahan2FocusGained
+
+    private void JTJumlahBahan2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTJumlahBahan2FocusLost
+        if (JCNamaBahan2.getSelectedIndex() == 0) {
+            JTJumlahBahan2.setText("0");
+        }
+    }//GEN-LAST:event_JTJumlahBahan2FocusLost
 
     /**
      * @param args the command line arguments
@@ -1446,7 +1475,7 @@ public class Packing extends javax.swing.JFrame {
                     Berhasil = multiInsert.setautocomit(false);
                     if (Berhasil) {
                         for (int i = 0; i < JTable.getRowCount(); i++) {
-                            Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4) + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
+                            Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[0] + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                         }
                     }
                 }
@@ -1507,7 +1536,7 @@ public class Packing extends javax.swing.JFrame {
                         Berhasil = multiInsert.Excute("DELETE FROM `tbpacking` WHERE `NoPacking` = '" + NoPacking + "'", null);
                         if (Berhasil) {
                             for (int i = 0; i < JTable.getRowCount(); i++) {
-                                Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4) + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[0] + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                             }
                         }
                     }

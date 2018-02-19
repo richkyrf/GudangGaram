@@ -233,15 +233,15 @@ public class ListPenerimaan extends javax.swing.JFrame {
     }
 
     public void load() {
-        jcomCari1.setQuery("SELECT `IdPenerimaan` as 'ID', `NoPenerimaan` as 'No. Penerimaan', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `Peminta`, `NamaBarang` as 'Barang', `KarungPenjual` as 'Karung PJL', `NettoPenjual` as 'Netto PJL', `NoTimbang` as 'No. Timbang', `Plat`, `KarungPelita` as 'Karung PLT', `BruttoPelita` as 'Brutto PLT', `TaraPelita` as 'Tara PLT', `NettoPelita` as 'Netto PLT', a.`Keterangan` FROM `tbpenerimaan`a JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbmpeminta`c ON a.`IdPeminta`=c.`IdPeminta` JOIN `tbmbarang`d ON a.`IdBarang`=d.`IdBarang` WHERE 1");
+        jcomCari1.setQuery("SELECT `IdPenerimaan` as 'ID', `NoPenerimaan` as 'No. Penerimaan', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `Peminta`, `NamaBarang` as 'Barang', a.`IdPartai` as 'No. Partai', `KarungPenjual` as 'Karung PJL', `NettoPenjual` as 'Netto PJL', `NoTimbang` as 'No. Timbang', `Plat`, `KarungPelita` as 'Karung PLT', `BruttoPelita` as 'Brutto PLT', `TaraPelita` as 'Tara PLT', `NettoPelita` as 'Netto PLT', a.`Keterangan` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`Idpartai`=b.`IdPartai` JOIN `tbmpemasok`c ON b.`IdPemasok`=c.`IdPemasok` JOIN `tbmpeminta`d ON b.`IdPeminta`=d.`IdPeminta` JOIN `tbmbarang`e ON b.`IdBarang`=e.`IdBarang` WHERE 1");
         jcomCari1.setOrder(" ORDER BY `NoPenerimaan` DESC");
         jcomCari1.tampilkan();
-        jcomCari1.jtablef.setrender(6, "Number");
         jcomCari1.jtablef.setrender(7, "Number");
-        jcomCari1.jtablef.setrender(10, "Number");
+        jcomCari1.jtablef.setrender(8, "Number");
         jcomCari1.jtablef.setrender(11, "Number");
         jcomCari1.jtablef.setrender(12, "Number");
         jcomCari1.jtablef.setrender(13, "Number");
+        jcomCari1.jtablef.setrender(14, "Number");
     }
 
 }

@@ -659,6 +659,7 @@ public class MasterPartai extends javax.swing.JFrame {
                     JTKarung.setText("0");
                     JTNetto.setText("0");
                     JTAKeterangan.setText("");
+                    loadNoPartai();
                     JCPemasok.requestFocus();
                 }
                 if (GlobalVar.Var.listPartai != null) {

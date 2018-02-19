@@ -11,6 +11,8 @@ import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
 import LSubProces.RunSelct;
 import LSubProces.Update;
+import LSubProces.UpdateAll;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import static java.lang.Integer.parseInt;
 import static java.lang.System.out;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.UIManager;
 
 /**
  *
@@ -41,7 +44,7 @@ public class Penerimaan extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jbuttonF3.setVisible(false);
-        JTPemasok.requestFocus();
+        JCNoPartai.requestFocus();
     }
 
     public Penerimaan(Object idEdit) {
@@ -53,32 +56,43 @@ public class Penerimaan extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jbuttonF1.setVisible(false);
         jbuttonF2.setVisible(false);
+        JCNoPartai.requestFocus();
         loadEditData();
-        JTPemasok.requestFocus();
     }
 
     void loadEditData() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdPenerimaan` as 'ID', `NoPenerimaan`, `Tanggal`, `Pemasok`, `Peminta`, `NamaBarang`, `KarungPenjual`, `NettoPenjual`, `NoTimbang`, `Plat`, `KarungPelita`, `BruttoPelita`, `TaraPelita`, `NettoPelita`, a.`Keterangan` FROM `tbpenerimaan`a JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbmpeminta`c ON a.`IdPeminta`=c.`IdPeminta` JOIN `tbmbarang`d on a.`IdBarang`=d.`IdBarang` WHERE `IdPenerimaan` = " + IdEdit);
+        dRunSelctOne.setQuery("SELECT `IdPenerimaan` as 'ID', `NoPenerimaan` as 'No. Penerimaan', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `Peminta`, `NamaBarang` as 'Barang', a.`IdPartai` as 'No. Partai', `KarungPenjual` as 'Karung PJL', `NettoPenjual` as 'Netto PJL', `NoTimbang` as 'No. Timbang', `Plat`, `KarungPelita` as 'Karung PLT', `BruttoPelita` as 'Brutto PLT', `TaraPelita` as 'Tara PLT', `NettoPelita` as 'Netto PLT', a.`Keterangan`, `SelesaiProduksi` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`Idpartai`=b.`IdPartai` JOIN `tbmpemasok`c ON b.`IdPemasok`=c.`IdPemasok` JOIN `tbmpeminta`d ON b.`IdPeminta`=d.`IdPeminta` JOIN `tbmbarang`e ON b.`IdBarang`=e.`IdBarang` WHERE `IdPenerimaan` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
+        JCNoPartai.load("SELECT '-- Pilih No. Partai --' as 'NoPartai' UNION SELECT `IdPartai` FROM `tbmpartai` WHERE `SelesaiTerima` = 0 OR `IdPartai` = " + list.get(6));
         JTNoPenerimaan.setText(list.get(1));
         JDTanggal.setDate(FDateF.strtodate(list.get(2), "dd-MM-yyyy"));
         JTPemasok.setText(list.get(3));
         JTPeminta.setText(list.get(4));
         JTNamaBarang.setText(list.get(5));
-        JTKarungPenjual.setText(list.get(6));
-        JTNettoPenjual.setText(list.get(7));
-        JTNoTimbang.setText(list.get(8));
-        JCPlat.setSelectedItem(list.get(9));
-        JTKarungPelita.setText(list.get(10));
-        JTBruttoPelita.setText(list.get(11));
-        JTTaraPelita.setText(list.get(12));
-        JTNettoPelita.setText(list.get(13));
-        JTAKeterangan.setText(list.get(14));
+        JCNoPartai.setSelectedItem(list.get(6));
+        JTKarungPenjual.setText(list.get(7));
+        JTNettoPenjual.setText(list.get(8));
+        JTNoTimbang.setText(list.get(9));
+        JCPlat.setSelectedItem(list.get(10));
+        JTKarungPelita.setText(list.get(11));
+        JTBruttoPelita.setText(list.get(12));
+        JTTaraPelita.setText(list.get(13));
+        JTNettoPelita.setText(list.get(14));
+        JTAKeterangan.setText(list.get(15));
+        if (list.get(16).equals("1")) {
+            JTKarungPenjual.requestFocus();
+            JCNoPartai.setEnabled(false);
+            jbuttonF8.setEnabled(false);
+        }
+        UIManager.put("ComboBox.disabledForeground", Color.blue);
     }
 
     Boolean checkInput() {
-        if (JTNoPenerimaan.getText().replace(" ", "").equals("")) {
+        if (JCNoPartai.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Silahkan Pilih No. Partai Terlebih Dahulu");
+            return false;
+        } else if (JTNoPenerimaan.getText().replace(" ", "").equals("")) {
             JOptionPane.showMessageDialog(null, "No. Penerimaan Tidak Boleh Kosong");
             return false;
         } else if (JDTanggal.getDate() == null) {
@@ -110,6 +124,16 @@ public class Penerimaan extends javax.swing.JFrame {
             return false;
         } else {
             return true;
+        }
+    }
+
+    void setNoPenerimaan() {
+        if (JCNoPartai.getSelectedIndex() != 0) {
+            if (JTPeminta.getText().equals("PT. INTI GARAM CEMERLANG")) {
+                JTNoPenerimaan.setText(generateNoPenerimaanPPN());
+            } else {
+                JTNoPenerimaan.setText(generateNoPenerimaan());
+            }
         }
     }
 
@@ -209,6 +233,12 @@ public class Penerimaan extends javax.swing.JFrame {
             JTPeminta.setText(list.get(1));
             JTNamaBarang.setText(list.get(2));
             loadTotalTerima();
+        } else {
+            JTPemasok.setText("");
+            JTPeminta.setText("");
+            JTNamaBarang.setText("");
+            JTTotalTerima.setText("");
+            JTNoPenerimaan.setText("");
         }
     }
 
@@ -216,7 +246,7 @@ public class Penerimaan extends javax.swing.JFrame {
         if (JCNoPartai.getSelectedIndex() != 0) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
             dRunSelctOne.seterorm("Gagal Panggil Total Terima");
-            dRunSelctOne.setQuery("SELECT IFNULL(CONCAT(FORMAT(`TotalKarung`,0),'/',FORMAT(`Karung`,0),' Karung'),0) FROM (SELECT `IdPartai`, SUM(`KarungPelita`) as 'TotalKarung', SUM(`NettoPelita`) as 'TotalNetto' FROM `tbpenerimaan` WHERE `IdPartai` = '" + JCNoPartai.getSelectedItem() + "') a JOIN (SELECT `IdPartai`, `Karung`, `Netto` FROM `tbmpartai` WHERE `IdPartai` = '" + JCNoPartai.getSelectedItem() + "') b ON a.`IdPartai`=b.`IdPartai`");
+            dRunSelctOne.setQuery("SELECT CONCAT(IFNULL(FORMAT(SUM(`KarungPelita`),0),0),'/',FORMAT(`Karung`,0),' Karung') as 'TotalKarung' FROM `tbpenerimaan`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` WHERE b.`IdPartai` = '" + JCNoPartai.getSelectedItem() + "'");
             ArrayList<String> list = dRunSelctOne.excute();
             JTTotalTerima.setText(list.get(0).replace(",", "."));
         }
@@ -487,11 +517,21 @@ public class Penerimaan extends javax.swing.JFrame {
                 JCNoPartaiItemStateChanged(evt);
             }
         });
+        JCNoPartai.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JCNoPartaiKeyPressed(evt);
+            }
+        });
 
         jbuttonF8.setText("+");
         jbuttonF8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbuttonF8ActionPerformed(evt);
+            }
+        });
+        jbuttonF8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbuttonF8KeyPressed(evt);
             }
         });
 
@@ -802,11 +842,7 @@ public class Penerimaan extends javax.swing.JFrame {
     }//GEN-LAST:event_JTTaraPelitaFocusLost
 
     private void JDTanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDTanggalPropertyChange
-        if (JTPeminta.getText().equals("PT. INTI GARAM CEMERLANG")) {
-            JTNoPenerimaan.setText(generateNoPenerimaanPPN());
-        } else {
-            JTNoPenerimaan.setText(generateNoPenerimaan());
-        }
+        setNoPenerimaan();
     }//GEN-LAST:event_JDTanggalPropertyChange
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -848,13 +884,21 @@ public class Penerimaan extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF8ActionPerformed
 
     private void JCNoPartaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNoPartaiItemStateChanged
-        if (JTPeminta.getText().equals("PT. INTI GARAM CEMERLANG")) {
-            JTNoPenerimaan.setText(generateNoPenerimaanPPN());
-        } else {
-            JTNoPenerimaan.setText(generateNoPenerimaan());
-        }
+        setNoPenerimaan();
         loadDataPartai();
     }//GEN-LAST:event_JCNoPartaiItemStateChanged
+
+    private void JCNoPartaiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNoPartaiKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTKarungPenjual.requestFocus();
+        }
+    }//GEN-LAST:event_JCNoPartaiKeyPressed
+
+    private void jbuttonF8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbuttonF8KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTKarungPenjual.requestFocus();
+        }
+    }//GEN-LAST:event_jbuttonF8KeyPressed
 
     /**
      * @param args the command line arguments
@@ -954,12 +998,21 @@ public class Penerimaan extends javax.swing.JFrame {
     void tambahData(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbpenerimaan`(`NoPenerimaan`, `Tanggal`, `IdPemasok`, `IdPeminta`, `IdBarang`, `KarungPenjual`, `NettoPenjual`, `NoTimbang`, `Plat`, `KarungPelita`, `BruttoPelita`, `TaraPelita`, `NettoPelita`, `Keterangan`) VALUES ('" + JTNoPenerimaan.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdPemasok` FROM `tbmpemasok` WHERE `Pemasok` = '" + JTPemasok.getText() + "'),(SELECT `IdPeminta` FROM `tbmpeminta` WHERE `Peminta` = '" + JTPeminta.getText() + "'),(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTNamaBarang.getText() + "'),'" + JTKarungPenjual.getInt() + "','" + JTNettoPenjual.getInt() + "','" + JTNoTimbang.getText() + "','" + JCPlat.getSelectedItem() + "','" + JTKarungPelita.getInt() + "','" + JTBruttoPelita.getInt() + "','" + JTTaraPelita.getInt() + "','" + JTNettoPelita.getInt() + "','" + JTAKeterangan.getText() + "')", "Penerimaan", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbpenerimaan`(`NoPenerimaan`, `Tanggal`, `IdPartai`, `KarungPenjual`, `NettoPenjual`, `NoTimbang`, `Plat`, `KarungPelita`, `BruttoPelita`, `TaraPelita`, `NettoPelita`, `Keterangan`) VALUES ('" + JTNoPenerimaan.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JCNoPartai.getSelectedItem() + "','" + JTKarungPenjual.getInt() + "','" + JTNettoPenjual.getInt() + "','" + JTNoTimbang.getText() + "','" + JCPlat.getSelectedItem() + "','" + JTKarungPelita.getInt() + "','" + JTBruttoPelita.getInt() + "','" + JTTaraPelita.getInt() + "','" + JTNettoPelita.getInt() + "','" + JTAKeterangan.getText() + "')", "Penerimaan", this);
             if (berhasil) {
+                if (Integer.valueOf(JTTotalTerima.getText().split("/")[0].replace(".", "")) + JTKarungPelita.getInt() == Integer.valueOf(JTTotalTerima.getText().split("/")[1].split(" ")[0].replace(".", ""))) {
+                    UpdateAll updateAll = new UpdateAll();
+                    updateAll.Ubah("UPDATE `tbmpartai` SET `SelesaiTerima`=1 WHERE `IdPartai`='" + JCNoPartai.getSelectedItem() + "'", "Partai", this);
+                    JCNoPartai.load("SELECT '-- Pilih No. Partai --' as 'NoPartai' UNION SELECT `IdPartai` FROM `tbmpartai` WHERE `SelesaiTerima` = 0 ");
+                    JCNoPartai.requestFocus();
+                    JCNoPartai.setSelectedIndex(0);
+                }
                 if (tutup) {
                     GlobalVar.Var.tambahPenerimaan.dispose();
                     GlobalVar.Var.tambahPenerimaan = null;
                 } else {
+                    setNoPenerimaan();
+                    loadTotalTerima();
                     JTKarungPenjual.setText("0");
                     JTNettoPenjual.setText("0");
                     JTNoTimbang.setText("");
@@ -968,12 +1021,7 @@ public class Penerimaan extends javax.swing.JFrame {
                     JTTaraPelita.setText("0");
                     JTNettoPelita.setText("0");
                     JTAKeterangan.setText("");
-                    JTNoTimbang.requestFocus();
-                    if (JTPeminta.getText().equals("PT. INTI GARAM CEMERLANG")) {
-                        JTNoPenerimaan.setText(generateNoPenerimaanPPN());
-                    } else {
-                        JTNoPenerimaan.setText(generateNoPenerimaan());
-                    }
+                    JTKarungPenjual.requestFocus();
                 }
                 if (GlobalVar.Var.listPenerimaan != null) {
                     GlobalVar.Var.listPenerimaan.load();
@@ -985,7 +1033,7 @@ public class Penerimaan extends javax.swing.JFrame {
     void ubahData() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbpenerimaan` SET `NoPenerimaan`='" + JTNoPenerimaan.getText() + "',`Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdPemasok`=(SELECT `IdPemasok` FROM `tbmpemasok` WHERE `Pemasok` = '" + JTPemasok.getText() + "'),`IdPeminta`=(SELECT `IdPeminta` FROM `tbmpeminta` WHERE `Peminta` = '" + JTPeminta.getText() + "'),`IdBarang`=(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTNamaBarang.getText() + "'),`KarungPenjual`='" + JTKarungPenjual.getInt() + "',`NettoPenjual`='" + JTNettoPenjual.getInt() + "',`NoTimbang`='" + JTNoTimbang.getText() + "',`Plat`='" + JCPlat.getSelectedItem() + "',`KarungPelita`='" + JTKarungPelita.getInt() + "',`BruttoPelita`='" + JTBruttoPelita.getInt() + "',`TaraPelita`='" + JTTaraPelita.getInt() + "',`NettoPelita`='" + JTNettoPelita.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `Pemasok` = '" + JTPemasok.getText() + "'),`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdPenerimaan` = " + IdEdit, "Penerimaan", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbpenerimaan` SET `NoPenerimaan`='" + JTNoPenerimaan.getText() + "',`Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdPartai`='" + JCNoPartai.getSelectedItem() + "',`KarungPenjual`='" + JTKarungPenjual.getInt() + "',`NettoPenjual`='" + JTNettoPenjual.getInt() + "',`NoTimbang`='" + JTNoTimbang.getText() + "',`Plat`='" + JCPlat.getSelectedItem() + "',`KarungPelita`='" + JTKarungPelita.getInt() + "',`BruttoPelita`='" + JTBruttoPelita.getInt() + "',`TaraPelita`='" + JTTaraPelita.getInt() + "',`NettoPelita`='" + JTNettoPelita.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `Pemasok` = '" + JTPemasok.getText() + "'),`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdPenerimaan` = " + IdEdit, "Penerimaan", this);
             if (berhasil) {
                 dispose();
             }

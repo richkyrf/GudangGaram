@@ -379,10 +379,11 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCNamaBahan1ItemStateChanged"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBahan1KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan1.load(&quot;SELECT &apos;-- Pilih Bahan Ke 1 --&apos;  as &apos;AliasBarang&apos; UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan1.load(&quot;SELECT &apos;-- Pilih Bahan Ke 1 --&apos;  as &apos;AliasBarang&apos; UNION (SELECT CONCAT(`AliasBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) as &apos;AliasBarang&apos; FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `AliasBarang`)&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JRibuanTextField" name="JTJumlahBahan1">
@@ -787,7 +788,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBahan2KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan2.load(&quot;SELECT &apos;-- Pilih Bahan Ke 2 Jika Campuran --&apos; as &apos;AliasBarang&apos; UNION SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 1&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan2.load(&quot;SELECT &apos;-- Pilih Bahan Ke 2 Jika Campuran --&apos;  as &apos;AliasBarang&apos; UNION (SELECT CONCAT(`AliasBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) as &apos;AliasBarang&apos; FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`AliasBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) != &apos;&quot;+JCNamaBahan1.getSelectedItem()+&quot;&apos; GROUP BY `AliasBarang`)&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JRibuanTextField" name="JTJumlahBahan2">
@@ -797,6 +798,8 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JTJumlahBahan2FocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JTJumlahBahan2FocusLost"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJumlahBahan2KeyPressed"/>
       </Events>
     </Component>
