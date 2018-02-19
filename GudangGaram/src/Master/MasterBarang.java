@@ -22,7 +22,7 @@ public class MasterBarang extends javax.swing.JFrame {
      * Creates new form MasterBarang
      */
     String IdEdit;
-
+    
     public MasterBarang() {
         initComponents();
         setVisible(true);
@@ -31,7 +31,7 @@ public class MasterBarang extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jbuttonF3.setVisible(false);
     }
-
+    
     public MasterBarang(Object idEdit) {
         IdEdit = idEdit.toString();
         initComponents();
@@ -43,7 +43,7 @@ public class MasterBarang extends javax.swing.JFrame {
         jbuttonF2.setVisible(false);
         loadeditdata();
     }
-
+    
     void loadeditdata() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.setQuery("SELECT `IdBarang` as 'ID', `AliasBarang` as 'Alias', `NamaBarang` as 'Nama', `JenisBarang` as 'Jenis', `Pemasok`, `Satuan`, `Harga`, `UpahPacking` as 'Upah', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmbarang`a JOIN `tbsmjenisbarang`b ON a.`IdJenisBarang`=b.`IdJenisBarang` LEFT JOIN `tbmpemasok`c ON a.`IdPemasok`=c.`IdPemasok` WHERE `IdBarang` = " + IdEdit);
@@ -54,13 +54,14 @@ public class MasterBarang extends javax.swing.JFrame {
         if (list.get(3).toUpperCase().equals("BAHAN")) {
             JCPemasok.setSelectedItem(list.get(4));
         }
-        JTSatuan.setText(list.get(5));
+        JTSatuan.setText(list.get(5).substring(0, (list.get(5).length() - 3)));
+        JTKoma.setText(list.get(5).substring((list.get(5).length() - 2), list.get(5).length()));
         JTHarga.setText(list.get(6));
         JTUpahPacking.setText(list.get(7));
         JTAKeterangan.setText(list.get(8));
         JCBStatus.setSelected(list.get(9).equals("Aktif"));
     }
-
+    
     Boolean checkInput() {
         if (JTNamaBarang.getText().replace(" ", "").equals("")) {
             JOptionPane.showMessageDialog(null, "Nama Tidak Boleh Kosong");
@@ -594,11 +595,11 @@ public class MasterBarang extends javax.swing.JFrame {
             return null;
         }
     }
-
+    
     void tambahData(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbmbarang`(`AliasBarang`, `NamaBarang`, `IdJenisBarang`, `IdPemasok`, `Satuan`, `Harga`, `UpahPacking`, `Keterangan`, `Status`) VALUES ('" + JTAliasBarang.getText() + "','" + JTNamaBarang.getText() + "',(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "')," + getIdPemasok() + ",'" + JTSatuan.getText() + "','" + JTHarga.getInt() + "." + JTKoma.getText() + "','" + JTUpahPacking.getInt() + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Barang", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbmbarang`(`AliasBarang`, `NamaBarang`, `IdJenisBarang`, `IdPemasok`, `Satuan`, `Harga`, `UpahPacking`, `Keterangan`, `Status`) VALUES ('" + JTAliasBarang.getText() + "','" + JTNamaBarang.getText() + "',(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "')," + getIdPemasok() + ",'" + JTSatuan.getText() + "." + JTKoma.getText() + "','" + JTHarga.getInt() + "','" + JTUpahPacking.getInt() + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Barang", this);
             if (berhasil) {
                 if (GlobalVar.Var.listKendaraan != null) {
                     GlobalVar.Var.listKendaraan.load();
@@ -632,11 +633,11 @@ public class MasterBarang extends javax.swing.JFrame {
             }
         }
     }
-
+    
     void ubahData() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbmbarang` SET `AliasBarang`='" + JTAliasBarang.getText() + "',`NamaBarang`='" + JTNamaBarang.getText() + "',`IdJenisBarang`=(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "'),`IdPemasok`=" + getIdPemasok() + ",`Satuan`='" + JTSatuan.getText() + "',`Harga`='" + JTHarga.getInt() + "." + JTKoma.getText() + "',`UpahPacking`='" + JTUpahPacking.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "',`Status`=" + JCBStatus.isSelected() + " WHERE `IdBarang` = " + IdEdit, "Barang", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbmbarang` SET `AliasBarang`='" + JTAliasBarang.getText() + "',`NamaBarang`='" + JTNamaBarang.getText() + "',`IdJenisBarang`=(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "'),`IdPemasok`=" + getIdPemasok() + ",`Satuan`='" + JTSatuan.getText() + "." + JTKoma.getText() + "',`Harga`='" + JTHarga.getInt() + "',`UpahPacking`='" + JTUpahPacking.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "',`Status`=" + JCBStatus.isSelected() + " WHERE `IdBarang` = " + IdEdit, "Barang", this);
             if (berhasil) {
                 dispose();
                 if (GlobalVar.Var.listBarang != null) {
@@ -645,5 +646,5 @@ public class MasterBarang extends javax.swing.JFrame {
             }
         }
     }
-
+    
 }
