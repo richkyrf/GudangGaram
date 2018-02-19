@@ -24,6 +24,7 @@ public class Var {
     public static ResetPasswordUser resetPasswordUser;
     public static GantiPassword gantiPassword;
     
+    public static MasterPartai tambahPartai, ubahPartai;
     public static MasterKaryawan tambahKaryawan,ubahKaryawan;
     public static MasterBarang tambahBarang,ubahBarang;
     public static MasterKendaraan tambahKendaraan, ubahKendaraan;
@@ -39,6 +40,7 @@ public class Var {
     public static PrintTPB printTPB;
     public static Poles poles;
     
+    public static ListPartai listPartai;
     public static ListKaryawan listKaryawan;
     public static ListBarang listBarang;
     public static ListKendaraan listKendaraan;

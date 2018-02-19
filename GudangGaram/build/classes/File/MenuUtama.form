@@ -60,6 +60,14 @@
             <Property name="text" type="java.lang.String" value="Master"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Master Partai"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterBarang">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Master Barang"/>
@@ -129,11 +137,6 @@
             <Property name="text" type="java.lang.String" value="Proses"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPartai">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Partai"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenerimaan">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Proses Penerimaan"/>
@@ -201,11 +204,6 @@
             <Property name="text" type="java.lang.String" value="List"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIListPartai">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="List Partai"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIListPenerimaan">
               <Properties>
                 <Property name="text" type="java.lang.String" value="List Penerimaan"/>

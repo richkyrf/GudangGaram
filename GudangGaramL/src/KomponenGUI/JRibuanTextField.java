@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 public final class JRibuanTextField extends JTextField {
 
     private static final long serialVersionUID = 1L;
-    private char separator = ',';
+    private char separator = '.';
     private int maxlimit = 2147483647;
     private int minlimit = -2147483647;
 
@@ -85,7 +85,7 @@ public final class JRibuanTextField extends JTextField {
 
     public String formatNumber(String s) {
         try {
-            int v = Integer.parseInt(s.replace(",", ""));
+            int v = Integer.parseInt(s.replace(".", ""));
             if (v >= this.maxlimit) {
                 v = this.maxlimit;
             }

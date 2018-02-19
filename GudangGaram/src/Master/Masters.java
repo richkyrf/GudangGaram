@@ -363,9 +363,9 @@ public class Masters extends javax.swing.JFrame {
                             MasterBarang.JCPemasok.requestFocus();
                         }
                         if (GlobalVar.Var.tambahPenerimaan != null || GlobalVar.Var.ubahPenerimaan != null) {
-                            Penerimaan.JCPemasok.load("SELECT `Pemasok` FROM `tbmpemasok`");
-                            Penerimaan.JCPemasok.setSelectedItem(JTNama.getText());
-                            Penerimaan.JCPemasok.requestFocus();
+                            MasterPartai.JCPemasok.load("SELECT `Pemasok` FROM `tbmpemasok`");
+                            MasterPartai.JCPemasok.setSelectedItem(JTNama.getText());
+                            MasterPartai.JCPemasok.requestFocus();
                         }
                         break;
                     case "Peminta":
@@ -373,9 +373,9 @@ public class Masters extends javax.swing.JFrame {
                             GlobalVar.Var.listPeminta.refresh();
                         }
                         if (GlobalVar.Var.tambahPenerimaan != null || GlobalVar.Var.ubahPenerimaan != null) {
-                            Penerimaan.JCPeminta.load("SELECT `Peminta` FROM `tbmpeminta`");
-                            Penerimaan.JCPeminta.setSelectedItem(JTNama.getText());
-                            Penerimaan.JCPeminta.requestFocus();
+                            MasterPartai.JCPeminta.load("SELECT `Peminta` FROM `tbmpeminta`");
+                            MasterPartai.JCPeminta.setSelectedItem(JTNama.getText());
+                            MasterPartai.JCPeminta.requestFocus();
                         }
                         break;
                     case "Penerima":
