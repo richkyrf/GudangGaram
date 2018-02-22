@@ -304,22 +304,22 @@ public class MasterKendaraan extends javax.swing.JFrame {
                     GlobalVar.Var.listKendaraan.load();
                 }
                 if (GlobalVar.Var.tambahPenerimaan != null) {
-                    GlobalVar.Var.tambahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.tambahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
                     GlobalVar.Var.tambahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
                     GlobalVar.Var.tambahPenerimaan.JCPlat.requestFocus();
                 }
                 if (GlobalVar.Var.ubahPenerimaan != null) {
-                    GlobalVar.Var.ubahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.ubahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
                     GlobalVar.Var.ubahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
                     GlobalVar.Var.ubahPenerimaan.JCPlat.requestFocus();
                 }
                 if (GlobalVar.Var.tambahPenjualan != null) {
-                    GlobalVar.Var.tambahPenjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.tambahPenjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
                     GlobalVar.Var.tambahPenjualan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
                     GlobalVar.Var.tambahPenjualan.JCPlat.requestFocus();
                 }
                 if (GlobalVar.Var.ubahPenjualan != null) {
-                    GlobalVar.Var.ubahPenjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+                    GlobalVar.Var.ubahPenjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
                     GlobalVar.Var.ubahPenjualan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
                     GlobalVar.Var.ubahPenjualan.JCPlat.requestFocus();
                 }
