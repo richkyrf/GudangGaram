@@ -3,6 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -30,23 +31,23 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="JCNamaBarang" pref="352" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jlabelF7" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jlabelF8" pref="77" max="32767" attributes="0"/>
-                          <Component id="JTJumlah" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jlabelF9" max="32767" attributes="0"/>
-                          <Component id="JTHargaSatuan" max="32767" attributes="0"/>
+                          <Component id="JCNamaBarang" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jlabelF11" max="32767" attributes="0"/>
+                          <Component id="jlabelF8" alignment="1" min="-2" pref="77" max="-2" attributes="0"/>
+                          <Component id="JTJumlah" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="JTHargaSatuan" max="32767" attributes="0"/>
+                          <Component id="jlabelF9" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jlabelF11" pref="250" max="32767" attributes="0"/>
                           <Component id="JTSubTotal" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -123,7 +124,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="401" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jbuttonF5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
@@ -140,7 +141,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" pref="605" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jlableF4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -158,7 +159,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -424,21 +425,21 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
-                <Column editable="true" title="No" type="java.lang.Object"/>
-                <Column editable="true" title="Nama Barang" type="java.lang.Object"/>
-                <Column editable="true" title="Jumlah" type="java.lang.Object"/>
-                <Column editable="true" title="Harga Satuan" type="java.lang.Object"/>
-                <Column editable="true" title="Sub Total" type="java.lang.Object"/>
+                <Column editable="false" title="No" type="java.lang.Object"/>
+                <Column editable="false" title="Nama Barang" type="java.lang.Object"/>
+                <Column editable="false" title="Jumlah" type="java.lang.Object"/>
+                <Column editable="false" title="Harga Satuan" type="java.lang.Object"/>
+                <Column editable="false" title="Sub Total" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTable.setrender(2, &quot;Number&quot;);&#xa;JTable.setrender(3, &quot;Number&quot;);&#xa;JTable.setrender(4, &quot;Number&quot;);">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="310" minWidth="310" prefWidth="310" resizable="true">
+                <Column maxWidth="410" minWidth="410" prefWidth="410" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -485,7 +486,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBarangKeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT `NamaBarang` FROM `tbmbarang`&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT &apos;-- Pilih Nama Barang --&apos; as &apos;NamaBarang&apos; UNION ALL (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2)&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JtextF" name="jlabelF8">
@@ -634,10 +635,11 @@
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCPlat">
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCPlatItemStateChanged"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCPlatKeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPlat.load(&quot;SELECT `Plat` FROM `tbmkendaraan`&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPlat.load(&quot;SELECT `Plat` FROM `tbmkendaraan` ORDER BY `Plat` &quot;);"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>

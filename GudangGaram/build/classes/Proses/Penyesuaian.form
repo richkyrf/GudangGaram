@@ -35,80 +35,86 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jlableF3" max="32767" attributes="0"/>
-                              <Component id="jlableF5" max="32767" attributes="0"/>
-                              <Component id="jlableF1" pref="131" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jlableF2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jlableF4" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jlableF3" max="32767" attributes="0"/>
+                                  <Component id="jlableF5" max="32767" attributes="0"/>
+                                  <Component id="jlableF1" pref="131" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jlableF2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jlableF4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="JTNoPenyesuaian" max="32767" attributes="0"/>
+                                          <Component id="JDTanggalPenyesuaian" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="JTNoPenyesuaian" max="32767" attributes="0"/>
-                                      <Component id="JDTanggalPenyesuaian" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCNamaBarang" pref="310" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JCNamaBarang" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jlableF11" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jlableF9" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jlableF7" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jlableF13" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JTStokLamaSak" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jlableF14" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="JTStokBaruKG" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                              <Component id="jlableF16" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                              <Component id="JTKomaKG" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="JTStokBaruSak" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                              <Component id="jlableF15" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                              <Component id="JTKomaSak" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="JTStokLamaKG" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jlableF11" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jlableF9" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jlableF7" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JTStokLamaSak" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JTStokLamaKG" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JTStokBaruSak" max="32767" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Component id="jlableF15" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Component id="JTKomaSak" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jlableF17" min="-2" pref="131" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jlableF18" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="309" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jlableF13" min="-2" pref="131" max="-2" attributes="0"/>
+                      <Component id="jlableF17" min="-2" pref="131" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jlableF14" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlableF18" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JTStokBaruKG" min="-2" pref="278" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="jlableF16" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="JTKomaKG" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -152,21 +158,21 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlableF11" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlableF12" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTStokBaruSak" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTKomaSak" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF15" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTStokBaruSak" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF12" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF11" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlableF13" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlableF14" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTStokBaruKG" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlableF16" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTKomaKG" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF16" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTStokBaruKG" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF14" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF13" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jlableF17" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -174,7 +180,7 @@
                   </Group>
                   <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -308,7 +314,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBarangKeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT &apos;-- Pilih Nama Barang --&apos; as &apos;NamaBarang&apos; UNION SELECT `NamaBarang` FROM `tbmbarang` &quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT &apos;-- Pilih Nama Barang --&apos; as &apos;NamaBarang&apos; UNION ALL (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2)&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JtextF" name="JTStokLamaSak">

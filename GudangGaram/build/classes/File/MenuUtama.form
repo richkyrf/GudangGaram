@@ -145,6 +145,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenerimaanActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPrintTandaPenerimaanBarang">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Proses Print Tanda Penerimaan Barang (TPB)"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPrintTandaPenerimaanBarangActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPacking">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Proses Packing"/>

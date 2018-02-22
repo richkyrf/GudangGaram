@@ -199,7 +199,7 @@ public class ListKaryawan extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void refreshAll() {
-        jcomCari1.Clear();
+        jcomCari1.refresh();
         load();
     }
     

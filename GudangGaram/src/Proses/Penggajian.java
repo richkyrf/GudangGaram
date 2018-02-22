@@ -669,7 +669,7 @@ public class Penggajian extends javax.swing.JFrame {
             DecimalFormat myFormatter = new DecimalFormat(pattern);
             output = myFormatter.format(value);
         }
-        return output;
+        return output.replace(",",".");
     }
 
     String Decformatdigit(double Number) {
@@ -686,7 +686,7 @@ public class Penggajian extends javax.swing.JFrame {
             DecimalFormat myFormatter = new DecimalFormat(pattern);
             output = myFormatter.format(value);
         }
-        return output;
+        return output.replace(",",".");
     }
 
 }

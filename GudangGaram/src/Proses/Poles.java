@@ -127,8 +127,8 @@ public class Poles extends javax.swing.JFrame {
 
     boolean checkPacking() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.seterorm("Gagal check Packing");
-        dRunSelctOne.setQuery("SELECT b.`NamaBarang`, ROUND(SUM(`JumlahBahan`)) as 'Jumlah', b.`Satuan`, ROUND(ROUND(SUM(`JumlahBahan`)) * b.`Satuan`) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangBahan` = b.`IdBarang` WHERE `Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`NamaBarang`");
+        dRunSelctOne.seterorm("Gagal Check Packing");
+        dRunSelctOne.setQuery("SELECT c.`NamaBarang`, ROUND(SUM(`JumlahBahan`)) as 'Jumlah', c.`Satuan`, ROUND(ROUND(SUM(`JumlahBahan`)) * c.`Satuan`) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai` = b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY c.`NamaBarang`");
         ArrayList<String> list = dRunSelctOne.excute();
         return list.get(0) != null;
     }
@@ -600,9 +600,8 @@ public class Poles extends javax.swing.JFrame {
         }
         
         String Keterangan;
-        if (JTAKeterangan.getText().length() < 65) {
-            Keterangan = JTAKeterangan.getText();
-        } else {
+        Keterangan = JTAKeterangan.getText();
+        if (JTAKeterangan.getText().length() > 64) {
             Keterangan = JTAKeterangan.getText().substring(0, 64);
         }
 
@@ -620,8 +619,8 @@ public class Poles extends javax.swing.JFrame {
         OutFormat += format("%-81s%n", " _____________________________________________________________________________");
         OutFormat += format("%-58s%-22s%n", " LAPORAN PROSES POLES", "No.Poles: " + NoPoles);
         OutFormat += format("%-58s%-22s%n", " ", "Tanggal : " + Tanggal);
-        //                              12345678901234567890123456789012345678901234567890123456789012345678901234567890
-        //                              12341234567890123456789012345678901234567890123456712345678912345671234567890123
+        //                               12345678901234567890123456789012345678901234567890123456789012345678901234567890
+        //                               12341234567890123456789012345678901234567890123456712345678912345671234567890123
         OutFormat += format("%-80s%n", " BAHAN PROSES:");
         OutFormat += format("%-80s%n", " +---+-------------------------------------------+--------+--------+-----------+");
         OutFormat += format("%-80s%n", " | NO| NAMA BARANG                               | JUMLAH | KG/ZAK | SUB TOTAL |");
@@ -760,7 +759,7 @@ public class Poles extends javax.swing.JFrame {
             DecimalFormat myFormatter = new DecimalFormat(pattern);
             output = myFormatter.format(value);
         }
-        return output;
+        return output.replace(",",".");
     }
 
     String Decformatdigit(double Number) {
@@ -777,7 +776,7 @@ public class Poles extends javax.swing.JFrame {
             DecimalFormat myFormatter = new DecimalFormat(pattern);
             output = myFormatter.format(value);
         }
-        return output;
+        return output.replace(",","*").replace(".", ",").replace("*", ".");
     }
 
 }

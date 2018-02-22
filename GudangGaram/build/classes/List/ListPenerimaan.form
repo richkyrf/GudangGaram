@@ -37,8 +37,6 @@
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                       <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jbuttonF5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
@@ -61,7 +59,6 @@
                   <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbuttonF5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -102,14 +99,6 @@
       </Events>
     </Component>
     <Component class="KomponenGUI.JcomCari" name="jcomCari1">
-    </Component>
-    <Component class="KomponenGUI.JbuttonF" name="jbuttonF5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Print"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF5ActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

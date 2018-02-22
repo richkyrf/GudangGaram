@@ -205,7 +205,7 @@ public class ListPartai extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void refreshAll(){
-        jcomCari1.Clear();
+        jcomCari1.refresh();
         load();
     }
     
@@ -241,11 +241,11 @@ public class ListPartai extends javax.swing.JFrame {
     }
 
     public void load() {
-        jcomCari1.setQuery("SELECT `IdPartai` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `Peminta`, `NamaBarang`, `Netto`, `Karung`, a.`Keterangan`, IF(`SelesaiTerima`=1,'Sudah','Belum') as 'Selesai Terima', IF(`SelesaiProduksi`=1,'Sudah','Belum') as 'Selesai Produksi' FROM `tbmpartai`a JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbmpeminta`c ON a.`IdPeminta`=c.`IdPeminta` JOIN `tbmbarang`d ON a.`IdBarang`=d.`IdBarang` WHERE 1");
-        jcomCari1.setOrder(" ORDER BY `IdPartai` DESC");
+        jcomCari1.setQuery("SELECT a.`IdPartai` as 'ID', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `NamaBarang` as 'Nama Barang', REPLACE(CONCAT(FORMAT(IFNULL(SUM(`NettoPelita`),0),0),'/', FORMAT(`Netto`,0)),',','.') as 'Netto', REPLACE(CONCAT(FORMAT(IFNULL(SUM(`KarungPelita`),0),0),'/', FORMAT(`Karung`,0)),',','.') as 'Karung', a.`Keterangan`, IF(`SelesaiTerima`=1,'Sudah','Belum') as 'Selesai Terima', IF(`SelesaiProduksi`=1,'Sudah','Belum') as 'Selesai Produksi' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmpemasok`c ON b.`IdPemasok`=c.`IdPemasok` JOIN `tbpenerimaan`d ON a.`IdPartai`=d.`IdPartai` WHERE 1");
+        jcomCari1.setOrder(" ORDER BY a.`IdPartai` DESC");
         jcomCari1.tampilkan();
+        jcomCari1.jtablef.setrender(4, "Number");
         jcomCari1.jtablef.setrender(5, "Number");
-        jcomCari1.jtablef.setrender(6, "Number");
     }
 
 }

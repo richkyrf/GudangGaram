@@ -362,20 +362,15 @@ public class Masters extends javax.swing.JFrame {
                             MasterBarang.JCPemasok.setSelectedItem(JTNama.getText());
                             MasterBarang.JCPemasok.requestFocus();
                         }
-                        if (GlobalVar.Var.tambahPenerimaan != null || GlobalVar.Var.ubahPenerimaan != null) {
-                            MasterPartai.JCPemasok.load("SELECT `Pemasok` FROM `tbmpemasok`");
-                            MasterPartai.JCPemasok.setSelectedItem(JTNama.getText());
-                            MasterPartai.JCPemasok.requestFocus();
-                        }
                         break;
                     case "Peminta":
                         if (GlobalVar.Var.listPeminta != null) {
                             GlobalVar.Var.listPeminta.refresh();
                         }
                         if (GlobalVar.Var.tambahPenerimaan != null || GlobalVar.Var.ubahPenerimaan != null) {
-                            MasterPartai.JCPeminta.load("SELECT `Peminta` FROM `tbmpeminta`");
-                            MasterPartai.JCPeminta.setSelectedItem(JTNama.getText());
-                            MasterPartai.JCPeminta.requestFocus();
+                            Penerimaan.JCPeminta.load("SELECT `Peminta` FROM `tbmpeminta`");
+                            Penerimaan.JCPeminta.setSelectedItem(JTNama.getText());
+                            Penerimaan.JCPeminta.requestFocus();
                         }
                         break;
                     case "Penerima":

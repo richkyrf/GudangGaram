@@ -32,8 +32,9 @@ public class MasterPartai extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jbuttonF3.setVisible(false);
-        JCPemasok.requestFocus();
+        JCNamaBarang.requestFocus();
         loadNoPartai();
+        loadPemasok();
     }
 
     public MasterPartai(Object idEdit) {
@@ -46,23 +47,22 @@ public class MasterPartai extends javax.swing.JFrame {
         jbuttonF1.setVisible(false);
         jbuttonF2.setVisible(false);
         loadEditData();
-        JCPemasok.requestFocus();
+        JCNamaBarang.requestFocus();
     }
 
     void loadEditData() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdPartai` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `Peminta`, `NamaBarang`, `Netto`, `Karung`, a.`Keterangan`, IF(`SelesaiTerima`=1,'Sudah','Belum') as 'Selesai Terima', IF(`SelesaiProduksi`=1,'Sudah','Belum') as 'Selesai Produksi' FROM `tbmpartai`a JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbmpeminta`c ON a.`IdPeminta`=c.`IdPeminta` JOIN `tbmbarang`d ON a.`IdBarang`=d.`IdBarang` WHERE `IdPartai` = " + IdEdit);
+        dRunSelctOne.setQuery("SELECT `IdPartai` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `NamaBarang`, `Netto`, `Karung`, a.`Keterangan`, IF(`SelesaiTerima`=1,'Sudah','Belum') as 'Selesai Terima', IF(`SelesaiProduksi`=1,'Sudah','Belum') as 'Selesai Produksi' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmpemasok`d ON b.`IdPemasok`=d.`IdPemasok`  WHERE `IdPartai` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
         JTNoPartai.setText(list.get(0));
         JDTanggal.setDate(FDateF.strtodate(list.get(1), "dd-MM-yyyy"));
-        JCPemasok.setSelectedItem(list.get(2));
-        JCPeminta.setSelectedItem(list.get(3));
-        JCNamaBarang.setSelectedItem(list.get(4));
-        JTNetto.setText(list.get(5));
-        JTKarung.setText(list.get(6));
-        JTAKeterangan.setText(list.get(7));
-        JCBSelesaiTerima.setSelected(list.get(8).toUpperCase().equals("SUDAH"));
-        JCBSelesaiProduksi.setSelected(list.get(9).toUpperCase().equals("SUDAH"));
+        JTPemasok.setText(list.get(2));
+        JCNamaBarang.setSelectedItem(list.get(3));
+        JTNetto.setText(list.get(4));
+        JTKarung.setText(list.get(5));
+        JTAKeterangan.setText(list.get(6));
+        JCBSelesaiTerima.setSelected(list.get(7).toUpperCase().equals("SUDAH"));
+        JCBSelesaiProduksi.setSelected(list.get(8).toUpperCase().equals("SUDAH"));
     }
 
     Boolean checkInput() {
@@ -70,7 +70,7 @@ public class MasterPartai extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No. Partai Tidak Boleh Kosong");
             return false;
         } else if (JDTanggal.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Tanggal Terima Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, "Tanggal Pesan Tidak Boleh Kosong");
             return false;
         } else if (JTKarung.getText().replace("0", "").equals("")) {
             JOptionPane.showMessageDialog(null, "Jumlah Karung Penjual Tidak Boleh Kosong");
@@ -93,6 +93,14 @@ public class MasterPartai extends javax.swing.JFrame {
         } else {
             JTNoPartai.setText(list.get(0));
         }
+    }
+
+    void loadPemasok() {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal Panggil Pemasok");
+        dRunSelctOne.setQuery("SELECT `Pemasok` FROM `tbmbarang`a JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` WHERE `NamaBarang`='" + JCNamaBarang.getSelectedItem() + "'");
+        ArrayList<String> list = dRunSelctOne.excute();
+        JTPemasok.setText(list.get(0));
     }
 
     /**
@@ -126,18 +134,13 @@ public class MasterPartai extends javax.swing.JFrame {
         JDTanggal = new KomponenGUI.JdateCF();
         jlableF23 = new KomponenGUI.JlableF();
         jlableF24 = new KomponenGUI.JlableF();
-        jlableF25 = new KomponenGUI.JlableF();
-        JCPeminta = new KomponenGUI.JcomboboxF();
-        jlableF4 = new KomponenGUI.JlableF();
         LBNoTransaksi = new KomponenGUI.JlableF();
         jlableF26 = new KomponenGUI.JlableF();
         JTNoPartai = new KomponenGUI.JtextF();
-        JCPemasok = new KomponenGUI.JcomboboxF();
-        jbuttonF5 = new KomponenGUI.JbuttonF();
-        jbuttonF6 = new KomponenGUI.JbuttonF();
         jbuttonF8 = new KomponenGUI.JbuttonF();
         JCBSelesaiProduksi = new KomponenGUI.JCheckBoxF();
         JCBSelesaiTerima = new KomponenGUI.JCheckBoxF();
+        JTPemasok = new KomponenGUI.JtextF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -193,6 +196,11 @@ public class MasterPartai extends javax.swing.JFrame {
         });
 
         JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`a LEFT JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbsmjenisbarang`c ON a.`IdJenisBarang`=c.`IdJenisBarang` WHERE `JenisBarang` = 'Bahan'");
+        JCNamaBarang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCNamaBarangItemStateChanged(evt);
+            }
+        });
         JCNamaBarang.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JCNamaBarangKeyPressed(evt);
@@ -246,53 +254,11 @@ public class MasterPartai extends javax.swing.JFrame {
 
         jlableF24.setText(":");
 
-        jlableF25.setText(":");
-
-        JCPeminta.load("SELECT `Peminta` FROM `tbmpeminta`");
-        JCPeminta.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                JCPemintaItemStateChanged(evt);
-            }
-        });
-        JCPeminta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JCPemintaKeyPressed(evt);
-            }
-        });
-
-        jlableF4.setText("Kepada");
-
         LBNoTransaksi.setText("No. Partai");
 
         jlableF26.setText(":");
 
         JTNoPartai.setEnabled(false);
-
-        JCPemasok.load("SELECT `Pemasok` FROM `tbmpemasok` ");
-        JCPemasok.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                JCPemasokItemStateChanged(evt);
-            }
-        });
-        JCPemasok.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JCPemasokKeyPressed(evt);
-            }
-        });
-
-        jbuttonF5.setText("+");
-        jbuttonF5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF5ActionPerformed(evt);
-            }
-        });
-
-        jbuttonF6.setText("+");
-        jbuttonF6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF6ActionPerformed(evt);
-            }
-        });
 
         jbuttonF8.setText("+");
         jbuttonF8.addActionListener(new java.awt.event.ActionListener() {
@@ -307,6 +273,8 @@ public class MasterPartai extends javax.swing.JFrame {
         JCBSelesaiTerima.setSelected(false);
         JCBSelesaiTerima.setText("Selesai Terima");
 
+        JTPemasok.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -314,81 +282,64 @@ public class MasterPartai extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(JCBSelesaiTerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JCBSelesaiProduksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(JCBSelesaiTerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JCBSelesaiProduksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(LBNoTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jlableF4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jlableF23, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(JTNoPartai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(jlableF24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(JDTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(jlableF25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(JCPeminta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(jbuttonF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JCPemasok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JCNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jbuttonF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JTKarung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jScrollPane1))))
-                                .addGap(0, 2, Short.MAX_VALUE)))
-                        .addGap(10, 10, 10))
+                        .addComponent(LBNoTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTNoPartai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlableF23, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlableF24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JDTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JCNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbuttonF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTPemasok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JTNetto, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(JTNetto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTKarung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,22 +357,15 @@ public class MasterPartai extends javax.swing.JFrame {
                     .addComponent(JDTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JCPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jlableF25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JCPeminta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JCNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,13 +386,13 @@ public class MasterPartai extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JCBSelesaiProduksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JCBSelesaiTerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -488,7 +432,7 @@ public class MasterPartai extends javax.swing.JFrame {
 
     private void JDTanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JDTanggalKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCPeminta.requestFocus();
+            JCNamaBarang.requestFocus();
         }
     }//GEN-LAST:event_JDTanggalKeyPressed
 
@@ -497,20 +441,6 @@ public class MasterPartai extends javax.swing.JFrame {
             JTNetto.requestFocus();
         }
     }//GEN-LAST:event_JTKarungKeyPressed
-
-    private void JCPemintaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCPemintaKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCNamaBarang.requestFocus();
-        }
-    }//GEN-LAST:event_JCPemintaKeyPressed
-
-    private void JCPemintaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCPemintaItemStateChanged
-
-    }//GEN-LAST:event_JCPemintaItemStateChanged
-
-    private void JCPemasokItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCPemasokItemStateChanged
-
-    }//GEN-LAST:event_JCPemasokItemStateChanged
 
     private void JDTanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDTanggalPropertyChange
 
@@ -524,39 +454,14 @@ public class MasterPartai extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosed
 
-    private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
-        if (GlobalVar.Var.tambahPemasok == null) {
-            GlobalVar.Var.tambahPemasok = new Masters("0", "Pemasok");
-        } else {
-            GlobalVar.Var.tambahPemasok.setState(NORMAL);
-            GlobalVar.Var.tambahPemasok.toFront();
-        }
-    }//GEN-LAST:event_jbuttonF5ActionPerformed
-
-    private void jbuttonF6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF6ActionPerformed
-        if (GlobalVar.Var.tambahPeminta == null) {
-            GlobalVar.Var.tambahPeminta = new Masters("0", "Peminta");
-        } else {
-            GlobalVar.Var.tambahPeminta.setState(NORMAL);
-            GlobalVar.Var.tambahPeminta.toFront();
-        }
-    }//GEN-LAST:event_jbuttonF6ActionPerformed
-
     private void jbuttonF8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF8ActionPerformed
         if (GlobalVar.Var.tambahBarang == null) {
             GlobalVar.Var.tambahBarang = new MasterBarang();
-            GlobalVar.Var.tambahBarang.JCPemasok.setSelectedItem(JCPemasok.getSelectedItem());
         } else {
             GlobalVar.Var.tambahBarang.setState(NORMAL);
             GlobalVar.Var.tambahBarang.toFront();
         }
     }//GEN-LAST:event_jbuttonF8ActionPerformed
-
-    private void JCPemasokKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCPemasokKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCPeminta.requestFocus();
-        }
-    }//GEN-LAST:event_JCPemasokKeyPressed
 
     private void JTNettoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNettoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -569,8 +474,12 @@ public class MasterPartai extends javax.swing.JFrame {
         dRunSelctOne.seterorm("Gagal Panggil Satuan Barang");
         dRunSelctOne.setQuery("SELECT FORMAT(" + JTNetto.getInt() + "/`Satuan`,0) FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'");
         ArrayList<String> list = dRunSelctOne.excute();
-        JTKarung.setText(list.get(0).replace(",",""));
+        JTKarung.setText(list.get(0).replace(",", ""));
     }//GEN-LAST:event_JTNettoFocusLost
+
+    private void JCNamaBarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBarangItemStateChanged
+        loadPemasok();
+    }//GEN-LAST:event_JCNamaBarangItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -614,21 +523,18 @@ public class MasterPartai extends javax.swing.JFrame {
     private KomponenGUI.JCheckBoxF JCBSelesaiProduksi;
     private KomponenGUI.JCheckBoxF JCBSelesaiTerima;
     public KomponenGUI.JcomboboxF JCNamaBarang;
-    public static KomponenGUI.JcomboboxF JCPemasok;
-    public static KomponenGUI.JcomboboxF JCPeminta;
     private static KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JRibuanTextField JTKarung;
     private KomponenGUI.JRibuanTextField JTNetto;
     private KomponenGUI.JtextF JTNoPartai;
+    private KomponenGUI.JtextF JTPemasok;
     private KomponenGUI.JlableF LBNoTransaksi;
     private javax.swing.JScrollPane jScrollPane1;
     private KomponenGUI.JbuttonF jbuttonF1;
     private KomponenGUI.JbuttonF jbuttonF2;
     private KomponenGUI.JbuttonF jbuttonF3;
     private KomponenGUI.JbuttonF jbuttonF4;
-    private KomponenGUI.JbuttonF jbuttonF5;
-    private KomponenGUI.JbuttonF jbuttonF6;
     private KomponenGUI.JbuttonF jbuttonF8;
     private KomponenGUI.JlableF jlableF15;
     private KomponenGUI.JlableF jlableF16;
@@ -639,10 +545,8 @@ public class MasterPartai extends javax.swing.JFrame {
     private KomponenGUI.JlableF jlableF22;
     private KomponenGUI.JlableF jlableF23;
     private KomponenGUI.JlableF jlableF24;
-    private KomponenGUI.JlableF jlableF25;
     private KomponenGUI.JlableF jlableF26;
     private KomponenGUI.JlableF jlableF3;
-    private KomponenGUI.JlableF jlableF4;
     private KomponenGUI.JlableF jlableF6;
     private KomponenGUI.JlableF jlableF7;
     // End of variables declaration//GEN-END:variables
@@ -650,7 +554,7 @@ public class MasterPartai extends javax.swing.JFrame {
     void tambahData(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbmpartai`(`Tanggal`, `IdPemasok`, `IdPeminta`, `IdBarang`, `Netto`, `Karung`, `Keterangan`, `SelesaiTerima`, `SelesaiProduksi`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdPemasok` FROM `tbmpemasok` WHERE `Pemasok` = '" + JCPemasok.getSelectedItem() + "'),(SELECT `IdPeminta` FROM `tbmpeminta` WHERE `Peminta` = '" + JCPeminta.getSelectedItem() + "'),(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'),'" + JTKarung.getInt() + "','" + JTNetto.getInt() + "','" + JTAKeterangan.getText() + "'," + JCBSelesaiTerima.isSelected() + "," + JCBSelesaiProduksi.isSelected() + ")", "Partai", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbmpartai`(`Tanggal`, `IdBarang`, `Netto`, `Karung`, `Keterangan`, `SelesaiTerima`, `SelesaiProduksi`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'),'" + JTNetto.getInt() + "','" + JTKarung.getInt() + "','" + JTAKeterangan.getText() + "'," + JCBSelesaiTerima.isSelected() + "," + JCBSelesaiProduksi.isSelected() + ")", "Partai", this);
             if (berhasil) {
                 if (tutup) {
                     GlobalVar.Var.tambahPartai.dispose();
@@ -660,7 +564,7 @@ public class MasterPartai extends javax.swing.JFrame {
                     JTNetto.setText("0");
                     JTAKeterangan.setText("");
                     loadNoPartai();
-                    JCPemasok.requestFocus();
+                    JCNamaBarang.requestFocus();
                 }
                 if (GlobalVar.Var.listPartai != null) {
                     GlobalVar.Var.listPartai.load();
@@ -672,7 +576,7 @@ public class MasterPartai extends javax.swing.JFrame {
     void ubahData() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbmpartai` SET `Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdPemasok`=(SELECT `IdPemasok` FROM `tbmpemasok` WHERE `Pemasok` = '" + JCPemasok.getSelectedItem() + "'),`IdPeminta`=(SELECT `IdPeminta` FROM `tbmpeminta` WHERE `Peminta` = '" + JCPeminta.getSelectedItem() + "'),`IdBarang`=(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'),`Netto`='" + JTNetto.getInt() + "',`Karung`='" + JTKarung.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "',`SelesaiTerima`=" + JCBSelesaiTerima.isSelected() + ",`SelesaiProduksi`=" + JCBSelesaiProduksi.isSelected() + " WHERE `IdPartai` = " + IdEdit, "Partai", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbmpartai` SET `Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdBarang`=(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'),`Netto`='" + JTNetto.getInt() + "',`Karung`='" + JTKarung.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "',`SelesaiTerima`=" + JCBSelesaiTerima.isSelected() + ",`SelesaiProduksi`=" + JCBSelesaiProduksi.isSelected() + " WHERE `IdPartai` = " + IdEdit, "Partai", this);
             if (berhasil) {
                 dispose();
             }

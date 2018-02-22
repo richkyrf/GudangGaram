@@ -68,7 +68,7 @@ public class Packing extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoPoles`, `NoPacking`, DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, `NamaKaryawan` as 'Nama', CONCAT(c.`AliasBarang`,' (PARTAI ',a.`IdPartai`,')') as 'Bahan', `JumlahBahan`, d.`AliasBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmbarang`c ON a.`IdBarangBahan`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` JOIN `tbmpartai`e ON a.`IdBarangBahan`=e.`IdBarang` AND a.`IdPartai`=e.`IdPartai` WHERE `NoPacking` = '" + NoPacking + "' ORDER BY `NoPacking`, `NoIndi`");
+        runSelct.setQuery("SELECT `NoPoles`, `NoPacking`, DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, `NamaKaryawan` as 'Nama', CONCAT(d.`NamaBarang`,' (PARTAI ',a.`IdPartai`,')') as 'Bahan', `JumlahBahan`, e.`NamaBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON c.`IdBarang`=d.`IdBarang` JOIN `tbmbarang`e ON a.`IdBarangHasil`=e.`IdBarang` WHERE `NoPacking` = '" + NoPacking + "' ORDER BY `NoPacking`, `NoIndi`");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -489,7 +489,7 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'AliasBarang' UNION (SELECT CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') as 'AliasBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `AliasBarang`)");
+        JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `NamaBarang`)");
         JCNamaBahan1.setNextFocusableComponent(JTJumlahBahan1);
         JCNamaBahan1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -525,7 +525,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF8.setText(":");
 
-        JCNamaHasil.load("SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 2");
+        JCNamaHasil.load("SELECT `NamaBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 2");
         JCNamaHasil.setNextFocusableComponent(JTUpahPerPack);
         JCNamaHasil.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -742,7 +742,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF34.setText(":");
 
-        JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campuran --'  as 'AliasBarang' UNION (SELECT CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') as 'AliasBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') != '"+JCNamaBahan1.getSelectedItem()+"' GROUP BY `AliasBarang`)");
+        JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campuran --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') != '"+JCNamaBahan1.getSelectedItem()+"' GROUP BY `NamaBarang`)");
         JCNamaBahan2.setNextFocusableComponent(JTJumlahBahan2);
         JCNamaBahan2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -831,26 +831,6 @@ public class Packing extends javax.swing.JFrame {
                                         .addGap(87, 87, 87)
                                         .addComponent(JTNoBak, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JCNamaBahan1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JTJumlahBahan1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlableF31, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JCNamaBahan2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JTJumlahBahan2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jlableF12, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jlableF25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -880,7 +860,31 @@ public class Packing extends javax.swing.JFrame {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JCNamaHasil, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(JCNamaHasil, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(JCNamaBahan1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(jlableF31, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jlableF34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(JCNamaBahan2, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(JTJumlahBahan1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(JTJumlahBahan2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -1274,7 +1278,7 @@ public class Packing extends javax.swing.JFrame {
 
     private void JCNamaBahan1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBahan1ItemStateChanged
         if (JCNamaBahan1.getSelectedIndex() != 0) {
-            JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campur --'  as 'AliasBarang' UNION (SELECT CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') as 'AliasBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`AliasBarang`,' (PARTAI ',`IdPartai`,')') != '" + JCNamaBahan1.getSelectedItem() + "' GROUP BY `AliasBarang`)");
+            JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campur --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') != '" + JCNamaBahan1.getSelectedItem() + "' GROUP BY `NamaBarang`)");
         }
     }//GEN-LAST:event_JCNamaBahan1ItemStateChanged
 
@@ -1475,7 +1479,7 @@ public class Packing extends javax.swing.JFrame {
                     Berhasil = multiInsert.setautocomit(false);
                     if (Berhasil) {
                         for (int i = 0; i < JTable.getRowCount(); i++) {
-                            Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[0] + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
+                            Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                         }
                     }
                 }
@@ -1536,7 +1540,7 @@ public class Packing extends javax.swing.JFrame {
                         Berhasil = multiInsert.Excute("DELETE FROM `tbpacking` WHERE `NoPacking` = '" + NoPacking + "'", null);
                         if (Berhasil) {
                             for (int i = 0; i < JTable.getRowCount(); i++) {
-                                Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `IdBarangBahan`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[0] + "'),'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `AliasBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "'),'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                             }
                         }
                     }
@@ -1601,7 +1605,7 @@ public class Packing extends javax.swing.JFrame {
     void loadUpah() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.seterorm("Gagal Load Upah");
-        dRunSelctOne.setQuery("SELECT `UpahPacking` FROM `tbmbarang` WHERE `AliasBarang` = '" + JCNamaHasil.getSelectedItem() + "'");
+        dRunSelctOne.setQuery("SELECT `UpahPacking` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaHasil.getSelectedItem() + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         JTUpahPerPack.setText(list.get(0));
     }

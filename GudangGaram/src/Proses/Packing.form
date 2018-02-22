@@ -40,28 +40,6 @@
                                       <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                                       <Component id="JTNoBak" min="-2" pref="49" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jlableF2" min="-2" pref="136" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JCNamaBahan1" min="-2" pref="330" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JTJumlahBahan1" min="-2" pref="50" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jlableF31" min="-2" pref="136" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF34" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JCNamaBahan2" min="-2" pref="330" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JTJumlahBahan2" min="-2" pref="50" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jlableF12" min="-2" pref="136" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -97,6 +75,37 @@
                                           <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="JCNamaHasil" min="-2" pref="330" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jlableF2" min="-2" pref="136" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JCNamaBahan1" min="-2" pref="418" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jlableF31" min="-2" pref="136" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jlableF34" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JCNamaBahan2" min="-2" pref="418" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="JTJumlahBahan1" min="-2" pref="50" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jlableF3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="JTJumlahBahan2" min="-2" pref="50" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
@@ -383,7 +392,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBahan1KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan1.load(&quot;SELECT &apos;-- Pilih Bahan Ke 1 --&apos;  as &apos;AliasBarang&apos; UNION (SELECT CONCAT(`AliasBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) as &apos;AliasBarang&apos; FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `AliasBarang`)&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan1.load(&quot;SELECT &apos;-- Pilih Bahan Ke 1 --&apos;  as &apos;NamaBarang&apos; UNION (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) as &apos;NamaBarang&apos; FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `NamaBarang`)&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JRibuanTextField" name="JTJumlahBahan1">
@@ -438,7 +447,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaHasilKeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaHasil.load(&quot;SELECT `AliasBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 2&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaHasil.load(&quot;SELECT `NamaBarang` FROM `tbmbarang` WHERE `IdJenisBarang` = 2&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF5">
@@ -788,7 +797,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBahan2KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan2.load(&quot;SELECT &apos;-- Pilih Bahan Ke 2 Jika Campuran --&apos;  as &apos;AliasBarang&apos; UNION (SELECT CONCAT(`AliasBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) as &apos;AliasBarang&apos; FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`AliasBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) != &apos;&quot;+JCNamaBahan1.getSelectedItem()+&quot;&apos; GROUP BY `AliasBarang`)&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBahan2.load(&quot;SELECT &apos;-- Pilih Bahan Ke 2 Jika Campuran --&apos;  as &apos;NamaBarang&apos; UNION (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) as &apos;NamaBarang&apos; FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) != &apos;&quot;+JCNamaBahan1.getSelectedItem()+&quot;&apos; GROUP BY `NamaBarang`)&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JRibuanTextField" name="JTJumlahBahan2">

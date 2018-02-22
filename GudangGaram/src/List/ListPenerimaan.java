@@ -46,7 +46,6 @@ public class ListPenerimaan extends javax.swing.JFrame {
         jbuttonF3 = new KomponenGUI.JbuttonF();
         jbuttonF4 = new KomponenGUI.JbuttonF();
         jcomCari1 = new KomponenGUI.JcomCari();
-        jbuttonF5 = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -83,13 +82,6 @@ public class ListPenerimaan extends javax.swing.JFrame {
             }
         });
 
-        jbuttonF5.setText("Print");
-        jbuttonF5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF5ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,8 +96,6 @@ public class ListPenerimaan extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,8 +113,7 @@ public class ListPenerimaan extends javax.swing.JFrame {
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -146,12 +135,6 @@ public class ListPenerimaan extends javax.swing.JFrame {
     private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
         refreshAll();
     }//GEN-LAST:event_jbuttonF3ActionPerformed
-
-    private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
-        if (jcomCari1.getSelectedRow() != -1 && GlobalVar.Var.printTPB == null) {
-            GlobalVar.Var.printTPB = new PrintTPB(jcomCari1.getselected11());
-        }
-    }//GEN-LAST:event_jbuttonF5ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         GlobalVar.Var.listPenerimaan = null;
@@ -198,12 +181,11 @@ public class ListPenerimaan extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF jbuttonF2;
     private KomponenGUI.JbuttonF jbuttonF3;
     private KomponenGUI.JbuttonF jbuttonF4;
-    private KomponenGUI.JbuttonF jbuttonF5;
     private KomponenGUI.JcomCari jcomCari1;
     // End of variables declaration//GEN-END:variables
 
     void refreshAll(){
-        jcomCari1.Clear();
+        jcomCari1.refresh();
         load();
     }
     
@@ -233,8 +215,8 @@ public class ListPenerimaan extends javax.swing.JFrame {
     }
 
     public void load() {
-        jcomCari1.setQuery("SELECT `IdPenerimaan` as 'ID', `NoPenerimaan` as 'No. Penerimaan', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `Peminta`, `NamaBarang` as 'Barang', a.`IdPartai` as 'No. Partai', `KarungPenjual` as 'Karung PJL', `NettoPenjual` as 'Netto PJL', `NoTimbang` as 'No. Timbang', `Plat`, `KarungPelita` as 'Karung PLT', `BruttoPelita` as 'Brutto PLT', `TaraPelita` as 'Tara PLT', `NettoPelita` as 'Netto PLT', a.`Keterangan` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`Idpartai`=b.`IdPartai` JOIN `tbmpemasok`c ON b.`IdPemasok`=c.`IdPemasok` JOIN `tbmpeminta`d ON b.`IdPeminta`=d.`IdPeminta` JOIN `tbmbarang`e ON b.`IdBarang`=e.`IdBarang` WHERE 1");
-        jcomCari1.setOrder(" ORDER BY `NoPenerimaan` DESC");
+        jcomCari1.setQuery("SELECT `IdPenerimaan` as 'ID', `NoPenerimaan` as 'No. Penerimaan', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `Peminta`, `NamaBarang` as 'Barang', a.`IdPartai` as 'No. Partai', `KarungPenjual` as 'Karung PJL', `NettoPenjual` as 'Netto PJL', `NoTimbang` as 'No. Timbang', `Plat`, `KarungPelita` as 'Karung PLT', `BruttoPelita` as 'Brutto PLT', `TaraPelita` as 'Tara PLT', `NettoPelita` as 'Netto PLT', a.`Keterangan` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`Idpartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpeminta`d ON a.`IdPeminta`=d.`IdPeminta` JOIN `tbmpemasok`e ON c.`IdPemasok`=e.`IdPemasok` WHERE 1");
+        jcomCari1.setOrder(" ORDER BY `IdPenerimaan` DESC");
         jcomCari1.tampilkan();
         jcomCari1.jtablef.setrender(7, "Number");
         jcomCari1.jtablef.setrender(8, "Number");

@@ -55,6 +55,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIMasterKaryawan = new javax.swing.JMenuItem();
         JMProses = new javax.swing.JMenu();
         JMIProsesPenerimaan = new javax.swing.JMenuItem();
+        JMIProsesPrintTandaPenerimaanBarang = new javax.swing.JMenuItem();
         JMIProsesPacking = new javax.swing.JMenuItem();
         JMIProsesPoles = new javax.swing.JMenuItem();
         JMIProsesPenjualan = new javax.swing.JMenuItem();
@@ -200,6 +201,14 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMProses.add(JMIProsesPenerimaan);
+
+        JMIProsesPrintTandaPenerimaanBarang.setText("Proses Print Tanda Penerimaan Barang (TPB)");
+        JMIProsesPrintTandaPenerimaanBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIProsesPrintTandaPenerimaanBarangActionPerformed(evt);
+            }
+        });
+        JMProses.add(JMIProsesPrintTandaPenerimaanBarang);
 
         JMIProsesPacking.setText("Proses Packing");
         JMIProsesPacking.addActionListener(new java.awt.event.ActionListener() {
@@ -541,6 +550,15 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void JMIProsesPrintTandaPenerimaanBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIProsesPrintTandaPenerimaanBarangActionPerformed
+        if (GlobalVar.Var.printTPB == null) {
+            GlobalVar.Var.printTPB = new PrintTPB();
+        } else {
+            GlobalVar.Var.printTPB.setState(NORMAL);
+            GlobalVar.Var.printTPB.toFront();
+        }
+    }//GEN-LAST:event_JMIProsesPrintTandaPenerimaanBarangActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -600,6 +618,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIProsesPenjualan;
     private javax.swing.JMenuItem JMIProsesPenyesuaianStok;
     private javax.swing.JMenuItem JMIProsesPoles;
+    private javax.swing.JMenuItem JMIProsesPrintTandaPenerimaanBarang;
     private javax.swing.JMenuItem JMIResetPasswordUser;
     private javax.swing.JMenuItem JMITambahUser;
     private javax.swing.JMenu JMLaporan;

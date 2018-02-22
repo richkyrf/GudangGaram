@@ -22,7 +22,7 @@ public class MasterBarang extends javax.swing.JFrame {
      * Creates new form MasterBarang
      */
     String IdEdit;
-    
+
     public MasterBarang() {
         initComponents();
         setVisible(true);
@@ -30,8 +30,14 @@ public class MasterBarang extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jbuttonF3.setVisible(false);
+        jlableF14.setEnabled(false);
+        jlableF16.setEnabled(false);
+        JTHarga.setEnabled(false);
+        jlableF2.setEnabled(false);
+        jlableF7.setEnabled(false);
+        JTUpahPacking.setEnabled(false);
     }
-    
+
     public MasterBarang(Object idEdit) {
         IdEdit = idEdit.toString();
         initComponents();
@@ -43,32 +49,30 @@ public class MasterBarang extends javax.swing.JFrame {
         jbuttonF2.setVisible(false);
         loadeditdata();
     }
-    
+
     void loadeditdata() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdBarang` as 'ID', `AliasBarang` as 'Alias', `NamaBarang` as 'Nama', `JenisBarang` as 'Jenis', `Pemasok`, `Satuan`, `Harga`, `UpahPacking` as 'Upah', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmbarang`a JOIN `tbsmjenisbarang`b ON a.`IdJenisBarang`=b.`IdJenisBarang` LEFT JOIN `tbmpemasok`c ON a.`IdPemasok`=c.`IdPemasok` WHERE `IdBarang` = " + IdEdit);
+        dRunSelctOne.setQuery("SELECT `IdBarang` as 'ID', `NamaBarang` as 'Nama', `JenisBarang` as 'Jenis', `Pemasok`, `Satuan`, `Harga`, `UpahPacking` as 'Upah', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmbarang`a JOIN `tbsmjenisbarang`b ON a.`IdJenisBarang`=b.`IdJenisBarang` LEFT JOIN `tbmpemasok`c ON a.`IdPemasok`=c.`IdPemasok` WHERE `IdBarang` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
-        JTAliasBarang.setText(list.get(1));
-        JTNamaBarang.setText(list.get(2));
-        JCJenisBarang.setSelectedItem(list.get(3));
-        if (list.get(3).toUpperCase().equals("BAHAN")) {
-            JCPemasok.setSelectedItem(list.get(4));
+        JTNamaBarang.setText(list.get(1));
+        JCJenisBarang.setSelectedItem(list.get(2));
+        if (list.get(2).toUpperCase().equals("BAHAN")) {
+            JCPemasok.setSelectedItem(list.get(3));
         }
-        JTSatuan.setText(list.get(5).substring(0, (list.get(5).length() - 3)));
-        JTKoma.setText(list.get(5).substring((list.get(5).length() - 2), list.get(5).length()));
-        JTHarga.setText(list.get(6));
-        JTUpahPacking.setText(list.get(7));
-        JTAKeterangan.setText(list.get(8));
-        JCBStatus.setSelected(list.get(9).equals("Aktif"));
+        JTSatuan.setText(list.get(4).substring(0, (list.get(4).length() - 3)));
+        JTKoma.setText(list.get(4).substring((list.get(4).length() - 2), list.get(4).length()));
+        JTHarga.setText(list.get(5));
+        JTUpahPacking.setText(list.get(6));
+        JTAKeterangan.setText(list.get(7));
+        JCBStatus.setSelected(list.get(8).equals("Aktif"));
     }
-    
+
     Boolean checkInput() {
         if (JTNamaBarang.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Nama Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Nama Tidak Boleh Kosong");
             return false;
-        } else if (JTAliasBarang.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Alias Tidak Boleh Kosong");
-            return false;
+        } else if (JTSatuan.getInt() == 0 && JTSatuan.getInt() == 0) {
+            JOptionPane.showMessageDialog(this, "Satuan KG Tidak Boleh Kosong");
         }
         return true;
     }
@@ -98,9 +102,6 @@ public class MasterBarang extends javax.swing.JFrame {
         jlableF7 = new KomponenGUI.JlableF();
         jlableF8 = new KomponenGUI.JlableF();
         jbuttonF3 = new KomponenGUI.JbuttonF();
-        jlableF9 = new KomponenGUI.JlableF();
-        jlableF10 = new KomponenGUI.JlableF();
-        JTAliasBarang = new KomponenGUI.JtextF();
         jlableF11 = new KomponenGUI.JlableF();
         jlableF12 = new KomponenGUI.JlableF();
         JCJenisBarang = new KomponenGUI.JcomboboxF();
@@ -108,15 +109,15 @@ public class MasterBarang extends javax.swing.JFrame {
         jlableF14 = new KomponenGUI.JlableF();
         jlableF15 = new KomponenGUI.JlableF();
         jlableF16 = new KomponenGUI.JlableF();
-        JTSatuan = new KomponenGUI.JNumberOnly();
-        JTHarga = new KomponenGUI.JRibuanTextField();
         jlableF17 = new KomponenGUI.JlableF();
         jlableF18 = new KomponenGUI.JlableF();
         JCPemasok = new KomponenGUI.JcomboboxF();
         jbuttonF5 = new KomponenGUI.JbuttonF();
-        JTUpahPacking = new KomponenGUI.JRibuanTextField();
         JTKoma = new KomponenGUI.JtKoma();
         jlableF19 = new KomponenGUI.JlableF();
+        JTUpahPacking = new KomponenGUI.JRibuanTextField();
+        JTHarga = new KomponenGUI.JRibuanTextField();
+        JTSatuan = new KomponenGUI.JRibuanTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -148,6 +149,7 @@ public class MasterBarang extends javax.swing.JFrame {
                 JTNamaBarangKeyPressed(evt);
             }
         });
+        JTNamaBarang.setMaxText(30);
 
         JCBStatus.setText("Aktif");
 
@@ -187,16 +189,6 @@ public class MasterBarang extends javax.swing.JFrame {
             }
         });
 
-        jlableF9.setText("Alias Barang");
-
-        jlableF10.setText(":");
-
-        JTAliasBarang.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTAliasBarangKeyPressed(evt);
-            }
-        });
-
         jlableF11.setText("Jenis Barang");
 
         jlableF12.setText(":");
@@ -213,26 +205,13 @@ public class MasterBarang extends javax.swing.JFrame {
             }
         });
 
-        jlableF13.setText("KG / SAK");
+        jlableF13.setText("Satuan KG / SAK");
 
-        jlableF14.setText("Harga");
+        jlableF14.setText("Harga Jual");
 
         jlableF15.setText(":");
 
         jlableF16.setText(":");
-
-        JTSatuan.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        JTSatuan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTSatuanKeyPressed(evt);
-            }
-        });
-
-        JTHarga.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTHargaKeyPressed(evt);
-            }
-        });
 
         jlableF17.setText("Pemasok");
 
@@ -252,12 +231,6 @@ public class MasterBarang extends javax.swing.JFrame {
             }
         });
 
-        JTUpahPacking.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTUpahPackingKeyPressed(evt);
-            }
-        });
-
         JTKoma.setText("00");
         JTKoma.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -266,6 +239,24 @@ public class MasterBarang extends javax.swing.JFrame {
         });
 
         jlableF19.setText(",");
+
+        JTUpahPacking.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTUpahPackingKeyPressed(evt);
+            }
+        });
+
+        JTHarga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTHargaKeyPressed(evt);
+            }
+        });
+
+        JTSatuan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTSatuanKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -285,28 +276,23 @@ public class MasterBarang extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF2, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                    .addComponent(jlableF3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jlableF4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlableF2, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                            .addComponent(jlableF3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jlableF4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(JTNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jScrollPane1)
-                                        .addComponent(JCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(JTAliasBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(JCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(JTUpahPacking, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -351,11 +337,6 @@ public class MasterBarang extends javax.swing.JFrame {
                     .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTAliasBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JCJenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -369,9 +350,9 @@ public class MasterBarang extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTSatuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTKoma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlableF19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTSatuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,7 +374,7 @@ public class MasterBarang extends javax.swing.JFrame {
                     .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,7 +404,7 @@ public class MasterBarang extends javax.swing.JFrame {
 
     private void JTNamaBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNamaBarangKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTAliasBarang.requestFocus();
+            JCJenisBarang.requestFocus();
         }
     }//GEN-LAST:event_JTNamaBarangKeyPressed
 
@@ -437,23 +418,15 @@ public class MasterBarang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JTAKeteranganKeyPressed
 
-    private void JTAliasBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTAliasBarangKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCJenisBarang.requestFocus();
-        }
-    }//GEN-LAST:event_JTAliasBarangKeyPressed
-
     private void JCJenisBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCJenisBarangKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCPemasok.requestFocus();
+            if (JCPemasok.isVisible()) {
+                JCPemasok.requestFocus();
+            } else {
+                JTSatuan.requestFocus();
+            }
         }
     }//GEN-LAST:event_JCJenisBarangKeyPressed
-
-    private void JTSatuanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTSatuanKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTKoma.requestFocus();
-        }
-    }//GEN-LAST:event_JTSatuanKeyPressed
 
     private void JTHargaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTHargaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -481,11 +454,23 @@ public class MasterBarang extends javax.swing.JFrame {
             jlableF18.setVisible(true);
             JCPemasok.setVisible(true);
             jbuttonF5.setVisible(true);
+            jlableF14.setEnabled(false);
+            jlableF16.setEnabled(false);
+            JTHarga.setEnabled(false);
+            jlableF2.setEnabled(false);
+            jlableF7.setEnabled(false);
+            JTUpahPacking.setEnabled(false);
         } else {
             jlableF17.setVisible(false);
             jlableF18.setVisible(false);
             JCPemasok.setVisible(false);
             jbuttonF5.setVisible(false);
+            jlableF14.setEnabled(true);
+            jlableF16.setEnabled(true);
+            JTHarga.setEnabled(true);
+            jlableF2.setEnabled(true);
+            jlableF7.setEnabled(true);
+            JTUpahPacking.setEnabled(true);
         }
     }//GEN-LAST:event_JCJenisBarangItemStateChanged
 
@@ -506,9 +491,19 @@ public class MasterBarang extends javax.swing.JFrame {
 
     private void JTKomaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKomaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTHarga.requestFocus();
+            if (JTHarga.isEnabled()) {
+                JTHarga.requestFocus();
+            } else {
+                JTAKeterangan.requestFocus();
+            }
         }
     }//GEN-LAST:event_JTKomaKeyPressed
+
+    private void JTSatuanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTSatuanKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTKoma.requestFocus();
+        }
+    }//GEN-LAST:event_JTSatuanKeyPressed
 
     /**
      * @param args the command line arguments
@@ -551,11 +546,10 @@ public class MasterBarang extends javax.swing.JFrame {
     public static KomponenGUI.JcomboboxF JCJenisBarang;
     public static KomponenGUI.JcomboboxF JCPemasok;
     private KomponenGUI.JTextAreaF JTAKeterangan;
-    private KomponenGUI.JtextF JTAliasBarang;
     private KomponenGUI.JRibuanTextField JTHarga;
     private KomponenGUI.JtKoma JTKoma;
     private KomponenGUI.JtextF JTNamaBarang;
-    private KomponenGUI.JNumberOnly JTSatuan;
+    private KomponenGUI.JRibuanTextField JTSatuan;
     private KomponenGUI.JRibuanTextField JTUpahPacking;
     private javax.swing.JScrollPane jScrollPane1;
     private KomponenGUI.JbuttonF jbuttonF1;
@@ -564,7 +558,6 @@ public class MasterBarang extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF jbuttonF4;
     private KomponenGUI.JbuttonF jbuttonF5;
     private KomponenGUI.JlableF jlableF1;
-    private KomponenGUI.JlableF jlableF10;
     private KomponenGUI.JlableF jlableF11;
     private KomponenGUI.JlableF jlableF12;
     private KomponenGUI.JlableF jlableF13;
@@ -581,7 +574,6 @@ public class MasterBarang extends javax.swing.JFrame {
     private KomponenGUI.JlableF jlableF6;
     private KomponenGUI.JlableF jlableF7;
     private KomponenGUI.JlableF jlableF8;
-    private KomponenGUI.JlableF jlableF9;
     // End of variables declaration//GEN-END:variables
 
     String getIdPemasok() {
@@ -595,49 +587,43 @@ public class MasterBarang extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     void tambahData(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbmbarang`(`AliasBarang`, `NamaBarang`, `IdJenisBarang`, `IdPemasok`, `Satuan`, `Harga`, `UpahPacking`, `Keterangan`, `Status`) VALUES ('" + JTAliasBarang.getText() + "','" + JTNamaBarang.getText() + "',(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "')," + getIdPemasok() + ",'" + JTSatuan.getText() + "." + JTKoma.getText() + "','" + JTHarga.getInt() + "','" + JTUpahPacking.getInt() + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Barang", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbmbarang`(`NamaBarang`, `IdJenisBarang`, `IdPemasok`, `Satuan`, `Harga`, `UpahPacking`, `Keterangan`, `Status`) VALUES ('" + JTNamaBarang.getText() + "',(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "')," + getIdPemasok() + ",'" + JTSatuan.getText() + "." + JTKoma.getText() + "','" + JTHarga.getInt() + "','" + JTUpahPacking.getInt() + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Barang", this);
             if (berhasil) {
-                if (GlobalVar.Var.listKendaraan != null) {
-                    GlobalVar.Var.listKendaraan.load();
-                }
                 if (GlobalVar.Var.tambahPartai != null) {
-                    GlobalVar.Var.tambahPartai.JCPemasok.setSelectedItem(JCPemasok.getSelectedItem());
                     GlobalVar.Var.tambahPartai.JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`a LEFT JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbsmjenisbarang`c ON a.`IdJenisBarang`=c.`IdJenisBarang` WHERE `JenisBarang` = 'Bahan' AND `Pemasok` = '" + JCPemasok.getSelectedItem() + "'");
                     GlobalVar.Var.tambahPartai.JCNamaBarang.setSelectedItem(JTNamaBarang.getText());
                     GlobalVar.Var.tambahPartai.JCNamaBarang.requestFocus();
                 }
                 if (GlobalVar.Var.ubahPartai != null) {
-                    GlobalVar.Var.ubahPartai.JCPemasok.setSelectedItem(JCPemasok.getSelectedItem());
                     GlobalVar.Var.ubahPartai.JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`a LEFT JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbsmjenisbarang`c ON a.`IdJenisBarang`=c.`IdJenisBarang` WHERE `JenisBarang` = 'Bahan' AND `Pemasok` = '" + JCPemasok.getSelectedItem() + "'");
                     GlobalVar.Var.ubahPartai.JCNamaBarang.setSelectedItem(JTNamaBarang.getText());
                     GlobalVar.Var.ubahPartai.JCNamaBarang.requestFocus();
+                }
+                if (GlobalVar.Var.listBarang != null) {
+                    GlobalVar.Var.listBarang.load();
                 }
                 if (tutup) {
                     dispose();
                 } else {
                     JTNamaBarang.setText("");
-                    JTAliasBarang.setText("");
                     JTSatuan.setText("0");
                     JTHarga.setText("0");
                     JTUpahPacking.setText("0");
                     JTAKeterangan.setText("");
                     JTNamaBarang.requestFocus();
                 }
-                if (GlobalVar.Var.listBarang != null) {
-                    GlobalVar.Var.listBarang.load();
-                }
             }
         }
     }
-    
+
     void ubahData() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbmbarang` SET `AliasBarang`='" + JTAliasBarang.getText() + "',`NamaBarang`='" + JTNamaBarang.getText() + "',`IdJenisBarang`=(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "'),`IdPemasok`=" + getIdPemasok() + ",`Satuan`='" + JTSatuan.getText() + "." + JTKoma.getText() + "',`Harga`='" + JTHarga.getInt() + "',`UpahPacking`='" + JTUpahPacking.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "',`Status`=" + JCBStatus.isSelected() + " WHERE `IdBarang` = " + IdEdit, "Barang", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbmbarang` SET `NamaBarang`='" + JTNamaBarang.getText() + "',`IdJenisBarang`=(SELECT `IdJenisBarang` FROM `tbsmjenisbarang` WHERE `JenisBarang` = '" + JCJenisBarang.getSelectedItem() + "'),`IdPemasok`=" + getIdPemasok() + ",`Satuan`='" + JTSatuan.getText() + "." + JTKoma.getText() + "',`Harga`='" + JTHarga.getInt() + "',`UpahPacking`='" + JTUpahPacking.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "',`Status`=" + JCBStatus.isSelected() + " WHERE `IdBarang` = " + IdEdit, "Barang", this);
             if (berhasil) {
                 dispose();
                 if (GlobalVar.Var.listBarang != null) {
@@ -646,5 +632,5 @@ public class MasterBarang extends javax.swing.JFrame {
             }
         }
     }
-    
+
 }

@@ -72,14 +72,11 @@ public class JcomCari extends javax.swing.JPanel {
 
     public void refresh() {
         jtextF1.setText("");
-        jcomboboxF1.setSelectedIndex(1);
-        jcomboboxF2.setSelectedIndex(3);
-    }
-
-    public void Clear() {
-        jtextF1.setText("");
         jcomboboxF1.setSelectedIndex(0);
-        jcomboboxF2.setSelectedIndex(0);
+        if (jcomboboxF1.getItemCount() > 1) {
+        jcomboboxF1.setSelectedIndex(selectedIndex);
+        }
+        jcomboboxF2.setSelectedIndex(3);
     }
 
     public JcomCari() {

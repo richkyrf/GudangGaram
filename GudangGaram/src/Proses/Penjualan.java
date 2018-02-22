@@ -75,6 +75,7 @@ public class Penjualan extends javax.swing.JFrame {
             JTNoTransaksi.setText(getNoMutasi());
             LBTujuan.setText("Ke Gudang");
         }
+        loadJenisKendaraan();
     }
 
     public Penjualan(Object idEdit) {
@@ -113,7 +114,7 @@ public class Penjualan extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `IdPenjualanDetail`, `NoTransaksi`, `NoKolom`, `NamaBarang`, `Jumlah`, `HargaSatuan`, `Jumlah`*`HargaSatuan` as 'Sub Total' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NoTransaksi` = '" + list.get(1) + "'");
+        runSelct.setQuery("SELECT `IdPenjualanDetail`, `NoTransaksi`, `NoKolom`, `NamaBarang`, FORMAT(`Jumlah`,0), FORMAT(`HargaSatuan`,0), FORMAT(`Jumlah`*`HargaSatuan`,0) as 'Sub Total' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NoTransaksi` = '" + list.get(1) + "'");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -121,9 +122,9 @@ public class Penjualan extends javax.swing.JFrame {
                 model.addRow(new Object[]{"", "", "", "", ""});
                 JTable.setValueAt(rs.getString(3), row, 0);
                 JTable.setValueAt(rs.getString(4), row, 1);
-                JTable.setValueAt(rs.getString(5), row, 2);
-                JTable.setValueAt(rs.getString(6), row, 3);
-                JTable.setValueAt(rs.getString(7), row, 4);
+                JTable.setValueAt(rs.getString(5).replace(",", "."), row, 2);
+                JTable.setValueAt(rs.getString(6).replace(",", "."), row, 3);
+                JTable.setValueAt(rs.getString(7).replace(",", "."), row, 4);
                 row++;
             }
         } catch (SQLException e) {
@@ -228,6 +229,10 @@ public class Penjualan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Jumlah Permintaan Tidak Bisa Melebihi Stok");
             JTJumlah.requestFocus();
             return false;
+        } else if (JTHargaSatuan.getInt() == 0) {
+            JOptionPane.showMessageDialog(this, "Harga Satuan Tidak Boleh Kosong");
+            JTHargaSatuan.requestFocus();
+            return false;
         } else if (cekdoubleitem(JCNamaBarang.getSelectedItem().toString())) {
             JOptionPane.showMessageDialog(this, "Tidak Bisa Input Barang Yang Sama");
             JCNamaBarang.requestFocus();
@@ -278,11 +283,13 @@ public class Penjualan extends javax.swing.JFrame {
     }
 
     void setHarga() {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.seterorm("Gagal Panggil Data Harga");
-        dRunSelctOne.setQuery("SELECT `Harga` FROM `tbmbarang` WHERE `NamaBarang`= '" + JCNamaBarang.getSelectedItem() + "'");
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTHargaSatuan.setText(list.get(0));
+        if (JCNamaBarang.getSelectedIndex() != 0) {
+            DRunSelctOne dRunSelctOne = new DRunSelctOne();
+            dRunSelctOne.seterorm("Gagal Panggil Data Harga");
+            dRunSelctOne.setQuery("SELECT `Harga` FROM `tbmbarang` WHERE `NamaBarang`= '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[0] + "'");
+            ArrayList<String> list = dRunSelctOne.excute();
+            JTHargaSatuan.setText(list.get(0));
+        }
     }
 
     void setSubTotal() {
@@ -291,6 +298,14 @@ public class Penjualan extends javax.swing.JFrame {
         int subtotal = jumlah * harga;
         String subtotals = String.valueOf(subtotal);
         JTSubTotal.setText(subtotals);
+    }
+
+    void loadJenisKendaraan() {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal Load Jenis Kendaraan");
+        dRunSelctOne.setQuery("SELECT `JenisKendaraan` FROM `tbmkendaraan` WHERE `Plat`= '" + JCPlat.getSelectedItem() + "'");
+        ArrayList<String> list = dRunSelctOne.excute();
+        JTJenisKendaraan.setText(list.get(0));
     }
 
     /**
@@ -356,6 +371,7 @@ public class Penjualan extends javax.swing.JFrame {
         jbuttonF7 = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -459,7 +475,15 @@ public class Penjualan extends javax.swing.JFrame {
             new String [] {
                 "No", "Nama Barang", "Jumlah", "Harga Satuan", "Sub Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         JTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JTableMouseClicked(evt);
@@ -470,9 +494,9 @@ public class Penjualan extends javax.swing.JFrame {
             JTable.getColumnModel().getColumn(0).setMinWidth(50);
             JTable.getColumnModel().getColumn(0).setPreferredWidth(50);
             JTable.getColumnModel().getColumn(0).setMaxWidth(50);
-            JTable.getColumnModel().getColumn(1).setMinWidth(310);
-            JTable.getColumnModel().getColumn(1).setPreferredWidth(310);
-            JTable.getColumnModel().getColumn(1).setMaxWidth(310);
+            JTable.getColumnModel().getColumn(1).setMinWidth(410);
+            JTable.getColumnModel().getColumn(1).setPreferredWidth(410);
+            JTable.getColumnModel().getColumn(1).setMaxWidth(410);
             JTable.getColumnModel().getColumn(2).setMinWidth(85);
             JTable.getColumnModel().getColumn(2).setPreferredWidth(85);
             JTable.getColumnModel().getColumn(2).setMaxWidth(85);
@@ -480,12 +504,15 @@ public class Penjualan extends javax.swing.JFrame {
             JTable.getColumnModel().getColumn(3).setPreferredWidth(115);
             JTable.getColumnModel().getColumn(3).setMaxWidth(115);
         }
+        JTable.setrender(2, "Number");
+        JTable.setrender(3, "Number");
+        JTable.setrender(4, "Number");
 
         jlabelF7.setText("Nama Barang");
         jlabelF7.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jlabelF7.setEnabled(false);
 
-        JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`");
+        JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarang' UNION ALL (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2)");
         JCNamaBarang.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 JCNamaBarangFocusLost(evt);
@@ -617,7 +644,12 @@ public class Penjualan extends javax.swing.JFrame {
             }
         });
 
-        JCPlat.load("SELECT `Plat` FROM `tbmkendaraan`");
+        JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` ORDER BY `Plat` ");
+        JCPlat.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCPlatItemStateChanged(evt);
+            }
+        });
         JCPlat.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JCPlatKeyPressed(evt);
@@ -662,20 +694,20 @@ public class Penjualan extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(JCNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-                            .addComponent(jlabelF7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jlabelF8, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                            .addComponent(JTJumlah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jlabelF9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(JTHargaSatuan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlabelF7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JCNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlabelF11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlabelF8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JTJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(JTHargaSatuan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlabelF9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlabelF11, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                             .addComponent(JTSubTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -735,7 +767,7 @@ public class Penjualan extends javax.swing.JFrame {
                                     .addComponent(JDTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 401, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -751,7 +783,7 @@ public class Penjualan extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -764,7 +796,7 @@ public class Penjualan extends javax.swing.JFrame {
                             .addComponent(ubahtable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tambahtable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(hapustable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -920,12 +952,10 @@ public class Penjualan extends javax.swing.JFrame {
 
     private void tambahtableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahtableActionPerformed
         TambahTabel();
-        JTGrandTotal.setText(String.valueOf(getGrandTotal()));
     }//GEN-LAST:event_tambahtableActionPerformed
 
     private void ubahtableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ubahtableActionPerformed
         ubahtable();
-        JTGrandTotal.setText(String.valueOf(getGrandTotal()));
     }//GEN-LAST:event_ubahtableActionPerformed
 
     private void hapustableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapustableActionPerformed
@@ -1052,6 +1082,10 @@ public class Penjualan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbuttonF7ActionPerformed
 
+    private void JCPlatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCPlatItemStateChanged
+        loadJenisKendaraan();
+    }//GEN-LAST:event_JCPlatItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -1148,10 +1182,11 @@ public class Penjualan extends javax.swing.JFrame {
     void TambahTabel() {
         if (checkTable()) {
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
-            model.addRow(new Object[]{JTable.getRowCount() + 1, JCNamaBarang.getSelectedItem(), JTJumlah.getText(), JTHargaSatuan.getText(), JTSubTotal.getText()});
+            model.addRow(new Object[]{JTable.getRowCount() + 1, JCNamaBarang.getSelectedItem(), JTJumlah.getText(), Intformatdigit(JTHargaSatuan.getInt()), JTSubTotal.getText()});
             JOptionPane.showMessageDialog(this, "Berhasil Tambah Permintaan");
             JCNamaBarang.requestFocus();
             RefreshTbl();
+            JTGrandTotal.setText(String.valueOf(getGrandTotal()));
         }
     }
 
@@ -1164,6 +1199,7 @@ public class Penjualan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Berhasil Ubah Data");
             RefreshTbl();
             JCNamaBarang.requestFocus();
+            JTGrandTotal.setText(String.valueOf(getGrandTotal()));
         }
     }
 
@@ -1182,7 +1218,11 @@ public class Penjualan extends javax.swing.JFrame {
                     }
                     if (Berhasil) {
                         for (int i = 0; i < JTable.getRowCount(); i++) {
-                            Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1) + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                            if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PARTAI")) {
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdPartai`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                            } else {
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1) + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                            }
                         }
                     }
                 }
@@ -1238,7 +1278,11 @@ public class Penjualan extends javax.swing.JFrame {
                         Berhasil = multiInsert.Excute("DELETE FROM `tbpenjualandetail` WHERE `NoTransaksi` = '" + JTNoTransaksi.getText() + "'", null);
                         if (Berhasil) {
                             for (int i = 0; i < JTable.getRowCount(); i++) {
-                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1) + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                                if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PARTAI")) {
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdPartai`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                                } else {
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1) + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                                }
                             }
                         }
                     }
@@ -1264,6 +1308,9 @@ public class Penjualan extends javax.swing.JFrame {
 
     void printing() {
         String NamaSupir = JTNamaSupir.getText();
+        if (JTNamaSupir.getText().length() > 13) {
+            NamaSupir = JTNamaSupir.getText().substring(0, 13);
+        }
         String Plat = JCPlat.getSelectedItem().toString();
         String JenisKendaraan = JTJenisKendaraan.getText();
         String NoTransaksi = JTNoTransaksi.getText();
@@ -1280,7 +1327,7 @@ public class Penjualan extends javax.swing.JFrame {
         String[] Subs = new String[JTable.getRowCount()];
 
         for (int i = 0; i < JTable.getRowCount(); i++) {
-            Barang[i] = JTable.getValueAt(0, 1).toString();
+            Barang[i] = JTable.getValueAt(0, 1).toString().split(" \\(PARTAI ")[0];
             Jumlah[i] = Integer.parseInt(JTable.getValueAt(0, 2).toString().replace(".", ""));
             Jumlahs[i] = Intformatdigit(Jumlah[i]);
             Harga[i] = Integer.parseInt(JTable.getValueAt(0, 3).toString().replace(".", ""));
@@ -1290,15 +1337,17 @@ public class Penjualan extends javax.swing.JFrame {
         }
 
         int Total = getGrandTotal();
-        String terbilang = "";
         String Totals = Intformatdigit(Total);
-        terbilang = angkaToTerbilang(Long.valueOf(Total));
+        String terbilang = angkaToTerbilang(Long.valueOf(Total)) + "RUPIAH";
+        if (terbilang.length() > 66) {
+            terbilang = terbilang.substring(0, 66);
+        }
         if (JCJenisPenjualan.getSelectedItem().equals("MUTASI GUDANG")) {
             String leftAlignFormat = "%-5s%-37s%-9s%-15s%-13s%-1s%n";
             String OutFormat = "";
             OutFormat += format("%-81s%n", " _____________________________________________________________________________");
             OutFormat += format("%-54s%-26s%n", " SURAT JALAN", "No Transaksi: " + NoTransaksi);
-            OutFormat += format("%-54s%-26s%n", " ", "    Tanggal : " + Tanggal);
+            OutFormat += format("%-54s%-26s%n", " ", "Tanggal     : " + Tanggal);
             if (JCJenisPenjualan.getSelectedItem().equals("MUTASI GUDANG")) {
                 OutFormat += format("%-54s%-26s%n", " Ke Gudang : " + Tujuan, " ");
             } else {
@@ -1323,7 +1372,7 @@ public class Penjualan extends javax.swing.JFrame {
             OutFormat += format("%-80s%n", " +----------------------------------------------------------------+------------+");
             OutFormat += format("%-80s%n", " Ket : " + Keterangan);
             OutFormat += format("%n", "");
-            OutFormat += format("%-80s%n", " Terbilang : " + terbilang + "RUPIAH");
+            OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
             OutFormat += format("%n", "");
             OutFormat += format("%-67s%-24s%n", " Disiapkan Oleh", "Diterima Oleh \n \n ");
             OutFormat += format("%-67s%-24s%n", " HENDRI", NamaSupir);
@@ -1338,7 +1387,7 @@ public class Penjualan extends javax.swing.JFrame {
             String OutFormat = "";
             OutFormat += format("%-81s%n", " _____________________________________________________________________________");
             OutFormat += format("%-54s%-26s%n", " FAKTUR PENJUALAN", "No Transaksi: " + NoTransaksi);
-            OutFormat += format("%-54s%-26s%n", " ", "    Tanggal : " + Tanggal);
+            OutFormat += format("%-54s%-26s%n", " ", "Tanggal     : " + Tanggal);
             if (JCJenisPenjualan.getSelectedItem().equals("MUTASI GUDANG")) {
                 OutFormat += format("%-54s%-26s%n", " Ke Gudang : " + Tujuan, " ");
             } else {
@@ -1363,7 +1412,7 @@ public class Penjualan extends javax.swing.JFrame {
             OutFormat += format("%-80s%n", " +----------------------------------------------------------------+------------+");
             OutFormat += format("%-80s%n", " Ket : " + Keterangan);
             OutFormat += format("%n", "");
-            OutFormat += format("%-80s%n", " Terbilang : " + terbilang + "RUPIAH");
+            OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
             OutFormat += format("%n", "");
             OutFormat += format("%-67s%-24s%n", " Disiapkan Oleh", "Diterima Oleh \n \n ");
             OutFormat += format("%-67s%-24s%n", " HENDRI", NamaSupir);
@@ -1463,31 +1512,31 @@ public class Penjualan extends javax.swing.JFrame {
         int value = 0;
         value = Number;
         String output;
+        String pattern = "#,###,###";
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
         if (value < 0) {
             value = abs(value);
-            String pattern = "#,###,###";
-            DecimalFormat myFormatter = new DecimalFormat(pattern);
             output = "(" + myFormatter.format(value) + ")";
+        } else if (value >= 0 && value < 1) {
+            output = "0" + myFormatter.format(value);
         } else {
-            String pattern = "#,###,###";
-            DecimalFormat myFormatter = new DecimalFormat(pattern);
             output = myFormatter.format(value);
         }
-        return output;
+        return output.replace(",", ".");
     }
 
     String Decformatdigit(double Number) {
         double value = 0;
         value = Number;
         String output;
+        String pattern = "#,###,###.00";
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
         if (value < 0) {
             value = abs(value);
-            String pattern = "#,###,###.00";
-            DecimalFormat myFormatter = new DecimalFormat(pattern);
             output = "-" + myFormatter.format(value);
+        } else if (value >= 0 && value < 1) {
+            output = "0" + myFormatter.format(value);
         } else {
-            String pattern = "#,###,###.00";
-            DecimalFormat myFormatter = new DecimalFormat(pattern);
             output = myFormatter.format(value);
         }
         return output;
@@ -1496,7 +1545,7 @@ public class Penjualan extends javax.swing.JFrame {
     Integer getGrandTotal() {
         int GrandTotal = 0;
         for (int x = 0; x < JTable.getRowCount(); x++) {
-            GrandTotal = GrandTotal + (Integer.valueOf(JTable.getValueAt(x, 2).toString().replace(",", "")) * Integer.valueOf(JTable.getValueAt(x, 3).toString().replace(",", "")));
+            GrandTotal = GrandTotal + (Integer.valueOf(JTable.getValueAt(x, 2).toString().replace(".", "")) * Integer.valueOf(JTable.getValueAt(x, 3).toString().replace(".", "")));
         }
         return GrandTotal;
     }
@@ -1542,19 +1591,40 @@ public class Penjualan extends javax.swing.JFrame {
     void setStok() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.seterorm("Gagal setStok()");
-        dRunSelctOne.setQuery("SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok', SUM(`KG`) as 'KG' FROM (\n"
-                + "SELECT `IdBarang`, `NamaBarang`, 0 as 'Stok', 0 as 'KG' FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
-                + "UNION ALL\n"
-                + "SELECT a.`IdBarang`, `NamaBarang`, ifnull(`KarungPelita`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'KG' FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
-                + "UNION ALL\n"
-                + "SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'KG' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbpenjualan`c ON a.`NoTransaksi`=c.`NoTransaksi` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
-                + "UNION ALL\n"
-                + "SELECT  `IdBarangBahan`, `NamaBarang`, (ROUND(`JumlahBahan` * 10) / 10 )*-1 AS 'Stok', `JumlahBahan`*`Satuan`*-1 AS 'KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangBahan`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
-                + "UNION ALL\n"
-                + "SELECT  `IdBarangHasil`, `NamaBarang`, (ROUND(`JumlahHasil` * 10 ) / 10) AS 'Stok', `JumlahHasil`*`Satuan` AS 'KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
-                + "UNION ALL\n"
-                + "SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0) AS 'Stok', ifnull(`Jumlah`,0) AS 'KG' FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
-                + ") as tbTemp GROUP BY `IdBarang`");
+        if (JCNamaBarang.getSelectedItem().toString().contains("PARTAI")) {
+            System.out.println("SELECT `IdPartai`, `NamaBarang`, SUM(`Stok`) as 'Stok', SUM(`KG`) as 'KG' FROM (\n"
+                    + "SELECT `IdPartai`, `NamaBarang`, 0 as 'Stok', 0 as 'KG' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`KarungPelita`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'KG' FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'KG' FROM `tbpenjualandetail`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, (ROUND(`JumlahBahan` * 10) / 10 )*-1 AS 'Stok', `JumlahBahan`*`Satuan`*-1 AS 'KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`Sak`,0) AS 'Stok', ifnull(`Jumlah`,0) AS 'KG' FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + ") as tbTemp GROUP BY `IdPartai`");
+            dRunSelctOne.setQuery("SELECT `IdPartai`, `NamaBarang`, SUM(`Stok`) as 'Stok', SUM(`KG`) as 'KG' FROM (\n"
+                    + "SELECT `IdPartai`, `NamaBarang`, 0 as 'Stok', 0 as 'KG' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`KarungPelita`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'KG' FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'KG' FROM `tbpenjualandetail`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, (ROUND(`JumlahBahan` * 10) / 10 )*-1 AS 'Stok', `JumlahBahan`*`Satuan`*-1 AS 'KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`Sak`,0) AS 'Stok', ifnull(`Jumlah`,0) AS 'KG' FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + ") as tbTemp GROUP BY `IdPartai`");
+        } else {
+            dRunSelctOne.setQuery("SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok', SUM(`KG`) as 'KG' FROM (\n"
+                    + "SELECT `IdBarang`, `NamaBarang`, 0 as 'Stok', 0 as 'KG' FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'KG' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbpenjualan`c ON a.`NoTransaksi`=c.`NoTransaksi` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT  `IdBarangHasil`, `NamaBarang`, (ROUND(`JumlahHasil` * 10 ) / 10) AS 'Stok', `JumlahHasil`*`Satuan` AS 'KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
+                    + "UNION ALL\n"
+                    + "SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0) AS 'Stok', ifnull(`Jumlah`,0) AS 'KG' FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'\n"
+                    + ") as tbTemp GROUP BY `IdBarang`");
+        }
         ArrayList<String> list = dRunSelctOne.excute();
         double dobel = Double.valueOf(list.get(2));
         JTStock.setText(Decformatdigit(dobel));

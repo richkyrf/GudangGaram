@@ -41,7 +41,17 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jlableF5" min="-2" pref="458" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="LBNoTransaksi1" min="-2" pref="136" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jlableF29" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="JCNoPartai" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jbuttonF8" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jlableF27" min="-2" pref="136" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -66,7 +76,9 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jlableF25" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="JTPeminta" max="32767" attributes="0"/>
+                                          <Component id="JCPeminta" max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jbuttonF6" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
@@ -81,27 +93,15 @@
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jlableF21" min="-2" pref="136" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jlableF22" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JTPemasok" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="jlableF19" min="-2" pref="136" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jlableF20" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JCPlat" max="32767" attributes="0"/>
+                                  <Component id="JTPlat" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="JCPlat" pref="0" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jbuttonF7" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jlableF2" min="-2" pref="136" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JTNamaBarang" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jlableF9" min="-2" pref="136" max="-2" attributes="0"/>
@@ -145,35 +145,35 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jScrollPane1" pref="308" max="32767" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="LBNoTransaksi2" min="-2" pref="136" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jlableF30" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="JTTotalTerima" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jlableF5" min="-2" pref="458" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jlableF21" min="-2" pref="136" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jlableF22" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="JTPemasok" pref="308" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="LBNoTransaksi1" min="-2" pref="136" max="-2" attributes="0"/>
+                              <Component id="jlableF2" min="-2" pref="136" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlableF29" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JCNoPartai" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbuttonF8" min="-2" max="-2" attributes="0"/>
+                              <Component id="JTNamaBarang" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="LBNoTransaksi2" min="-2" pref="136" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jlableF30" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JTTotalTerima" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -195,19 +195,11 @@
                   <Component id="jlableF30" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTTotalTerima" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="LBNoTransaksi" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF26" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTNoPenerimaan" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jlableF23" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlableF24" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="JDTanggal" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -217,17 +209,26 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlableF4" alignment="3" max="32767" attributes="0"/>
-                  <Component id="jlableF25" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTPeminta" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jlableF2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF7" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTNamaBarang" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jlableF23" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlableF24" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="JDTanggal" min="-2" pref="28" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlableF4" alignment="3" max="32767" attributes="0"/>
+                  <Component id="jlableF25" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JCPeminta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbuttonF6" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jlableF17" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF18" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -253,6 +254,7 @@
                   <Component id="jlableF20" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JCPlat" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF7" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTPlat" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -286,7 +288,7 @@
                   </Group>
                   <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -538,7 +540,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCPlatKeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPlat.load(&quot;SELECT `Plat` FROM `tbmkendaraan`&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPlat.load(&quot;SELECT `Plat` FROM `tbmkendaraan` WHERE 1 &quot;);"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
@@ -575,11 +577,6 @@
       </Events>
     </Component>
     <Component class="KomponenGUI.JtextF" name="JTPemasok">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-    </Component>
-    <Component class="KomponenGUI.JtextF" name="JTPeminta">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -638,6 +635,30 @@
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+    </Component>
+    <Component class="KomponenGUI.JcomboboxF" name="JCPeminta">
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCPemintaItemStateChanged"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCPemintaKeyPressed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPeminta.load(&quot;SELECT `Peminta` FROM `tbmpeminta`&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
+    </Component>
+    <Component class="KomponenGUI.JbuttonF" name="jbuttonF6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="+"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF6ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JtextF" name="JTPlat">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTPlatKeyPressed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTPlatKeyReleased"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
