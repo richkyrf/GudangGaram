@@ -52,29 +52,31 @@ public class JtableF extends JTable {
         return SQL;
     }
 
-    public void setrender(int x, String Type) {
+    public void setrender(int[] x, String Type) {
         try {
             TableColumnModel m = this.getColumnModel();
-            if ("Date".equals(Type)) {
-                m.getColumn(x).setCellRenderer(FormatRenderer.getDateTimeRenderer());
-            }
+            for (int i = 0; i < x.length; i++) {
+                if ("Date".equals(Type)) {
+                    m.getColumn(x[i]).setCellRenderer(FormatRenderer.getDateTimeRenderer());
+                }
 
-            if ("Time".equals(Type)) {
-                m.getColumn(x).setCellRenderer(FormatRenderer.getTimeRenderer());
-            }
+                if ("Time".equals(Type)) {
+                    m.getColumn(x[i]).setCellRenderer(FormatRenderer.getTimeRenderer());
+                }
 
-            if ("Percent".equals(Type)) {
-                m.getColumn(x).setCellRenderer(FNumberRenderer.getPercentRenderer());
-            }
+                if ("Percent".equals(Type)) {
+                    m.getColumn(x[i]).setCellRenderer(FNumberRenderer.getPercentRenderer());
+                }
 
-            if ("Curency".equals(Type)) {
-                m.getColumn(x).setCellRenderer(FNumberRenderer.getCurrencyRenderer());
-            }
-            if ("Number".equals(Type)) {
-                m.getColumn(x).setCellRenderer(FNumberRenderer.getumberrender());
-            }
-            if ("Decimal".equals(Type)) {
-                m.getColumn(x).setCellRenderer(FNumberRenderer.getdecimalrender());
+                if ("Curency".equals(Type)) {
+                    m.getColumn(x[i]).setCellRenderer(FNumberRenderer.getCurrencyRenderer());
+                }
+                if ("Number".equals(Type)) {
+                    m.getColumn(x[i]).setCellRenderer(FNumberRenderer.getumberrender());
+                }
+                if ("Decimal".equals(Type)) {
+                    m.getColumn(x[i]).setCellRenderer(FNumberRenderer.getdecimalrender());
+                }
             }
         } catch (Exception e) {
             LogEror.SaveEror(e);

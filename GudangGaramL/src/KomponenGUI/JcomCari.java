@@ -19,6 +19,13 @@ public class JcomCari extends javax.swing.JPanel {
     public ArrayList<String> DbColomName = new ArrayList<>();
     Object SelectedValue = null;
     int selectedIndex = 1;
+    int[] X;
+    String Format;
+    
+    public void setRender(int[] x, String Type){
+        X = x;
+        Format = Type;
+    }
 
     public Object GetIDTable() {
         return jtablef.getValueAt(jtablef.getSelectedRow(), 0);
@@ -103,6 +110,7 @@ public class JcomCari extends javax.swing.JPanel {
         }
         this.jtablef.setQuery(this.Query + " " + this.Order);
         this.jtablef.tampilkan();
+        jtablef.setrender(X, Format);
         jtextF1.requestFocus();
     }
 
@@ -248,6 +256,7 @@ public class JcomCari extends javax.swing.JPanel {
         try {
             this.jtablef.setQuery(this.Query + " HAVING " + this.DbColomName.get(JcomCari.jcomboboxF1.getSelectedIndex()) + getjcomtypecari() + this.Order);
             this.jtablef.tampilkan();
+        jtablef.setrender(X, Format);
         } catch (Exception localException) {
         }
     }

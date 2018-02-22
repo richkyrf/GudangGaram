@@ -933,7 +933,7 @@ public class Penerimaan extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF8KeyPressed
 
     private void JCPemintaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCPemintaItemStateChanged
-
+        setNoPenerimaan();
     }//GEN-LAST:event_JCPemintaItemStateChanged
 
     private void JCPemintaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCPemintaKeyPressed
@@ -952,17 +952,17 @@ public class Penerimaan extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF6ActionPerformed
 
     private void JTPlatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPlatKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             JTKarungPelita.requestFocus();
             JCPlat.hidePopup();
-        } else if (evt.getKeyCode() == KeyEvent.VK_DOWN){
-            JCPlat.setSelectedIndex(JCPlat.getSelectedIndex()+1);
+        } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
+            JCPlat.setSelectedIndex(JCPlat.getSelectedIndex() + 1);
             JCPlat.requestFocus();
         }
     }//GEN-LAST:event_JTPlatKeyPressed
 
     private void JTPlatKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPlatKeyReleased
-        if (!JTPlat.getText().replace(" ","").equals("")){
+        if (!JTPlat.getText().replace(" ", "").equals("")) {
             JCPlat.Cari(" AND `Plat` REGEXP '" + JTPlat.getText().replace(" ", ".+") + "' ORDER BY `Plat` ASC");
             JCPlat.showPopup();
         }
@@ -1073,7 +1073,7 @@ public class Penerimaan extends javax.swing.JFrame {
                 if (Integer.valueOf(JTTotalTerima.getText().split("/")[0].replace(".", "")) + JTKarungPelita.getInt() == Integer.valueOf(JTTotalTerima.getText().split("/")[1].split(" ")[0].replace(".", ""))) {
                     UpdateAll updateAll = new UpdateAll();
                     updateAll.Ubah("UPDATE `tbmpartai` SET `SelesaiTerima`=1 WHERE `IdPartai`='" + JCNoPartai.getSelectedItem() + "'", "Partai", this);
-                    JOptionPane.showMessageDialog(this, "Partai No."+JCNoPartai.getSelectedItem()+" Telah Ditutup Karena Jumlah Penerimaan Telah Pas");
+                    JOptionPane.showMessageDialog(this, "Partai No." + JCNoPartai.getSelectedItem() + " Telah Ditutup Karena Jumlah Penerimaan Telah Pas");
                     JCNoPartai.load("SELECT '-- Pilih No. Partai --' as 'NoPartai' UNION SELECT `IdPartai` FROM `tbmpartai` WHERE `SelesaiTerima` = 0 ");
                     JCNoPartai.requestFocus();
                     JCNoPartai.setSelectedIndex(0);
