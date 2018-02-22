@@ -21,22 +21,16 @@ public class JtKoma extends JTextField {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (((c < '0') || (c > '9')) && (c != '\b') && (c != '')) {
+                if (((c < '0') || (c > '9')) && (c != '\b') && (c != '') || (getText().length() >= 2 && !getText().equals("00"))) {
                     getToolkit().beep();
                     e.consume();
                 }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (getText().length() == 0) {
-                    setText("0");
-                } else if (getText().length() > 2) {
-                    setText(getText().substring(0, 2));
-                } else {
-                    setText(getText());
+                if(getText().isEmpty()){
+                    setText("00");
+                    selectAll();
                 }
             }
+
         });
 
     }
