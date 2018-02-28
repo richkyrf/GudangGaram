@@ -39,6 +39,7 @@ public class Var {
     public static Penggajian penggajian;
     public static PrintTPB printTPB;
     public static Poles poles;
+    public static DinasLuar tambahDinasLuar, ubahDinasLuar;
     
     public static ListPartai listPartai;
     public static ListKaryawan listKaryawan;
@@ -49,6 +50,7 @@ public class Var {
     public static ListPacking listPacking;
     public static ListPenjualan listPenjualan;
     public static ListPenyesuaian listPenyesuaian;
+    public static ListDinasLuar listDinasLuar;
     
     public static LaporanStokHarian laporanStokHarian;
     

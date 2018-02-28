@@ -432,7 +432,7 @@
                 <Column editable="false" title="Sub Total" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTable.setrender(2, &quot;Number&quot;);&#xa;JTable.setrender(3, &quot;Number&quot;);&#xa;JTable.setrender(4, &quot;Number&quot;);">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTable.setrender(new int[]{2,3,4}, new String[]{&quot;Number&quot;, &quot;Number&quot;, &quot;Number&quot;});">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                   <Title/>
@@ -482,6 +482,7 @@
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCNamaBarang">
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCNamaBarangItemStateChanged"/>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JCNamaBarangFocusLost"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBarangKeyPressed"/>
       </Events>

@@ -113,7 +113,7 @@ public class LaporanStokHarian extends javax.swing.JFrame {
         hashs.put("PrintedBy", "Di Print Oleh " + GlobalVar.VarL.username + " Pada " + FDateF.datetostr(new Date(), "dd/MM/yyyy HH:mm"));
         hashs.put("Title", "LAPORAN STOK HARIAN");
         hashs.put("Tgl", FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd"));
-        hashs.put("FormatTgl", FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy"));
+        hashs.put("FormatTgl", JDTanggal.getDate());
         java.util.Locale locale = new Locale("id", "ID");
         hashs.put(JRParameter.REPORT_LOCALE, locale);
         fLaporan.sethashmap(hashs);

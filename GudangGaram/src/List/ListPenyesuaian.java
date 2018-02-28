@@ -178,9 +178,8 @@ public class ListPenyesuaian extends javax.swing.JFrame {
 
     public void refresh() {
         jcomCariBarang.setQuery("SELECT `IdPenyesuaian` as 'ID', `NoPenyesuaian` as 'No. Penyesuaian', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', c.`NamaBarang` as 'Nama Barang', `Sak`, `Jumlah` as 'KG', a.`Keterangan` FROM `tbpenyesuaian`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON IF(a.`IdPartai` is null,a.`IdBarang`,b.`IdBarang`)=c.`IdBarang` WHERE 1");
+        jcomCariBarang.setRender(new int[]{4,5}, new String[]{"Decimal", "Decimal"});
         jcomCariBarang.tampilkan();
-        jcomCariBarang.jtablef.setrender(4, "Decimal");
-        jcomCariBarang.jtablef.setrender(5, "Decimal");
     }
 
 }

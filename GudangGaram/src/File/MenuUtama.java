@@ -64,6 +64,7 @@ public class MenuUtama extends javax.swing.JFrame {
         SProses2 = new javax.swing.JPopupMenu.Separator();
         JMIProsesAbsenKaryawan = new javax.swing.JMenuItem();
         JMIProsesPenggajianKaryawan = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         JMList = new javax.swing.JMenu();
         JMIListPenerimaan = new javax.swing.JMenuItem();
         JMIListPacking = new javax.swing.JMenuItem();
@@ -71,6 +72,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIListPenjualan = new javax.swing.JMenuItem();
         SList = new javax.swing.JPopupMenu.Separator();
         JMIListPenyesuaianStok = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         JMLaporan = new javax.swing.JMenu();
         JMILaporanStokHarian = new javax.swing.JMenuItem();
 
@@ -260,6 +262,14 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMProses.add(JMIProsesPenggajianKaryawan);
 
+        jMenuItem2.setText("Proses Dinas Luar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        JMProses.add(jMenuItem2);
+
         JMenuBar.add(JMProses);
 
         JMList.setText("List");
@@ -304,6 +314,14 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMList.add(JMIListPenyesuaianStok);
+
+        jMenuItem3.setText("List Dinas Luar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        JMList.add(jMenuItem3);
 
         JMenuBar.add(JMList);
 
@@ -559,6 +577,24 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JMIProsesPrintTandaPenerimaanBarangActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        if (GlobalVar.Var.listDinasLuar == null) {
+            GlobalVar.Var.listDinasLuar = new ListDinasLuar();
+        } else {
+            GlobalVar.Var.listDinasLuar.setState(NORMAL);
+            GlobalVar.Var.listDinasLuar.toFront();
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if (GlobalVar.Var.tambahDinasLuar == null) {
+            GlobalVar.Var.tambahDinasLuar = new DinasLuar();
+        } else {
+            GlobalVar.Var.tambahDinasLuar.setState(NORMAL);
+            GlobalVar.Var.tambahDinasLuar.toFront();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -634,5 +670,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator SProses1;
     private javax.swing.JPopupMenu.Separator SProses2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }

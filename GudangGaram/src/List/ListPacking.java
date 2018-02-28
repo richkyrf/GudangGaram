@@ -217,11 +217,9 @@ public class ListPacking extends javax.swing.JFrame {
     
     public void load(){
         jcomCari1.setQuery("SELECT `IdPacking` as 'ID', `NoPacking`, DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, `NamaKaryawan` as 'Nama', CONCAT(d.`NamaBarang`,' (PARTAI ',a.`IdPartai`,')') as 'Bahan', `JumlahBahan`, e.`NamaBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON c.`IdBarang`=d.`IdBarang` JOIN `tbmbarang`e ON a.`IdBarangHasil`=e.`IdBarang` WHERE 1");
-        jcomCari1.setOrder(" ORDER BY `NoPacking` DESC, `NoIndi` ASC ");
+        jcomCari1.setOrder(" ORDER BY a.`Tanggal` DESC, `NoBak`, `NoPas`, `NoIndi` ");
+        jcomCari1.setRender(new int[]{8,10,11}, new String[]{"Decimal", "Decimal", "Number"});
         jcomCari1.tampilkan();
-        jcomCari1.jtablef.setrender(8, "Decimal");
-        jcomCari1.jtablef.setrender(10, "Decimal");
-        jcomCari1.jtablef.setrender(11, "Number");
     }
 
 }

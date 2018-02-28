@@ -217,8 +217,8 @@ public class ListPenerimaan extends javax.swing.JFrame {
     public void load() {
         jcomCari1.setQuery("SELECT `IdPenerimaan` as 'ID', `NoPenerimaan` as 'No. Penerimaan', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `Peminta`, `NamaBarang` as 'Barang', a.`IdPartai` as 'No. Partai', `KarungPenjual` as 'Karung PJL', `NettoPenjual` as 'Netto PJL', `NoTimbang` as 'No. Timbang', `Plat`, `KarungPelita` as 'Karung PLT', `BruttoPelita` as 'Brutto PLT', `TaraPelita` as 'Tara PLT', `NettoPelita` as 'Netto PLT', a.`Keterangan` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`Idpartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpeminta`d ON a.`IdPeminta`=d.`IdPeminta` JOIN `tbmpemasok`e ON c.`IdPemasok`=e.`IdPemasok` WHERE 1");
         jcomCari1.setOrder(" ORDER BY `IdPenerimaan` DESC");
+        jcomCari1.setRender(new int[]{7,8,11,12,13,14}, new String[]{"Number", "Number", "Number", "Number", "Number", "Number"});
         jcomCari1.tampilkan();
-        jcomCari1.setRender(new int[]{7,8,11,12,13,14}, "Number");
     }
 
 }

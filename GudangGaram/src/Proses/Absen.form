@@ -42,7 +42,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jlableF5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JDTanggalPenyesuaian" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="JDTanggal" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -59,7 +59,7 @@
                       <Component id="jlableF2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlableF5" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="JDTanggalPenyesuaian" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="JDTanggal" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="375" max="-2" attributes="0"/>
@@ -135,12 +135,15 @@
         <Property name="text" type="java.lang.String" value="Tanggal"/>
       </Properties>
     </Component>
-    <Component class="KomponenGUI.JdateCF" name="JDTanggalPenyesuaian">
+    <Component class="KomponenGUI.JdateCF" name="JDTanggal">
       <Properties>
         <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
       </Properties>
+      <Events>
+        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="JDTanggalPropertyChange"/>
+      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JDTanggalPenyesuaian.setDate(new Date());"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JDTanggal.setDate(new Date());"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF5">

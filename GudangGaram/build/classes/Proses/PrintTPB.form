@@ -158,7 +158,7 @@
                 <Column editable="true" title="Keterangan" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" preCode="JTable.setrender(3, &quot;Number&quot;);&#xa;JTable.setrender(4, &quot;Number&quot;);&#xa;JTable.setrender(5, &quot;Number&quot;);">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" preCode="JTable.setrender(new int[]{3,4,5}, new String[]{&quot;Number&quot;, &quot;Number&quot;, &quot;Number&quot;});">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>

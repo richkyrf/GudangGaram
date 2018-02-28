@@ -241,11 +241,10 @@ public class ListPartai extends javax.swing.JFrame {
     }
 
     public void load() {
-        jcomCari1.setQuery("SELECT a.`IdPartai` as 'ID', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `NamaBarang` as 'Nama Barang', REPLACE(CONCAT(FORMAT(IFNULL(SUM(`NettoPelita`),0),0),'/', FORMAT(`Netto`,0)),',','.') as 'Netto', REPLACE(CONCAT(FORMAT(IFNULL(SUM(`KarungPelita`),0),0),'/', FORMAT(`Karung`,0)),',','.') as 'Karung', a.`Keterangan`, IF(`SelesaiTerima`=1,'Sudah','Belum') as 'Selesai Terima', IF(`SelesaiProduksi`=1,'Sudah','Belum') as 'Selesai Produksi' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmpemasok`c ON b.`IdPemasok`=c.`IdPemasok` JOIN `tbpenerimaan`d ON a.`IdPartai`=d.`IdPartai` WHERE 1");
+        jcomCari1.setQuery("SELECT a.`IdPartai` as 'No. Partai', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Pemasok`, `NamaBarang` as 'Nama Barang', REPLACE(CONCAT(FORMAT(IFNULL(SUM(`NettoPelita`),0),0),'/', FORMAT(`Netto`,0)),',','.') as 'Netto Penerimaan', REPLACE(CONCAT(FORMAT(IFNULL(SUM(`KarungPelita`),0),0),'/', FORMAT(`Karung`,0)),',','.') as 'Karung Penerimaan', REPLACE(FORMAT(`KG Packing`,0),',','.') as 'Netto Packing', REPLACE(FORMAT(`Total Packing`,0),',','.') as 'Karung Packing', a.`Keterangan`, IF(`SelesaiTerima`=1,'Sudah','Belum') as 'Selesai Terima', IF(`SelesaiProduksi`=1,'Sudah','Belum') as 'Selesai Produksi' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbmpemasok`c ON b.`IdPemasok`=c.`IdPemasok` LEFT JOIN `tbpenerimaan`d ON a.`IdPartai`=d.`IdPartai` LEFT JOIN (SELECT a.`IdPartai`, SUM(IFNULL((ROUND(`JumlahBahan` * 100) / 100 ),0))  AS 'Total Packing', SUM(`JumlahHasil`*d.`Satuan`) as 'KG Packing' FROM `tbmpartai`a LEFT JOIN `tbpacking`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON b.`IdBarangHasil`=d.`IdBarang` WHERE 1 GROUP BY a.`IdPartai`) e ON a.`IdPartai`=e.`IdPartai` GROUP BY a.`IdPartai` ");
         jcomCari1.setOrder(" ORDER BY a.`IdPartai` DESC");
+        jcomCari1.setRender(new int[]{4,5,6,7}, new String[]{"Number", "Number", "Number", "Number"});
         jcomCari1.tampilkan();
-        jcomCari1.jtablef.setrender(4, "Number");
-        jcomCari1.jtablef.setrender(5, "Number");
     }
 
 }

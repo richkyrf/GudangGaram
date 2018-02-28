@@ -6,7 +6,11 @@
 package Proses;
 
 import KomponenGUI.FDateF;
+import LSubProces.DRunSelctOne;
+import LSubProces.Delete;
 import LSubProces.MultiInsert;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -28,11 +32,33 @@ public class Absen extends javax.swing.JFrame {
         load();
     }
 
+    Boolean isFirstSaturday(String year, String month) {
+        Calendar cacheCalendar = Calendar.getInstance();
+        cacheCalendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+        cacheCalendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
+        cacheCalendar.set(Calendar.MONTH, Integer.parseInt(month) - 1);
+        cacheCalendar.set(Calendar.YEAR, Integer.parseInt(year));
+        String date = FDateF.datetostr(cacheCalendar.getTime(), "dd-MM-yyyy");
+        return date.equals(FDateF.datetostr(new Date(), "dd-MM-yyyy"));
+    }
+
     void load() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(JDTanggal.getDate());
+        String jenis;
+        if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
+            jenis = " AND b.`IdJenisKaryawan` = 1 ";
+        } else {
+            jenis = "";
+        }
         JTable.useboolean(true);
         JTable.setbooleanfield(3);
-        JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', 1 as 'Hadir', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1");
+        JTable.setQuery("SELECT `IdAbsen` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', `Hadir`, a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE `Status` = 1 " + jenis + " AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan` ORDER BY b.`IdJenisKaryawan`, `NamaKaryawan`");
         JTable.tampilkan();
+        if (JTable.getRowCount() == 0) {
+            JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', 1 as 'Hadir', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE `Status` = 1 " + jenis + " ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
+            JTable.tampilkan();
+        }
     }
 
     /**
@@ -47,7 +73,7 @@ public class Absen extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         JTable = new KomponenGUI.JtableF();
         jlableF2 = new KomponenGUI.JlableF();
-        JDTanggalPenyesuaian = new KomponenGUI.JdateCF();
+        JDTanggal = new KomponenGUI.JdateCF();
         jlableF5 = new KomponenGUI.JlableF();
         jbuttonF1 = new KomponenGUI.JbuttonF();
         jbuttonF2 = new KomponenGUI.JbuttonF();
@@ -97,8 +123,13 @@ public class Absen extends javax.swing.JFrame {
 
         jlableF2.setText("Tanggal");
 
-        JDTanggalPenyesuaian.setDate(new Date());
-        JDTanggalPenyesuaian.setDateFormatString("dd-MM-yyyy");
+        JDTanggal.setDate(new Date());
+        JDTanggal.setDateFormatString("dd-MM-yyyy");
+        JDTanggal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                JDTanggalPropertyChange(evt);
+            }
+        });
 
         jlableF5.setText(":");
 
@@ -142,7 +173,7 @@ public class Absen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JDTanggalPenyesuaian, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JDTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -154,7 +185,7 @@ public class Absen extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(JDTanggalPenyesuaian, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JDTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -183,6 +214,10 @@ public class Absen extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         GlobalVar.Var.absen = null;
     }//GEN-LAST:event_formWindowClosed
+
+    private void JDTanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDTanggalPropertyChange
+        load();
+    }//GEN-LAST:event_JDTanggalPropertyChange
 
     /**
      * @param args the command line arguments
@@ -220,7 +255,7 @@ public class Absen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private KomponenGUI.JdateCF JDTanggalPenyesuaian;
+    private KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JtableF JTable;
     private javax.swing.JScrollPane jScrollPane1;
     private KomponenGUI.JbuttonF jbuttonF1;
@@ -237,8 +272,23 @@ public class Absen extends javax.swing.JFrame {
         if (Berhasil) {
             Berhasil = multiInsert.setautocomit(false);
             if (Berhasil) {
-                for (int i = 0; i < JTable.getRowCount(); i++) {
-                    Berhasil = multiInsert.Excute("INSERT INTO `tbabsen`(`Tanggal`, `IdKaryawan`, `Hadir`, `Keterangan`) VALUES ('" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 1) + "')," + JTable.getValueAt(i, 3) + ",'" + JTable.getValueAt(i, 4) + "')", null);
+                DRunSelctOne dRunSelctOne = new DRunSelctOne();
+                dRunSelctOne.seterorm("Gagal check absen");
+                dRunSelctOne.setQuery("SELECT COUNT(`Tanggal`) FROM `tbabsen` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
+                ArrayList<String> list = dRunSelctOne.excute();
+                if (!list.get(0).equals("0")) {
+                    Berhasil = multiInsert.Excute("DELETE FROM `tbabsen` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'", null);
+                }
+                if (Berhasil) {
+                    String query = "INSERT INTO `tbabsen`(`Tanggal`, `IdKaryawan`, `Hadir`, `Keterangan`) VALUES ";
+                    for (int i = 0; i < JTable.getRowCount(); i++) {
+                        if (i == 0) {
+                            query += "('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 1) + "')," + JTable.getValueAt(i, 3) + ",'" + JTable.getValueAt(i, 4) + "')";
+                        } else {
+                            query += ",('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 1) + "')," + JTable.getValueAt(i, 3) + ",'" + JTable.getValueAt(i, 4) + "')";
+                        }
+                    }
+                    Berhasil = multiInsert.Excute(query, null);
                 }
             }
         }
@@ -253,6 +303,8 @@ public class Absen extends javax.swing.JFrame {
             multiInsert.closecon();
             if (tutup) {
                 dispose();
+            } else {
+                load();
             }
         }
     }

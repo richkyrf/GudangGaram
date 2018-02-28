@@ -52,29 +52,29 @@ public class JtableF extends JTable {
         return SQL;
     }
 
-    public void setrender(int[] x, String Type) {
+    public void setrender(int[] x, String[] Type) {
         try {
             TableColumnModel m = this.getColumnModel();
             for (int i = 0; i < x.length; i++) {
-                if ("Date".equals(Type)) {
+                if ("Date".equals(Type[i])) {
                     m.getColumn(x[i]).setCellRenderer(FormatRenderer.getDateTimeRenderer());
                 }
 
-                if ("Time".equals(Type)) {
+                if ("Time".equals(Type[i])) {
                     m.getColumn(x[i]).setCellRenderer(FormatRenderer.getTimeRenderer());
                 }
 
-                if ("Percent".equals(Type)) {
+                if ("Percent".equals(Type[i])) {
                     m.getColumn(x[i]).setCellRenderer(FNumberRenderer.getPercentRenderer());
                 }
 
-                if ("Curency".equals(Type)) {
+                if ("Curency".equals(Type[i])) {
                     m.getColumn(x[i]).setCellRenderer(FNumberRenderer.getCurrencyRenderer());
                 }
-                if ("Number".equals(Type)) {
+                if ("Number".equals(Type[i])) {
                     m.getColumn(x[i]).setCellRenderer(FNumberRenderer.getumberrender());
                 }
-                if ("Decimal".equals(Type)) {
+                if ("Decimal".equals(Type[i])) {
                     m.getColumn(x[i]).setCellRenderer(FNumberRenderer.getdecimalrender());
                 }
             }

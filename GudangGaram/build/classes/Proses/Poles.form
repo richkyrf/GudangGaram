@@ -220,7 +220,7 @@
                 <Column editable="false" title="Jumlah KG" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableBahan.setrender(2, &quot;Number&quot;);&#xa;JTableBahan.setrender(3, &quot;Number&quot;);&#xa;JTableBahan.setrender(4, &quot;Number&quot;);">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableBahan.setrender(new int[]{2,3,4}, new String[]{&quot;Number&quot;, &quot;Number&quot;, &quot;Number&quot;});">
               <TableColumnModel selectionModel="1">
                 <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                   <Title/>
@@ -275,7 +275,7 @@
                 <Column editable="false" title="Jumlah KG" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableHasil.setrender(2, &quot;Number&quot;);&#xa;JTableHasil.setrender(3, &quot;Number&quot;);&#xa;JTableHasil.setrender(4, &quot;Number&quot;);">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableHasil.setrender(new int[]{2,3,4}, new String[]{&quot;Number&quot;, &quot;Number&quot;, &quot;Number&quot;});">
               <TableColumnModel selectionModel="1">
                 <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                   <Title/>

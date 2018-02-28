@@ -73,7 +73,7 @@ public class JtextF extends JTextField {
 
     public String getribuankomaText() {
         try {
-            return this.getText().replace(",", "");
+            return this.getText().replace(".", "").replace(",", ".");
         } catch (Exception e) {
             return ("0");
         }

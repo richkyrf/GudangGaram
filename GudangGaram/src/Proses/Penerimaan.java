@@ -303,7 +303,6 @@ public class Penerimaan extends javax.swing.JFrame {
         JTNoPenerimaan = new KomponenGUI.JtextF();
         JCPlat = new KomponenGUI.JcomboboxF();
         jbuttonF7 = new KomponenGUI.JbuttonF();
-        jlableF5 = new KomponenGUI.JlableF();
         jlableF27 = new KomponenGUI.JlableF();
         jlableF28 = new KomponenGUI.JlableF();
         JTKarungPelita = new KomponenGUI.JRibuanTextField();
@@ -319,6 +318,7 @@ public class Penerimaan extends javax.swing.JFrame {
         JCPeminta = new KomponenGUI.JcomboboxF();
         jbuttonF6 = new KomponenGUI.JbuttonF();
         JTPlat = new KomponenGUI.JtextF();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -488,10 +488,6 @@ public class Penerimaan extends javax.swing.JFrame {
             }
         });
 
-        jlableF5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlableF5.setText("------------------------------------------------------------------------------------------------------------------");
-        jlableF5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
         jlableF27.setText("Karung Pelita");
 
         jlableF28.setText(":");
@@ -586,7 +582,6 @@ public class Penerimaan extends javax.swing.JFrame {
                                 .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(LBNoTransaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -695,7 +690,10 @@ public class Penerimaan extends javax.swing.JFrame {
                                 .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JTNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSeparator1)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -748,9 +746,9 @@ public class Penerimaan extends javax.swing.JFrame {
                     .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTNettoPenjual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1026,6 +1024,7 @@ public class Penerimaan extends javax.swing.JFrame {
     private KomponenGUI.JlableF LBNoTransaksi1;
     private KomponenGUI.JlableF LBNoTransaksi2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private KomponenGUI.JbuttonF jbuttonF1;
     private KomponenGUI.JbuttonF jbuttonF2;
     private KomponenGUI.JbuttonF jbuttonF3;
@@ -1058,7 +1057,6 @@ public class Penerimaan extends javax.swing.JFrame {
     private KomponenGUI.JlableF jlableF3;
     private KomponenGUI.JlableF jlableF30;
     private KomponenGUI.JlableF jlableF4;
-    private KomponenGUI.JlableF jlableF5;
     private KomponenGUI.JlableF jlableF6;
     private KomponenGUI.JlableF jlableF7;
     private KomponenGUI.JlableF jlableF8;

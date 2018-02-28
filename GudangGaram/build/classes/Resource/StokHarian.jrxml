@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StokHarian" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="acc8509b-a836-4b53-b178-b496671fd8c2">
-	<property name="ireport.zoom" value="1.2100000000000002"/>
-	<property name="ireport.x" value="207"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StokHarian" language="groovy" pageWidth="935" pageHeight="609" orientation="Landscape" columnWidth="895" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="acc8509b-a836-4b53-b178-b496671fd8c2">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="854"/>
+	<property name="ireport.y" value="60"/>
 	<parameter name="Title" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["Laporan Permintaan Barang"]]></defaultValueExpression>
 	</parameter>
@@ -12,51 +12,66 @@
 	<parameter name="Tgl" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["2017-10-12"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="FormatTgl" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["01-01-2010"]]></defaultValueExpression>
+	<parameter name="FormatTgl" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Where" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT a.`IdBarang`, a.`NamaBarang`, `Stok Awal`, `Stok Awal KG`, `Beli` as 'Beli', `Jual` as 'Jual', `Mutasi` as 'Mutasi', `Bahan` as 'Bahan', `Hasil` as 'Hasil', `Sak` as 'Penyesuaian', ifnull(`Beli`,0)+ifnull(`Hasil`,0)-IF(ifnull(`Sak`,0) > 0, ifnull(`Sak`,0), 0) as 'Total Masuk', ifnull(`Jual`,0)+ifnull(`Mutasi`,0)+ifnull(`Bahan`,0)-IF(ifnull(`Sak`,0) < 0, ifnull(`Sak`,0), 0) as 'Total Keluar' FROM (
+		<![CDATA[SELECT a.`IdBarang`, a.`NamaBarang`, `Stok Awal`, `Stok Awal KG`, `Beli` as 'Beli', `Jual` as 'Jual', `Mutasi` as 'Mutasi', `Bahan` as 'Bahan', `Hasil` as 'Hasil', `Sak` as 'Penyesuaian', ifnull(`Beli`,0)+ifnull(`Hasil`,0)+IF(ifnull(`Sak`,0) >= 0, ifnull(`Sak`,0), 0) as 'Total Masuk', ifnull(`Jual`,0)+ifnull(`Mutasi`,0)+ifnull(`Bahan`,0)-IF(ifnull(`Sak`,0) < 0, ifnull(`Sak`,0), 0) as 'Total Keluar', `Stok Akhir`, `Stok Akhir KG` FROM (
 
-(SELECT `IdBarang`, `NamaBarang` FROM `tbmbarang` WHERE 1 ) a
+(SELECT a.`IdBarang`, IF(`IdPartai` IS NULL,`NamaBarang`, CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')')) as 'NamaBarang', `IdJenisBarang`, `IdPartai` FROM `tbmbarang`a LEFT JOIN `tbmpartai`b ON a.`IdBarang`=b.`IdBarang` WHERE 1 ) a
     LEFT JOIN
-(SELECT `IdBarang`, SUM(`KarungPelita`) as 'Beli' FROM `tbpenerimaan` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarang`) b
+(SELECT b.`IdBarang`, SUM(`KarungPelita`) as 'Beli', null a, null b FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` WHERE 1 AND a.`Tanggal` = $P{Tgl} GROUP BY a.`IdPartai`) b
     ON a.`IdBarang`=b.`IdBarang`
     LEFT JOIN
-(SELECT `IdBarang`, SUM(`Jumlah`) as 'Jual' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` WHERE 1 AND `Tanggal` = $P{Tgl} AND b.`NoTransaksi` LIKE '%-PJ' GROUP BY `IdBarang`) c
+(SELECT d.`IdBarang`, SUM(`Jumlah`) as 'Jual', null a, null b FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` LEFT JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON IF(a.`IdPartai` IS NULL , a.`IdBarang`, c.`IdBarang`)=d.`IdBarang` WHERE 1 AND b.`Tanggal` = $P{Tgl} AND b.`NoTransaksi` LIKE '%-PJ' GROUP BY IF(a.`IdPartai` IS NULL, d.`IdBarang`, a.`IdPartai`)) c
     ON a.`IdBarang`=c.`IdBarang`
     LEFT JOIN
-(SELECT `IdBarang`, SUM(`Jumlah`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` WHERE 1 AND `Tanggal` = $P{Tgl} AND b.`NoTransaksi` LIKE '%-SJ' GROUP BY `IdBarang`) d
+(SELECT d.`IdBarang`, SUM(`Jumlah`) as 'Mutasi', null a, null b FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` LEFT JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON IF(a.`IdPartai` IS NULL , a.`IdBarang`, c.`IdBarang`)=d.`IdBarang` WHERE 1 AND b.`Tanggal` = $P{Tgl} AND b.`NoTransaksi` LIKE '%-SJ' GROUP BY IF(a.`IdPartai` IS NULL, d.`IdBarang`, a.`IdPartai`)) d
     ON a.`IdBarang`=d.`IdBarang`
     LEFT JOIN
-(SELECT `IdBarangBahan`, ROUND(SUM(`JumlahBahan`) * 10 ) / 10 as 'Bahan' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangBahan`=b.`IdBarang` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarangBahan`) e
-    ON a.`IdBarang`=e.`IdBarangBahan`
+(SELECT b.`IdBarang`, ROUND(SUM(`JumlahBahan`) * 10 ) / 10 as 'Bahan', null a, null b FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` WHERE 1 AND a.`Tanggal` = $P{Tgl} GROUP BY a.`IdPartai`) e
+    ON a.`IdBarang`=e.`IdBarang`
     LEFT JOIN
-(SELECT `IdBarangHasil`, SUM(`JumlahHasil`) as 'Hasil' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarangHasil`) f
+(SELECT `IdBarangHasil`, SUM(`JumlahHasil`) as 'Hasil', null a, null b FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE 1 AND a.`Tanggal` = $P{Tgl} GROUP BY `IdBarangHasil`) f
     ON a.`IdBarang`=f.`IdBarangHasil`
     LEFT JOIN
-(SELECT `IdBarang`, `Sak` FROM `tbpenyesuaian` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarang`) g
+(SELECT c.`IdBarang`, SUM(`Sak`) as 'Sak', null a, null b FROM `tbpenyesuaian`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON IF(a.`IdPartai` IS NULL,a.`IdBarang`,b.`IdBarang`)=c.`IdBarang` WHERE 1 AND a.`Tanggal` = $P{Tgl} GROUP BY IF(a.`IdPartai` IS NULL, a.`IdBarang`, a.`IdPartai`)) g
     ON a.`IdBarang`=g.`IdBarang`
     LEFT JOIN
 (SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok Awal', SUM(`Stokkg`) as 'Stok Awal Kg' FROM (
-SELECT `IdBarang`, `NamaBarang`, 0 as 'Stok', 0 as 'Stokkg' FROM `tbmbarang` WHERE 1
+SELECT a.`IdBarang`, IF(`IdPartai` IS NULL,`NamaBarang`, CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')')) as 'NamaBarang', 0 as 'Stok', 0 as 'Stokkg', `IdPartai` FROM `tbmbarang`a LEFT JOIN `tbmpartai`b ON a.`IdBarang`=b.`IdBarang` WHERE 1
 UNION ALL
-SELECT a.`IdBarang`, `NamaBarang`, ifnull(`KarungPelita`,0) AS 'Stok', ifnull(`NettoPelita`,0) AS 'Stokkg' FROM `tbpenerimaan`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE 1 AND `Tanggal` < $P{Tgl}
+SELECT b.`IdBarang`, `NamaBarang`, SUM(ifnull(`KarungPelita`,0)) AS 'Stok', SUM((ifnull(`NettoPelita`,0))) AS 'Stokkg', a.`IdPartai` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} GROUP BY a.`IdPartai`
 UNION ALL
-SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'Stokkg' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` JOIN `tbpenjualan`c ON a.`NoTransaksi`=c.`NoTransaksi` WHERE 1 AND `Tanggal` < $P{Tgl}
+SELECT d.`IdBarang`, `NamaBarang`, SUM(ifnull(`Jumlah`*-1,0)) AS 'Stok', SUM(ifnull(`Jumlah`*-1*`Satuan`,0)) AS 'Stokkg', a.`IdPartai` FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` LEFT JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON IF(a.`IdPartai` IS NULL , a.`IdBarang`, c.`IdBarang`)=d.`IdBarang` WHERE 1 AND b.`Tanggal` < $P{Tgl} GROUP BY IF(a.`IdPartai` IS NULL, d.`IdBarang`, a.`IdPartai`)
 UNION ALL
-SELECT  `IdBarangBahan`, `NamaBarang`, `JumlahBahan`*-1, `JumlahBahan`*-1*`Satuan` FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangBahan`=b.`IdBarang` WHERE 1 AND `Tanggal` < $P{Tgl}
+SELECT  b.`IdBarang`, c.`NamaBarang`, (ROUND(SUM(`JumlahBahan`)))*-1, SUM(`JumlahHasil`*-1*d.`Satuan`), a.`IdPartai` FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} GROUP BY `NoPacking`, `IdPartai`
 UNION ALL
-SELECT  `IdBarangHasil`, `NamaBarang`, `JumlahHasil`, `JumlahHasil`*`Satuan` FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE 1 AND `Tanggal` < $P{Tgl}
+SELECT  `IdBarangHasil`, `NamaBarang`, SUM(`JumlahHasil`), SUM(`JumlahHasil`*`Satuan`), `IdPartai` FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} GROUP BY `IdBarangHasil`
 UNION ALL
-SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE 1 AND `Tanggal` < $P{Tgl}
+SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0)), a.`IdPartai` FROM `tbpenyesuaian`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON IF(a.`IdPartai` IS NULL,a.`IdBarang`,b.`IdBarang`)=c.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} GROUP BY IF(a.`IdPartai` IS NULL, a.`IdBarang`, a.`IdPartai`)
 ) as tbTemp GROUP BY `IdBarang`) h
 	ON a.`IdBarang`=h.`IdBarang`
+LEFT JOIN
+(SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok Akhir', SUM(`Stokkg`) as 'Stok Akhir Kg' FROM (
+SELECT a.`IdBarang`, IF(`IdPartai` IS NULL,`NamaBarang`, CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')')) as 'NamaBarang', 0 as 'Stok', 0 as 'Stokkg', `IdPartai` FROM `tbmbarang`a LEFT JOIN `tbmpartai`b ON a.`IdBarang`=b.`IdBarang` WHERE 1
+UNION ALL
+SELECT b.`IdBarang`, `NamaBarang`, SUM(ifnull(`KarungPelita`,0)) AS 'Stok', SUM((ifnull(`NettoPelita`,0))) AS 'Stokkg', a.`IdPartai` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdPartai`
+UNION ALL
+SELECT d.`IdBarang`, `NamaBarang`, SUM(ifnull(`Jumlah`*-1,0)) AS 'Stok', SUM(ifnull(`Jumlah`*-1*`Satuan`,0)) AS 'Stokkg', a.`IdPartai` FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` LEFT JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON IF(a.`IdPartai` IS NULL , a.`IdBarang`, c.`IdBarang`)=d.`IdBarang` WHERE 1 AND b.`Tanggal` <= $P{Tgl} GROUP BY IF(a.`IdPartai` IS NULL, d.`IdBarang`, a.`IdPartai`)
+UNION ALL
+SELECT  b.`IdBarang`, c.`NamaBarang`, (ROUND(SUM(`JumlahBahan`)))*-1, SUM(`JumlahHasil`*-1*d.`Satuan`), a.`IdPartai` FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY `NoPacking`, `IdPartai`
+UNION ALL
+SELECT  `IdBarangHasil`, `NamaBarang`, SUM(`JumlahHasil`), SUM(`JumlahHasil`*`Satuan`), `IdPartai` FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY `IdBarangHasil`
+UNION ALL
+SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0)), a.`IdPartai` FROM `tbpenyesuaian`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON IF(a.`IdPartai` IS NULL,a.`IdBarang`,b.`IdBarang`)=c.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY IF(a.`IdPartai` IS NULL, a.`IdBarang`, a.`IdPartai`)
+) as tbTemp GROUP BY `IdBarang`) i
+	ON a.`IdBarang`=i.`IdBarang`
 
-) ORDER BY a.`IdBarang`]]>
+) ORDER BY a.`IdJenisBarang`, IF(a.`IdPartai` IS NULL, a.`NamaBarang`, a.`IdPartai`)]]>
 	</queryString>
 	<field name="IdBarang" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -74,6 +89,8 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 	<field name="Penyesuaian" class="java.math.BigDecimal"/>
 	<field name="Total Masuk" class="java.math.BigDecimal"/>
 	<field name="Total Keluar" class="java.math.BigDecimal"/>
+	<field name="Stok Akhir" class="java.math.BigDecimal"/>
+	<field name="Stok Akhir KG" class="java.math.BigDecimal"/>
 	<variable name="Stok Akhir" class="java.lang.String"/>
 	<group name="Category">
 		<groupExpression><![CDATA[$F{IdBarang}]]></groupExpression>
@@ -84,7 +101,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 	<pageHeader>
 		<band height="30" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="802" height="30" uuid="5c0fbdc4-2ef8-4c98-a95f-1bb4dd356913"/>
+				<reportElement x="0" y="0" width="895" height="30" uuid="5c0fbdc4-2ef8-4c98-a95f-1bb4dd356913"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -100,25 +117,25 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="51">
+		<band height="69">
 			<staticText>
-				<reportElement x="0" y="0" width="55" height="20" uuid="6b3e52b1-2cd5-4749-9461-36875f2e5bb2"/>
+				<reportElement x="0" y="3" width="895" height="20" uuid="6b3e52b1-2cd5-4749-9461-36875f2e5bb2"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tanggal :]]></text>
+				<text><![CDATA[TANGGAL]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="54" y="0" width="56" height="20" uuid="dc1a3974-9b1c-4ec0-aaff-660ad01cf4c7"/>
+			<textField pattern="EEEEE, dd MMMMM yyyy">
+				<reportElement x="0" y="17" width="895" height="20" uuid="dc1a3974-9b1c-4ec0-aaff-660ad01cf4c7"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{FormatTgl}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="21" width="37" height="30" uuid="5f1057e5-237e-4fa5-a6ca-51d8f6853871"/>
+				<reportElement x="0" y="39" width="25" height="30" uuid="5f1057e5-237e-4fa5-a6ca-51d8f6853871"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -132,7 +149,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[NO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="37" y="21" width="143" height="30" uuid="d55267f8-2242-4796-9db0-be59e7ecd769"/>
+				<reportElement x="25" y="39" width="248" height="30" uuid="d55267f8-2242-4796-9db0-be59e7ecd769"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -146,7 +163,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Nama Barang]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="21" width="91" height="15" uuid="5acbf8a5-880f-4599-86c3-4baf94cd0b86"/>
+				<reportElement x="273" y="39" width="91" height="15" uuid="5acbf8a5-880f-4599-86c3-4baf94cd0b86"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -160,7 +177,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Stok Awal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="271" y="36" width="55" height="15" uuid="227ac288-b524-4ffa-ac65-443075c2b247"/>
+				<reportElement x="364" y="54" width="55" height="15" uuid="227ac288-b524-4ffa-ac65-443075c2b247"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -174,7 +191,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Beli]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="326" y="36" width="55" height="15" uuid="4cd64545-d689-4688-b974-c0812ffb97cc"/>
+				<reportElement x="419" y="54" width="55" height="15" uuid="4cd64545-d689-4688-b974-c0812ffb97cc"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -188,7 +205,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Hasil]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="381" y="36" width="55" height="15" uuid="7b95076e-8ad0-4791-9352-10416d8e20a2"/>
+				<reportElement x="474" y="54" width="55" height="15" uuid="7b95076e-8ad0-4791-9352-10416d8e20a2"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -202,7 +219,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="601" y="36" width="55" height="15" uuid="84d42651-95ef-40d1-b478-f7763ee53ca9"/>
+				<reportElement x="694" y="54" width="55" height="15" uuid="84d42651-95ef-40d1-b478-f7763ee53ca9"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -216,7 +233,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="36" width="36" height="15" uuid="95e00c02-1a28-4f67-879b-68a4ae422036"/>
+				<reportElement x="273" y="54" width="36" height="15" uuid="95e00c02-1a28-4f67-879b-68a4ae422036"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -230,7 +247,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Sak]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="216" y="36" width="55" height="15" uuid="8bf825e2-a2fd-42ad-ac89-c6d5b6e24c85"/>
+				<reportElement x="309" y="54" width="55" height="15" uuid="8bf825e2-a2fd-42ad-ac89-c6d5b6e24c85"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -244,7 +261,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[KG]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="747" y="36" width="55" height="15" uuid="c0b9e89b-4889-4946-b68b-b83d5f85d02c"/>
+				<reportElement x="840" y="54" width="55" height="15" uuid="c0b9e89b-4889-4946-b68b-b83d5f85d02c"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -258,7 +275,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[KG]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="711" y="21" width="91" height="15" uuid="2e4c4f40-5aa1-40c8-87f2-5c01bfc70b44"/>
+				<reportElement x="804" y="39" width="91" height="15" uuid="2e4c4f40-5aa1-40c8-87f2-5c01bfc70b44"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -272,7 +289,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Stok Akhir]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="711" y="36" width="36" height="15" uuid="73ac6cf2-c464-4cc2-9888-d044ac4abfec"/>
+				<reportElement x="804" y="54" width="36" height="15" uuid="73ac6cf2-c464-4cc2-9888-d044ac4abfec"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -286,7 +303,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Sak]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="36" width="55" height="15" uuid="9b1baa38-29e7-4e06-ad08-e8cffa2f61aa"/>
+				<reportElement x="529" y="54" width="55" height="15" uuid="9b1baa38-29e7-4e06-ad08-e8cffa2f61aa"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -300,7 +317,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Jual]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="491" y="36" width="55" height="15" uuid="8dc01f54-16d2-42ef-be87-659efba2142d"/>
+				<reportElement x="584" y="54" width="55" height="15" uuid="8dc01f54-16d2-42ef-be87-659efba2142d"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -314,7 +331,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Mutasi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="546" y="36" width="55" height="15" uuid="f3cc74ef-6a3e-437e-acac-bb58b12010e0"/>
+				<reportElement x="639" y="54" width="55" height="15" uuid="f3cc74ef-6a3e-437e-acac-bb58b12010e0"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -328,7 +345,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Bahan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="656" y="21" width="55" height="30" uuid="34ee593d-1965-4e8f-aac5-ca2d65b0e71c"/>
+				<reportElement x="749" y="39" width="55" height="30" uuid="34ee593d-1965-4e8f-aac5-ca2d65b0e71c"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -342,7 +359,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Penye suaian]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="271" y="21" width="165" height="15" uuid="82d3f962-e7dd-4b27-89ce-fd8719e32632"/>
+				<reportElement x="364" y="39" width="165" height="15" uuid="82d3f962-e7dd-4b27-89ce-fd8719e32632"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -356,7 +373,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Penerimaan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="21" width="220" height="15" uuid="eb5e581d-764d-4dbe-bff5-e14f0fb6d6d7"/>
+				<reportElement x="529" y="39" width="220" height="15" uuid="eb5e581d-764d-4dbe-bff5-e14f0fb6d6d7"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -374,7 +391,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 	<detail>
 		<band height="20">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="37" height="20" isPrintWhenDetailOverflows="true" uuid="88cfabcb-bbc8-44ce-b2c0-c44f98b90645"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="25" height="20" isPrintWhenDetailOverflows="true" uuid="88cfabcb-bbc8-44ce-b2c0-c44f98b90645"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -382,13 +399,13 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="37" y="0" width="143" height="20" uuid="41b24620-97c5-4dfc-9776-84893a7d9f14"/>
+				<reportElement x="25" y="0" width="248" height="20" uuid="41b24620-97c5-4dfc-9776-84893a7d9f14"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -400,7 +417,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{NamaBarang}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="180" y="0" width="36" height="20" uuid="3af16aba-ad8e-44c9-8a38-b98029b19620"/>
+				<reportElement x="273" y="0" width="36" height="20" uuid="3af16aba-ad8e-44c9-8a38-b98029b19620"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -409,10 +426,10 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Stok Awal}==0?null:$F{Stok Awal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Stok Awal KG}==0?null:$F{Stok Awal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="271" y="0" width="55" height="20" uuid="23902b6f-995f-483b-9513-4fee5e4298c6"/>
+				<reportElement x="364" y="0" width="55" height="20" uuid="23902b6f-995f-483b-9513-4fee5e4298c6"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -424,7 +441,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Beli}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="326" y="0" width="55" height="20" uuid="9f287f6f-bb5f-497f-8187-65fe172cb999"/>
+				<reportElement x="419" y="0" width="55" height="20" uuid="9f287f6f-bb5f-497f-8187-65fe172cb999"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -436,7 +453,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Hasil}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="381" y="0" width="55" height="20" uuid="b759fb8c-176b-41ef-bdca-2d89e70693e1"/>
+				<reportElement x="474" y="0" width="55" height="20" uuid="b759fb8c-176b-41ef-bdca-2d89e70693e1"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -448,7 +465,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Total Masuk}==0?null:$F{Total Masuk}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="601" y="0" width="55" height="20" uuid="7ac5446b-ef93-48f0-8a4e-1027227ad389"/>
+				<reportElement x="694" y="0" width="55" height="20" uuid="7ac5446b-ef93-48f0-8a4e-1027227ad389"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -460,7 +477,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Total Keluar}==0?null:$F{Total Keluar}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="711" y="0" width="36" height="20" uuid="b99a844d-2bd0-456e-a326-a4caedaa160c"/>
+				<reportElement x="933" y="0" width="36" height="20" uuid="b99a844d-2bd0-456e-a326-a4caedaa160c"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -469,10 +486,10 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})==0?null:($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{Stok Awal}+($F{Total Masuk}==null?0:$F{Total Masuk})-$F{Total Keluar})==0?null:($F{Stok Awal}+($F{Total Masuk}==null?0:$F{Total Masuk})-$F{Total Keluar})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="216" y="0" width="55" height="20" uuid="4c9c41bb-18e9-409d-98e0-1e8ed519b25f"/>
+				<reportElement x="309" y="0" width="55" height="20" uuid="4c9c41bb-18e9-409d-98e0-1e8ed519b25f"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -484,7 +501,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Stok Awal KG}==0?null:$F{Stok Awal KG}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="747" y="0" width="55" height="20" uuid="b332a3a5-62ea-40c3-bf2d-d8c3d84510c5"/>
+				<reportElement x="969" y="0" width="55" height="20" uuid="b332a3a5-62ea-40c3-bf2d-d8c3d84510c5"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -496,7 +513,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[(($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})*($F{Stok Awal}==0?null:($F{Stok Awal KG}/$F{Stok Awal})))==0?null:(($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})*($F{Stok Awal}==0?null:($F{Stok Awal KG}/$F{Stok Awal})))]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="436" y="0" width="55" height="20" uuid="f19d82b3-39ed-4c10-ac48-ccf4145602cf"/>
+				<reportElement x="529" y="0" width="55" height="20" uuid="f19d82b3-39ed-4c10-ac48-ccf4145602cf"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -508,7 +525,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Jual}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="491" y="0" width="55" height="20" uuid="936190cb-9c9a-4d88-be37-4b575c74dcce"/>
+				<reportElement x="584" y="0" width="55" height="20" uuid="936190cb-9c9a-4d88-be37-4b575c74dcce"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -520,7 +537,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Mutasi}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="546" y="0" width="55" height="20" uuid="950f7005-3b47-429a-a22b-475498f40ba7"/>
+				<reportElement x="639" y="0" width="55" height="20" uuid="950f7005-3b47-429a-a22b-475498f40ba7"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -532,7 +549,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textFieldExpression><![CDATA[$F{Bahan}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement x="656" y="0" width="55" height="20" uuid="dcf37082-abf8-4ba8-91d3-8d77cf5805a6"/>
+				<reportElement x="749" y="0" width="55" height="20" uuid="dcf37082-abf8-4ba8-91d3-8d77cf5805a6"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -543,12 +560,36 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Penyesuaian}]]></textFieldExpression>
 			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="804" y="0" width="36" height="20" uuid="3481d831-36ae-45b6-a03a-008d164864b4"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Stok Akhir}==0?null:$F{Stok Akhir}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="840" y="0" width="55" height="20" uuid="3aa1dfce-5269-4178-a145-67472631cc2d"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Stok Akhir KG}==0?null:$F{Stok Akhir KG}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="105" splitType="Stretch">
 			<staticText>
-				<reportElement x="655" y="13" width="86" height="20" uuid="bf654a98-41fd-417b-ad19-f6a3282f207c"/>
+				<reportElement x="809" y="16" width="86" height="20" uuid="bf654a98-41fd-417b-ad19-f6a3282f207c"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 				<textElement>
 					<font isBold="true"/>
@@ -556,7 +597,7 @@ SELECT a.`IdBarang`, `NamaBarang`, ifnull(`Sak`,0), ifnull(`Jumlah`*`Satuan`,0) 
 				<text><![CDATA[Dilaporkan Oleh:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="655" y="75" width="86" height="20" uuid="c4e7aeb4-656a-4ae0-9220-53d60d5fb3eb"/>
+				<reportElement x="809" y="78" width="86" height="20" uuid="c4e7aeb4-656a-4ae0-9220-53d60d5fb3eb"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>

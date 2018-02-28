@@ -504,15 +504,18 @@ public class Penjualan extends javax.swing.JFrame {
             JTable.getColumnModel().getColumn(3).setPreferredWidth(115);
             JTable.getColumnModel().getColumn(3).setMaxWidth(115);
         }
-        JTable.setrender(2, "Number");
-        JTable.setrender(3, "Number");
-        JTable.setrender(4, "Number");
+        JTable.setrender(new int[]{2,3,4}, new String[]{"Number", "Number", "Number"});
 
         jlabelF7.setText("Nama Barang");
         jlabelF7.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jlabelF7.setEnabled(false);
 
         JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarang' UNION ALL (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2)");
+        JCNamaBarang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCNamaBarangItemStateChanged(evt);
+            }
+        });
         JCNamaBarang.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 JCNamaBarangFocusLost(evt);
@@ -1086,6 +1089,11 @@ public class Penjualan extends javax.swing.JFrame {
         loadJenisKendaraan();
     }//GEN-LAST:event_JCPlatItemStateChanged
 
+    private void JCNamaBarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBarangItemStateChanged
+        setHarga();
+        setStok();
+    }//GEN-LAST:event_JCNamaBarangItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -1531,15 +1539,17 @@ public class Penjualan extends javax.swing.JFrame {
         String output;
         String pattern = "#,###,###.00";
         DecimalFormat myFormatter = new DecimalFormat(pattern);
-        if (value < 0) {
+        if (value <= -1) {
             value = abs(value);
-            output = "-" + myFormatter.format(value);
-        } else if (value >= 0 && value < 1) {
-            output = "0" + myFormatter.format(value);
+            return "-" + myFormatter.format(value);
+        } else if (value < 0 && value > -1) {
+            value = abs(value);
+            return "-0" + myFormatter.format(value);
+        } else if (value < 1 && value >= 0) {
+            return "0" + myFormatter.format(value);
         } else {
-            output = myFormatter.format(value);
+            return myFormatter.format(value);
         }
-        return output;
     }
 
     Integer getGrandTotal() {
@@ -1599,7 +1609,7 @@ public class Penjualan extends javax.swing.JFrame {
                     + "UNION ALL\n"
                     + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`Jumlah`*-1,0) AS 'Stok', ifnull(`Jumlah`*-1*`Satuan`,0) AS 'KG' FROM `tbpenjualandetail`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
                     + "UNION ALL\n"
-                    + "SELECT a.`IdPartai`, `NamaBarang`, (ROUND(`JumlahBahan` * 10) / 10 )*-1 AS 'Stok', `JumlahBahan`*`Satuan`*-1 AS 'KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
+                    + "SELECT a.`IdPartai`, `NamaBarang`, (ROUND(SUM(`JumlahBahan`)))*-1 AS 'Stok', `JumlahBahan`*`Satuan`*-1 AS 'KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "' GROUP BY `NoPacking`\n"
                     + "UNION ALL\n"
                     + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`Sak`,0) AS 'Stok', ifnull(`Jumlah`,0) AS 'KG' FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
                     + ") as tbTemp GROUP BY `IdPartai`");

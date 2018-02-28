@@ -123,9 +123,7 @@ public class PrintTPB extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(JTable);
-        JTable.setrender(3, "Number");
-        JTable.setrender(4, "Number");
-        JTable.setrender(5, "Number");
+        JTable.setrender(new int[]{3,4,5}, new String[]{"Number", "Number", "Number"});
 
         jbuttonF1.setText("Print");
         jbuttonF1.addActionListener(new java.awt.event.ActionListener() {

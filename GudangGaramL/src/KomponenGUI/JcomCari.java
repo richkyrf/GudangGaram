@@ -20,9 +20,9 @@ public class JcomCari extends javax.swing.JPanel {
     Object SelectedValue = null;
     int selectedIndex = 1;
     int[] X;
-    String Format;
+    String[] Format;
     
-    public void setRender(int[] x, String Type){
+    public void setRender(int[] x, String[] Type){
         X = x;
         Format = Type;
     }
