@@ -53,7 +53,7 @@ public class Absen extends javax.swing.JFrame {
         }
         JTable.useboolean(true);
         JTable.setbooleanfield(3);
-        JTable.setQuery("SELECT `IdAbsen` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', `Hadir`, a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE `Status` = 1 " + jenis + " AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan` ORDER BY b.`IdJenisKaryawan`, `NamaKaryawan`");
+        JTable.setQuery("SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', `Hadir`, a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE `Status` = 1 " + jenis + " AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan` ORDER BY b.`IdJenisKaryawan`, `NamaKaryawan`");
         JTable.tampilkan();
         if (JTable.getRowCount() == 0) {
             JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', 1 as 'Hadir', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE `Status` = 1 " + jenis + " ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");

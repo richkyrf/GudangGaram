@@ -352,7 +352,7 @@ public class MasterKendaraan extends javax.swing.JFrame {
     void ubah() {
         if (checkInput()) {
             Update update = new LSubProces.Update();
-            boolean ubah = update.Ubah("UPDATE `tbmkendaraan` SET `Plat`='" + JTPlatKendaraan.getText() + "', `JenisKendaraan`='" + JTJenisKendaraan.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdJenisBarang`=" + idEdit, "Master Kendaraan", this);
+            boolean ubah = update.Ubah("UPDATE `tbmkendaraan` SET `Plat`='" + JTPlatKendaraan.getText() + "', `JenisKendaraan`='" + JTJenisKendaraan.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdKendaraan`=" + idEdit, "Master Kendaraan", this);
             if (ubah) {
                 dispose();
                 GlobalVar.Var.listKendaraan.load();

@@ -60,9 +60,27 @@
             <Property name="text" type="java.lang.String" value="Master"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterKaryawan">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="1. Master Karyawan"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterKaryawanActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterKendaraan">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="2. Master Kendaraan"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterKendaraanActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SMaster1">
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Master Partai"/>
+                <Property name="text" type="java.lang.String" value="3. Master Partai"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
@@ -70,17 +88,27 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterBarang">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Master Barang"/>
+                <Property name="text" type="java.lang.String" value="4. Master Barang"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterBarangActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SMaster1">
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SMaster3">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterHariLibur">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="5. Master Hari Libur"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterHariLiburActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SMaster2">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPemasok">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Master Pemasok"/>
+                <Property name="text" type="java.lang.String" value="6. Master Pemasok"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPemasokActionPerformed"/>
@@ -88,7 +116,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPeminta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Master Peminta"/>
+                <Property name="text" type="java.lang.String" value="7. Master Peminta"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPemintaActionPerformed"/>
@@ -96,7 +124,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterGudang">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Master Gudang"/>
+                <Property name="text" type="java.lang.String" value="8. Master Gudang"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterGudangActionPerformed"/>
@@ -104,30 +132,10 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPenerima">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Master Penerima (Customer)"/>
+                <Property name="text" type="java.lang.String" value="9. Master Penerima (Customer)"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPenerimaActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SMaster2">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterKendaraan">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Master Kendaraan"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterKendaraanActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SMaster3">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterKaryawan">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Master Karyawan"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterKaryawanActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -137,25 +145,17 @@
             <Property name="text" type="java.lang.String" value="Proses"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenerimaan">
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesAbsenKaryawan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Penerimaan"/>
+                <Property name="text" type="java.lang.String" value="1. Proses Absen Karyawan"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenerimaanActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPrintTandaPenerimaanBarang">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Print Tanda Penerimaan Barang (TPB)"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPrintTandaPenerimaanBarangActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesAbsenKaryawanActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPacking">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Packing"/>
+                <Property name="text" type="java.lang.String" value="2. Proses Packing"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPackingActionPerformed"/>
@@ -163,7 +163,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPoles">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Poles"/>
+                <Property name="text" type="java.lang.String" value="3. Proses Poles"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPolesActionPerformed"/>
@@ -171,46 +171,62 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenjualan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Penjualan"/>
+                <Property name="text" type="java.lang.String" value="4. Proses Penjualan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenjualanActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SProses1">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenyesuaianStok">
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenerimaan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Penyesuaian Stok"/>
+                <Property name="text" type="java.lang.String" value="5. Proses Penerimaan"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenyesuaianStokActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenerimaanActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SProses2">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesAbsenKaryawan">
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPrintTandaPenerimaanBarang">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Absen Karyawan"/>
+                <Property name="text" type="java.lang.String" value="6. Proses Print Tanda Penerimaan Barang (TPB)"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesAbsenKaryawanActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPrintTandaPenerimaanBarangActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SProses1">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIDinasLuar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="7. Proses Dinas Luar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIDinasLuarActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesRekapPenggajianKaryawan">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="8. Proses Rekap Penggajian Karyawan"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesRekapPenggajianKaryawanActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenggajianKaryawan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Penggajian Karyawan"/>
+                <Property name="text" type="java.lang.String" value="9. Proses Penggajian Karyawan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenggajianKaryawanActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SProses2">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenyesuaianStok">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Proses Dinas Luar"/>
+                <Property name="text" type="java.lang.String" value="10. Proses Penyesuaian Stok"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenyesuaianStokActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -220,54 +236,48 @@
             <Property name="text" type="java.lang.String" value="List"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIListPenerimaan">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="List Penerimaan"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenerimaanActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIListPacking">
               <Properties>
-                <Property name="text" type="java.lang.String" value="List Packing"/>
+                <Property name="text" type="java.lang.String" value="1. List Packing"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPackingActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIListPoles">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="List Poles"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPolesActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIListPenjualan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="List Penjualan"/>
+                <Property name="text" type="java.lang.String" value="2. List Penjualan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenjualanActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SList">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JMIListPenyesuaianStok">
+            <MenuItem class="javax.swing.JMenuItem" name="JMIListPenerimaan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="List Penyesuaian Stok"/>
+                <Property name="text" type="java.lang.String" value="3. List Penerimaan"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenyesuaianStokActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenerimaanActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SList">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="List Dinas Luar"/>
+                <Property name="text" type="java.lang.String" value="5. List Dinas Luar"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="SList1">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIListPenyesuaianStok">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="4. List Penyesuaian Stok"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenyesuaianStokActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

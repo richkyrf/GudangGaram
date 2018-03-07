@@ -237,7 +237,8 @@ public class ListDinasLuar extends javax.swing.JFrame {
     }
 
     public void load() {
-        jcomCari1.setQuery("SELECT `IdDinasLuar` as 'ID', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaKaryawan` as 'Nama', `UangDinas` as 'Uang Dinas', a.`Keterangan`, `Hadir`, `StatusUangMakan` FROM `tbdinasluar`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbabsen`c ON a.`IdKaryawan`=c.`IdKaryawan` WHERE 1");
+        jcomCari1.setQuery("SELECT `IdDinasLuar` as 'ID', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaKaryawan` as 'Nama', `UangDinas` as 'Uang Dinas', a.`Keterangan`, IF(`Hadir`=1,'Ya','Tidak') as `Datang Absen`, IF(`StatusUangMakan`=0,'Ya','Tidak') as `Potong UM` FROM `tbdinasluar`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbabsen`c ON a.`IdKaryawan`=c.`IdKaryawan` WHERE 1 GROUP BY a.`Tanggal`, a.`IdKaryawan`");
+        jcomCari1.setOrder("ORDER BY a.`Tanggal` DESC, a.`IdDinasLuar` DESC");
         jcomCari1.tampilkan();
     }
 

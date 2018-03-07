@@ -77,7 +77,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="JTAKeterangan" min="-2" pref="300" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jlableF11" min="-2" max="-2" attributes="0"/>
+                                      <Component id="JCBBonusBulanan" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -127,8 +127,8 @@
                   <Component id="jlableF7" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF8" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTAKeterangan" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlableF11" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTBonus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JCBBonusBulanan" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -206,7 +206,7 @@
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jcomboboxF1ItemStateChanged"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jcomboboxF1.load(&quot;SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jcomboboxF1.load(&quot;SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` &quot;);"/>
       </AuxValues>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -322,15 +322,22 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="KomponenGUI.JlableF" name="jlableF11">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Bonus Bulanan"/>
-      </Properties>
-    </Component>
     <Component class="KomponenGUI.JRibuanTextField" name="JTBonus">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTBonusKeyPressed"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTBonusKeyReleased"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JCheckBoxF" name="JCBBonusBulanan">
+      <Properties>
+        <Property name="selected" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Bonus Bulanan"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JCBBonusBulananActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -63,7 +63,7 @@ public class Poles extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTableBahan.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoPoles`, CONCAT(c.`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')'), FORMAT(ROUND(SUM(`JumlahBahan`)),0) as 'Jumlah', FORMAT(SUM(`JumlahHasil`) * d.`Satuan` / SUM(`JumlahBahan`),2), FORMAT(ROUND(ROUND(SUM(`JumlahHasil`)) * d.`Satuan`),0) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai` = b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE a.`Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY c.`NamaBarang` ORDER BY `NoPacking` DESC");
+        runSelct.setQuery("SELECT `NoPoles`, `NamaBarang`, SUM(`Jumlah`) as 'Jumlah', FORMAT((SUM(`Jumlah KG`)/SUM(`Jumlah`)),2) 'Satuan', FORMAT(SUM(`Jumlah KG`),0) as 'Jumlah KG'  FROM (SELECT `NoPoles`, CONCAT(c.`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') as 'NamaBarang', FORMAT(ROUND(SUM(`JumlahBahan`)),0) as 'Jumlah', ROUND(ROUND(SUM(`JumlahHasil`)) * d.`Satuan`) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai` = b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE a.`Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY d.`NamaBarang` ORDER BY `NoPacking` DESC) tbtemo GROUP BY `NamaBarang`");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;

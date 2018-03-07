@@ -130,7 +130,7 @@ public class JcomboboxF extends JComboBox {
                 }
             }
             if (!rs.isBeforeFirst()) {
-                groupNames.add("-");
+                //groupNames.add("-");
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(groupNames.toArray());
             setModel(model);

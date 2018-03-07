@@ -5,11 +5,16 @@
  */
 package Master;
 
+import KomponenGUI.FDateF;
 import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
+import LSubProces.InsertHistory;
 import LSubProces.Update;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 /**
@@ -60,6 +65,20 @@ public class MasterKaryawan extends javax.swing.JFrame {
             return false;
         }
         return true;
+    }
+
+    public static long daysBetween(Calendar startDate, Calendar endDate) {
+        long end = endDate.getTimeInMillis();
+        long start = startDate.getTimeInMillis();
+        return TimeUnit.MILLISECONDS.toDays(Math.abs(end - start));
+    }
+
+    boolean isNotLibur(Date tanggal) {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal Cek Hari Libur");
+        dRunSelctOne.setQuery("SELECT COUNT(`TanggalHariLibur`) FROM `tbmharilibur` WHERE `TanggalHariLibur` = '" + FDateF.datetostr(tanggal, "yyyy-MM-dd") + "' ");
+        ArrayList<String> list = dRunSelctOne.excute();
+        return list.get(0).equals("0");
     }
 
     /**
@@ -341,6 +360,27 @@ public class MasterKaryawan extends javax.swing.JFrame {
             Insert insert = new Insert();
             Boolean berhasil = insert.simpan("INSERT INTO `tbmkaryawan`(`NamaKaryawan`, `IdJenisKaryawan`, `Keterangan`, `Status`) VALUES ('" + jtextF1.getText() + "',(SELECT `IdJenisKaryawan` FROM `tbsmjeniskaryawan` WHERE `JenisKaryawan` = '" + jcomboboxF1.getSelectedItem() + "'),'" + jTextAreaF1.getText() + "'," + jCheckBoxF1.isSelected() + ")", "Karyawan", this);
             if (berhasil) {
+                InsertHistory insertHistory = new InsertHistory();
+                Calendar startDate = Calendar.getInstance();
+                startDate.set(Calendar.DAY_OF_MONTH, startDate.getActualMinimum(Calendar.DAY_OF_MONTH));
+                Calendar endDate = Calendar.getInstance();
+                endDate.setTime(new Date());
+                long noOfDaysBetween = daysBetween(startDate, endDate);
+                String values = null;
+                for (int i = 0; i < noOfDaysBetween; i++) {
+                    int dayOfWeek = startDate.get(Calendar.DAY_OF_WEEK);
+                    if (dayOfWeek != Calendar.SUNDAY) {
+                        if (isNotLibur(startDate.getTime())) {
+                            if (i == 0) {
+                                values = "('" + FDateF.datetostr(startDate.getTime(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jtextF1.getText() + "'),0,'BELUM KERJA')";
+                            } else {
+                                values += ",('" + FDateF.datetostr(startDate.getTime(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jtextF1.getText() + "'),0,'BELUM KERJA')";
+                            }
+                        }
+                    }
+                    startDate.add(Calendar.DATE, 1);
+                }
+                insertHistory.simpan("INSERT INTO `tbabsen`(`Tanggal`, `IdKaryawan`, `Hadir`, `Keterangan`) VALUES " + values, "Absen", this);
                 if (tutup) {
                     dispose();
                 } else {
