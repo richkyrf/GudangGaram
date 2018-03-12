@@ -131,12 +131,17 @@ public class Poles extends javax.swing.JFrame {
         dRunSelctOne.seterorm("Gagal Check Packing");
         dRunSelctOne.setQuery("SELECT c.`NamaBarang`, ROUND(SUM(`JumlahBahan`)) as 'Jumlah', c.`Satuan`, ROUND(ROUND(SUM(`JumlahBahan`)) * c.`Satuan`) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai` = b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE a.`Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY c.`NamaBarang`");
         ArrayList<String> list = dRunSelctOne.excute();
+
         return list.get(0) != null;
     }
 
     Date yesterday() {
         final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
+        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+            cal.add(Calendar.DATE, -2);
+        } else {
+            cal.add(Calendar.DATE, -1);
+        }
         return cal.getTime();
     }
 

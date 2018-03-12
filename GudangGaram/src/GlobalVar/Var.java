@@ -39,6 +39,7 @@ public class Var {
     
     public static Penggajian penggajian;
     public static RekapPenggajian rekapPenggajian;
+    public static RekapPenggajianHarian rekapPenggajianHarian;
     public static PrintTPB printTPB;
     public static Poles poles;
     public static DinasLuar tambahDinasLuar, ubahDinasLuar;

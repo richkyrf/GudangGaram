@@ -47,21 +47,14 @@ public class Absen extends javax.swing.JFrame {
     }
 
     void load() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(JDTanggal.getDate());
-        String jenis;
-        if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
-            jenis = " AND b.`IdJenisKaryawan` = 1 ";
-        } else {
-            jenis = "";
-        }
         JTable.useboolean(true);
-        JTable.setbooleanfield(3);
-        JTable.setQuery("SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', `Hadir`, a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE b.`IdJenisKaryawan` = 2 AND `Status` = 1 " + jenis + " AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan` ORDER BY b.`IdJenisKaryawan`, `NamaKaryawan`");
+        JTable.setbooleanfield(2);
+        JTable.setbooleanfield2(3);
+        JTable.setQuery("SELECT `IdKaryawan`, `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
         JTable.tampilkan();
         JLTitle.setText("DATA ABSEN TANGGAL " + FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy"));
         if (JTable.getRowCount() == 0) {
-            JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `JenisKaryawan` as 'Jenis Karyawan', 1 as 'Hadir', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE a.`IdJenisKaryawan` = 2 AND `Status` = 1 " + jenis + " ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
+            JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
             JTable.tampilkan();
             JLTitle.setText("TAMBAH BARU DATA ABSEN KARYAWAN");
         }
@@ -70,7 +63,7 @@ public class Absen extends javax.swing.JFrame {
     void hitungTotalHadir() {
         int total = 0;
         for (int i = 0; i < JTable.getRowCount(); i++) {
-            if (JTable.getValueAt(i, 3).equals(true)) {
+            if (JTable.getValueAt(i, 2).equals(true)) {
                 total++;
             }
         }
@@ -128,6 +121,9 @@ public class Absen extends javax.swing.JFrame {
         JTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JTableMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                JTableMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(JTable);
@@ -281,7 +277,7 @@ public class Absen extends javax.swing.JFrame {
     }//GEN-LAST:event_JDTanggalPropertyChange
 
     private void JTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMouseClicked
-        hitungTotalHadir();
+        
     }//GEN-LAST:event_JTableMouseClicked
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
@@ -294,6 +290,13 @@ public class Absen extends javax.swing.JFrame {
         fLaporan.excute();
         History.simpanhistory(GlobalVar.VarL.username, "Print Form Absensi Karyawan Borongan");
     }//GEN-LAST:event_jbuttonF4ActionPerformed
+
+    private void JTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMouseReleased
+        hitungTotalHadir();
+        if (JTable.getSelectedRow() != -1 && JTable.getValueAt(JTable.getSelectedRow(), 2).equals(false) && JTable.getValueAt(JTable.getSelectedRow(), 3).equals(true)) {
+            JTable.setValueAt(true, JTable.getSelectedRow(), 2);
+        }
+    }//GEN-LAST:event_JTableMouseReleased
 
     /**
      * @param args the command line arguments
@@ -361,12 +364,12 @@ public class Absen extends javax.swing.JFrame {
                     Berhasil = multiInsert.Excute("DELETE FROM `tbabsen` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'", null);
                 }
                 if (Berhasil) {
-                    String query = "INSERT INTO `tbabsen`(`Tanggal`, `IdKaryawan`, `Hadir`, `Keterangan`) VALUES ";
+                    String query = "INSERT INTO `tbabsen`(`Tanggal`, `IdKaryawan`, `Hadir`, `SetengahHari`, `Keterangan`) VALUES ";
                     for (int i = 0; i < JTable.getRowCount(); i++) {
                         if (i == 0) {
-                            query += "('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 1) + "')," + JTable.getValueAt(i, 3) + ",'" + JTable.getValueAt(i, 4) + "')";
+                            query += "('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 1) + "')," + JTable.getValueAt(i, 2) + "," + JTable.getValueAt(i, 3) + ",'" + JTable.getValueAt(i, 4) + "')";
                         } else {
-                            query += ",('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 1) + "')," + JTable.getValueAt(i, 3) + ",'" + JTable.getValueAt(i, 4) + "')";
+                            query += ",('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 1) + "')," + JTable.getValueAt(i, 2) + "," + JTable.getValueAt(i, 3) + ",'" + JTable.getValueAt(i, 4) + "')";
                         }
                     }
                     Berhasil = multiInsert.Excute(query, null);

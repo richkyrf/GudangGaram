@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
         <group>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListHariLibur.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPartai.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Penerimaan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/RekapPenggajian.java</file>
@@ -25,6 +23,7 @@
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPenjualan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListKendaraan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/File/MenuUtama.java</file>
+            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/RekapPenggajianHarian.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Absen.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPenerimaan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Packing.java</file>
@@ -35,9 +34,7 @@
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterBarang.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterPartai.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterKaryawan.java</file>
+            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/GlobalVar/Terbilang.java</file>
         </group>
-=======
-        <group/>
->>>>>>> 6bc1ba4523759c9b5b1d69dd5e5b2df8adad2488
     </open-files>
 </project-private>

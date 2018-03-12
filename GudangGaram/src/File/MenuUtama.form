@@ -205,7 +205,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesRekapPenggajianKaryawan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="8. Proses Rekap Penggajian Karyawan"/>
+                <Property name="text" type="java.lang.String" value="8. Proses Print Rekap Gaji Karyawan Borongan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesRekapPenggajianKaryawanActionPerformed"/>
@@ -213,17 +213,25 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenggajianKaryawan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="9. Proses Penggajian Karyawan"/>
+                <Property name="text" type="java.lang.String" value="9. Proses Print Gaji Karyawan Borongan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenggajianKaryawanActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesRekapPenggajianKaryawan1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="10. Proses Print Rekap Gaji Karyawan Harian"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesRekapPenggajianKaryawan1ActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="SProses2">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenyesuaianStok">
               <Properties>
-                <Property name="text" type="java.lang.String" value="10. Proses Penyesuaian Stok"/>
+                <Property name="text" type="java.lang.String" value="11. Proses Penyesuaian Stok"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenyesuaianStokActionPerformed"/>

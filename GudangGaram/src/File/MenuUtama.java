@@ -65,6 +65,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIDinasLuar = new javax.swing.JMenuItem();
         JMIProsesRekapPenggajianKaryawan = new javax.swing.JMenuItem();
         JMIProsesPenggajianKaryawan = new javax.swing.JMenuItem();
+        JMIProsesRekapPenggajianKaryawan1 = new javax.swing.JMenuItem();
         SProses2 = new javax.swing.JPopupMenu.Separator();
         JMIProsesPenyesuaianStok = new javax.swing.JMenuItem();
         JMList = new javax.swing.JMenu();
@@ -263,7 +264,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMProses.add(JMIDinasLuar);
 
-        JMIProsesRekapPenggajianKaryawan.setText("8. Proses Rekap Penggajian Karyawan");
+        JMIProsesRekapPenggajianKaryawan.setText("8. Proses Print Rekap Gaji Karyawan Borongan");
         JMIProsesRekapPenggajianKaryawan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIProsesRekapPenggajianKaryawanActionPerformed(evt);
@@ -271,16 +272,24 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMProses.add(JMIProsesRekapPenggajianKaryawan);
 
-        JMIProsesPenggajianKaryawan.setText("9. Proses Penggajian Karyawan");
+        JMIProsesPenggajianKaryawan.setText("9. Proses Print Gaji Karyawan Borongan");
         JMIProsesPenggajianKaryawan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIProsesPenggajianKaryawanActionPerformed(evt);
             }
         });
         JMProses.add(JMIProsesPenggajianKaryawan);
+
+        JMIProsesRekapPenggajianKaryawan1.setText("10. Proses Print Rekap Gaji Karyawan Harian");
+        JMIProsesRekapPenggajianKaryawan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIProsesRekapPenggajianKaryawan1ActionPerformed(evt);
+            }
+        });
+        JMProses.add(JMIProsesRekapPenggajianKaryawan1);
         JMProses.add(SProses2);
 
-        JMIProsesPenyesuaianStok.setText("10. Proses Penyesuaian Stok");
+        JMIProsesPenyesuaianStok.setText("11. Proses Penyesuaian Stok");
         JMIProsesPenyesuaianStok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIProsesPenyesuaianStokActionPerformed(evt);
@@ -620,6 +629,15 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JMIMasterHariLiburActionPerformed
 
+    private void JMIProsesRekapPenggajianKaryawan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIProsesRekapPenggajianKaryawan1ActionPerformed
+        if (GlobalVar.Var.rekapPenggajianHarian == null) {
+            GlobalVar.Var.rekapPenggajianHarian = new RekapPenggajianHarian();
+        } else {
+            GlobalVar.Var.rekapPenggajianHarian.setState(NORMAL);
+            GlobalVar.Var.rekapPenggajianHarian.toFront();
+        }
+    }//GEN-LAST:event_JMIProsesRekapPenggajianKaryawan1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -682,6 +700,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIProsesPoles;
     private javax.swing.JMenuItem JMIProsesPrintTandaPenerimaanBarang;
     private javax.swing.JMenuItem JMIProsesRekapPenggajianKaryawan;
+    private javax.swing.JMenuItem JMIProsesRekapPenggajianKaryawan1;
     private javax.swing.JMenuItem JMIResetPasswordUser;
     private javax.swing.JMenuItem JMITambahUser;
     private javax.swing.JMenu JMLaporan;

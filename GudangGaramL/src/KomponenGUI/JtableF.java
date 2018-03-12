@@ -29,6 +29,7 @@ public class JtableF extends JTable {
     Connection con;
     boolean bf = false;
     int booleanfield = -1;
+    int booleanfield2 = -1;
     Class[] types = new Class[]{null};
     java.sql.ResultSetMetaData md;
     int columnCount;
@@ -99,6 +100,10 @@ public class JtableF extends JTable {
     public void setbooleanfield(int i) {
         booleanfield = i;
     }
+    
+    public void setbooleanfield2(int i) {
+        booleanfield2 = i;
+    }
 
     public void setclass(Class[] cv) {
         types = cv;
@@ -127,6 +132,8 @@ public class JtableF extends JTable {
                 for (int i = 1; i <= columnCount; i++) {
                     if (i == booleanfield + 1) {
                         row.addElement(rs.getBoolean(booleanfield + 1));
+                    } else if (i == booleanfield2 + 1) {
+                        row.addElement(rs.getBoolean(booleanfield2 + 1));
                     } else {
                         row.addElement(rs.getObject(i));
                     }
@@ -137,14 +144,14 @@ public class JtableF extends JTable {
             DefaultTableModel model = new DefaultTableModel(data, columnNames) {
                 @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return columnIndex == booleanfield;
+                    return columnIndex == booleanfield || columnIndex == booleanfield2;
                 }
             };
             if (bf) {
                 model = new DefaultTableModel(data, columnNames) {
                     @Override
                     public Class<?> getColumnClass(int column) {
-                        if (column == booleanfield) {
+                        if (column == booleanfield || column == booleanfield2) {
                             return java.lang.Boolean.class;
                         }
                         return java.lang.Object.class;
@@ -152,7 +159,7 @@ public class JtableF extends JTable {
 
                     @Override
                     public boolean isCellEditable(int rowIndex, int columnIndex) {
-                        return columnIndex == booleanfield;
+                        return columnIndex == booleanfield || columnIndex == booleanfield2;
                     }
                 };
             }
