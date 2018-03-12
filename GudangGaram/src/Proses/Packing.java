@@ -70,7 +70,7 @@ public class Packing extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoPoles`, `NoPacking`, DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, `NamaKaryawan` as 'Nama', CONCAT(d.`NamaBarang`,' (PARTAI ',a.`IdPartai`,')') as 'Bahan', `JumlahBahan`, e.`NamaBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON c.`IdBarang`=d.`IdBarang` JOIN `tbmbarang`e ON a.`IdBarangHasil`=e.`IdBarang` WHERE `NoPacking` = '" + NoPacking + "' ORDER BY `NoPacking`, `NoIndi`");
+        runSelct.setQuery("SELECT `NoPoles`, `NoPacking`, DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, IFNULL(`NamaKaryawan`,'') as 'Nama', CONCAT(d.`NamaBarang`,' (PARTAI ',a.`IdPartai`,')') as 'Bahan', `JumlahBahan`, e.`NamaBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a LEFT JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON c.`IdBarang`=d.`IdBarang` JOIN `tbmbarang`e ON a.`IdBarangHasil`=e.`IdBarang` WHERE `NoPacking` = '" + NoPacking + "' ORDER BY `NoPacking`, `NoIndi`");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -133,6 +133,10 @@ public class Packing extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Hasil Packing Terlebih Dahulu");
             JCNamaHasil.requestFocus();
             return false;
+        } else if (JCNamaKaryawan1.getSelectedItem().equals("") && !JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Karyawan No.1");
+            JCNamaKaryawan1.requestFocus();
+            return false;
         } else if (JTJumlahHasil1.getInt() == 0) {
             JOptionPane.showMessageDialog(this, "Hasil Packing Pasangan Ke-1 Tidak Boleh Kosong");
             JTJumlahHasil1.requestFocus();
@@ -151,10 +155,6 @@ public class Packing extends javax.swing.JFrame {
             return false;
         } else if (JCNamaKaryawan3.getSelectedItem().equals("") && !"".equals(JCNamaKaryawan4.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Harap Pindahkan Karyawan No. 4 ke Karyawan No. 3");
-            JCNamaKaryawan4.requestFocus();
-            return false;
-        } else if (JCNamaKaryawan1.getSelectedItem().equals("")) {
-            JOptionPane.showMessageDialog(this, "Silahkan Pilih Karyawan No. 1 ke Karyawan No. 3");
             JCNamaKaryawan4.requestFocus();
             return false;
         } else {
@@ -240,141 +240,150 @@ public class Packing extends javax.swing.JFrame {
     }
 
     void tableToComponent() {
-        JTNoBak.setText(JTable.getValueAt(0, 0).toString());
-        JCNamaBahan1.setSelectedItem(JTable.getValueAt(0, 4));
-        JCNamaHasil.setSelectedItem(JTable.getValueAt(0, 7));
-        JTUpahPerPack.setText(JTable.getValueAt(0, 9).toString().replace(".", ""));
-        JCNamaKaryawan1.setSelectedItem(JTable.getValueAt(0, 3));
-        JTKeterangan1.setText(JTable.getValueAt(0, 10).toString());
-        //====================================================================//
-        if (JTable.getRowCount() == 1) {
+        if (JTable.getValueAt(0, 4).equals("GRM KSR NON YOD @50 KG") || JTable.getValueAt(0, 4).equals("G. KOTOR @50 KG")) {
+            JTNoBak.setText(JTable.getValueAt(0, 0).toString());
+            JCNamaBahan1.setSelectedItem(JTable.getValueAt(0, 4));
             JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()))));
-            JCNamaBahan2.setSelectedItem("");
-            JTJumlahBahan2.setText("0");
-            JCNamaKaryawan2.setSelectedItem("");
+            JCNamaHasil.setSelectedItem(JTable.getValueAt(0, 7));
             JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()))));
-            JCNamaKaryawan3.setSelectedItem("");
-            JCNamaKaryawan4.setSelectedItem("");
-            JTJumlahHasil2.setText("0");
-            JTKeterangan2.setText("");
-        } //==================================================================//
-        else if (JTable.getRowCount() == 2) {
-            if (JTable.getValueAt(0, 4).equals(JTable.getValueAt(1, 4))) {
-                JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(1, 6).toString()))));
+            JTKeterangan1.setText(JTable.getValueAt(0, 10).toString());
+        } else {
+            JTNoBak.setText(JTable.getValueAt(0, 0).toString());
+            JCNamaBahan1.setSelectedItem(JTable.getValueAt(0, 4));
+            JCNamaHasil.setSelectedItem(JTable.getValueAt(0, 7));
+            JTUpahPerPack.setText(JTable.getValueAt(0, 9).toString().replace(".", ""));
+            JCNamaKaryawan1.setSelectedItem(JTable.getValueAt(0, 3));
+            JTKeterangan1.setText(JTable.getValueAt(0, 10).toString());
+            //====================================================================//
+            if (JTable.getRowCount() == 1) {
+                JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()))));
                 JCNamaBahan2.setSelectedItem("");
                 JTJumlahBahan2.setText("0");
-
-                if (JTable.getValueAt(1, 2).equals("2")) {
-                    JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(1, 3));
-                    JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                    JCNamaKaryawan3.setSelectedItem("");
-                    JTJumlahHasil2.setText("0");
-                } else if (JTable.getValueAt(1, 2).equals("3")) {
-                    JCNamaKaryawan2.setSelectedItem("");
-                    JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()))));
-                    JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(1, 3));
-                    JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                }
-                JCNamaKaryawan4.setSelectedItem("");
-                JTKeterangan2.setText(JTable.getValueAt(1, 10).toString());
-            } else if (!JTable.getValueAt(0, 4).equals(JTable.getValueAt(1, 4))) {
-                JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()))));
-                JCNamaBahan2.setSelectedItem(JTable.getValueAt(1, 4));
-                JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()))));
                 JCNamaKaryawan2.setSelectedItem("");
-                JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
+                JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()))));
                 JCNamaKaryawan3.setSelectedItem("");
                 JCNamaKaryawan4.setSelectedItem("");
                 JTJumlahHasil2.setText("0");
                 JTKeterangan2.setText("");
-            }
-        } //==================================================================//
-        else if (JTable.getRowCount() == 3) {
-            JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()))));
-            JCNamaBahan2.setSelectedItem("");
-            JTJumlahBahan2.setText("0");
-            if (JTable.getValueAt(1, 2).equals("2")) {
-                JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(1, 3));
-                JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
-                JCNamaKaryawan4.setSelectedItem("");
-                JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()))));
-            } else if (JTable.getValueAt(1, 2).equals("3")) {
-                JCNamaKaryawan2.setSelectedItem("");
-                JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()))));
-                JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(1, 3));
-                JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(2, 3));
-                JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()))));
-            }
-            JTKeterangan2.setText(JTable.getValueAt(2, 10).toString());
-        } //==================================================================//
-        else if (JTable.getRowCount() == 4) {
-            if (JTable.getValueAt(0, 4).equals(JTable.getValueAt(1, 4))) {
-                JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()))));
+            } //==================================================================//
+            else if (JTable.getRowCount() == 2) {
+                if (JTable.getValueAt(0, 4).equals(JTable.getValueAt(1, 4))) {
+                    JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(1, 6).toString()))));
+                    JCNamaBahan2.setSelectedItem("");
+                    JTJumlahBahan2.setText("0");
+
+                    if (JTable.getValueAt(1, 2).equals("2")) {
+                        JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(1, 3));
+                        JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
+                        JCNamaKaryawan3.setSelectedItem("");
+                        JTJumlahHasil2.setText("0");
+                    } else if (JTable.getValueAt(1, 2).equals("3")) {
+                        JCNamaKaryawan2.setSelectedItem("");
+                        JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()))));
+                        JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(1, 3));
+                        JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 8).toString()))));
+                    }
+                    JCNamaKaryawan4.setSelectedItem("");
+                    JTKeterangan2.setText(JTable.getValueAt(1, 10).toString());
+                } else if (!JTable.getValueAt(0, 4).equals(JTable.getValueAt(1, 4))) {
+                    JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()))));
+                    JCNamaBahan2.setSelectedItem(JTable.getValueAt(1, 4));
+                    JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()))));
+                    JCNamaKaryawan2.setSelectedItem("");
+                    JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
+                    JCNamaKaryawan3.setSelectedItem("");
+                    JCNamaKaryawan4.setSelectedItem("");
+                    JTJumlahHasil2.setText("0");
+                    JTKeterangan2.setText("");
+                }
+            } //==================================================================//
+            else if (JTable.getRowCount() == 3) {
+                JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()))));
                 JCNamaBahan2.setSelectedItem("");
                 JTJumlahBahan2.setText("0");
-                JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(1, 3));
-                JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
-                JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(3, 3));
-                JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
-                JTKeterangan2.setText(JTable.getValueAt(3, 10).toString());
-            } else if (!JTable.getValueAt(0, 4).equals(JTable.getValueAt(1, 4))) {
-                JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()))));
+                if (JTable.getValueAt(1, 2).equals("2")) {
+                    JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(1, 3));
+                    JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
+                    JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
+                    JCNamaKaryawan4.setSelectedItem("");
+                    JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()))));
+                } else if (JTable.getValueAt(1, 2).equals("3")) {
+                    JCNamaKaryawan2.setSelectedItem("");
+                    JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()))));
+                    JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(1, 3));
+                    JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(2, 3));
+                    JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()))));
+                }
+                JTKeterangan2.setText(JTable.getValueAt(2, 10).toString());
+            } //==================================================================//
+            else if (JTable.getRowCount() == 4) {
+                if (JTable.getValueAt(0, 4).equals(JTable.getValueAt(1, 4))) {
+                    JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()))));
+                    JCNamaBahan2.setSelectedItem("");
+                    JTJumlahBahan2.setText("0");
+                    JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(1, 3));
+                    JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
+                    JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
+                    JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(3, 3));
+                    JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
+                    JTKeterangan2.setText(JTable.getValueAt(3, 10).toString());
+                } else if (!JTable.getValueAt(0, 4).equals(JTable.getValueAt(1, 4))) {
+                    JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()))));
+                    JCNamaBahan2.setSelectedItem(JTable.getValueAt(1, 4));
+                    JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()))));
+                    if (JTable.getValueAt(2, 2).equals("2")) {
+                        JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(2, 3));
+                        JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
+                        JCNamaKaryawan3.setSelectedItem("");
+                        JTJumlahHasil2.setText("0");
+                        JTKeterangan2.setText("");
+                    } else if (JTable.getValueAt(2, 2).equals("3")) {
+                        JCNamaKaryawan2.setSelectedItem("");
+                        JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
+                        JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
+                        JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
+                        JTKeterangan2.setText(JTable.getValueAt(3, 10).toString());
+                    }
+                    JCNamaKaryawan4.setSelectedItem("");
+                }
+            } //==================================================================//
+            else if (JTable.getRowCount() == 6) {
+                JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()) + Double.valueOf(JTable.getValueAt(4, 6).toString()))));
                 JCNamaBahan2.setSelectedItem(JTable.getValueAt(1, 4));
-                JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()))));
+                JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()) + Double.valueOf(JTable.getValueAt(5, 6).toString()))));
                 if (JTable.getValueAt(2, 2).equals("2")) {
                     JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(2, 3));
                     JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
-                    JCNamaKaryawan3.setSelectedItem("");
-                    JTJumlahHasil2.setText("0");
-                    JTKeterangan2.setText("");
+                    JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(4, 3));
+                    JCNamaKaryawan4.setSelectedItem("");
+                    JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(4, 8).toString()) + Double.valueOf(JTable.getValueAt(5, 8).toString()))));
                 } else if (JTable.getValueAt(2, 2).equals("3")) {
                     JCNamaKaryawan2.setSelectedItem("");
                     JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
                     JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
-                    JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
-                    JTKeterangan2.setText(JTable.getValueAt(3, 10).toString());
+                    JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(4, 3));
+                    JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()) + Double.valueOf(JTable.getValueAt(4, 8).toString()) + Double.valueOf(JTable.getValueAt(5, 8).toString()))));
                 }
-                JCNamaKaryawan4.setSelectedItem("");
-            }
-        } //==================================================================//
-        else if (JTable.getRowCount() == 6) {
-            JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()) + Double.valueOf(JTable.getValueAt(4, 6).toString()))));
-            JCNamaBahan2.setSelectedItem(JTable.getValueAt(1, 4));
-            JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()) + Double.valueOf(JTable.getValueAt(5, 6).toString()))));
-            if (JTable.getValueAt(2, 2).equals("2")) {
+                JTKeterangan2.setText(JTable.getValueAt(5, 10).toString());
+            } //==================================================================//
+            else if (JTable.getRowCount() == 8) {
+                JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()) + Double.valueOf(JTable.getValueAt(4, 6).toString()) + Double.valueOf(JTable.getValueAt(6, 6).toString()))));
+                JCNamaBahan2.setSelectedItem(JTable.getValueAt(1, 4));
+                JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()) + Double.valueOf(JTable.getValueAt(5, 6).toString()) + Double.valueOf(JTable.getValueAt(7, 6).toString()))));
                 JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(2, 3));
                 JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
                 JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(4, 3));
-                JCNamaKaryawan4.setSelectedItem("");
-                JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(4, 8).toString()) + Double.valueOf(JTable.getValueAt(5, 8).toString()))));
-            } else if (JTable.getValueAt(2, 2).equals("3")) {
-                JCNamaKaryawan2.setSelectedItem("");
-                JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()))));
-                JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(2, 3));
-                JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(4, 3));
-                JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()) + Double.valueOf(JTable.getValueAt(4, 8).toString()) + Double.valueOf(JTable.getValueAt(5, 8).toString()))));
+                JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(6, 3));
+                JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(4, 8).toString()) + Double.valueOf(JTable.getValueAt(5, 8).toString()) + Double.valueOf(JTable.getValueAt(6, 8).toString()) + Double.valueOf(JTable.getValueAt(7, 8).toString()))));
+                JTKeterangan2.setText(JTable.getValueAt(7, 10).toString());
             }
-            JTKeterangan2.setText(JTable.getValueAt(5, 10).toString());
-        } //==================================================================//
-        else if (JTable.getRowCount() == 8) {
-            JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()) + Double.valueOf(JTable.getValueAt(2, 6).toString()) + Double.valueOf(JTable.getValueAt(4, 6).toString()) + Double.valueOf(JTable.getValueAt(6, 6).toString()))));
-            JCNamaBahan2.setSelectedItem(JTable.getValueAt(1, 4));
-            JTJumlahBahan2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(1, 6).toString()) + Double.valueOf(JTable.getValueAt(3, 6).toString()) + Double.valueOf(JTable.getValueAt(5, 6).toString()) + Double.valueOf(JTable.getValueAt(7, 6).toString()))));
-            JCNamaKaryawan2.setSelectedItem(JTable.getValueAt(2, 3));
-            JTJumlahHasil1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 8).toString()) + Double.valueOf(JTable.getValueAt(1, 8).toString()) + Double.valueOf(JTable.getValueAt(2, 8).toString()) + Double.valueOf(JTable.getValueAt(3, 8).toString()))));
-            JCNamaKaryawan3.setSelectedItem(JTable.getValueAt(4, 3));
-            JCNamaKaryawan4.setSelectedItem(JTable.getValueAt(6, 3));
-            JTJumlahHasil2.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(4, 8).toString()) + Double.valueOf(JTable.getValueAt(5, 8).toString()) + Double.valueOf(JTable.getValueAt(6, 8).toString()) + Double.valueOf(JTable.getValueAt(7, 8).toString()))));
-            JTKeterangan2.setText(JTable.getValueAt(7, 10).toString());
+            DefaultTableModel dm = (DefaultTableModel) JTable.getModel();
+            int rowCount = dm.getRowCount();
+            for (int i = rowCount - 1; i >= 0; i--) {
+                dm.removeRow(i);
+            }
+            tambahtable.setEnabled(true);
         }
-        DefaultTableModel dm = (DefaultTableModel) JTable.getModel();
-        int rowCount = dm.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            dm.removeRow(i);
-        }
-        tambahtable.setEnabled(true);
     }
 
     void loadTotalPackingBahan1() {
@@ -607,8 +616,8 @@ public class Packing extends javax.swing.JFrame {
         jlableF11.setText(":");
 
         JCNamaKaryawan1.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
-        JCNamaKaryawan1.setSelectedItem("AMBAR");
         JCNamaKaryawan1.setNextFocusableComponent(JCNamaKaryawan2);
+        JCNamaKaryawan1.setSelectedItem("");
         JCNamaKaryawan1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 JCNamaKaryawan1FocusGained(evt);
@@ -633,7 +642,7 @@ public class Packing extends javax.swing.JFrame {
         jlableF29.setText(":");
 
         JCNamaKaryawan2.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
-        JCNamaKaryawan2.setSelectedItem("MUSLINA");
+        JCNamaKaryawan2.setSelectedItem("");
         JCNamaKaryawan2.setNextFocusableComponent(JTJumlahHasil1);
         JCNamaKaryawan2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -647,7 +656,7 @@ public class Packing extends javax.swing.JFrame {
         });
 
         JCNamaKaryawan3.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
-        JCNamaKaryawan3.setSelectedItem("SINAP");
+        JCNamaKaryawan3.setSelectedItem("");
         JCNamaKaryawan3.setNextFocusableComponent(JCNamaKaryawan4);
         JCNamaKaryawan3.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -664,7 +673,7 @@ public class Packing extends javax.swing.JFrame {
         });
 
         JCNamaKaryawan4.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2");
-        JCNamaKaryawan4.setSelectedItem("KAYATI");
+        JCNamaKaryawan4.setSelectedItem("");
         JCNamaKaryawan4.setNextFocusableComponent(JTJumlahHasil2);
         JCNamaKaryawan4.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1180,13 +1189,21 @@ public class Packing extends javax.swing.JFrame {
 
     private void JTJumlahBahan1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTJumlahBahan1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCNamaBahan2.requestFocus();
+            if (JCNamaBahan2.isEnabled()) {
+                JCNamaBahan2.requestFocus();
+            } else {
+                JCNamaHasil.requestFocus();
+            }
         }
     }//GEN-LAST:event_JTJumlahBahan1KeyPressed
 
     private void JCNamaHasilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaHasilKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCNamaKaryawan1.requestFocus();
+            if (JCNamaKaryawan1.isEnabled()) {
+                JCNamaKaryawan1.requestFocus();
+            } else {
+                JTJumlahHasil1.requestFocus();
+            }
         }
     }//GEN-LAST:event_JCNamaHasilKeyPressed
 
@@ -1260,6 +1277,31 @@ public class Packing extends javax.swing.JFrame {
 
     private void JCNamaHasilItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaHasilItemStateChanged
         loadUpah();
+        if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+            JCNamaKaryawan1.setSelectedItem("");
+            JCNamaKaryawan1.setEnabled(false);
+            JCNamaKaryawan2.setSelectedItem("");
+            JCNamaKaryawan2.setEnabled(false);
+            JCNamaKaryawan3.setSelectedItem("");
+            JCNamaKaryawan3.setEnabled(false);
+            JCNamaKaryawan4.setSelectedItem("");
+            JCNamaKaryawan4.setEnabled(false);
+            JTJumlahHasil2.setText("0");
+            JTJumlahHasil2.setEnabled(false);
+            JTKeterangan2.setText("");
+            JCNamaBahan2.setSelectedIndex(0);
+            JCNamaBahan2.setEnabled(false);
+            JTJumlahBahan2.setText("0");
+            JTJumlahBahan2.setEnabled(false);
+        } else {
+            JCNamaKaryawan1.setEnabled(true);
+            JCNamaKaryawan2.setEnabled(true);
+            JCNamaKaryawan3.setEnabled(true);
+            JCNamaKaryawan4.setEnabled(true);
+            JTJumlahHasil2.setEnabled(true);
+            JCNamaBahan2.setEnabled(true);
+            JTJumlahBahan2.setEnabled(true);
+        }
     }//GEN-LAST:event_JCNamaHasilItemStateChanged
 
     private void JCNamaBahan2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaBahan2KeyPressed
@@ -1278,7 +1320,11 @@ public class Packing extends javax.swing.JFrame {
 
     private void JTKeterangan1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKeterangan1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCNamaKaryawan3.requestFocus();
+            if (JCNamaKaryawan3.isEnabled()) {
+                JCNamaKaryawan3.requestFocus();
+            } else {
+                TambahTabel();
+            }
         }
     }//GEN-LAST:event_JTKeterangan1KeyPressed
 
@@ -1354,29 +1400,31 @@ public class Packing extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void JCNamaBahan1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBahan1ItemStateChanged
-        if (JCNamaBahan1.getSelectedIndex() != 0 && JCNamaBahan1.getSelectedIndex() != JCNamaBahan1.getItemCount() - 1) {
-            JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campur --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') != '" + JCNamaBahan1.getSelectedItem() + "' GROUP BY `NamaBarang`)");
-            loadTotalPackingBahan1();
-            JLTotalPackingBahan2.setText("");
-        } else if (JCNamaBahan1.getSelectedIndex() == 0 || JCNamaBahan1.getSelectedIndex() == JCNamaBahan1.getItemCount() - 1) {
-            JCNamaBahan2.setSelectedIndex(0);
-        }
-        if (JCNamaBahan1.getSelectedIndex() != JCNamaBahan1.getItemCount() - 1) {
-            JTJumlahBahan1.setVisible(true);
-            JCNamaBahan2.setEnabled(true);
-            JTJumlahBahan2.setVisible(true);
-            jlableF3.setVisible(true);
-            jlableF6.setVisible(true);
-            JLTotalPackingBahan1.setVisible(true);
-            JLTotalPackingBahan2.setVisible(true);
-        } else {
-            JTJumlahBahan1.setVisible(false);
-            JCNamaBahan2.setEnabled(false);
-            JTJumlahBahan2.setVisible(false);
-            jlableF3.setVisible(false);
-            jlableF6.setVisible(false);
-            JLTotalPackingBahan1.setVisible(false);
-            JLTotalPackingBahan2.setVisible(false);
+        if (!JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+            if (JCNamaBahan1.getSelectedIndex() != 0 && JCNamaBahan1.getSelectedIndex() != JCNamaBahan1.getItemCount() - 1) {
+                JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campur --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') != '" + JCNamaBahan1.getSelectedItem() + "' GROUP BY `NamaBarang`)");
+                loadTotalPackingBahan1();
+                JLTotalPackingBahan2.setText("");
+            } else if (JCNamaBahan1.getSelectedIndex() == 0 || JCNamaBahan1.getSelectedIndex() == JCNamaBahan1.getItemCount() - 1) {
+                JCNamaBahan2.setSelectedIndex(0);
+            }
+            if (JCNamaBahan1.getSelectedIndex() != JCNamaBahan1.getItemCount() - 1) {
+                JTJumlahBahan1.setVisible(true);
+                JCNamaBahan2.setEnabled(true);
+                JTJumlahBahan2.setVisible(true);
+                jlableF3.setVisible(true);
+                jlableF6.setVisible(true);
+                JLTotalPackingBahan1.setVisible(true);
+                JLTotalPackingBahan2.setVisible(true);
+            } else {
+                JTJumlahBahan1.setVisible(false);
+                JCNamaBahan2.setEnabled(false);
+                JTJumlahBahan2.setVisible(false);
+                jlableF3.setVisible(false);
+                jlableF6.setVisible(false);
+                JLTotalPackingBahan1.setVisible(false);
+                JLTotalPackingBahan2.setVisible(false);
+            }
         }
     }//GEN-LAST:event_JCNamaBahan1ItemStateChanged
 
@@ -1513,52 +1561,56 @@ public class Packing extends javax.swing.JFrame {
     void TambahTabel() {
         if (checkTable()) {
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
-            if (JCNamaBahan2.getSelectedIndex() == 0) {
-
-                //1
-                if (!"".equals(JCNamaKaryawan1.getSelectedItem())) {
-                    model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri(), JTUpahPerPack.getText(), JTKeterangan1.getText(),});
-                }
-
-                if (!"".equals(JCNamaKaryawan2.getSelectedItem())) {
-                    //2
-                    model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri(), JTUpahPerPack.getText(), JTKeterangan1.getText(),});
-                }
-
-                if (!"".equals(JCNamaKaryawan3.getSelectedItem())) {
-                    //3
-                    model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan(), JTUpahPerPack.getText(), JTKeterangan2.getText(),});
-                }
-
-                if (!"".equals(JCNamaKaryawan4.getSelectedItem())) {
-                    //4
-                    model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan(), JTUpahPerPack.getText(), JTKeterangan2.getText(),});
-                }
-
+            if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+                model.addRow(new Object[]{0, 0, 0, "", JCNamaBahan1.getSelectedItem(), 100.0, JTJumlahBahan1.getInt(), JCNamaHasil.getSelectedItem(), JTJumlahHasil1.getInt(), 0, JTKeterangan1.getText()});
             } else {
-                if (!"".equals(JCNamaKaryawan1.getSelectedItem())) {
+                if (JCNamaBahan2.getSelectedIndex() == 0) {
+
                     //1
-                    model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
-                    //2
-                    model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
-                }
-                if (!"".equals(JCNamaKaryawan2.getSelectedItem())) {
-                    //3
-                    model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
-                    //4
-                    model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
-                }
-                if (!"".equals(JCNamaKaryawan3.getSelectedItem())) {
-                    //5
-                    model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
-                    //6
-                    model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
-                }
-                if (!"".equals(JCNamaKaryawan4.getSelectedItem())) {
-                    //7
-                    model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
-                    //8
-                    model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    if (!"".equals(JCNamaKaryawan1.getSelectedItem())) {
+                        model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri(), JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    }
+
+                    if (!"".equals(JCNamaKaryawan2.getSelectedItem())) {
+                        //2
+                        model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri(), JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    }
+
+                    if (!"".equals(JCNamaKaryawan3.getSelectedItem())) {
+                        //3
+                        model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan(), JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    }
+
+                    if (!"".equals(JCNamaKaryawan4.getSelectedItem())) {
+                        //4
+                        model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan1.getSelectedItem(), getPersen1(), Float.parseFloat(JTJumlahBahan1.getText()) / getJumlahKaryawan(), JCNamaHasil.getSelectedItem(), Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan(), JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    }
+
+                } else {
+                    if (!"".equals(JCNamaKaryawan1.getSelectedItem())) {
+                        //1
+                        model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                        //2
+                        model.addRow(new Object[]{JTNoBak.getText(), 1, 1, JCNamaKaryawan1.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    }
+                    if (!"".equals(JCNamaKaryawan2.getSelectedItem())) {
+                        //3
+                        model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                        //4
+                        model.addRow(new Object[]{JTNoBak.getText(), 1, 2, JCNamaKaryawan2.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil1.getText().replace(".", "")) / getJumlahKiri()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan1.getText(),});
+                    }
+                    if (!"".equals(JCNamaKaryawan3.getSelectedItem())) {
+                        //5
+                        model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                        //6
+                        model.addRow(new Object[]{JTNoBak.getText(), 2, 3, JCNamaKaryawan3.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    }
+                    if (!"".equals(JCNamaKaryawan4.getSelectedItem())) {
+                        //7
+                        model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan1.getSelectedItem(), Math.round(getPersen1() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen1() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen1() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                        //8
+                        model.addRow(new Object[]{JTNoBak.getText(), 2, 4, JCNamaKaryawan4.getSelectedItem(), JCNamaBahan2.getSelectedItem(), Math.round(getPersen2() * 100.0) / 100.0, Math.round(((Float.parseFloat(JTJumlahBahan1.getText()) + Float.parseFloat(JTJumlahBahan2.getText())) / getJumlahKaryawan()) * getPersen2() / 100 * 100.0) / 100.0, JCNamaHasil.getSelectedItem(), Math.floor(1000 * ((Float.parseFloat(JTJumlahHasil2.getText().replace(".", "")) / getJumlahKanan()) * getPersen2() / 100) + 0.5) / 1000, JTUpahPerPack.getText(), JTKeterangan2.getText(),});
+                    }
                 }
             }
             JOptionPane.showMessageDialog(this, "Berhasil Hitung");
@@ -1585,10 +1637,14 @@ public class Packing extends javax.swing.JFrame {
                     if (Berhasil) {
                         for (int i = 0; i < JTable.getRowCount(); i++) {
                             String idPartai = "null";
+                            String idKaryawan = "null";
                             if (!JTable.getValueAt(i, 4).equals("GARAM RETUR")) {
                                 idPartai = "'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'";
                             }
-                            Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "')," + idPartai + ",'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
+                            if (!JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+                                idKaryawan = "(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "')";
+                            }
+                            Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "'," + idKaryawan + "," + idPartai + ",'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                         }
                         if (Berhasil) {
                             if (Integer.valueOf(JTJumlahBahan1.getText().replace(".", "")) == Integer.valueOf(JLTotalPackingBahan1.getText().split("\\(Sisa Bahan: ")[1].split(" ")[0].replace(".", "")) && !JCNamaBahan1.getSelectedItem().equals("GARAM RETUR")) {
@@ -1639,7 +1695,7 @@ public class Packing extends javax.swing.JFrame {
                         tambahtable.setEnabled(true);
                         JTNoPoles.setText(generateNoPoles());
                         JTNoPacking.setText(generateNoPacking());
-                        JCNamaKaryawan1.requestFocus();
+                        JTJumlahBahan1.requestFocus();
                         loadTotalPackingBahan1();
                         loadTotalPackingBahan2();
                     }
@@ -1666,10 +1722,14 @@ public class Packing extends javax.swing.JFrame {
                         if (Berhasil) {
                             for (int i = 0; i < JTable.getRowCount(); i++) {
                                 String idPartai = "'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'";
+                                String idKaryawan = "(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "')";
                                 if (JTable.getValueAt(i, 4).equals("GARAM RETUR")) {
                                     idPartai = "null";
                                 }
-                                Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "')," + idPartai + ",'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
+                                if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+                                    idKaryawan = "null";
+                                }
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "'," + idKaryawan + "," + idPartai + ",'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                             }
                         }
                     }
@@ -1732,11 +1792,13 @@ public class Packing extends javax.swing.JFrame {
     }
 
     void loadUpah() {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.seterorm("Gagal Load Upah");
-        dRunSelctOne.setQuery("SELECT `UpahPacking` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaHasil.getSelectedItem() + "'");
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTUpahPerPack.setText(list.get(0));
+        if (JCNamaHasil.getSelectedIndex() != 0) {
+            DRunSelctOne dRunSelctOne = new DRunSelctOne();
+            dRunSelctOne.seterorm("Gagal Load Upah");
+            dRunSelctOne.setQuery("SELECT `UpahPacking` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaHasil.getSelectedItem() + "'");
+            ArrayList<String> list = dRunSelctOne.excute();
+            JTUpahPerPack.setText(list.get(0));
+        }
     }
 
     Boolean checkSameItem() {

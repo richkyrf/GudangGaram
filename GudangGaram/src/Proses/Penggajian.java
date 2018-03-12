@@ -170,7 +170,10 @@ public class Penggajian extends javax.swing.JFrame {
 
         jlableF4.setText(":");
 
-        JDTanggal1.setDate(new Date());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, -7);
+        JDTanggal1.setDate(cal.getTime());
         JDTanggal1.setDateFormatString("dd-MM-yyyy");
         JDTanggal1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -187,7 +190,10 @@ public class Penggajian extends javax.swing.JFrame {
 
         jlableF6.setText(":");
 
-        JDTanggal2.setDate(new Date());
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(new Date());
+        cal2.add(Calendar.DATE, -1);
+        JDTanggal2.setDate(cal2.getTime());
         JDTanggal2.setDateFormatString("dd-MM-yyyy");
         JDTanggal2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {

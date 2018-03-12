@@ -43,6 +43,7 @@ import static javax.print.attribute.standard.MediaSize.findMedia;
 import static javax.print.attribute.standard.OrientationRequested.LANDSCAPE;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
@@ -69,12 +70,12 @@ public class RekapPenggajian extends javax.swing.JFrame {
     Double getGrandTotal() {
         double GrandTotal = 0;
         for (int x = 0; x < JTable.getRowCount(); x++) {
-            GrandTotal = GrandTotal + (Double.valueOf(JTable.getValueAt(x, 5).toString().replace(".", "").replace(",", ".")));
+            GrandTotal = GrandTotal + (Double.valueOf(JTable.getValueAt(x, 4).toString().replace(".", "").replace(",", ".")));
         }
         return GrandTotal;
     }
 
-    public static int getDaysInMonth(String year, String monthNumber) {
+    /*public static int getDaysInMonth(String year, String monthNumber) {
         int days = 0;
         if (Integer.parseInt(monthNumber) >= 0 && Integer.parseInt(monthNumber) < 12) {
             try {
@@ -89,9 +90,9 @@ public class RekapPenggajian extends javax.swing.JFrame {
             }
         }
         return days;
-    }
+    }*/
 
-    Boolean isFirstSaturday(String year, String month) {
+ /*Boolean isFirstSaturday(String year, String month) {
         Calendar cacheCalendar = Calendar.getInstance();
         cacheCalendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
         cacheCalendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
@@ -99,8 +100,7 @@ public class RekapPenggajian extends javax.swing.JFrame {
         cacheCalendar.set(Calendar.YEAR, Integer.parseInt(year));
         String date = FDateF.datetostr(cacheCalendar.getTime(), "dd-MM-yyyy");
         return date.equals(FDateF.datetostr(new Date(), "dd-MM-yyyy"));
-    }
-
+    }*/
     void loadBonus() {
         /*if (JCBBonusBulanan.isSelected()) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
@@ -123,6 +123,38 @@ public class RekapPenggajian extends javax.swing.JFrame {
         }*/
     }
 
+    void tambahTabel() {
+        if (checkTable()) {
+            DefaultTableModel model = (DefaultTableModel) JTable.getModel();
+            model.addRow(new Object[]{JTable.getRowCount() + 1, JTKeterangan.getText(), Intformatdigit(JTJumlah.getInt()), Intformatdigit(JTRupiah.getInt()), Intformatdigit(JTJumlah.getInt() * JTRupiah.getInt())});
+            JOptionPane.showMessageDialog(this, "Berhasil Tambah");
+            JTKeterangan.requestFocus();
+            RefreshTbl();
+            JTGrandTotal.setText(Decformatdigit(getGrandTotal()));
+        }
+    }
+
+    void RefreshTbl() {
+        JTKeterangan.setText("");
+        JTJumlah.setText("0");
+        JTRupiah.setText("0");
+    }
+
+    boolean checkTable() {
+        if (JTKeterangan.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Keterangan Tambahan Tidak Boleh Kosong");
+            return false;
+        } else if (JTJumlah.getInt() == 0) {
+            JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong");
+            return false;
+        } else if (JTRupiah.getInt() == 0) {
+            JOptionPane.showMessageDialog(this, "Rupiah Tidak Boleh Kosong");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,13 +173,19 @@ public class RekapPenggajian extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         JTable = new KomponenGUI.JtableF();
         jbuttonF1 = new KomponenGUI.JbuttonF();
-        jlableF7 = new KomponenGUI.JlableF();
-        jlableF8 = new KomponenGUI.JlableF();
         jbuttonF2 = new KomponenGUI.JbuttonF();
         jlableF9 = new KomponenGUI.JlableF();
         jlableF10 = new KomponenGUI.JlableF();
-        JTAKeterangan = new KomponenGUI.JtextF();
+        JTKeterangan = new KomponenGUI.JtextF();
         JTGrandTotal = new KomponenGUI.JtextF();
+        JCBBonus = new KomponenGUI.JCheckBoxF();
+        JTAKeterangan1 = new KomponenGUI.JtextF();
+        JTAKeterangan2 = new KomponenGUI.JtextF();
+        JTAKeterangan3 = new KomponenGUI.JtextF();
+        jbuttonF3 = new KomponenGUI.JbuttonF();
+        jbuttonF4 = new KomponenGUI.JbuttonF();
+        JTJumlah = new KomponenGUI.JRibuanTextField();
+        JTRupiah = new KomponenGUI.JRibuanTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -160,7 +198,10 @@ public class RekapPenggajian extends javax.swing.JFrame {
 
         jlableF2.setText(":");
 
-        JDTanggal1.setDate(new Date());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, -7);
+        JDTanggal1.setDate(cal.getTime());
         JDTanggal1.setDateFormatString("dd-MM-yyyy");
         JDTanggal1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -177,7 +218,10 @@ public class RekapPenggajian extends javax.swing.JFrame {
 
         jlableF6.setText(":");
 
-        JDTanggal2.setDate(new Date());
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(new Date());
+        cal2.add(Calendar.DATE, -1);
+        JDTanggal2.setDate(cal2.getTime());
         JDTanggal2.setDateFormatString("dd-MM-yyyy");
         JDTanggal2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -197,27 +241,24 @@ public class RekapPenggajian extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No", "Tanggal", "Keterangan", "Jumlah", "Upah", "Sub Total"
+                "No", "Keterangan", "Jumlah", "@ Rupiah", "Sub Total"
             }
         ));
         jScrollPane1.setViewportView(JTable);
-        JTable.setrender(new int[]{3,4,5}, new String[]{"Number","Number","Number"});
+        JTable.setrender(new int[]{2,3,4}, new String[]{"Number","Number","Number"});
         if (JTable.getColumnModel().getColumnCount() > 0) {
             JTable.getColumnModel().getColumn(0).setMinWidth(50);
             JTable.getColumnModel().getColumn(0).setPreferredWidth(50);
             JTable.getColumnModel().getColumn(0).setMaxWidth(50);
-            JTable.getColumnModel().getColumn(1).setMinWidth(100);
-            JTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-            JTable.getColumnModel().getColumn(1).setMaxWidth(100);
+            JTable.getColumnModel().getColumn(2).setMinWidth(100);
+            JTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+            JTable.getColumnModel().getColumn(2).setMaxWidth(100);
             JTable.getColumnModel().getColumn(3).setMinWidth(100);
             JTable.getColumnModel().getColumn(3).setPreferredWidth(100);
             JTable.getColumnModel().getColumn(3).setMaxWidth(100);
             JTable.getColumnModel().getColumn(4).setMinWidth(100);
             JTable.getColumnModel().getColumn(4).setPreferredWidth(100);
             JTable.getColumnModel().getColumn(4).setMaxWidth(100);
-            JTable.getColumnModel().getColumn(5).setMinWidth(100);
-            JTable.getColumnModel().getColumn(5).setPreferredWidth(100);
-            JTable.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
         jbuttonF1.setText("Print");
@@ -226,10 +267,6 @@ public class RekapPenggajian extends javax.swing.JFrame {
                 jbuttonF1ActionPerformed(evt);
             }
         });
-
-        jlableF7.setText("Keterangan");
-
-        jlableF8.setText(":");
 
         jbuttonF2.setText("Kembali");
         jbuttonF2.addActionListener(new java.awt.event.ActionListener() {
@@ -242,9 +279,59 @@ public class RekapPenggajian extends javax.swing.JFrame {
 
         jlableF10.setText(":");
 
+        JTKeterangan.setMaxText(30);
+        JTKeterangan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTKeteranganKeyPressed(evt);
+            }
+        });
+
         JTGrandTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         JTGrandTotal.setText("0");
         JTGrandTotal.setEnabled(false);
+
+        JCBBonus.setSelected(false);
+        JCBBonus.setText("Tambah Bonus Bulanan");
+        JCBBonus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBBonusActionPerformed(evt);
+            }
+        });
+
+        JTAKeterangan1.setText("Keterangan (Jika ada tambahan)");
+        JTAKeterangan1.setEnabled(false);
+
+        JTAKeterangan2.setText("Jumlah");
+        JTAKeterangan2.setEnabled(false);
+
+        JTAKeterangan3.setText("@ Rupiah");
+        JTAKeterangan3.setEnabled(false);
+
+        jbuttonF3.setText("Tambah");
+        jbuttonF3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbuttonF3ActionPerformed(evt);
+            }
+        });
+
+        jbuttonF4.setText("Refresh");
+        jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbuttonF4ActionPerformed(evt);
+            }
+        });
+
+        JTJumlah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTJumlahKeyPressed(evt);
+            }
+        });
+
+        JTRupiah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTRupiahKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -253,6 +340,22 @@ public class RekapPenggajian extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(JTAKeterangan1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                            .addComponent(JTKeterangan, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(JTAKeterangan2, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                            .addComponent(JTJumlah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(JTAKeterangan3, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                            .addComponent(JTRupiah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbuttonF3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbuttonF4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,15 +375,12 @@ public class RekapPenggajian extends javax.swing.JFrame {
                                 .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JDTanggal2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6))
+                                .addGap(18, 18, 18)
+                                .addComponent(JCBBonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTAKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(154, 154, 154)
-                                .addComponent(jlableF9, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(4, 4, 4)))
@@ -291,23 +391,34 @@ public class RekapPenggajian extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(JDTanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(JDTanggal2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JDTanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(JDTanggal2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JCBBonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTAKeterangan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTAKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTAKeterangan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTAKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTRupiah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JTGrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -349,6 +460,37 @@ public class RekapPenggajian extends javax.swing.JFrame {
         GlobalVar.Var.rekapPenggajian = null;
     }//GEN-LAST:event_formWindowClosed
 
+    private void JCBBonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBBonusActionPerformed
+        hitungBorongan();
+    }//GEN-LAST:event_JCBBonusActionPerformed
+
+    private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
+        tambahTabel();
+    }//GEN-LAST:event_jbuttonF3ActionPerformed
+
+    private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
+        RefreshTbl();
+        hitungBorongan();
+    }//GEN-LAST:event_jbuttonF4ActionPerformed
+
+    private void JTKeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKeteranganKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTJumlah.requestFocus();
+        }
+    }//GEN-LAST:event_JTKeteranganKeyPressed
+
+    private void JTJumlahKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTJumlahKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTRupiah.requestFocus();
+        }
+    }//GEN-LAST:event_JTJumlahKeyPressed
+
+    private void JTRupiahKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTRupiahKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            tambahTabel();
+        }
+    }//GEN-LAST:event_JTRupiahKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -388,21 +530,27 @@ public class RekapPenggajian extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private KomponenGUI.JCheckBoxF JCBBonus;
     private KomponenGUI.JdateCF JDTanggal1;
     private KomponenGUI.JdateCF JDTanggal2;
-    private KomponenGUI.JtextF JTAKeterangan;
+    private KomponenGUI.JtextF JTAKeterangan1;
+    private KomponenGUI.JtextF JTAKeterangan2;
+    private KomponenGUI.JtextF JTAKeterangan3;
     private KomponenGUI.JtextF JTGrandTotal;
+    private KomponenGUI.JRibuanTextField JTJumlah;
+    private KomponenGUI.JtextF JTKeterangan;
+    private KomponenGUI.JRibuanTextField JTRupiah;
     private KomponenGUI.JtableF JTable;
     private javax.swing.JScrollPane jScrollPane1;
     private KomponenGUI.JbuttonF jbuttonF1;
     private KomponenGUI.JbuttonF jbuttonF2;
+    private KomponenGUI.JbuttonF jbuttonF3;
+    private KomponenGUI.JbuttonF jbuttonF4;
     private KomponenGUI.JlableF jlableF1;
     private KomponenGUI.JlableF jlableF10;
     private KomponenGUI.JlableF jlableF2;
     private KomponenGUI.JlableF jlableF5;
     private KomponenGUI.JlableF jlableF6;
-    private KomponenGUI.JlableF jlableF7;
-    private KomponenGUI.JlableF jlableF8;
     private KomponenGUI.JlableF jlableF9;
     // End of variables declaration//GEN-END:variables
 
@@ -410,7 +558,11 @@ public class RekapPenggajian extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("(SELECT DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', CONCAT('UPAH PACKING ',b.`NamaBarang`) as `Keterangan`, FORMAT(SUM(`JumlahHasil`),0) as 'JumlahHasil', FORMAT(`UpahPerPak`,0) as 'UpahPerPak', FORMAT(SUM(`JumlahHasil`)*`UpahPerPak`,0) as 'SubTotal' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang`  WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' GROUP BY `Tanggal`, `NamaBarang` ORDER BY `Tanggal`) UNION ALL SELECT DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', a.`Keterangan`, 1 as 'Jumlah',  FORMAT(`UangDinas`,0), FORMAT(`UangDinas`,2) FROM `tbdinasluar`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' UNION ALL SELECT '' as 'Tanggal', 'BANTUAN UANG MAKAN + TRANSPORT ' as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(17500,0) as 'Upah', FORMAT((SUM(`Hadir`) * 17500),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 2 AND `Status` = 1 UNION ALL (SELECT '' as 'Tanggal', IF(`Bonus`=130000,'UANG BONUS FULL BEKERJA ','UANG BONUS TIDAK FULL BEKERJA ') as 'Keterangan', COUNT(`Bonus`) as 'Jumlah', FORMAT(`Bonus`,0) as 'Upah', FORMAT(COUNT(`Bonus`)*`Bonus`,0) as 'Sub Total' FROM (SELECT a.`IdKaryawan`, IF(COUNT(`Hadir`)<=1,130000,IF(COUNT(`Hadir`)=2,65000,0)) as 'Bonus', `IdJenisKaryawan`, a.`Keterangan`, `Status` FROM `tbmkaryawan`a LEFT JOIN (SELECT `IdKaryawan`, `Hadir` FROM `tbabsen` WHERE hadir=0 AND `Tanggal` BETWEEN DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-01') AND DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-31'))b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE 1  AND `IdJenisKaryawan` = 2 AND `Status` = 1 GROUP BY a.`IdKaryawan`) AS `tbtemp` WHERE `Bonus` != 0 GROUP BY `Bonus`) ORDER BY DATE_FORMAT(`Tanggal`,'%Y-%m-%d') ");
+        String queryBonus = " UNION ALL (SELECT IF(`Bonus`=130000,'BONUS FULL BEKERJA ','BONUS TIDAK FULL BEKERJA ') as 'Keterangan', COUNT(`Bonus`) as 'Jumlah', FORMAT(`Bonus`,0) as 'Upah', FORMAT(COUNT(`Bonus`)*`Bonus`,0) as 'Sub Total' FROM (SELECT a.`IdKaryawan`, IF(COUNT(`Hadir`)<=1,130000,IF(COUNT(`Hadir`)=2,65000,0)) as 'Bonus', `IdJenisKaryawan`, a.`Keterangan`, `Status` FROM `tbmkaryawan`a LEFT JOIN (SELECT `IdKaryawan`, `Hadir` FROM `tbabsen` WHERE hadir=0 AND `Tanggal` BETWEEN DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-01') AND DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-31'))b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE 1  AND `IdJenisKaryawan` = 2 AND `Status` = 1 GROUP BY a.`IdKaryawan`) AS `tbtemp` WHERE `Bonus` != 0 GROUP BY `Bonus`) ";
+        if (!JCBBonus.isSelected()) {
+            queryBonus = "";
+        }
+        runSelct.setQuery("(SELECT CONCAT('UPAH PACKING ',a.`NamaBarang`) as `Keterangan`, FORMAT(IFNULL(SUM(`JumlahHasil`),0),0) as 'JumlahHasil', FORMAT(IFNULL(`UpahPerPak`,0),0) as 'UpahPerPak', FORMAT(IFNULL(SUM(`JumlahHasil`)*`UpahPerPak`,0),0) as 'SubTotal' FROM `tbmbarang`a LEFT JOIN `tbpacking`b ON a.`IdBarang`=b.`IdBarangHasil`  WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaBarang` ORDER BY `NamaBarang`) UNION ALL SELECT a.`Keterangan`, COUNT(a.`Keterangan`) as 'Jumlah',  FORMAT(`UangDinas`,0) as 'Rupiah', FORMAT(SUM(`UangDinas`),0) as 'Sub Total' FROM `tbdinasluar`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' GROUP BY `Keterangan` UNION ALL SELECT 'TUNJ. TRANSPORT & UANG MAKAN ' as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(17500,0) as 'Upah', FORMAT((SUM(`Hadir`) * 17500),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 2 AND `Status` = 1 " + queryBonus);
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -418,10 +570,9 @@ public class RekapPenggajian extends javax.swing.JFrame {
                 model.addRow(new Object[]{"", "", "", "", "", ""});
                 JTable.setValueAt(row + 1, row, 0);
                 JTable.setValueAt(rs.getString(1), row, 1);
-                JTable.setValueAt(rs.getString(2), row, 2);
+                JTable.setValueAt(rs.getString(2).replace(",", "."), row, 2);
                 JTable.setValueAt(rs.getString(3).replace(",", "."), row, 3);
                 JTable.setValueAt(rs.getString(4).replace(",", "."), row, 4);
-                JTable.setValueAt(rs.getString(5).replace(",", "."), row, 5);
                 row++;
             }
         } catch (SQLException e) {
@@ -457,7 +608,6 @@ public class RekapPenggajian extends javax.swing.JFrame {
         String Periode1 = datetostr(JDTanggal1.getDate(), "dd-MM-yyyy");
         String Periode2 = datetostr(JDTanggal2.getDate(), "dd-MM-yyyy");
         String[] No = new String[JTable.getRowCount()];
-        String[] Tanggal = new String[JTable.getRowCount()];
         String[] Barang = new String[JTable.getRowCount()];
         Integer[] Jumlah = new Integer[JTable.getRowCount()];
         String[] Jumlahs = new String[JTable.getRowCount()];
@@ -467,54 +617,75 @@ public class RekapPenggajian extends javax.swing.JFrame {
         String[] Subs = new String[JTable.getRowCount()];
         for (int i = 0; i < JTable.getRowCount(); i++) {
             No[i] = JTable.getValueAt(i, 0).toString();
-            Tanggal[i] = JTable.getValueAt(i, 1).toString();
-            Barang[i] = JTable.getValueAt(i, 2).toString();
-            Jumlah[i] = Integer.parseInt(JTable.getValueAt(i, 3).toString().replace(".", ""));
+            Barang[i] = JTable.getValueAt(i, 1).toString();
+            Jumlah[i] = Integer.parseInt(JTable.getValueAt(i, 2).toString().replace(".", ""));
             Jumlahs[i] = Intformatdigit(Jumlah[i]);
-            Upah[i] = Integer.parseInt(JTable.getValueAt(i, 4).toString().replace(".", ""));
+            Upah[i] = Integer.parseInt(JTable.getValueAt(i, 3).toString().replace(".", ""));
             Upahs[i] = Intformatdigit(Upah[i]);
-            Sub[i] = Integer.parseInt(JTable.getValueAt(i, 5).toString().replace(".", ""));
+            Sub[i] = Integer.parseInt(JTable.getValueAt(i, 4).toString().replace(".", ""));
             Subs[i] = Intformatdigit(Sub[i]);
         }
 
-        String Keterangan = JTAKeterangan.getText();
+        String Keterangan = JTKeterangan.getText();
 
         int Total = (int) Math.round(getGrandTotal());
         String Totals = Intformatdigit(Total);
         Terbilang terbilang = new Terbilang(Total);
         String terbilangg = terbilang.toString();
-        if (terbilangg.length() > 66) {
-            terbilangg = terbilangg.substring(0, 66);
+        String terbilangg2 = terbilang.toString();
+        if (terbilangg.length() > 64) {
+            terbilangg = terbilangg.substring(0, 64);
+        } else {
+            terbilangg = terbilangg + " #";
         }
-
-        String leftAlignFormat = "%-4s%-13s%-33s%-9s%-8s%-12s%-1s%n";
+        if (terbilangg2.length() > 64 && terbilangg2.length() < 129) {
+            terbilangg2 = terbilangg2.substring(64, terbilangg2.length()) + " #";
+        } else if (terbilangg2.length() > 128) {
+            terbilangg2 = terbilangg2.substring(64, 128) + " #";
+        } else {
+            terbilangg2 = "";
+        }
+        String leftAlignFormat = "%-4s%-33s%-12s%-13s%-16s%-1s%n";
         String OutFormat = "";
-        OutFormat += format("%-81s%n", " _____________________________________________________________________________");
-        OutFormat += format("%-61s%-19s%n", " Rekap Upah Pembayaran Karyawan Borongan Packing Garam", "Periode: " + Periode1);
-        OutFormat += format("%-61s%-19s%n", " ", "Hingga : " + Periode2);
+        OutFormat += format("%-81s%n", "                     PERMOHONAN PERSETUJUAN PENGELUARAN KAS                     ");
+        OutFormat += format("%-81s%n", "                        Untuk Upah Borongan Packing Garam                       ");
+        OutFormat += format("%-81s%n", "                        Tanggal " + Periode1 + " s/d " + Periode2 + "                       ");
+        OutFormat += format("%n", "");
         //                              12345678901234567890123456789012345678901234567890123456789012345678901234567890
         //                              12341234567890123456789012345678901234567890123456712345678912345671234567890123
-        OutFormat += format("%-80s%n", "+---+------------+--------------------------------+--------+-------+-----------+");
-        OutFormat += format("%-80s%n", "| NO|  TANGGAL   | KETERANGAN                     | JUMLAH |  UPAH | SUB TOTAL |");
-        OutFormat += format("%-80s%n", "+---+------------+--------------------------------+--------+-------+-----------+");
-        for (int i = 0; i < 12; i++) {
+        OutFormat += format("%-80s%n", "+---+--------------------------------+-----------+------------+---------------+");
+        OutFormat += format("%-80s%n", "| NO| KETERANGAN                     |   JUMLAH  |  @ RUPIAH  |   SUB TOTAL   |");
+        OutFormat += format("%-80s%n", "+---+--------------------------------+-----------+------------+---------------+");
+        for (int i = 0; i < 15; i++) {
             if (i < JTable.getRowCount()) {
-                OutFormat += format(leftAlignFormat, "| " + (i + 1), "| " + Tanggal[i], "| " + Barang[i], "|" + format("%7s", Jumlahs[i]), "|" + format("%7s", Upahs[i]), "|" + format("%10s", Subs[i]), "|");
+                String satuan;
+                if (Barang[i].contains("UPAH PACKING")) {
+                    satuan = " PAK";
+                } else if (Barang[i].contains("UANG MAKAN")) {
+                    satuan = "  HR";
+                } else if (Barang[i].contains("BONUS") || Barang[i].contains("PELATIHAN")) {
+                    satuan = " ORG";
+                } else {
+                    satuan = "    ";
+                }
+                OutFormat += format(leftAlignFormat, "| " + (i + 1), "| " + Barang[i], "|" + format("%10s", Jumlahs[i] + satuan), "| Rp" + format("%8s", Upahs[i]), "| Rp" + format("%11s", Subs[i]), "|");
             } else {
-                OutFormat += format(leftAlignFormat, "| " + (i + 1), "|", "|", "|", "|", "|", "|");
+                OutFormat += format(leftAlignFormat, "| " + (i + 1), "|", "|", "|", "|", "|");
             }
         }
-        OutFormat += format("%-80s%n", "+---+------------+--------------------------------+--------+-------+-----------+");
-        OutFormat += format("%-67s%-12s%-1s%n", "| GRAND TOTAL", "|" + format("%10s", Totals), "|");
-        OutFormat += format("%-80s%n", "+------------------------------------------------------------------+-----------+");
-        OutFormat += format("%-80s%n", "Terbilang : " + terbilangg);
+        OutFormat += format("%-80s%n", "+---+--------------------------------+-----------+------------+---------------+");
+        OutFormat += format("%-62s%-16s%-1s%n", "| GRAND TOTAL", "| Rp" + format("%11s", Totals), "|");
+        OutFormat += format("%-80s%n", "+-------------------------------------------------------------+---------------+");
+        OutFormat += format("%-80s%n", "Terbilang : # " + terbilangg);
+        OutFormat += format("%-80s%n", "            " + terbilangg2);
         OutFormat += format("%n", "");
-        OutFormat += format("%-66s%-24s%n", " ", "Disiapkan Oleh\n \n ");
-        OutFormat += format("%-66s%-24s%n", " ", "HENDRI");
-        OutFormat += format("%-80s%n", " _____________________________________________________________________________");
+        OutFormat += format("%-80s%n", format("%79s", "TL. DUKU, " + datetostr(new Date(), "dd MMMM yyyy")));
+        OutFormat += format("%-33s%-33s%-24s%n", "Disetujui Oleh,", "Diperiksa Oleh,", "Dibuat Oleh,\n \n \n \n ");
+        OutFormat += format("%-33s%-33s%-24s%n", "    SUBAGIO", "    ADIANTO", "   HENDRI");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
+        //System.out.println(OutFormat);
         directprinting(OutFormat);
     }
 
@@ -622,7 +793,7 @@ public class RekapPenggajian extends javax.swing.JFrame {
         double value = 0;
         value = Number;
         String output;
-        String pattern = "#,###,###.00";
+        String pattern = "#,###,###";
         DecimalFormat myFormatter = new DecimalFormat(pattern);
         if (value <= -1) {
             value = abs(value);

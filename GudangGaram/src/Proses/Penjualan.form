@@ -125,8 +125,14 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="JCJenisPenjualan" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="jlabelF7" alignment="0" max="32767" attributes="0"/>
                                   <Component id="JCNamaBarang" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jlabelF7" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCBRetur" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="JCBBarcode" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -244,6 +250,8 @@
                           <Component id="jlabelF8" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jlabelF9" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jlabelF11" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JCBRetur" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JCBBarcode" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -518,7 +526,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBarangKeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT &apos;-- Pilih Nama Barang --&apos; as &apos;NamaBarang&apos; UNION ALL (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2) UNION ALL (SELECT CONCAT(`NamaBarang`, &apos; (RETUR)&apos;) as &apos;NamaBarang&apos; FROM `tbmbarang` WHERE `IdJenisBarang` = 2)&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT &apos;-- Pilih Nama Barang --&apos; as &apos;NamaBarang&apos; UNION ALL (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2)&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JtextF" name="jlabelF8">
@@ -764,6 +772,18 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="JTNoDO.setMaxText(20);"/>
       </AuxValues>
+    </Component>
+    <Component class="KomponenGUI.JCheckBoxF" name="JCBRetur">
+      <Properties>
+        <Property name="selected" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Retur"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JCheckBoxF" name="JCBBarcode">
+      <Properties>
+        <Property name="selected" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Barcode"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -470,7 +470,8 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan1KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan1.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan1.setSelectedItem(&quot;AMBAR&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="JCNamaKaryawan1.setSelectedItem(&quot;&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan1.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF12">
@@ -514,7 +515,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan2KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan2.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan2.setSelectedItem(&quot;MUSLINA&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan2.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan2.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCNamaKaryawan3">
@@ -529,7 +530,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan3KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan3.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan3.setSelectedItem(&quot;SINAP&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan3.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan3.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCNamaKaryawan4">
@@ -543,7 +544,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan4KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan4.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan4.setSelectedItem(&quot;KAYATI&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan4.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan4.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF13">
