@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListHariLibur.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPartai.java</file>
@@ -35,5 +36,8 @@
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterPartai.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterKaryawan.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 6bc1ba4523759c9b5b1d69dd5e5b2df8adad2488
     </open-files>
 </project-private>
