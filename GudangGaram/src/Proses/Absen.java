@@ -50,14 +50,18 @@ public class Absen extends javax.swing.JFrame {
         JTable.useboolean(true);
         JTable.setbooleanfield(2);
         JTable.setbooleanfield2(3);
-        JTable.setQuery("SELECT `IdKaryawan`, `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
-        JTable.tampilkan();
-        JLTitle.setText("DATA ABSEN TANGGAL " + FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy"));
-        if (JTable.getRowCount() == 0) {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal check absen");
+        dRunSelctOne.setQuery("SELECT COUNT(`Tanggal`) FROM `tbabsen` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
+        ArrayList<String> list = dRunSelctOne.excute();
+        if (!list.get(0).equals("0")) {
+            JTable.setQuery("SELECT `IdKaryawan`, `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
+            JLTitle.setText("DATA ABSEN TANGGAL " + FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy"));
+        } else {
             JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
-            JTable.tampilkan();
             JLTitle.setText("TAMBAH BARU DATA ABSEN KARYAWAN");
         }
+        JTable.tampilkan();
     }
 
     void hitungTotalHadir() {
@@ -277,7 +281,7 @@ public class Absen extends javax.swing.JFrame {
     }//GEN-LAST:event_JDTanggalPropertyChange
 
     private void JTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMouseClicked
-        
+
     }//GEN-LAST:event_JTableMouseClicked
 
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed

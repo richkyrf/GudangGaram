@@ -67,10 +67,10 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
-    Double getGrandTotal() {
-        double GrandTotal = 0;
+    Integer getGrandTotal() {
+        int GrandTotal = 0;
         for (int x = 0; x < JTable.getRowCount(); x++) {
-            GrandTotal = GrandTotal + (Double.valueOf(JTable.getValueAt(x, 4).toString().replace(".", "").replace(",", ".")));
+            GrandTotal = GrandTotal + (Integer.valueOf(JTable.getValueAt(x, 4).toString().replace(".", "").replace(",", ".")));
         }
         return GrandTotal;
     }
@@ -130,7 +130,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Berhasil Tambah");
             JCKeterangan.requestFocus();
             RefreshTbl();
-            JTGrandTotal.setText(Decformatdigit(getGrandTotal()));
+            JTGrandTotal.setText(Intformatdigit(getGrandTotal()));
         }
     }
 
@@ -190,7 +190,6 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         jbuttonF5 = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(990, 536));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -339,6 +338,16 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
 
         JCKeterangan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Pilih Keterangan --" }));
         JCKeterangan.load("SELECT '-- Pilih Keterangan --' as 'Keterangan' UNION ALL SELECT `Keterangan` FROM `tbmketerangan` ORDER BY `Keterangan` ASC");
+        JCKeterangan.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCKeteranganItemStateChanged(evt);
+            }
+        });
+        JCKeterangan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JCKeteranganKeyPressed(evt);
+            }
+        });
 
         jbuttonF5.setText("+");
 
@@ -510,6 +519,22 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JDTanggalKeyPressed
 
+    private void JCKeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCKeteranganKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTJumlah.requestFocus();
+        }
+    }//GEN-LAST:event_JCKeteranganKeyPressed
+
+    private void JCKeteranganItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCKeteranganItemStateChanged
+        if (JCKeterangan.getSelectedIndex() != 0) {
+            DRunSelctOne dRunSelctOne = new DRunSelctOne();
+            dRunSelctOne.seterorm("Gagal Select Rupiah");
+            dRunSelctOne.setQuery("SELECT `Rupiah` FROM `tbmketerangan` WHERE `Keterangan` = '" + JCKeterangan.getSelectedItem() + "'");
+            ArrayList<String> list = dRunSelctOne.excute();
+            JTRupiah.setText(list.get(0));
+        }
+    }//GEN-LAST:event_JCKeteranganItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -579,7 +604,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT DATE_FORMAT(`Tanggal`,'%d/%m') as 'Tanggal', IF(`SetengahHari` = 0,'ANGKUT GARAM,CURAH,ADUK YODIUM','SETENGAH HARI BEKERJA') as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(IF(`SetengahHari`=0,89748,89748/2),0) as '@ Rupiah', FORMAT((SUM(`Hadir`) * IF(`SetengahHari`=0,89748,89748/2)),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 1 AND `Status` = 1 GROUP BY `Tanggal`, `SetengahHari` UNION ALL SELECT '' as 'Tanggal', 'BIAYA ADMINISTRASI' as `Keterangan`, 1 as 'Jumlah', FORMAT(55800,0) as '@ Rupiah', FORMAT(1*55800,0) as 'Sub Total' UNION ALL SELECT '' as 'Tanggal', `Keterangan`, FORMAT(SUM(`Jumlah`),2) as 'Jumlah', FORMAT(`@ Rupiah`,0) as '@ Rupiah', FORMAT(SUM(`Sub Total`),0) as 'Sub Total' FROM (SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`Jumlah`*`Satuan`)/1000,0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL((SUM(`Jumlah`*`Satuan`)/1000)*6000,0) as 'Sub Total' FROM `tbpenjualan`a JOIN `tbpenjualandetail`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON b.`IdBarang`=c.`Idbarang` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' UNION ALL SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`NettoPelita`),0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL(SUM(`NettoPelita`)*6000,0) as 'Sub Total' FROM `tbpenerimaan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "') tbtemp");
+        runSelct.setQuery("SELECT DATE_FORMAT(`Tanggal`,'%d/%m') as 'Tanggal', IF(`SetengahHari` = 0,'ANGKUT GARAM,CURAH,ADUK YOD','SETENGAH HARI BEKERJA') as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(IF(`SetengahHari`=0,89748,89748/2),0) as '@ Rupiah', FORMAT((SUM(`Hadir`) * IF(`SetengahHari`=0,89748,89748/2)),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 1 AND `Status` = 1 GROUP BY `Tanggal`, `SetengahHari` UNION ALL SELECT '' as 'Tanggal', 'BIAYA ADMINISTRASI' as `Keterangan`, 1 as 'Jumlah', FORMAT(55800,0) as '@ Rupiah', FORMAT(1*55800,0) as 'Sub Total' UNION ALL SELECT '' as 'Tanggal', `Keterangan`, FORMAT(SUM(`Jumlah`),1) as 'Jumlah', FORMAT(`@ Rupiah`,0) as '@ Rupiah', FORMAT(SUM(`Sub Total`),0) as 'Sub Total' FROM (SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`Jumlah`*`Satuan`)/1000,0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL((SUM(`Jumlah`*`Satuan`)/1000)*6000,0) as 'Sub Total' FROM `tbpenjualan`a JOIN `tbpenjualandetail`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON b.`IdBarang`=c.`Idbarang` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' UNION ALL SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`NettoPelita`),0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL(SUM(`NettoPelita`)*6000,0) as 'Sub Total' FROM `tbpenerimaan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "') tbtemp");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -587,7 +612,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
                 model.addRow(new Object[]{"", "", "", "", "", ""});
                 JTable.setValueAt(rs.getString(1), row, 0);
                 JTable.setValueAt(rs.getString(2), row, 1);
-                JTable.setValueAt(rs.getString(3).replace(",", "."), row, 2);
+                JTable.setValueAt(rs.getString(3).replace(".", ","), row, 2);
                 JTable.setValueAt(rs.getString(4).replace(",", "."), row, 3);
                 JTable.setValueAt(rs.getString(5).replace(",", "."), row, 4);
                 row++;
@@ -618,7 +643,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         }
         JTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         JTable.getTableHeader().setReorderingAllowed(false);
-        JTGrandTotal.setText(Decformatdigit(getGrandTotal()));
+        JTGrandTotal.setText(Intformatdigit(getGrandTotal()));
     }
 
     void print() {
@@ -635,15 +660,17 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         for (int i = 0; i < JTable.getRowCount(); i++) {
             Tanggal[i] = JTable.getValueAt(i, 0).toString();
             Barang[i] = JTable.getValueAt(i, 1).toString();
-            Jumlah[i] = Integer.parseInt(JTable.getValueAt(i, 2).toString().replace(".", ""));
-            Jumlahs[i] = Intformatdigit(Jumlah[i]);
+            if (JTable.getValueAt(i, 1).toString().toUpperCase().equals("BONGKAR DAN MUAT GARAM")) {
+                Jumlahs[i] = JTable.getValueAt(i, 2).toString();
+            } else {
+                Jumlah[i] = Integer.parseInt(JTable.getValueAt(i, 2).toString().replace(".", ""));
+                Jumlahs[i] = Intformatdigit(Jumlah[i]);
+            }
             Upah[i] = Integer.parseInt(JTable.getValueAt(i, 3).toString().replace(".", ""));
             Upahs[i] = Intformatdigit(Upah[i]);
             Sub[i] = Integer.parseInt(JTable.getValueAt(i, 4).toString().replace(".", ""));
             Subs[i] = Intformatdigit(Sub[i]);
         }
-
-        String Keterangan = JCKeterangan.getSelectedItem().toString();
 
         int Total = (int) Math.round(getGrandTotal());
         String Totals = Intformatdigit(Total);
@@ -662,35 +689,38 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         } else {
             terbilangg2 = "";
         }
-        String leftAlignFormat = "%-4s%-33s%-12s%-13s%-16s%-1s%n";
+        String leftAlignFormat = "%-8s%-29s%-12s%-13s%-16s%-1s%n";
         String OutFormat = "";
         OutFormat += format("%-81s%n", "                     PERMOHONAN PERSETUJUAN PENGELUARAN KAS                     ");
-        OutFormat += format("%-81s%n", "                        Untuk Upah Borongan Packing Garam                       ");
+        OutFormat += format("%-81s%n", "                        Untuk Upah Borongan/Harian Gudang                       ");
         OutFormat += format("%-81s%n", "                        Tanggal " + Periode1 + " s/d " + Periode2 + "                       ");
         OutFormat += format("%n", "");
         //                              12345678901234567890123456789012345678901234567890123456789012345678901234567890
         //                              12341234567890123456789012345678901234567890123456712345678912345671234567890123
-        OutFormat += format("%-80s%n", "+---+--------------------------------+-----------+------------+---------------+");
-        OutFormat += format("%-80s%n", "| NO| KETERANGAN                     |   JUMLAH  |  @ RUPIAH  |   SUB TOTAL   |");
-        OutFormat += format("%-80s%n", "+---+--------------------------------+-----------+------------+---------------+");
-        for (int i = 0; i < 15; i++) {
+        OutFormat += format("%-80s%n", "+-------+----------------------------+-----------+------------+---------------+");
+        OutFormat += format("%-80s%n", "|  TGL  | KETERANGAN                 |   JUMLAH  |  @ RUPIAH  |   SUB TOTAL   |");
+        OutFormat += format("%-80s%n", "+-------+----------------------------+-----------+------------+---------------+");
+        for (int i = 0; i < 20; i++) {
             if (i < JTable.getRowCount()) {
                 String satuan;
-                if (Barang[i].contains("UPAH PACKING")) {
-                    satuan = " PAK";
-                } else if (Barang[i].contains("UANG MAKAN")) {
-                    satuan = "  HR";
-                } else if (Barang[i].contains("BONUS") || Barang[i].contains("PELATIHAN")) {
+                DRunSelctOne dRunSelctOne = new DRunSelctOne();
+                dRunSelctOne.seterorm("Gagal Select Satuan");
+                dRunSelctOne.setQuery("SELECT IFNULL(`Satuan`,0) FROM `tbmketerangan` WHERE `Keterangan` = '" + JTable.getValueAt(i, 1) + "'");
+                ArrayList<String> list = dRunSelctOne.excute();
+                if (list.get(0) == null) {
                     satuan = " ORG";
                 } else {
-                    satuan = "    ";
+                    satuan = " " + list.get(0);
                 }
-                OutFormat += format(leftAlignFormat, "| " + (i + 1), "| " + Barang[i], "|" + format("%10s", Jumlahs[i] + satuan), "| Rp" + format("%8s", Upahs[i]), "| Rp" + format("%11s", Subs[i]), "|");
+                if (JTable.getValueAt(i, 1).toString().toUpperCase().contains("BONGKAR DAN MUAT GARAM")) {
+                    satuan = " TON";
+                }
+                OutFormat += format(leftAlignFormat, "| " + Tanggal[i], "| " + Barang[i], "|" + format("%10s", Jumlahs[i] + satuan), "| Rp" + format("%8s", Upahs[i]), "| Rp" + format("%11s", Subs[i]), "|");
             } else {
-                OutFormat += format(leftAlignFormat, "| " + (i + 1), "|", "|", "|", "|", "|");
+                OutFormat += format(leftAlignFormat, "| ", "|", "|", "|", "|", "|");
             }
         }
-        OutFormat += format("%-80s%n", "+---+--------------------------------+-----------+------------+---------------+");
+        OutFormat += format("%-80s%n", "+-------+----------------------------+-----------+------------+---------------+");
         OutFormat += format("%-62s%-16s%-1s%n", "| GRAND TOTAL", "| Rp" + format("%11s", Totals), "|");
         OutFormat += format("%-80s%n", "+-------------------------------------------------------------+---------------+");
         OutFormat += format("%-80s%n", "Terbilang : # " + terbilangg);
@@ -810,7 +840,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         double value = 0;
         value = Number;
         String output;
-        String pattern = "#,###,###";
+        String pattern = "#,###,###.00";
         DecimalFormat myFormatter = new DecimalFormat(pattern);
         if (value <= -1) {
             value = abs(value);
