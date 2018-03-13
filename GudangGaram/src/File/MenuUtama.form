@@ -138,6 +138,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPenerimaActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterKeterangan">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="10. Master Keterangan"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterKeteranganActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="JMProses">
@@ -272,7 +280,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="5. List Dinas Luar"/>
+                <Property name="text" type="java.lang.String" value="4. List Dinas Luar"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
@@ -282,7 +290,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIListPenyesuaianStok">
               <Properties>
-                <Property name="text" type="java.lang.String" value="4. List Penyesuaian Stok"/>
+                <Property name="text" type="java.lang.String" value="5. List Penyesuaian Stok"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenyesuaianStokActionPerformed"/>

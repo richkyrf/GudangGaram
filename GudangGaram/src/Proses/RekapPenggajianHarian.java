@@ -10,8 +10,9 @@ import KomponenGUI.FDateF;
 import static KomponenGUI.FDateF.datetostr;
 import LSubProces.DRunSelctOne;
 import LSubProces.RunSelct;
-import static Proses.Penjualan.angkaToTerbilang;
+import Master.MasterKeterangan;
 import java.awt.Component;
+import static java.awt.Frame.NORMAL;
 import java.awt.event.KeyEvent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -350,6 +351,11 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         });
 
         jbuttonF5.setText("+");
+        jbuttonF5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbuttonF5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -535,6 +541,15 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JCKeteranganItemStateChanged
 
+    private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
+        if (GlobalVar.Var.tambahKeterangan == null) {
+            GlobalVar.Var.tambahKeterangan = new MasterKeterangan();
+        } else {
+            GlobalVar.Var.tambahKeterangan.setState(NORMAL);
+            GlobalVar.Var.tambahKeterangan.toFront();
+        }
+    }//GEN-LAST:event_jbuttonF5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -561,9 +576,6 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(RekapPenggajianHarian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -574,7 +586,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private KomponenGUI.JcomboboxF JCKeterangan;
+    public KomponenGUI.JcomboboxF JCKeterangan;
     private KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JdateCF JDTanggal1;
     private KomponenGUI.JdateCF JDTanggal2;

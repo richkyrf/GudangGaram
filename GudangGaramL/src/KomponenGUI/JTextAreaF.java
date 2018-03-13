@@ -1,6 +1,5 @@
 package KomponenGUI;
 
-import static KomponenGUI.JtextF.MaxText;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;

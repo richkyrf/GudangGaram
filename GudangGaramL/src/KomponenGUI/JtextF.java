@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 public class JtextF extends JTextField {
 
-    static int MaxText = 250;
+    int MaxText = 250;
 
     public JtextF() {
         setText("");

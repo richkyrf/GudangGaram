@@ -375,12 +375,16 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="JCKeterangan.load(&quot;SELECT &apos;-- Pilih Keterangan --&apos; as &apos;Keterangan&apos; UNION ALL SELECT `Keterangan` FROM `tbmketerangan` ORDER BY `Keterangan` ASC&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF5">
       <Properties>
         <Property name="text" type="java.lang.String" value="+"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF5ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -63,7 +63,7 @@ public class Poles extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTableBahan.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoPoles`, `NamaBarang`, SUM(`Jumlah`) as 'Jumlah', FORMAT((SUM(`Jumlah KG`)/SUM(`Jumlah`)),2) 'Satuan', FORMAT(SUM(`Jumlah KG`),0) as 'Jumlah KG'  FROM (SELECT `NoPoles`, CONCAT(c.`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') as 'NamaBarang', FORMAT(ROUND(SUM(`JumlahBahan`)),0) as 'Jumlah', ROUND(ROUND(SUM(`JumlahHasil`)) * d.`Satuan`) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai` = b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE a.`Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY d.`NamaBarang` ORDER BY `NoPacking` DESC) tbtemo GROUP BY `NamaBarang`");
+        runSelct.setQuery("SELECT `NoPoles`, `NamaBarang`, SUM(`Jumlah`) as 'Jumlah', FORMAT((SUM(`Jumlah KG`)/SUM(`Jumlah`)),2) 'Satuan', FORMAT(SUM(`Jumlah KG`),2) as 'Jumlah KG'  FROM (SELECT `NoPoles`, CONCAT(c.`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') as 'NamaBarang', FORMAT(ROUND(SUM(`JumlahBahan`)),0) as 'Jumlah', ROUND(SUM(`JumlahHasil`)) * d.`Satuan` as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai` = b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE a.`Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY d.`NamaBarang` ORDER BY `NoPacking` DESC) tbtemo GROUP BY `NamaBarang`");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -74,7 +74,7 @@ public class Poles extends javax.swing.JFrame {
                 JTableBahan.setValueAt(rs.getString(2), row, 1);
                 JTableBahan.setValueAt(rs.getString(3).replace(",", "."), row, 2);
                 JTableBahan.setValueAt(rs.getString(4).replace(".", ","), row, 3);
-                JTableBahan.setValueAt(rs.getString(5).replace(",", "."), row, 4);
+                JTableBahan.setValueAt(rs.getString(5).replace(",", "*").replace(".", ",").replace("*", "."), row, 4);
                 row++;
             }
         } catch (SQLException e) {
@@ -83,13 +83,14 @@ public class Poles extends javax.swing.JFrame {
         } finally {
             runSelct.closecon();
         }
+        JTTotalBahan.setText(Decformatdigit(getTotalBahan()));
     }
 
     void loadHasil() {
         DefaultTableModel model = (DefaultTableModel) JTableHasil.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT b.`NamaBarang`, FORMAT(ROUND(SUM(`JumlahHasil`)),0) as 'Jumlah', b.`Satuan`, FORMAT(ROUND(ROUND(SUM(`JumlahHasil`)) * b.`Satuan`),0) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil` = b.`IdBarang` WHERE `Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`NamaBarang` ORDER BY `NoPacking` DESC");
+        runSelct.setQuery("SELECT b.`NamaBarang`, FORMAT(ROUND(SUM(`JumlahHasil`)),0) as 'Jumlah', b.`Satuan`, FORMAT(ROUND(SUM(`JumlahHasil`)) * b.`Satuan`,2) as 'Jumlah KG' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil` = b.`IdBarang` WHERE `Tanggal` = '" + datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`NamaBarang` ORDER BY `NoPacking` DESC");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -99,7 +100,7 @@ public class Poles extends javax.swing.JFrame {
                 JTableHasil.setValueAt(rs.getString(1), row, 1);
                 JTableHasil.setValueAt(rs.getString(2).replace(",", "."), row, 2);
                 JTableHasil.setValueAt(rs.getString(3).replace(".", ","), row, 3);
-                JTableHasil.setValueAt(rs.getString(4).replace(",", "."), row, 4);
+                JTableHasil.setValueAt(rs.getString(4).replace(",", "*").replace(".", ",").replace("*", "."), row, 4);
                 row++;
             }
         } catch (SQLException e) {
@@ -108,20 +109,21 @@ public class Poles extends javax.swing.JFrame {
         } finally {
             runSelct.closecon();
         }
+        JTTotalHasil.setText(Decformatdigit(getTotalHasil()));
     }
 
-    Integer getTotalBahan() {
-        int TotalBahan = 0;
+    Double getTotalBahan() {
+        double TotalBahan = 0;
         for (int x = 0; x < JTableBahan.getRowCount(); x++) {
-            TotalBahan = TotalBahan + Integer.valueOf(JTableBahan.getValueAt(x, 4).toString().replace(".", "").replace(",", "."));
+            TotalBahan = TotalBahan + Double.valueOf(JTableBahan.getValueAt(x, 4).toString().replace(".", "").replace(",", "."));
         }
         return TotalBahan;
     }
 
-    Integer getTotalHasil() {
-        int TotalHasil = 0;
+    Double getTotalHasil() {
+        double TotalHasil = 0;
         for (int x = 0; x < JTableHasil.getRowCount(); x++) {
-            TotalHasil = TotalHasil + Integer.valueOf(JTableHasil.getValueAt(x, 4).toString().replace(".", "").replace(",", "."));
+            TotalHasil = TotalHasil + Double.valueOf(JTableHasil.getValueAt(x, 4).toString().replace(".", "").replace(",", "."));
         }
         return TotalHasil;
     }
@@ -166,13 +168,13 @@ public class Poles extends javax.swing.JFrame {
         JTableHasil = new KomponenGUI.JtableF();
         JTNoPoles1 = new KomponenGUI.JtextF();
         JTNoPoles2 = new KomponenGUI.JtextF();
-        JTTotalBahan = new KomponenGUI.JRibuanTextField();
         jlableF9 = new KomponenGUI.JlableF();
         jlableF2 = new KomponenGUI.JlableF();
-        JTTotalHasil = new KomponenGUI.JRibuanTextField();
         jlableF10 = new KomponenGUI.JlableF();
         jlableF3 = new KomponenGUI.JlableF();
         jbuttonF2 = new KomponenGUI.JbuttonF();
+        JTTotalBahan = new KomponenGUI.JtextF();
+        JTTotalHasil = new KomponenGUI.JtextF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -298,13 +300,9 @@ public class Poles extends javax.swing.JFrame {
             }
         });
 
-        JTTotalBahan.setEnabled(false);
-
         jlableF9.setText(":");
 
         jlableF2.setText("Total Bahan");
-
-        JTTotalHasil.setEnabled(false);
 
         jlableF10.setText(":");
 
@@ -316,6 +314,14 @@ public class Poles extends javax.swing.JFrame {
                 jbuttonF2ActionPerformed(evt);
             }
         });
+
+        JTTotalBahan.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        JTTotalBahan.setText("0");
+        JTTotalBahan.setEnabled(false);
+
+        JTTotalHasil.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        JTTotalHasil.setText("0");
+        JTTotalHasil.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -379,18 +385,18 @@ public class Poles extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JTTotalBahan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTTotalBahan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(JTNoPoles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JTTotalHasil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTTotalHasil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -410,10 +416,10 @@ public class Poles extends javax.swing.JFrame {
     private void JDTanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDTanggalPropertyChange
         if (checkPacking()) {
             loadBahan();
-            JTTotalBahan.setText(String.valueOf(getTotalBahan()));
             loadHasil();
-            JTTotalHasil.setText(String.valueOf(getTotalHasil()));
         } else {
+            JTTotalBahan.setText("0");
+            JTTotalHasil.setText("0");
             JOptionPane.showMessageDialog(rootPane, "Belum ada data Packing pada Tanggal " + datetostr(JDTanggal.getDate(), "dd-MM-yyyy"));
             for (int a = 0; a < JTableBahan.getRowCount(); a++) {
                 ((DefaultTableModel) JTableBahan.getModel()).removeRow(0);
@@ -480,8 +486,8 @@ public class Poles extends javax.swing.JFrame {
     private KomponenGUI.JtextF JTNoPoles;
     private KomponenGUI.JtextF JTNoPoles1;
     private KomponenGUI.JtextF JTNoPoles2;
-    private KomponenGUI.JRibuanTextField JTTotalBahan;
-    private KomponenGUI.JRibuanTextField JTTotalHasil;
+    private KomponenGUI.JtextF JTTotalBahan;
+    private KomponenGUI.JtextF JTTotalHasil;
     private KomponenGUI.JtableF JTableBahan;
     private KomponenGUI.JtableF JTableHasil;
     private javax.swing.JScrollPane jScrollPane1;
@@ -506,7 +512,7 @@ public class Poles extends javax.swing.JFrame {
         String[] JumlahBahans = new String[JTableBahan.getRowCount()];
         double[] SatuanBahan = new double[JTableBahan.getRowCount()];
         String[] SatuanBahans = new String[JTableBahan.getRowCount()];
-        int[] JumlahKGBahan = new int[JTableBahan.getRowCount()];
+        double[] JumlahKGBahan = new double[JTableBahan.getRowCount()];
         String[] JumlahKGBahans = new String[JTableBahan.getRowCount()];
         for (int i = 0; i < JTableBahan.getRowCount(); i++) {
             BarangBahan[i] = JTableBahan.getValueAt(i, 1).toString();
@@ -514,15 +520,15 @@ public class Poles extends javax.swing.JFrame {
             JumlahBahans[i] = Intformatdigit(JumlahBahan[i]);
             SatuanBahan[i] = Double.valueOf(JTableBahan.getValueAt(i, 3).toString().replace(".", "").replace(",", "."));
             SatuanBahans[i] = Decformatdigit(SatuanBahan[i]);
-            JumlahKGBahan[i] = Integer.valueOf(JTableBahan.getValueAt(i, 4).toString().replace(".", "").replace(",", "."));
-            JumlahKGBahans[i] = Intformatdigit(JumlahKGBahan[i]);
+            JumlahKGBahan[i] = Double.valueOf(JTableBahan.getValueAt(i, 4).toString().replace(".", "").replace(",", "."));
+            JumlahKGBahans[i] = Decformatdigit(JumlahKGBahan[i]);
         }
         String[] BarangHasil = new String[JTableHasil.getRowCount()];
         int[] JumlahHasil = new int[JTableHasil.getRowCount()];
         String[] JumlahHasils = new String[JTableHasil.getRowCount()];
         double[] SatuanHasil = new double[JTableHasil.getRowCount()];
         String[] SatuanHasils = new String[JTableHasil.getRowCount()];
-        int[] JumlahKGHasil = new int[JTableHasil.getRowCount()];
+        double[] JumlahKGHasil = new double[JTableHasil.getRowCount()];
         String[] JumlahKGHasils = new String[JTableHasil.getRowCount()];
         for (int i = 0; i < JTableHasil.getRowCount(); i++) {
             BarangHasil[i] = JTableHasil.getValueAt(i, 1).toString();
@@ -530,15 +536,15 @@ public class Poles extends javax.swing.JFrame {
             JumlahHasils[i] = Intformatdigit(JumlahHasil[i]);
             SatuanHasil[i] = Double.valueOf(JTableHasil.getValueAt(i, 3).toString().replace(".", "").replace(",", "."));
             SatuanHasils[i] = Decformatdigit(SatuanHasil[i]);
-            JumlahKGHasil[i] = Integer.valueOf(JTableHasil.getValueAt(i, 4).toString().replace(".", "").replace(",", "."));
-            JumlahKGHasils[i] = Intformatdigit(JumlahKGHasil[i]);
+            JumlahKGHasil[i] = Double.valueOf(JTableHasil.getValueAt(i, 4).toString().replace(".", "").replace(",", "."));
+            JumlahKGHasils[i] = Decformatdigit(JumlahKGHasil[i]);
         }
 
-        Integer TotalBahan = getTotalBahan();
-        String TotalBahans = Intformatdigit(TotalBahan);
+        Double TotalBahan = getTotalBahan();
+        String TotalBahans = Decformatdigit(TotalBahan);
 
-        Integer TotalHasil = getTotalHasil();
-        String TotalHasils = Intformatdigit(TotalHasil);
+        Double TotalHasil = getTotalHasil();
+        String TotalHasils = Decformatdigit(TotalHasil);
 
         String leftAlignFormat = "%-5s%-44s%-9s%-9s%-12s%-1s%n";
         String OutFormat = "";
@@ -578,6 +584,7 @@ public class Poles extends javax.swing.JFrame {
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%-80s%n", " " + "HENDRI");
+        OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");

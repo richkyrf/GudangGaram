@@ -30,6 +30,7 @@ public class Var {
     public static MasterKendaraan tambahKendaraan, ubahKendaraan;
     public static Masters tambahGudang, ubahGudang, tambahPemasok, ubahPemasok, tambahPeminta, ubahPeminta, tambahPenerima, ubahPenerima, tambahJenisKaryawan, ubahJenisKaryawan, tambahJenisBarang, ubahJenisBarang, tambahJenisPenjualan, ubahJenisPenjualan;
     public static MasterHariLibur tambahHariLibur, ubahHariLibur;
+    public static MasterKeterangan tambahKeterangan, ubahKeterangan;
     
     public static Absen absen;
     public static Penerimaan tambahPenerimaan, ubahPenerimaan;
@@ -55,6 +56,7 @@ public class Var {
     public static ListPenjualan listPenjualan;
     public static ListPenyesuaian listPenyesuaian;
     public static ListDinasLuar listDinasLuar;
+    public static ListKeterangan listKeterangan;
     
     public static LaporanStokHarian laporanStokHarian;
     

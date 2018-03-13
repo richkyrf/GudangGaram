@@ -54,6 +54,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIMasterPeminta = new javax.swing.JMenuItem();
         JMIMasterGudang = new javax.swing.JMenuItem();
         JMIMasterPenerima = new javax.swing.JMenuItem();
+        JMIMasterKeterangan = new javax.swing.JMenuItem();
         JMProses = new javax.swing.JMenu();
         JMIProsesAbsenKaryawan = new javax.swing.JMenuItem();
         JMIProsesPacking = new javax.swing.JMenuItem();
@@ -203,6 +204,14 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMMaster.add(JMIMasterPenerima);
 
+        JMIMasterKeterangan.setText("10. Master Keterangan");
+        JMIMasterKeterangan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIMasterKeteranganActionPerformed(evt);
+            }
+        });
+        JMMaster.add(JMIMasterKeterangan);
+
         JMenuBar.add(JMMaster);
 
         JMProses.setText("Proses");
@@ -326,7 +335,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMList.add(JMIListPenerimaan);
         JMList.add(SList);
 
-        jMenuItem3.setText("5. List Dinas Luar");
+        jMenuItem3.setText("4. List Dinas Luar");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -335,7 +344,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMList.add(jMenuItem3);
         JMList.add(SList1);
 
-        JMIListPenyesuaianStok.setText("4. List Penyesuaian Stok");
+        JMIListPenyesuaianStok.setText("5. List Penyesuaian Stok");
         JMIListPenyesuaianStok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIListPenyesuaianStokActionPerformed(evt);
@@ -638,6 +647,15 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JMIProsesRekapPenggajianKaryawan1ActionPerformed
 
+    private void JMIMasterKeteranganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIMasterKeteranganActionPerformed
+        if (GlobalVar.Var.listKeterangan == null) {
+            GlobalVar.Var.listKeterangan = new ListKeterangan();
+        } else {
+            GlobalVar.Var.listKeterangan.setState(NORMAL);
+            GlobalVar.Var.listKeterangan.toFront();
+        }
+    }//GEN-LAST:event_JMIMasterKeteranganActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -688,6 +706,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIMasterHariLibur;
     private javax.swing.JMenuItem JMIMasterKaryawan;
     private javax.swing.JMenuItem JMIMasterKendaraan;
+    private javax.swing.JMenuItem JMIMasterKeterangan;
     private javax.swing.JMenuItem JMIMasterPemasok;
     private javax.swing.JMenuItem JMIMasterPeminta;
     private javax.swing.JMenuItem JMIMasterPenerima;
