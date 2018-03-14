@@ -16,38 +16,40 @@ import Master.*;
  *
  * @author richk
  */
-
 public class Var {
-    
+
     public static Login login;
     public static TambahUser tambahUser;
     public static ResetPasswordUser resetPasswordUser;
     public static GantiPassword gantiPassword;
-    
+
     public static MasterPartai tambahPartai, ubahPartai;
-    public static MasterKaryawan tambahKaryawan,ubahKaryawan;
-    public static MasterBarang tambahBarang,ubahBarang;
+    public static MasterKaryawan tambahKaryawan, ubahKaryawan;
+    public static MasterBarang tambahBarang, ubahBarang;
+    public static MasterBarangLain tambahBarangLain, ubahBarangLain;
     public static MasterKendaraan tambahKendaraan, ubahKendaraan;
     public static Masters tambahGudang, ubahGudang, tambahPemasok, ubahPemasok, tambahPeminta, ubahPeminta, tambahPenerima, ubahPenerima, tambahJenisKaryawan, ubahJenisKaryawan, tambahJenisBarang, ubahJenisBarang, tambahJenisPenjualan, ubahJenisPenjualan;
     public static MasterHariLibur tambahHariLibur, ubahHariLibur;
     public static MasterKeterangan tambahKeterangan, ubahKeterangan;
-    
+
     public static Absen absen;
     public static Penerimaan tambahPenerimaan, ubahPenerimaan;
     public static Packing tambahPacking, ubahPacking;
     public static Penjualan tambahPenjualan, ubahPenjualan;
     public static Penyesuaian tambahPenyesuaian;
-    
+    public static PenyesuaianLain tambahPenyesuaianLain;
+
     public static Penggajian penggajian;
     public static RekapPenggajian rekapPenggajian;
     public static RekapPenggajianHarian rekapPenggajianHarian;
     public static PrintTPB printTPB;
     public static Poles poles;
     public static DinasLuar tambahDinasLuar, ubahDinasLuar;
-    
+
     public static ListPartai listPartai;
     public static ListKaryawan listKaryawan;
     public static ListBarang listBarang;
+    public static ListBarangLain listBarangLain;
     public static ListKendaraan listKendaraan;
     public static ListMasters listGudang, listPemasok, listPeminta, listPenerima, listJenisKaryawan, listJenisBarang, listJenisPenjualan;
     public static ListHariLibur listHariLibur;
@@ -57,8 +59,8 @@ public class Var {
     public static ListPenyesuaian listPenyesuaian;
     public static ListDinasLuar listDinasLuar;
     public static ListKeterangan listKeterangan;
-    
+
     public static LaporanStokHarian laporanStokHarian;
-    
+
     public static Jcari jcari;
 }

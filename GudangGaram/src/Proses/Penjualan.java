@@ -1567,7 +1567,7 @@ public class Penjualan extends javax.swing.JFrame {
             for (int i = 0; i < 10; i++) {
                 if (i < JTable.getRowCount()) {
                     String satuan;
-                    if (Barang[i].toUpperCase().contains("PARTAI")) {
+                    if (Barang[i].toUpperCase().contains("PARTAI") || Barang[i].toUpperCase().contains("@50 KG")) {
                         satuan = " SAK";
                     } else {
                         satuan = " PAK";

@@ -5,12 +5,15 @@
         <group>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPartai.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Penerimaan.java</file>
+            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/PenyesuaianLain.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/RekapPenggajian.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListDinasLuar.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/DinasLuar.java</file>
+            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterKeterangan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/File/Login.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPacking.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListMasters.java</file>
+            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListKeterangan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListKaryawan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Penjualan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Penyesuaian.java</file>
@@ -22,6 +25,7 @@
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListBarang.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPenjualan.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListKendaraan.java</file>
+            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterBarangLain.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/File/MenuUtama.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/RekapPenggajianHarian.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Absen.java</file>
@@ -30,6 +34,7 @@
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/Masters.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Penggajian.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterKendaraan.java</file>
+            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListBarangLain.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/GlobalVar/Var.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterBarang.java</file>
             <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterPartai.java</file>

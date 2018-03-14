@@ -214,7 +214,7 @@ public class ListBarang extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
             Delete delete = new Delete();
-            Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbmbarang` WHERE `IdBarang` = " + jcomCari1.GetIDTable(), "Barang", this);
+            Boolean berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmbarang` WHERE `IdBarang` = " + jcomCari1.GetIDTable(), "Barang", this);
             if (berhasil) {
                 refreshAll();
             }

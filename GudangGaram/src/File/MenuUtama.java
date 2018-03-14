@@ -47,6 +47,7 @@ public class MenuUtama extends javax.swing.JFrame {
         SMaster1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
         JMIMasterBarang = new javax.swing.JMenuItem();
+        JMIMasterBarang1 = new javax.swing.JMenuItem();
         SMaster3 = new javax.swing.JPopupMenu.Separator();
         JMIMasterHariLibur = new javax.swing.JMenuItem();
         SMaster2 = new javax.swing.JPopupMenu.Separator();
@@ -69,6 +70,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIProsesRekapPenggajianKaryawan1 = new javax.swing.JMenuItem();
         SProses2 = new javax.swing.JPopupMenu.Separator();
         JMIProsesPenyesuaianStok = new javax.swing.JMenuItem();
+        JMIProsesPenyesuaianStok1 = new javax.swing.JMenuItem();
         JMList = new javax.swing.JMenu();
         JMIListPacking = new javax.swing.JMenuItem();
         JMIListPenjualan = new javax.swing.JMenuItem();
@@ -161,9 +163,17 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMMaster.add(JMIMasterBarang);
+
+        JMIMasterBarang1.setText("5. Master Barang Lain");
+        JMIMasterBarang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIMasterBarang1ActionPerformed(evt);
+            }
+        });
+        JMMaster.add(JMIMasterBarang1);
         JMMaster.add(SMaster3);
 
-        JMIMasterHariLibur.setText("5. Master Hari Libur");
+        JMIMasterHariLibur.setText("6. Master Hari Libur");
         JMIMasterHariLibur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIMasterHariLiburActionPerformed(evt);
@@ -172,7 +182,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMMaster.add(JMIMasterHariLibur);
         JMMaster.add(SMaster2);
 
-        JMIMasterPemasok.setText("6. Master Pemasok");
+        JMIMasterPemasok.setText("7. Master Pemasok");
         JMIMasterPemasok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIMasterPemasokActionPerformed(evt);
@@ -180,7 +190,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMMaster.add(JMIMasterPemasok);
 
-        JMIMasterPeminta.setText("7. Master Peminta");
+        JMIMasterPeminta.setText("8. Master Peminta");
         JMIMasterPeminta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIMasterPemintaActionPerformed(evt);
@@ -188,7 +198,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMMaster.add(JMIMasterPeminta);
 
-        JMIMasterGudang.setText("8. Master Gudang");
+        JMIMasterGudang.setText("9. Master Gudang");
         JMIMasterGudang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIMasterGudangActionPerformed(evt);
@@ -196,7 +206,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMMaster.add(JMIMasterGudang);
 
-        JMIMasterPenerima.setText("9. Master Penerima (Customer)");
+        JMIMasterPenerima.setText("10. Master Penerima (Customer)");
         JMIMasterPenerima.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIMasterPenerimaActionPerformed(evt);
@@ -204,7 +214,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMMaster.add(JMIMasterPenerima);
 
-        JMIMasterKeterangan.setText("10. Master Keterangan");
+        JMIMasterKeterangan.setText("11. Master Keterangan");
         JMIMasterKeterangan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIMasterKeteranganActionPerformed(evt);
@@ -305,6 +315,14 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMProses.add(JMIProsesPenyesuaianStok);
+
+        JMIProsesPenyesuaianStok1.setText("12. Proses Penyesuaian Stok Barang Lain");
+        JMIProsesPenyesuaianStok1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIProsesPenyesuaianStok1ActionPerformed(evt);
+            }
+        });
+        JMProses.add(JMIProsesPenyesuaianStok1);
 
         JMenuBar.add(JMProses);
 
@@ -656,6 +674,24 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JMIMasterKeteranganActionPerformed
 
+    private void JMIMasterBarang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIMasterBarang1ActionPerformed
+        if (GlobalVar.Var.listBarangLain == null) {
+            GlobalVar.Var.listBarangLain = new ListBarangLain();
+        } else {
+            GlobalVar.Var.listBarangLain.setState(NORMAL);
+            GlobalVar.Var.listBarangLain.toFront();
+        }
+    }//GEN-LAST:event_JMIMasterBarang1ActionPerformed
+
+    private void JMIProsesPenyesuaianStok1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIProsesPenyesuaianStok1ActionPerformed
+        if (GlobalVar.Var.tambahPenyesuaianLain == null) {
+            GlobalVar.Var.tambahPenyesuaianLain = new PenyesuaianLain();
+        } else {
+            GlobalVar.Var.tambahPenyesuaianLain.setState(NORMAL);
+            GlobalVar.Var.tambahPenyesuaianLain.toFront();
+        }
+    }//GEN-LAST:event_JMIProsesPenyesuaianStok1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -702,6 +738,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIListPenjualan;
     private javax.swing.JMenuItem JMIListPenyesuaianStok;
     private javax.swing.JMenuItem JMIMasterBarang;
+    private javax.swing.JMenuItem JMIMasterBarang1;
     private javax.swing.JMenuItem JMIMasterGudang;
     private javax.swing.JMenuItem JMIMasterHariLibur;
     private javax.swing.JMenuItem JMIMasterKaryawan;
@@ -716,6 +753,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIProsesPenggajianKaryawan;
     private javax.swing.JMenuItem JMIProsesPenjualan;
     private javax.swing.JMenuItem JMIProsesPenyesuaianStok;
+    private javax.swing.JMenuItem JMIProsesPenyesuaianStok1;
     private javax.swing.JMenuItem JMIProsesPoles;
     private javax.swing.JMenuItem JMIProsesPrintTandaPenerimaanBarang;
     private javax.swing.JMenuItem JMIProsesRekapPenggajianKaryawan;
