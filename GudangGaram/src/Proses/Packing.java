@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -64,6 +65,16 @@ public class Packing extends javax.swing.JFrame {
         loadeditdata();
         JCNamaBahan1.requestFocus();
         tableToComponent();
+    }
+    
+    Date yesterday() {
+        final Calendar cal = Calendar.getInstance();
+        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+            cal.add(Calendar.DATE, -2);
+        } else {
+            cal.add(Calendar.DATE, -1);
+        }
+        return cal.getTime();
     }
 
     void loadeditdata() {
@@ -577,7 +588,7 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        JDTanggal.setDate(new Date());
+        JDTanggal.setDate(yesterday());
         JDTanggal.setDateFormatString("dd-MM-yyyy");
         JDTanggal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {

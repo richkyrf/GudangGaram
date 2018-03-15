@@ -46,18 +46,23 @@ public class MasterBarangLain extends javax.swing.JFrame {
 
     void loadeditdata() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdBarangLain` as 'ID', `NamaBarangLain` as 'Nama Barang', `JenisBarangLain` as 'Jenis Barang', `Satuan`, a.`Keterangan` FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBarangLain` WHERE `IdBarangLain` = " + IdEdit);
+        dRunSelctOne.setQuery("SELECT `IdBarangLain` as 'ID', `NamaBarangLain` as 'Nama Barang', `JenisBarangLain` as 'Jenis Barang', `BeratPembagi`, `Satuan`, a.`Keterangan` FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBarangLain` WHERE `IdBarangLain` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
         JTNamaBarangLain.setText(list.get(1));
         JCJenisBarangLain.setSelectedItem(list.get(2));
-        JTSatuan.setText(list.get(3));
-        JTAKeterangan.setText(list.get(4));
+        JTBeratPembagi.setText(list.get(3));
+        JTSatuan.setText(list.get(4));
+        JTAKeterangan.setText(list.get(5));
     }
 
     Boolean checkInput() {
         if (JTNamaBarangLain.getText().replace(" ", "").equals("")) {
             JOptionPane.showMessageDialog(this, "Nama Tidak Boleh Kosong");
             JTNamaBarangLain.requestFocus();
+            return false;
+        } else if (JTBeratPembagi.getInt() == 0) {
+            JOptionPane.showMessageDialog(this, "Berat Pembagi Tidak Boleh Kosong");
+            JTBeratPembagi.requestFocus();
             return false;
         } else if (JTSatuan.getText().replace(" ", "").equals("")) {
             JOptionPane.showMessageDialog(this, "Satuan Tidak Boleh Kosong");
@@ -93,6 +98,9 @@ public class MasterBarangLain extends javax.swing.JFrame {
         JTSatuan = new KomponenGUI.JtextF();
         jlableF9 = new KomponenGUI.JlableF();
         jlableF2 = new KomponenGUI.JlableF();
+        jlableF19 = new KomponenGUI.JlableF();
+        jlableF20 = new KomponenGUI.JlableF();
+        JTBeratPembagi = new KomponenGUI.JRibuanTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -176,6 +184,16 @@ public class MasterBarangLain extends javax.swing.JFrame {
 
         jlableF2.setText("Satuan");
 
+        jlableF19.setText("Berat Pembagi");
+
+        jlableF20.setText(":");
+
+        JTBeratPembagi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTBeratPembagiKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,41 +201,50 @@ public class MasterBarangLain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JTNamaBarangLain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                                .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JTNamaBarangLain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JCJenisBarangLain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JTSatuan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jlableF19, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JCJenisBarangLain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTSatuan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(10, 10, 10))
+                        .addComponent(jlableF20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTBeratPembagi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,6 +259,11 @@ public class MasterBarangLain extends javax.swing.JFrame {
                     .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JCJenisBarangLain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlableF19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlableF20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTBeratPembagi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -297,7 +329,7 @@ public class MasterBarangLain extends javax.swing.JFrame {
 
     private void JCJenisBarangLainKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCJenisBarangLainKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTSatuan.requestFocus();
+            JTBeratPembagi.requestFocus();
         }
     }//GEN-LAST:event_JCJenisBarangLainKeyPressed
 
@@ -306,6 +338,12 @@ public class MasterBarangLain extends javax.swing.JFrame {
             JTAKeterangan.requestFocus();
         }
     }//GEN-LAST:event_JTSatuanKeyPressed
+
+    private void JTBeratPembagiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTBeratPembagiKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTSatuan.requestFocus();
+        }
+    }//GEN-LAST:event_JTBeratPembagiKeyPressed
 
     /**
      * @param args the command line arguments
@@ -352,13 +390,16 @@ public class MasterBarangLain extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF JBUbah;
     public static KomponenGUI.JcomboboxF JCJenisBarangLain;
     private KomponenGUI.JTextAreaF JTAKeterangan;
+    private KomponenGUI.JRibuanTextField JTBeratPembagi;
     private KomponenGUI.JtextF JTNamaBarangLain;
     private KomponenGUI.JtextF JTSatuan;
     private javax.swing.JScrollPane jScrollPane1;
     private KomponenGUI.JlableF jlableF1;
     private KomponenGUI.JlableF jlableF17;
     private KomponenGUI.JlableF jlableF18;
+    private KomponenGUI.JlableF jlableF19;
     private KomponenGUI.JlableF jlableF2;
+    private KomponenGUI.JlableF jlableF20;
     private KomponenGUI.JlableF jlableF3;
     private KomponenGUI.JlableF jlableF6;
     private KomponenGUI.JlableF jlableF8;
@@ -368,7 +409,7 @@ public class MasterBarangLain extends javax.swing.JFrame {
     void tambahData(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbmbaranglain`(`NamaBarangLain`, `IdJenisBarangLain`, `Satuan`, `Keterangan`) VALUES ('" + JTNamaBarangLain.getText() + "',(SELECT `IdJenisBarangLain` FROM `tbsmjenisbaranglain` WHERE `JenisBarangLain` = '" + JCJenisBarangLain.getSelectedItem() + "'),'" + JTSatuan.getText() + "','" + JTAKeterangan.getText() + "')", "Barang Lain", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbmbaranglain`(`NamaBarangLain`, `IdJenisBarangLain`, `BeratPembagi`, `Satuan`, `Keterangan`) VALUES ('" + JTNamaBarangLain.getText() + "',(SELECT `IdJenisBarangLain` FROM `tbsmjenisbaranglain` WHERE `JenisBarangLain` = '" + JCJenisBarangLain.getSelectedItem() + "'),'" + JTBeratPembagi.getInt() + "','" + JTSatuan.getText() + "','" + JTAKeterangan.getText() + "')", "Barang Lain", this);
             if (berhasil) {
                 /*if (GlobalVar.Var.tambahPartai != null) {
                     GlobalVar.Var.tambahPartai.JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`a LEFT JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbsmjenisbarang`c ON a.`IdJenisBarang`=c.`IdJenisBarang` WHERE `JenisBarang` = 'Bahan' AND `Pemasok` = '" + JCJenisBarangLain.getSelectedItem() + "'");
@@ -397,7 +438,7 @@ public class MasterBarangLain extends javax.swing.JFrame {
     void ubahData() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbmbaranglain` SET `NamaBarangLain`='" + JTNamaBarangLain.getText() + "',`IdJenisBarangLain`=(SELECT `IdJenisBarangLain` FROM `tbsmjenisbaranglain` WHERE `JenisBarangLain` = '" + JCJenisBarangLain.getSelectedItem() + "'),`Satuan`='" + JTSatuan.getText() + "',`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdBarangLain` = " + IdEdit, "Barang Lain", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbmbaranglain` SET `NamaBarangLain`='" + JTNamaBarangLain.getText() + "',`IdJenisBarangLain`=(SELECT `IdJenisBarangLain` FROM `tbsmjenisbaranglain` WHERE `JenisBarangLain` = '" + JCJenisBarangLain.getSelectedItem() + "'),`BeratPembagi`='" + JTBeratPembagi.getInt() + "',`Satuan`='" + JTSatuan.getText() + "',`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdBarangLain` = " + IdEdit, "Barang Lain", this);
             if (berhasil) {
                 dispose();
                 if (GlobalVar.Var.listBarangLain != null) {

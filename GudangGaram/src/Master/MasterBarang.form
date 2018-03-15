@@ -27,112 +27,124 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
+                      <Component id="JLIsi" min="-2" pref="136" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jlableF22" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
+                      <Component id="JTIsi" min="-2" pref="361" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jlableF17" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jlableF11" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jlableF1" alignment="0" pref="136" max="32767" attributes="0"/>
-                                  <Component id="jlableF13" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jlableF14" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jlableF15" min="-2" max="-2" attributes="0"/>
+                              <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JTSatuan" min="-2" pref="322" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                              <Component id="jlableF19" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                              <Component id="JTKoma" min="-2" max="-2" attributes="0"/>
+                              <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jlableF18" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JCPemasok" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbuttonF5" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="jlableF17" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jlableF11" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jlableF1" alignment="0" pref="136" max="32767" attributes="0"/>
+                                          <Component id="JLSatuan" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JTNamaBarang" min="-2" pref="361" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JCJenisBarang" min="-2" pref="361" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jlableF16" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JTHarga" min="-2" pref="361" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jlableF14" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jlableF20" max="32767" attributes="0"/>
-                          <Component id="jlableF9" max="32767" attributes="0"/>
-                          <Component id="jlableF2" alignment="1" pref="136" max="32767" attributes="0"/>
-                          <Component id="jlableF3" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jlableF4" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jlableF5" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="jlableF15" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JTSatuan" min="-2" pref="322" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                      <Component id="jlableF19" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                      <Component id="JTKoma" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jlableF18" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCPemasok" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jbuttonF5" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JTNamaBarang" min="-2" pref="361" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jlableF12" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JCJenisBarang" min="-2" pref="361" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jlableF16" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JTHarga" min="-2" pref="361" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jScrollPane1" alignment="0" pref="361" max="32767" attributes="0"/>
-                                  <Component id="JTUpahPacking" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="JCBStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlableF20" max="32767" attributes="0"/>
+                                  <Component id="jlableF9" max="32767" attributes="0"/>
+                                  <Component id="jlableF2" alignment="1" pref="136" max="32767" attributes="0"/>
+                                  <Component id="jlableF3" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jlableF4" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JCPlastikDalam" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbuttonF6" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jlableF21" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JCPlastikLuar" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbuttonF7" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jlableF5" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="jScrollPane1" alignment="0" pref="361" max="32767" attributes="0"/>
+                                          <Component id="JTUpahPacking" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="JCBStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCPlastikDalam" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jbuttonF6" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jlableF21" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCPlastikLuar" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jbuttonF7" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -161,9 +173,15 @@
                   <Component id="JCPemasok" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="JLIsi" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF22" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTIsi" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlableF13" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JLSatuan" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF15" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTSatuan" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF19" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -345,9 +363,9 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
-    <Component class="KomponenGUI.JlableF" name="jlableF13">
+    <Component class="KomponenGUI.JlableF" name="JLSatuan">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Satuan KG / SAK"/>
+        <Property name="text" type="java.lang.String" value="Total KG / Sak"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF14">
@@ -473,6 +491,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF7ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="KomponenGUI.JRibuanTextField" name="JTIsi">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTIsiKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF22">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="JLIsi">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Isi Dalam 1 Sak"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

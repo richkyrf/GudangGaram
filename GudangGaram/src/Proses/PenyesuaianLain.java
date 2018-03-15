@@ -434,12 +434,19 @@ public class PenyesuaianLain extends javax.swing.JFrame {
     }
 
     void setStok() {
-        if (JCNamaBarang.getSelectedIndex() != 0) {
+        if (JCNamaBarang.getSelectedIndex() != 0 && JCNamaBarang.getSelectedItem().toString().contains("PLASTIK")) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
             dRunSelctOne.seterorm("Gagal setStok()");
-            dRunSelctOne.setQuery("SELECT a.`IdBarangLain`, `NamaBarangLain`, ifnull(SUM(`Jumlah`),0) AS 'KG' FROM `tbpenyesuaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'");
+            String where = " d.`NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'";
+            if (JCNamaBarang.getSelectedItem().toString().contains("DALAM")) {
+                where = " c.`NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'";
+            }
+            dRunSelctOne.setQuery("SELECT `Namabarang`, SUM(`Total Dalam`), SUM(`Total Luar`) FROM ( SELECT `NamaBarang`, IFNULL(SUM(`JumlahHasil`)*-1*`Isi`/c.`BeratPembagi`,0) as 'Total Dalam', IFNULL(SUM(`JumlahHasil`)*-1*`Isi`/d.`BeratPembagi`,0) as 'Total Luar' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` JOIN `tbmbaranglain`d ON b.`IdPlastikLuar`=d.`IdBarangLain` WHERE " + where + " AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' UNION ALL SELECT `NamaBarangLain`, IF(`IdJenisBarangLain`=1,ifnull(SUM(`Jumlah`),0),0) AS 'Berat Dalam', IF(`IdJenisBarangLain`=2,ifnull(SUM(`Jumlah`),0),0) AS 'Berat Luar' FROM `tbpenyesuaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "' AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' ) tbtemp");
             ArrayList<String> list = dRunSelctOne.excute();
             double StokLamaKG = Double.valueOf(list.get(2));
+            if (JCNamaBarang.getSelectedItem().toString().contains("DALAM")) {
+                StokLamaKG = Double.valueOf(list.get(1));
+            }
             JTStokLamaKG.setText(Decformatdigit(StokLamaKG));
         }
     }

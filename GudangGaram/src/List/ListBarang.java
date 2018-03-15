@@ -235,8 +235,8 @@ public class ListBarang extends javax.swing.JFrame {
     }
 
     public void load() {
-        jcomCari1.setQuery("SELECT `IdBarang` as 'ID', `NamaBarang` as 'Nama', `JenisBarang` as 'Jenis', `Satuan`, `Harga`, `UpahPacking` as 'Upah', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmbarang`a JOIN `tbsmjenisbarang`b ON a.`IdJenisBarang`=b.`IdJenisBarang` WHERE 1");
-        jcomCari1.setRender(new int[]{3,4,5}, new String[]{"Decimal", "Number", "Number"});
+        jcomCari1.setQuery("SELECT `IdBarang` as 'ID', `NamaBarang` as 'Nama', `JenisBarang` as 'Jenis', `Isi`, `Satuan`, `Harga`, `UpahPacking` as 'Upah', a.`Keterangan`, IF(`Status`=1,'Aktif','Tidak Aktif') as 'Status' FROM `tbmbarang`a JOIN `tbsmjenisbarang`b ON a.`IdJenisBarang`=b.`IdJenisBarang` WHERE 1");
+        jcomCari1.setRender(new int[]{4,5,6}, new String[]{"Decimal", "Number", "Number"});
         jcomCari1.tampilkan();
     }
 

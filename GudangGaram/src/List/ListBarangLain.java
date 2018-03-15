@@ -237,7 +237,7 @@ public class ListBarangLain extends javax.swing.JFrame {
     }
 
     public void load() {
-        jcomCari1.setQuery("SELECT `IdBarangLain` as 'ID', `NamaBarangLain` as 'Nama Barang', `JenisBarangLain` as 'Jenis Barang', `Satuan`, a.`Keterangan` FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBarangLain` WHERE 1 ");
+        jcomCari1.setQuery("SELECT `IdBarangLain` as 'ID', `NamaBarangLain` as 'Nama Barang', `JenisBarangLain` as 'Jenis Barang', `BeratPembagi`, `Satuan`, a.`Keterangan` FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBarangLain` WHERE 1 ");
         jcomCari1.setOrder(" ORDER BY a.`IdJenisBarangLain` DESC, `NamaBarangLain` ASC");
         jcomCari1.tampilkan();
     }
