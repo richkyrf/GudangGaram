@@ -162,7 +162,7 @@ public class Penjualan extends javax.swing.JFrame {
         } else if (JTNamaSupir.getText().replace(" ", "").isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nama Supir Tidak Boleh Kosong");
             return false;
-        } else if (JCJenisPenjualan.getSelectedItem().toString().toUpperCase().equals("MUTASI GUDANG") && JCPlat.getSelectedItem().toString().replace("-", "").isEmpty() && !JTNamaSupir.getText().toUpperCase().equals("BOILER")) {
+        } else if (JCJenisPenjualan.getSelectedItem().toString().toUpperCase().equals("MUTASI GUDANG") && JCPlat.getSelectedItem().toString().replace("-", "").isEmpty() && !JTNamaSupir.getText().toUpperCase().contains("_")) {
             JOptionPane.showMessageDialog(this, "Plat Tidak Boleh Kosong");
             return false;
         } else if (JTable.getRowCount() < 1) {
