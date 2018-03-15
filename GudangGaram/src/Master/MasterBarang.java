@@ -683,7 +683,14 @@ public class MasterBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_JCPlastikDalamKeyPressed
 
     private void jbuttonF6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF6ActionPerformed
-        // TODO add your handling code here:
+        if (GlobalVar.Var.tambahBarangLain == null) {
+            GlobalVar.Var.tambahBarangLain = new MasterBarangLain();
+            GlobalVar.Var.tambahBarangLain.JCJenisBarangLain.setSelectedIndex(0);
+            GlobalVar.Var.tambahBarangLain.JCJenisBarangLain.setEnabled(false);
+        } else {
+            GlobalVar.Var.tambahBarangLain.setState(NORMAL);
+            GlobalVar.Var.tambahBarangLain.toFront();
+        }
     }//GEN-LAST:event_jbuttonF6ActionPerformed
 
     private void JCPlastikLuarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCPlastikLuarKeyPressed
@@ -693,7 +700,14 @@ public class MasterBarang extends javax.swing.JFrame {
     }//GEN-LAST:event_JCPlastikLuarKeyPressed
 
     private void jbuttonF7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF7ActionPerformed
-        // TODO add your handling code here:
+        if (GlobalVar.Var.tambahBarangLain == null) {
+            GlobalVar.Var.tambahBarangLain = new MasterBarangLain();
+            GlobalVar.Var.tambahBarangLain.JCJenisBarangLain.setSelectedIndex(1);
+            GlobalVar.Var.tambahBarangLain.JCJenisBarangLain.setEnabled(false);
+        } else {
+            GlobalVar.Var.tambahBarangLain.setState(NORMAL);
+            GlobalVar.Var.tambahBarangLain.toFront();
+        }
     }//GEN-LAST:event_jbuttonF7ActionPerformed
 
     private void JTIsiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTIsiKeyPressed
@@ -742,8 +756,8 @@ public class MasterBarang extends javax.swing.JFrame {
     private KomponenGUI.JCheckBoxF JCBStatus;
     public static KomponenGUI.JcomboboxF JCJenisBarang;
     public static KomponenGUI.JcomboboxF JCPemasok;
-    public static KomponenGUI.JcomboboxF JCPlastikDalam;
-    public static KomponenGUI.JcomboboxF JCPlastikLuar;
+    public KomponenGUI.JcomboboxF JCPlastikDalam;
+    public KomponenGUI.JcomboboxF JCPlastikLuar;
     private KomponenGUI.JlableF JLIsi;
     private KomponenGUI.JlableF JLSatuan;
     private KomponenGUI.JTextAreaF JTAKeterangan;
