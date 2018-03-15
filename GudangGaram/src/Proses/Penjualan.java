@@ -133,7 +133,7 @@ public class Penjualan extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `IdPenjualanDetail`, `NoTransaksi`, `NoKolom`, IF(`StatusRetur`=0 AND `StatusBarcode`=0,`NamaBarang`,IF(`StatusRetur`=1 AND `StatusBarcode`=0,CONCAT(`NamaBarang`,' (RETUR)'),IF(`StatusRetur`=0 AND `StatusBarcode`=1,CONCAT(`NamaBarang`,' (BARCODE)'),CONCAT(`NamaBarang`,' (RETUR) (BARCODE)')))) as 'NamaBarang', FORMAT(`Jumlah`,0), FORMAT(`HargaSatuan`,0), FORMAT(`Jumlah`*`HargaSatuan`,0) as 'Sub Total' FROM `tbpenjualandetail`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `NoTransaksi` = '" + list.get(1) + "'");
+        runSelct.setQuery("SELECT `IdPenjualanDetail`, `NoTransaksi`, `NoKolom`, IF(`StatusRetur`=0 AND `StatusBarcode`=0,IF(a.`IdBarangLain` IS NULL,c.`NamaBarang`,d.`NamaBarangLain`),IF(`StatusRetur`=1 AND `StatusBarcode`=0,CONCAT(IF(a.`IdBarangLain` IS NULL,c.`NamaBarang`,d.`NamaBarangLain`),' (RETUR)'),IF(`StatusRetur`=0 AND `StatusBarcode`=1,CONCAT(IF(a.`IdBarangLain` IS NULL,c.`NamaBarang`,d.`NamaBarangLain`),' (BARCODE)'),CONCAT(IF(a.`IdBarangLain` IS NULL,c.`NamaBarang`,d.`NamaBarangLain`),' (RETUR) (BARCODE)')))) as 'NamaBarang', FORMAT(`Jumlah`,0), FORMAT(`HargaSatuan`,0), FORMAT(`Jumlah`*`HargaSatuan`,0) as 'Sub Total' , `StatusRetur`, `StatusBarcode` FROM `tbpenjualandetail`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON IF(a.`IdPartai` is null,a.`IdBarang`,b.`IdBarang`)=c.`IdBarang` LEFT JOIN `tbmbaranglain`d on a.`IdBarangLain`=d.`IdbarangLain` WHERE `NoTransaksi` = '" + list.get(1) + "'");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -326,7 +326,7 @@ public class Penjualan extends javax.swing.JFrame {
     }
 
     void setHarga() {
-        if (JCNamaBarang.getSelectedIndex() != 0) {
+        if (JCNamaBarang.getSelectedIndex() != 0 && !getNamaBarang().contains("PLASTIK")) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
             dRunSelctOne.seterorm("Gagal Panggil Data Harga");
             dRunSelctOne.setQuery("SELECT `Harga` FROM `tbmbarang` WHERE `NamaBarang`= '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[0] + "'");
@@ -564,15 +564,10 @@ public class Penjualan extends javax.swing.JFrame {
         jlabelF7.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jlabelF7.setEnabled(false);
 
-        JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarang' UNION ALL (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2)");
+        JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarang' UNION ALL (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2) UNION ALL (SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1 OR `IdJenisBarangLain` = 2) ORDER BY `NamaBarang`");
         JCNamaBarang.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 JCNamaBarangItemStateChanged(evt);
-            }
-        });
-        JCNamaBarang.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                JCNamaBarangFocusLost(evt);
             }
         });
         JCNamaBarang.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1105,11 +1100,6 @@ public class Penjualan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JTJumlahKeyPressed
 
-    private void JCNamaBarangFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaBarangFocusLost
-        setHarga();
-        setStok();
-    }//GEN-LAST:event_JCNamaBarangFocusLost
-
     private void JTHargaSatuanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTHargaSatuanKeyPressed
         setSubTotal();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -1405,6 +1395,8 @@ public class Penjualan extends javax.swing.JFrame {
                         for (int i = 0; i < JTable.getRowCount(); i++) {
                             if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PARTAI")) {
                                 Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdPartai`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                            } else if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PLASTIK")) {
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarangLain`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
                             } else {
                                 Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
                             }
@@ -1477,13 +1469,15 @@ public class Penjualan extends javax.swing.JFrame {
                     if (Berhasil) {
                         Berhasil = multiInsert.Excute("DELETE FROM `tbpenjualandetail` WHERE `NoTransaksi` = '" + JTNoTransaksi.getText() + "'", null);
                         if (Berhasil) {
-                            for (int i = 0; i < JTable.getRowCount(); i++) {
-                                if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PARTAI")) {
-                                    Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdPartai`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
-                                } else {
-                                    Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`,`StatusRetur`,`StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
-                                }
+                             for (int i = 0; i < JTable.getRowCount(); i++) {
+                            if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PARTAI")) {
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdPartai`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                            } else if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PLASTIK")) {
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarangLain`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
+                            } else {
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
                             }
+                        }
                         }
                     }
                 }
@@ -1812,6 +1806,12 @@ public class Penjualan extends javax.swing.JFrame {
                         + "UNION ALL\n"
                         + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`Sak`,0) AS 'Stok', ifnull(`Jumlah`,0) AS 'KG' FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
                         + ") as tbTemp GROUP BY `IdPartai`");
+            } else if (getNamaBarang().contains("PLASTIK")) {
+                String where = " d.`NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'";
+                if (JCNamaBarang.getSelectedItem().toString().contains("DALAM")) {
+                    where = " c.`NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'";
+                }
+                dRunSelctOne.setQuery("SELECT `Namabarang`, SUM(`Total Dalam`), SUM(`Total Luar`) FROM ( SELECT `NamaBarang`, IFNULL(SUM(`JumlahHasil`)*-1*`Isi`/c.`BeratPembagi`,0) as 'Total Dalam', IFNULL(SUM(`JumlahHasil`)*-1*`Isi`/d.`BeratPembagi`,0) as 'Total Luar' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` JOIN `tbmbaranglain`d ON b.`IdPlastikLuar`=d.`IdBarangLain` WHERE " + where + " UNION ALL SELECT `NamaBarangLain`, IF(`IdJenisBarangLain`=1,ifnull(SUM(`Jumlah`),0),0) AS 'Berat Dalam', IF(`IdJenisBarangLain`=2,ifnull(SUM(`Jumlah`),0),0) AS 'Berat Luar' FROM `tbpenyesuaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "') tbtemp");
             } else if (getNamaBarang().contains("RETUR")) {
                 dRunSelctOne.setQuery("SELECT 0, 0, 0");
             } else {
@@ -1827,6 +1827,9 @@ public class Penjualan extends javax.swing.JFrame {
             }
             ArrayList<String> list = dRunSelctOne.excute();
             double dobel = Double.valueOf(list.get(2));
+            if (JCNamaBarang.getSelectedItem().toString().contains("DALAM")) {
+                dobel = Double.valueOf(list.get(1));
+            }
             JTStock.setText(Decformatdigit(dobel));
         }
     }
