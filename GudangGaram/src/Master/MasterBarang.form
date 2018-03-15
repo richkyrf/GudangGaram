@@ -454,7 +454,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPlastikDalam.load(&quot;SELECT &apos;-- Pilih Plastik Dalam --&apos; as &apos;NamaBarangLain&apos; UNION ALL SELECT `NamaBaranglain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1&quot;);"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF6">
@@ -481,7 +481,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCPlastikLuar.load(&quot;SELECT &apos;-- Pilih Plastik Luar --&apos; as &apos;NamaBarangLain&apos; UNION ALL SELECT `NamaBaranglain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 2&quot;);"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF7">

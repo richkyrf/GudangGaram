@@ -305,7 +305,11 @@ public class MasterBarangLain extends javax.swing.JFrame {
 
     private void JTNamaBarangLainKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTNamaBarangLainKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JCJenisBarangLain.requestFocus();
+            if (JCJenisBarangLain.isEnabled()) {
+                JCJenisBarangLain.requestFocus();
+            } else {
+                JTBeratPembagi.requestFocus();
+            }
         }
     }//GEN-LAST:event_JTNamaBarangLainKeyPressed
 
@@ -388,7 +392,7 @@ public class MasterBarangLain extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF JBTambah;
     private KomponenGUI.JbuttonF JBTambahTutup;
     private KomponenGUI.JbuttonF JBUbah;
-    public static KomponenGUI.JcomboboxF JCJenisBarangLain;
+    public KomponenGUI.JcomboboxF JCJenisBarangLain;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JRibuanTextField JTBeratPembagi;
     private KomponenGUI.JtextF JTNamaBarangLain;
@@ -411,16 +415,30 @@ public class MasterBarangLain extends javax.swing.JFrame {
             Insert insert = new Insert();
             Boolean berhasil = insert.simpan("INSERT INTO `tbmbaranglain`(`NamaBarangLain`, `IdJenisBarangLain`, `BeratPembagi`, `Satuan`, `Keterangan`) VALUES ('" + JTNamaBarangLain.getText() + "',(SELECT `IdJenisBarangLain` FROM `tbsmjenisbaranglain` WHERE `JenisBarangLain` = '" + JCJenisBarangLain.getSelectedItem() + "'),'" + JTBeratPembagi.getInt() + "','" + JTSatuan.getText() + "','" + JTAKeterangan.getText() + "')", "Barang Lain", this);
             if (berhasil) {
-                /*if (GlobalVar.Var.tambahPartai != null) {
-                    GlobalVar.Var.tambahPartai.JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`a LEFT JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbsmjenisbarang`c ON a.`IdJenisBarang`=c.`IdJenisBarang` WHERE `JenisBarang` = 'Bahan' AND `Pemasok` = '" + JCJenisBarangLain.getSelectedItem() + "'");
-                    GlobalVar.Var.tambahPartai.JCNamaBarang.setSelectedItem(JTNamaBarangLain.getText());
-                    GlobalVar.Var.tambahPartai.JCNamaBarang.requestFocus();
+                if (GlobalVar.Var.tambahBarang != null) {
+                    if (JCJenisBarangLain.getSelectedIndex() == 0) {
+                        GlobalVar.Var.tambahBarang.JCPlastikDalam.load("SELECT '-- Pilih Plastik Dalam --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1");
+                        GlobalVar.Var.tambahBarang.JCPlastikDalam.setSelectedItem(JTNamaBarangLain.getText());
+                        GlobalVar.Var.tambahBarang.JCPlastikDalam.requestFocus();
+                    }
+                    else if(JCJenisBarangLain.getSelectedIndex() == 1){
+                        GlobalVar.Var.tambahBarang.JCPlastikLuar.load("SELECT '-- Pilih Plastik Luar --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 2");
+                        GlobalVar.Var.tambahBarang.JCPlastikLuar.setSelectedItem(JTNamaBarangLain.getText());
+                        GlobalVar.Var.tambahBarang.JCPlastikLuar.requestFocus();
+                    }
                 }
-                if (GlobalVar.Var.ubahPartai != null) {
-                    GlobalVar.Var.ubahPartai.JCNamaBarang.load("SELECT `NamaBarang` FROM `tbmbarang`a LEFT JOIN `tbmpemasok`b ON a.`IdPemasok`=b.`IdPemasok` JOIN `tbsmjenisbarang`c ON a.`IdJenisBarang`=c.`IdJenisBarang` WHERE `JenisBarang` = 'Bahan' AND `Pemasok` = '" + JCJenisBarangLain.getSelectedItem() + "'");
-                    GlobalVar.Var.ubahPartai.JCNamaBarang.setSelectedItem(JTNamaBarangLain.getText());
-                    GlobalVar.Var.ubahPartai.JCNamaBarang.requestFocus();
-                }*/
+                if (GlobalVar.Var.ubahBarang != null) {
+                    if (JCJenisBarangLain.getSelectedIndex() == 0) {
+                        GlobalVar.Var.ubahBarang.JCPlastikDalam.load("SELECT '-- Pilih Plastik Dalam --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1");
+                        GlobalVar.Var.ubahBarang.JCPlastikDalam.setSelectedItem(JTNamaBarangLain.getText());
+                        GlobalVar.Var.ubahBarang.JCPlastikDalam.requestFocus();
+                    }
+                    else if(JCJenisBarangLain.getSelectedIndex() == 1){
+                        GlobalVar.Var.ubahBarang.JCPlastikLuar.load("SELECT '-- Pilih Plastik Luar --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 2");
+                        GlobalVar.Var.ubahBarang.JCPlastikLuar.setSelectedItem(JTNamaBarangLain.getText());
+                        GlobalVar.Var.ubahBarang.JCPlastikLuar.requestFocus();
+                    }
+                }
                 if (GlobalVar.Var.listBarangLain != null) {
                     GlobalVar.Var.listBarangLain.load();
                 }
