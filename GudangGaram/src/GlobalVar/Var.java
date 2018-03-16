@@ -57,6 +57,7 @@ public class Var {
     public static ListPacking listPacking;
     public static ListPenjualan listPenjualan;
     public static ListPenyesuaian listPenyesuaian;
+    public static ListPenyesuaianLain listPenyesuaianLain;
     public static ListDinasLuar listDinasLuar;
     public static ListKeterangan listKeterangan;
 

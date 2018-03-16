@@ -127,7 +127,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
     void tambahTabel() {
         if (checkTable()) {
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
-            model.addRow(new Object[]{"", JCKeterangan.getSelectedItem() + (datetostr(JDTanggal.getDate(), "dd/MM") == null ? "" : " TGL " + datetostr(JDTanggal.getDate(), "dd/MM")), Intformatdigit(JTJumlah.getInt()), Intformatdigit(JTRupiah.getInt()), Intformatdigit(JTJumlah.getInt() * JTRupiah.getInt())});
+            model.addRow(new Object[]{"", JCKeterangan.getSelectedItem(), Intformatdigit(JTJumlah.getInt()), Intformatdigit(JTRupiah.getInt()), Intformatdigit(JTJumlah.getInt() * JTRupiah.getInt())});
             JOptionPane.showMessageDialog(this, "Berhasil Tambah");
             JCKeterangan.requestFocus();
             RefreshTbl();
@@ -136,7 +136,6 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
     }
 
     void RefreshTbl() {
-        JDTanggal.setDate(null);
         JTJumlah.setText("0");
         JTRupiah.setText("0");
     }
@@ -185,8 +184,6 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         jbuttonF4 = new KomponenGUI.JbuttonF();
         JTJumlah = new KomponenGUI.JRibuanTextField();
         JTRupiah = new KomponenGUI.JRibuanTextField();
-        JDTanggal = new KomponenGUI.JdateCF();
-        JTAKeterangan4 = new KomponenGUI.JtextF();
         JCKeterangan = new KomponenGUI.JcomboboxF();
         jbuttonF5 = new KomponenGUI.JbuttonF();
 
@@ -204,7 +201,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        cal.add(Calendar.DATE, -7);
+        cal.add(Calendar.DATE, -6);
         JDTanggal1.setDate(cal.getTime());
         JDTanggal1.setDateFormatString("dd-MM-yyyy");
         JDTanggal1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -224,7 +221,6 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
 
         Calendar cal2 = Calendar.getInstance();
         cal2.setTime(new Date());
-        cal2.add(Calendar.DATE, -1);
         JDTanggal2.setDate(cal2.getTime());
         JDTanggal2.setDateFormatString("dd-MM-yyyy");
         JDTanggal2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -322,21 +318,6 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
             }
         });
 
-        JDTanggal.setDateFormatString("dd-MM-yyyy");
-        JDTanggal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                JDTanggalPropertyChange(evt);
-            }
-        });
-        JDTanggal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JDTanggalKeyPressed(evt);
-            }
-        });
-
-        JTAKeterangan4.setText("Tanggal");
-        JTAKeterangan4.setEnabled(false);
-
         JCKeterangan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Pilih Keterangan --" }));
         JCKeterangan.load("SELECT '-- Pilih Keterangan --' as 'Keterangan' UNION ALL SELECT `Keterangan` FROM `tbmketerangan` ORDER BY `Keterangan` ASC");
         JCKeterangan.addItemListener(new java.awt.event.ItemListener() {
@@ -365,16 +346,12 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JDTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(JTAKeterangan4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(JCKeterangan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(JTAKeterangan1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))
+                            .addComponent(JTAKeterangan1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(JTJumlah, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
@@ -406,7 +383,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
                                 .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JDTanggal2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 358, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -434,34 +411,28 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(JTAKeterangan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(JTAKeterangan4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(JTAKeterangan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JTAKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JTJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JTRupiah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JCKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JTGrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(JDTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTRupiah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JCKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTGrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlableF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -493,7 +464,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF2ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        GlobalVar.Var.rekapPenggajian = null;
+        GlobalVar.Var.rekapPenggajianHarian = null;
     }//GEN-LAST:event_formWindowClosed
 
     private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
@@ -516,14 +487,6 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
             tambahTabel();
         }
     }//GEN-LAST:event_JTRupiahKeyPressed
-
-    private void JDTanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDTanggalPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JDTanggalPropertyChange
-
-    private void JDTanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JDTanggalKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JDTanggalKeyPressed
 
     private void JCKeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCKeteranganKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -587,13 +550,11 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public KomponenGUI.JcomboboxF JCKeterangan;
-    private KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JdateCF JDTanggal1;
     private KomponenGUI.JdateCF JDTanggal2;
     private KomponenGUI.JtextF JTAKeterangan1;
     private KomponenGUI.JtextF JTAKeterangan2;
     private KomponenGUI.JtextF JTAKeterangan3;
-    private KomponenGUI.JtextF JTAKeterangan4;
     private KomponenGUI.JtextF JTGrandTotal;
     private KomponenGUI.JRibuanTextField JTJumlah;
     private KomponenGUI.JRibuanTextField JTRupiah;
@@ -616,7 +577,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT DATE_FORMAT(`Tanggal`,'%d/%m') as 'Tanggal', IF(`SetengahHari` = 0,'ANGKUT GARAM,CURAH,ADUK YOD','SETENGAH HARI BEKERJA') as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(IF(`SetengahHari`=0,89748,89748/2),0) as '@ Rupiah', FORMAT((SUM(`Hadir`) * IF(`SetengahHari`=0,89748,89748/2)),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 1 AND `Status` = 1 GROUP BY `Tanggal`, `SetengahHari` UNION ALL SELECT '' as 'Tanggal', 'BIAYA ADMINISTRASI' as `Keterangan`, 1 as 'Jumlah', FORMAT(55800,0) as '@ Rupiah', FORMAT(1*55800,0) as 'Sub Total' UNION ALL SELECT '' as 'Tanggal', `Keterangan`, FORMAT(SUM(`Jumlah`),1) as 'Jumlah', FORMAT(`@ Rupiah`,0) as '@ Rupiah', FORMAT(SUM(`Sub Total`),0) as 'Sub Total' FROM (SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`Jumlah`*`Satuan`)/1000,0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL((SUM(`Jumlah`*`Satuan`)/1000)*6000,0) as 'Sub Total' FROM `tbpenjualan`a JOIN `tbpenjualandetail`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON b.`IdBarang`=c.`Idbarang` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' UNION ALL SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`NettoPelita`),0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL(SUM(`NettoPelita`)*6000,0) as 'Sub Total' FROM `tbpenerimaan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "') tbtemp");
+        runSelct.setQuery("SELECT DATE_FORMAT(`Tanggal`,'%d/%m') as 'Tanggal', IF(`SetengahHari` = 1 AND DAYOFWEEK(`Tanggal`)!=1,'SETENGAH HARI BEKERJA',IF(DAYOFWEEK(`Tanggal`) = 1, 'CETAK EXPIRED', 'ANGKUT GARAM,CURAH,ADUK YOD')) as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(IF(`SetengahHari`=1 AND DAYOFWEEK(`Tanggal`)!=1,89748/2,IF(DAYOFWEEK(`Tanggal`)=1, 89748*2, 89748)),0) as '@ Rupiah', FORMAT((SUM(`Hadir`) * IF(`SetengahHari`=1 AND DAYOFWEEK(`Tanggal`)!=1,89748/2,IF(DAYOFWEEK(`Tanggal`)=1, 89748*2, 89748))),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 1 AND `Status` = 1 GROUP BY `Tanggal`, `SetengahHari` UNION ALL SELECT '' as 'Tanggal', 'BIAYA ADMINISTRASI' as `Keterangan`, 1 as 'Jumlah', FORMAT(55800,0) as '@ Rupiah', FORMAT(1*55800,0) as 'Sub Total' UNION ALL SELECT '' as 'Tanggal', `Keterangan`, FORMAT(SUM(`Jumlah`),1) as 'Jumlah', FORMAT(`@ Rupiah`,0) as '@ Rupiah', FORMAT(SUM(`Sub Total`),0) as 'Sub Total' FROM (SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`Jumlah`*`Satuan`)/1000,0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL((SUM(`Jumlah`*`Satuan`)/1000)*6000,0) as 'Sub Total' FROM `tbpenjualan`a JOIN `tbpenjualandetail`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON b.`IdBarang`=c.`Idbarang` WHERE `Jumlah` >= 3 && `IdKendaraan` IS NOT NULL AND `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY UNION ALL SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`NettoPelita`),0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL(SUM(`NettoPelita`)*6000,0) as 'Sub Total' FROM `tbpenerimaan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY) tbtemp");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;

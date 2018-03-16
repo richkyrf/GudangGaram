@@ -31,18 +31,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="JDTanggal" pref="130" max="32767" attributes="0"/>
-                          <Component id="JTAKeterangan4" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="JCKeterangan" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jbuttonF5" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="JTAKeterangan1" pref="403" max="32767" attributes="0"/>
+                          <Component id="JTAKeterangan1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -80,7 +75,7 @@
                               <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="JDTanggal2" min="-2" pref="140" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="358" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -120,7 +115,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="JTAKeterangan1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbuttonF3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="JTAKeterangan4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="JTAKeterangan3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -128,33 +122,25 @@
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JTJumlah" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JTRupiah" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JCKeterangan" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbuttonF5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="308" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JTGrandTotal" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlableF10" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlableF9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="JDTanggal" min="-2" pref="28" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTJumlah" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTRupiah" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JCKeterangan" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbuttonF5" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="308" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="JTGrandTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF10" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF9" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -184,7 +170,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JDTanggal1KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Calendar cal = Calendar.getInstance();&#xa;cal.setTime(new Date());&#xa;cal.add(Calendar.DATE, -7);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Calendar cal = Calendar.getInstance();&#xa;cal.setTime(new Date());&#xa;cal.add(Calendar.DATE, -6);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF5">
@@ -209,7 +195,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JDTanggal2KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Calendar cal2 = Calendar.getInstance();&#xa;cal2.setTime(new Date());&#xa;cal2.add(Calendar.DATE, -1);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Calendar cal2 = Calendar.getInstance();&#xa;cal2.setTime(new Date());"/>
       </AuxValues>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -345,21 +331,6 @@
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTRupiahKeyPressed"/>
       </Events>
-    </Component>
-    <Component class="KomponenGUI.JdateCF" name="JDTanggal">
-      <Properties>
-        <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
-      </Properties>
-      <Events>
-        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="JDTanggalPropertyChange"/>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JDTanggalKeyPressed"/>
-      </Events>
-    </Component>
-    <Component class="KomponenGUI.JtextF" name="JTAKeterangan4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tanggal"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCKeterangan">
       <Properties>

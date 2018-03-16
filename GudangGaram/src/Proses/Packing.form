@@ -27,7 +27,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -37,6 +37,22 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="tambahtable1" min="-2" pref="105" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tambahtable" min="-2" pref="105" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -60,22 +76,21 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="JTKeterangan1" min="-2" pref="200" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jlableF18" min="-2" pref="136" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jlableF5" min="-2" pref="136" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jlableF17" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jlableF11" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="JTUpahPerPack" max="32767" attributes="0"/>
+                                          <Component id="JCNamaKaryawan1" min="-2" pref="200" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jlableF4" min="-2" pref="136" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="JCNamaHasil" min="-2" pref="330" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="JTNoPas1" max="32767" attributes="0"/>
                                   </Group>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
@@ -119,6 +134,20 @@
                                           <Component id="JLTotalPackingBahan2" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jlableF4" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JCNamaHasil" min="-2" pref="330" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jlableF18" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jlableF17" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="JTUpahPerPack" min="-2" pref="330" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -144,35 +173,6 @@
                                       <Component id="JDTanggal" min="-2" pref="200" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="tambahtable1" min="-2" pref="105" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tambahtable" min="-2" pref="105" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jlableF5" min="-2" pref="136" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jlableF11" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="JCNamaKaryawan1" min="-2" pref="200" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="JTNoPas1" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -223,24 +223,59 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlableF30" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTNoBak" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="JLTotalPackingBahan1" alignment="0" max="32767" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="jlableF2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlableF7" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="JCNamaBahan1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="JTJumlahBahan1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlableF3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlableF24" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlableF23" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jlableF30" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JTNoBak" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jlableF4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlableF8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JCNamaHasil" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jlableF18" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlableF17" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JTUpahPerPack" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="JLTotalPackingBahan1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="jlableF2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlableF7" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="JCNamaBahan1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="JTJumlahBahan1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlableF3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
-                  <Component id="JDTanggal" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="jlableF24" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlableF23" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="JDTanggal" min="-2" pref="28" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="JTNoPoles" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlableF38" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlableF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="JTNoPacking" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlableF9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlableF37" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -251,25 +286,7 @@
                       <Component id="JCNamaBahan2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="JTJumlahBahan2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlableF6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="JTNoPoles" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlableF38" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlableF1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlableF4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlableF8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JCNamaHasil" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTNoPacking" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlableF9" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlableF37" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlableF18" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlableF17" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTUpahPerPack" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -323,7 +340,7 @@
                   <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="189" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="185" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -471,7 +488,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="JCNamaKaryawan1.setSelectedItem(&quot;&quot;);"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan1.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan1.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 &quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF12">
@@ -515,7 +532,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan2KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan2.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan2.setSelectedItem(&quot;&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan2.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 &quot;);&#xa;JCNamaKaryawan2.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCNamaKaryawan3">
@@ -530,7 +547,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan3KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan3.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan3.setSelectedItem(&quot;&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan3.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 &quot;);&#xa;JCNamaKaryawan3.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCNamaKaryawan4">
@@ -544,7 +561,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan4KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan4.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2&quot;);&#xa;JCNamaKaryawan4.setSelectedItem(&quot;&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan4.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 &quot;);&#xa;JCNamaKaryawan4.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF13">
@@ -895,7 +912,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="0" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="(Sisa Bahan: 0 Sak)"/>
+        <Property name="text" type="java.lang.String" value=""/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="JLTotalPackingBahan2">
