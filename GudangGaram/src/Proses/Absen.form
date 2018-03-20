@@ -224,7 +224,7 @@
     </Component>
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Print Form Absensi"/>
+        <Property name="text" type="java.lang.String" value="Print Form Absensi Karyawan"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF4ActionPerformed"/>

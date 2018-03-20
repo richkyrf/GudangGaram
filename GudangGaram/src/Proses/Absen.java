@@ -204,7 +204,7 @@ public class Absen extends javax.swing.JFrame {
         JLTitle.setText("TAMBAH DATA ABSEN BARU");
         JLTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
-        jbuttonF4.setText("Print Form Absensi");
+        jbuttonF4.setText("Print Form Absensi Karyawan");
         jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbuttonF4ActionPerformed(evt);
@@ -300,12 +300,12 @@ public class Absen extends javax.swing.JFrame {
     private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
         HashMap hashs = new HashMap();
         FLaporan fLaporan = new FLaporan();
-        hashs.put("Title", "FORM ABSENSI KARYAWAN BORONGAN");
+        hashs.put("Title", "FORM ABSENSI KARYAWAN HARIAN & BORONGAN");
         fLaporan.sethashmap(hashs);
         fLaporan.setfilename("FormAbsensi");
         fLaporan.setErorm("Gagal Menampilkan " + this.getTitle());
         fLaporan.excute();
-        History.simpanhistory(GlobalVar.VarL.username, "Print Form Absensi Karyawan Borongan");
+        History.simpanhistory(GlobalVar.VarL.username, "Print Form Absensi Karyawan Harian dan Borongan");
     }//GEN-LAST:event_jbuttonF4ActionPerformed
 
     private void JTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMouseReleased

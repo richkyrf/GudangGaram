@@ -76,7 +76,7 @@ public class MasterKaryawan extends javax.swing.JFrame {
     boolean isNotLibur(Date tanggal) {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.seterorm("Gagal Cek Hari Libur");
-        dRunSelctOne.setQuery("SELECT COUNT(`TanggalHariLibur`) FROM `tbmharilibur` WHERE `TanggalHariLibur` = '" + FDateF.datetostr(tanggal, "yyyy-MM-dd") + "' ");
+        dRunSelctOne.setQuery("SELECT COUNT(`TanggalHariLibur`) FROM `tbmharilibur` WHERE `TanggalHariLibur` = '" + FDateF.datetostr(tanggal, "yyyy-MM-dd") + "' AND `StatusKerja`=0");
         ArrayList<String> list = dRunSelctOne.excute();
         return list.get(0).equals("0");
     }

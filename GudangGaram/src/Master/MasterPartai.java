@@ -556,6 +556,9 @@ public class MasterPartai extends javax.swing.JFrame {
             Insert insert = new Insert();
             Boolean berhasil = insert.simpan("INSERT INTO `tbmpartai`(`Tanggal`, `IdBarang`, `Netto`, `Karung`, `Keterangan`, `SelesaiTerima`, `SelesaiProduksi`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'),'" + JTNetto.getInt() + "','" + JTKarung.getInt() + "','" + JTAKeterangan.getText() + "'," + JCBSelesaiTerima.isSelected() + "," + JCBSelesaiProduksi.isSelected() + ")", "Partai", this);
             if (berhasil) {
+                if (GlobalVar.Var.listPartai != null) {
+                    GlobalVar.Var.listPartai.load();
+                }
                 if (tutup) {
                     GlobalVar.Var.tambahPartai.dispose();
                     GlobalVar.Var.tambahPartai = null;
@@ -565,9 +568,6 @@ public class MasterPartai extends javax.swing.JFrame {
                     JTAKeterangan.setText("");
                     loadNoPartai();
                     JCNamaBarang.requestFocus();
-                }
-                if (GlobalVar.Var.listPartai != null) {
-                    GlobalVar.Var.listPartai.load();
                 }
             }
         }

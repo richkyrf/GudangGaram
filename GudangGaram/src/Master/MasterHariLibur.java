@@ -26,10 +26,10 @@ public class MasterHariLibur extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         idEdit = id.toString();
         if (idEdit.equals("0")) {
-            setTitle("Tambah Hari Libur");
+            setTitle("Tambah Tanggal Merah");
             JBUbah.setVisible(false);
         } else {
-            setTitle("Ubah Hari Libur");
+            setTitle("Ubah Tanggal Merah");
             loadData();
             JBTambah.setVisible(false);
             JBTambahTutup.setVisible(false);
@@ -57,6 +57,9 @@ public class MasterHariLibur extends javax.swing.JFrame {
         JBTambah = new KomponenGUI.JbuttonF();
         JBTambahTutup = new KomponenGUI.JbuttonF();
         JBUbah = new KomponenGUI.JbuttonF();
+        JLStatusKerja = new KomponenGUI.JlableF();
+        JLKeterangan3 = new KomponenGUI.JlableF();
+        JCBStatusKerja = new KomponenGUI.JCheckBoxF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -66,7 +69,7 @@ public class MasterHariLibur extends javax.swing.JFrame {
             }
         });
 
-        JLTanggalHariLibur.setText("Tanggal Hari Libur");
+        JLTanggalHariLibur.setText("Tanggal Merah");
 
         JLTanggalHariLibur2.setText(":");
 
@@ -118,6 +121,12 @@ public class MasterHariLibur extends javax.swing.JFrame {
             }
         });
 
+        JLStatusKerja.setText("Status Kerja");
+
+        JLKeterangan3.setText(":");
+
+        JCBStatusKerja.setText("Kerja");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,53 +135,65 @@ public class MasterHariLibur extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(JLTanggalHariLibur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JLTanggalHariLibur2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JDTanggalHariLibur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(JLStatusKerja, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JLKeterangan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JSPKeterangan))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JLKeterangan3, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(JCBStatusKerja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JLTanggalHariLibur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(JLKeterangan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(JLTanggalHariLibur2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JDTanggalHariLibur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JSPKeterangan)))))
-                .addGap(10, 10, 10))
+                        .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(JLTanggalHariLibur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JLTanggalHariLibur2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(JDTanggalHariLibur, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(JSPKeterangan, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(JLKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JLKeterangan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JSPKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLStatusKerja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLKeterangan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JCBStatusKerja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -255,11 +276,11 @@ public class MasterHariLibur extends javax.swing.JFrame {
 
     boolean checkInput() {
         if (JDTanggalHariLibur.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Tanggal Hari Libur Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Tanggal Merah Tidak Boleh Kosong");
             JDTanggalHariLibur.requestFocus();
             return false;
         } else if (JTKeterangan.getText().replace(" ", "").isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Keterangan Hari Libur Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Keterangan Tanggal Merah Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
             JTKeterangan.requestFocus();
             return false;
         } else {
@@ -270,7 +291,7 @@ public class MasterHariLibur extends javax.swing.JFrame {
     void tambah(boolean tutup) {
         if (checkInput()) {
             Insert insert = new LSubProces.Insert();
-            boolean simpan = insert.simpan("INSERT INTO `tbmharilibur`(`TanggalHariLibur`, `Keterangan`) VALUES ('" + FDateF.datetostr(JDTanggalHariLibur.getDate(), "yyyy-MM-dd") + "', '" + JTKeterangan.getText() + "')", "Master Hari Libur", this);
+            boolean simpan = insert.simpan("INSERT INTO `tbmharilibur`(`TanggalHariLibur`, `Keterangan`) VALUES ('" + FDateF.datetostr(JDTanggalHariLibur.getDate(), "yyyy-MM-dd") + "', '" + JTKeterangan.getText() + "')", "Master Tanggal Merah", this);
             if (simpan) {
                 if (GlobalVar.Var.listHariLibur != null) {
                     GlobalVar.Var.listHariLibur.load();
@@ -291,7 +312,7 @@ public class MasterHariLibur extends javax.swing.JFrame {
 
     void loadData() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.seterorm("Gagal Menampilkan Data Master Hari Libur");
+        dRunSelctOne.seterorm("Gagal Menampilkan Data Master Tanggal Merah");
         dRunSelctOne.setQuery("SELECT `IdHariLibur`, DATE_FORMAT(`TanggalHariLibur`,'%d-%m-%Y'), `Keterangan` FROM `tbmharilibur` WHERE `IdHariLibur`='" + idEdit + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         JDTanggalHariLibur.setDate(FDateF.strtodate(list.get(1), "dd-MM-yyyy"));
@@ -301,7 +322,7 @@ public class MasterHariLibur extends javax.swing.JFrame {
     void ubah() {
         if (checkInput()) {
             Update update = new LSubProces.Update();
-            boolean ubah = update.Ubah("UPDATE `tbmharilibur` SET `TanggalHariLibur`='" + FDateF.datetostr(JDTanggalHariLibur.getDate(), "yyyy-MM-dd") + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdHariLibur`=" + idEdit, "Master Hari Libur", this);
+            boolean ubah = update.Ubah("UPDATE `tbmharilibur` SET `TanggalHariLibur`='" + FDateF.datetostr(JDTanggalHariLibur.getDate(), "yyyy-MM-dd") + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdHariLibur`=" + idEdit, "Master Tanggal Merah", this);
             if (ubah) {
                 dispose();
                 GlobalVar.Var.listHariLibur.load();
@@ -314,9 +335,12 @@ public class MasterHariLibur extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF JBTambah;
     private KomponenGUI.JbuttonF JBTambahTutup;
     private KomponenGUI.JbuttonF JBUbah;
+    private KomponenGUI.JCheckBoxF JCBStatusKerja;
     private KomponenGUI.JdateCF JDTanggalHariLibur;
     private KomponenGUI.JlableF JLKeterangan;
     private KomponenGUI.JlableF JLKeterangan2;
+    private KomponenGUI.JlableF JLKeterangan3;
+    private KomponenGUI.JlableF JLStatusKerja;
     private KomponenGUI.JlableF JLTanggalHariLibur;
     private KomponenGUI.JlableF JLTanggalHariLibur2;
     private javax.swing.JScrollPane JSPKeterangan;

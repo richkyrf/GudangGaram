@@ -129,6 +129,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
             model.addRow(new Object[]{"", JCKeterangan.getSelectedItem(), Intformatdigit(JTJumlah.getInt()), Intformatdigit(JTRupiah.getInt()), Intformatdigit(JTJumlah.getInt() * JTRupiah.getInt())});
             JOptionPane.showMessageDialog(this, "Berhasil Tambah");
+            JCKeterangan.setSelectedIndex(0);
             JCKeterangan.requestFocus();
             RefreshTbl();
             JTGrandTotal.setText(Intformatdigit(getGrandTotal()));
@@ -143,12 +144,15 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
     boolean checkTable() {
         if (JCKeterangan.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Keterangan Tambahan Terlebih Dahulu");
+            JCKeterangan.requestFocus();
             return false;
         } else if (JTJumlah.getInt() == 0) {
             JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong");
+            JTJumlah.requestFocus();
             return false;
         } else if (JTRupiah.getInt() == 0) {
             JOptionPane.showMessageDialog(this, "Rupiah Tidak Boleh Kosong");
+            JTRupiah.requestFocus();
             return false;
         } else {
             return true;
@@ -577,17 +581,26 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT DATE_FORMAT(`Tanggal`,'%d/%m') as 'Tanggal', IF(`SetengahHari` = 1 AND DAYOFWEEK(`Tanggal`)!=1,'SETENGAH HARI BEKERJA',IF(DAYOFWEEK(`Tanggal`) = 1, 'CETAK EXPIRED', 'ANGKUT GARAM,CURAH,ADUK YOD')) as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(IF(`SetengahHari`=1 AND DAYOFWEEK(`Tanggal`)!=1,89748/2,IF(DAYOFWEEK(`Tanggal`)=1, 89748*2, 89748)),0) as '@ Rupiah', FORMAT((SUM(`Hadir`) * IF(`SetengahHari`=1 AND DAYOFWEEK(`Tanggal`)!=1,89748/2,IF(DAYOFWEEK(`Tanggal`)=1, 89748*2, 89748))),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 1 AND `Status` = 1 GROUP BY `Tanggal`, `SetengahHari` UNION ALL SELECT '' as 'Tanggal', 'BIAYA ADMINISTRASI' as `Keterangan`, 1 as 'Jumlah', FORMAT(55800,0) as '@ Rupiah', FORMAT(1*55800,0) as 'Sub Total' UNION ALL SELECT '' as 'Tanggal', `Keterangan`, FORMAT(SUM(`Jumlah`),1) as 'Jumlah', FORMAT(`@ Rupiah`,0) as '@ Rupiah', FORMAT(SUM(`Sub Total`),0) as 'Sub Total' FROM (SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`Jumlah`*`Satuan`)/1000,0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL((SUM(`Jumlah`*`Satuan`)/1000)*6000,0) as 'Sub Total' FROM `tbpenjualan`a JOIN `tbpenjualandetail`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON b.`IdBarang`=c.`Idbarang` WHERE `Jumlah` >= 3 && `IdKendaraan` IS NOT NULL AND `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY UNION ALL SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`NettoPelita`),0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL(SUM(`NettoPelita`)*6000,0) as 'Sub Total' FROM `tbpenerimaan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY) tbtemp");
+        runSelct.setQuery("SELECT DATE_FORMAT(`Tanggal`,'%d/%m/%Y') as 'Tanggal', IF(`SetengahHari` = 1 AND DAYOFWEEK(`Tanggal`)!=1,'SETENGAH HARI BEKERJA',IF(DAYOFWEEK(`Tanggal`) = 1, 'CETAK EXPIRED', 'ANGKUT GARAM,CURAH,ADUK YOD')) as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(IF(`SetengahHari`=1 AND DAYOFWEEK(`Tanggal`)!=1,89748/2,IF(DAYOFWEEK(`Tanggal`)=1, 89748*2, 89748)),0) as '@ Rupiah', FORMAT((SUM(`Hadir`) * IF(`SetengahHari`=1 AND DAYOFWEEK(`Tanggal`)!=1,89748/2,IF(DAYOFWEEK(`Tanggal`)=1, 89748*2, 89748))),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 1 AND `Status` = 1 GROUP BY `Tanggal`, `SetengahHari` UNION ALL SELECT '' as 'Tanggal', 'BIAYA ADMINISTRASI' as `Keterangan`, 1 as 'Jumlah', FORMAT(55800,0) as '@ Rupiah', FORMAT(1*55800,0) as 'Sub Total' UNION ALL SELECT '' as 'Tanggal', `Keterangan`, FORMAT(SUM(`Jumlah`),1) as 'Jumlah', FORMAT(`@ Rupiah`,0) as '@ Rupiah', FORMAT(SUM(`Sub Total`),0) as 'Sub Total' FROM (SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`Jumlah`*`Satuan`)/1000,0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL((SUM(`Jumlah`*`Satuan`)/1000)*6000,0) as 'Sub Total' FROM `tbpenjualan`a JOIN `tbpenjualandetail`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON b.`IdBarang`=c.`Idbarang` WHERE `Jumlah` >= 3 && `IdKendaraan` IS NOT NULL AND `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY UNION ALL SELECT 'BONGKAR DAN MUAT GARAM' as 'Keterangan', IFNULL(SUM(`NettoPelita`)/1000,0) as 'Jumlah', 6000 as '@ Rupiah', IFNULL((SUM(`NettoPelita`)/1000)*6000,0) as 'Sub Total' FROM `tbpenerimaan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' - INTERVAL 1 DAY) tbtemp");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
             while (rs.next()) {
                 model.addRow(new Object[]{"", "", "", "", "", ""});
-                JTable.setValueAt(rs.getString(1), row, 0);
+                if(rs.getString(1).length()<5){
+                    JTable.setValueAt(rs.getString(1), row, 0);
+                }else{
+                    JTable.setValueAt(rs.getString(1).substring(0, 5), row, 0);
+                }
                 JTable.setValueAt(rs.getString(2), row, 1);
                 JTable.setValueAt(rs.getString(3).replace(".", ","), row, 2);
-                JTable.setValueAt(rs.getString(4).replace(",", "."), row, 3);
-                JTable.setValueAt(rs.getString(5).replace(",", "."), row, 4);
+                if (isKerja(FDateF.strtodate(rs.getString(1), "dd/MM/yyyy"))) {
+                    JTable.setValueAt(Intformatdigit(Integer.valueOf(rs.getString(4).replace(",", "")) * 2), row, 3);
+                    JTable.setValueAt(Intformatdigit(Integer.valueOf(rs.getString(5).replace(",", "")) * 2), row, 4);
+                } else {
+                    JTable.setValueAt(rs.getString(4).replace(",", "."), row, 3);
+                    JTable.setValueAt(rs.getString(5).replace(",", "."), row, 4);
+                }
                 row++;
             }
         } catch (SQLException e) {
@@ -617,6 +630,14 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         JTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         JTable.getTableHeader().setReorderingAllowed(false);
         JTGrandTotal.setText(Intformatdigit(getGrandTotal()));
+    }
+
+    boolean isKerja(Date tanggal) {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal Cek Hari Libur");
+        dRunSelctOne.setQuery("SELECT COUNT(`TanggalHariLibur`) FROM `tbmharilibur` WHERE `TanggalHariLibur` = '" + FDateF.datetostr(tanggal, "yyyy-MM-dd") + "' AND `StatusKerja`=1");
+        ArrayList<String> list = dRunSelctOne.excute();
+        return list.get(0).equals("1");
     }
 
     void print() {

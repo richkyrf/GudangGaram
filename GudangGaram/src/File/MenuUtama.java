@@ -172,7 +172,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMMaster.add(JMIMasterBarang1);
         JMMaster.add(SMaster3);
 
-        JMIMasterHariLibur.setText("6. Master Hari Libur");
+        JMIMasterHariLibur.setText("6. Master Tanggal Merah");
         JMIMasterHariLibur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIMasterHariLiburActionPerformed(evt);

@@ -30,7 +30,36 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="JLTanggalHariLibur" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="JLTanggalHariLibur2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JDTanggalHariLibur" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="JLStatusKerja" alignment="0" max="32767" attributes="0"/>
+                          <Component id="JLKeterangan" alignment="0" pref="117" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="JLKeterangan2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="JSPKeterangan" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="JLKeterangan3" min="-2" pref="6" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="JCBStatusKerja" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="JBKembali" min="-2" pref="110" max="-2" attributes="0"/>
                       <EmptySpace pref="33" max="32767" attributes="0"/>
                       <Component id="JBTambah" min="-2" pref="115" max="-2" attributes="0"/>
@@ -38,28 +67,9 @@
                       <Component id="JBTambahTutup" min="-2" pref="200" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="JBUbah" min="-2" pref="110" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="JLTanggalHariLibur" max="32767" attributes="0"/>
-                          <Component id="JLKeterangan" max="32767" attributes="0"/>
-                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="JLTanggalHariLibur2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JDTanggalHariLibur" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="JLKeterangan2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JSPKeterangan" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
                   </Group>
               </Group>
-              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,32 +77,35 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="JLTanggalHariLibur" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="JLTanggalHariLibur2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="JDTanggalHariLibur" pref="28" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JLKeterangan" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JLKeterangan2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="JLKeterangan" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JLKeterangan2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="JSPKeterangan" pref="144" max="32767" attributes="0"/>
+                  <Component id="JSPKeterangan" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="JBTambahTutup" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JBTambah" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JBUbah" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JBKembali" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JLStatusKerja" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JLKeterangan3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JCBStatusKerja" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="JBKembali" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JBUbah" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JBTambahTutup" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JBTambah" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -100,7 +113,7 @@
   <SubComponents>
     <Component class="KomponenGUI.JlableF" name="JLTanggalHariLibur">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tanggal Hari Libur"/>
+        <Property name="text" type="java.lang.String" value="Tanggal Merah"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="JLTanggalHariLibur2">
@@ -177,6 +190,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBUbahActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="JLStatusKerja">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Status Kerja"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="JLKeterangan3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JCheckBoxF" name="JCBStatusKerja">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kerja"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

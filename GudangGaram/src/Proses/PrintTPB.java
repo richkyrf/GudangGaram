@@ -421,7 +421,6 @@ public class PrintTPB extends javax.swing.JFrame {
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
-        OutFormat += format("%n", "");
         directprinting(OutFormat);
     }
 

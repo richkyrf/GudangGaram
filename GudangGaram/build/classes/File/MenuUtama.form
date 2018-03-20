@@ -106,7 +106,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterHariLibur">
               <Properties>
-                <Property name="text" type="java.lang.String" value="6. Master Hari Libur"/>
+                <Property name="text" type="java.lang.String" value="6. Master Tanggal Merah"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterHariLiburActionPerformed"/>
