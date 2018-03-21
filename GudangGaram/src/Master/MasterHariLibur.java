@@ -53,13 +53,13 @@ public class MasterHariLibur extends javax.swing.JFrame {
         JLKeterangan2 = new KomponenGUI.JlableF();
         JSPKeterangan = new javax.swing.JScrollPane();
         JTKeterangan = new KomponenGUI.JTextAreaF();
+        JLStatusKerja = new KomponenGUI.JlableF();
+        JLStatusKerja2 = new KomponenGUI.JlableF();
+        JCBStatusKerja = new KomponenGUI.JCheckBoxF();
         JBKembali = new KomponenGUI.JbuttonF();
         JBTambah = new KomponenGUI.JbuttonF();
         JBTambahTutup = new KomponenGUI.JbuttonF();
         JBUbah = new KomponenGUI.JbuttonF();
-        JLStatusKerja = new KomponenGUI.JlableF();
-        JLKeterangan3 = new KomponenGUI.JlableF();
-        JCBStatusKerja = new KomponenGUI.JCheckBoxF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -93,6 +93,12 @@ public class MasterHariLibur extends javax.swing.JFrame {
         });
         JSPKeterangan.setViewportView(JTKeterangan);
 
+        JLStatusKerja.setText("Status Kerja");
+
+        JLStatusKerja2.setText(":");
+
+        JCBStatusKerja.setText("Kerja");
+
         JBKembali.setText("Kembali");
         JBKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,12 +127,6 @@ public class MasterHariLibur extends javax.swing.JFrame {
             }
         });
 
-        JLStatusKerja.setText("Status Kerja");
-
-        JLKeterangan3.setText(":");
-
-        JCBStatusKerja.setText("Kerja");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,7 +152,7 @@ public class MasterHariLibur extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JSPKeterangan))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(JLKeterangan3, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(JLStatusKerja2, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(JCBStatusKerja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -185,7 +185,7 @@ public class MasterHariLibur extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLStatusKerja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JLKeterangan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLStatusKerja2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JCBStatusKerja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -291,7 +291,7 @@ public class MasterHariLibur extends javax.swing.JFrame {
     void tambah(boolean tutup) {
         if (checkInput()) {
             Insert insert = new LSubProces.Insert();
-            boolean simpan = insert.simpan("INSERT INTO `tbmharilibur`(`TanggalHariLibur`, `Keterangan`) VALUES ('" + FDateF.datetostr(JDTanggalHariLibur.getDate(), "yyyy-MM-dd") + "', '" + JTKeterangan.getText() + "')", "Master Tanggal Merah", this);
+            boolean simpan = insert.simpan("INSERT INTO `tbmharilibur`(`TanggalHariLibur`, `StatusKerja`, `Keterangan`) VALUES ('" + FDateF.datetostr(JDTanggalHariLibur.getDate(), "yyyy-MM-dd") + "'," + JCBStatusKerja.isSelected() + ", '" + JTKeterangan.getText() + "')", "Master Tanggal Merah", this);
             if (simpan) {
                 if (GlobalVar.Var.listHariLibur != null) {
                     GlobalVar.Var.listHariLibur.load();
@@ -313,16 +313,17 @@ public class MasterHariLibur extends javax.swing.JFrame {
     void loadData() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.seterorm("Gagal Menampilkan Data Master Tanggal Merah");
-        dRunSelctOne.setQuery("SELECT `IdHariLibur`, DATE_FORMAT(`TanggalHariLibur`,'%d-%m-%Y'), `Keterangan` FROM `tbmharilibur` WHERE `IdHariLibur`='" + idEdit + "'");
+        dRunSelctOne.setQuery("SELECT `IdHariLibur`, DATE_FORMAT(`TanggalHariLibur`,'%d-%m-%Y'), `StatusKerja`, `Keterangan` FROM `tbmharilibur` WHERE `IdHariLibur`='" + idEdit + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         JDTanggalHariLibur.setDate(FDateF.strtodate(list.get(1), "dd-MM-yyyy"));
-        JTKeterangan.setText(list.get(2));
+        JCBStatusKerja.setSelected(list.get(2).equals("1"));
+        JTKeterangan.setText(list.get(3));
     }
 
     void ubah() {
         if (checkInput()) {
             Update update = new LSubProces.Update();
-            boolean ubah = update.Ubah("UPDATE `tbmharilibur` SET `TanggalHariLibur`='" + FDateF.datetostr(JDTanggalHariLibur.getDate(), "yyyy-MM-dd") + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdHariLibur`=" + idEdit, "Master Tanggal Merah", this);
+            boolean ubah = update.Ubah("UPDATE `tbmharilibur` SET `TanggalHariLibur`='" + FDateF.datetostr(JDTanggalHariLibur.getDate(), "yyyy-MM-dd") + "',`StatusKerja`=" + JCBStatusKerja.isSelected() + ", `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdHariLibur`=" + idEdit, "Master Tanggal Merah", this);
             if (ubah) {
                 dispose();
                 GlobalVar.Var.listHariLibur.load();
@@ -339,8 +340,8 @@ public class MasterHariLibur extends javax.swing.JFrame {
     private KomponenGUI.JdateCF JDTanggalHariLibur;
     private KomponenGUI.JlableF JLKeterangan;
     private KomponenGUI.JlableF JLKeterangan2;
-    private KomponenGUI.JlableF JLKeterangan3;
     private KomponenGUI.JlableF JLStatusKerja;
+    private KomponenGUI.JlableF JLStatusKerja2;
     private KomponenGUI.JlableF JLTanggalHariLibur;
     private KomponenGUI.JlableF JLTanggalHariLibur2;
     private javax.swing.JScrollPane JSPKeterangan;

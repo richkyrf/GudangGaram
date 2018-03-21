@@ -22,7 +22,7 @@ public class ListHariLibur extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setTitle("List Master Hari Libur");
+        setTitle("List Master Tanggal Merah");
         setVisible(true);
         load();
         if (!GlobalVar.VarL.level.equals("Administrator")) {
@@ -188,7 +188,7 @@ public class ListHariLibur extends javax.swing.JFrame {
     }
 
     public void load() {
-        JComCari.setQuery("SELECT `IdHariLibur` AS 'ID', DATE_FORMAT(`TanggalHariLibur`,'%d-%m-%Y') AS 'Tanggal', `Keterangan` FROM `tbmharilibur`");
+        JComCari.setQuery("SELECT `IdHariLibur` AS 'ID', DATE_FORMAT(`TanggalHariLibur`,'%d-%m-%Y') AS 'Tanggal', IF(`StatusKerja`=1,'Ya','Tidak') AS 'Status Kerja', `Keterangan` FROM `tbmharilibur`");
         JComCari.tampilkan();
     }
 
@@ -219,7 +219,7 @@ public class ListHariLibur extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
             Delete delete = new LSubProces.Delete();
-            if (delete.Hapus(JComCari.GetIDTable(), "DELETE FROM `tbmharilibur` WHERE `IdHariLibur`=" + JComCari.GetIDTable(), "Master Hari Libur", this)) {
+            if (delete.Hapus(JComCari.GetIDTable(), "DELETE FROM `tbmharilibur` WHERE `IdHariLibur`=" + JComCari.GetIDTable(), "Master Tanggal Merah", this)) {
                 load();
             }
         }

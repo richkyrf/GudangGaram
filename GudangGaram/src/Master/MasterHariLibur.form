@@ -51,7 +51,7 @@
                               <Component id="JSPKeterangan" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="JLKeterangan3" min="-2" pref="6" max="-2" attributes="0"/>
+                              <Component id="JLStatusKerja2" min="-2" pref="6" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="JCBStatusKerja" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -95,10 +95,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="JLStatusKerja" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JLKeterangan3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JLStatusKerja2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JCBStatusKerja" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="JBKembali" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JBUbah" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -159,6 +159,21 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="KomponenGUI.JlableF" name="JLStatusKerja">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Status Kerja"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="JLStatusKerja2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JCheckBoxF" name="JCBStatusKerja">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kerja"/>
+      </Properties>
+    </Component>
     <Component class="KomponenGUI.JbuttonF" name="JBKembali">
       <Properties>
         <Property name="text" type="java.lang.String" value="Kembali"/>
@@ -190,21 +205,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBUbahActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="KomponenGUI.JlableF" name="JLStatusKerja">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Status Kerja"/>
-      </Properties>
-    </Component>
-    <Component class="KomponenGUI.JlableF" name="JLKeterangan3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value=":"/>
-      </Properties>
-    </Component>
-    <Component class="KomponenGUI.JCheckBoxF" name="JCBStatusKerja">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Kerja"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
