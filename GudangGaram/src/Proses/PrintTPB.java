@@ -6,17 +6,23 @@
 package Proses;
 
 import KomponenGUI.FDateF;
+import LSubProces.DRunSelctOne;
+import LSubProces.Insert;
 import LSubProces.RunSelct;
+import LSubProces.Update;
 import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import static java.lang.Integer.parseInt;
 import static java.lang.Math.abs;
 import static java.lang.String.format;
 import static java.lang.System.out;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.print.Doc;
@@ -37,6 +43,7 @@ import static javax.print.attribute.standard.MediaSize.findMedia;
 import static javax.print.attribute.standard.OrientationRequested.LANDSCAPE;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
@@ -58,13 +65,50 @@ public class PrintTPB extends javax.swing.JFrame {
         setTitle("Print Tanda Penerimaan Barang");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        JCNoPenerimaan.load("SELECT `NoPenerimaan` FROM `tbpenerimaan` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NoPenerimaan`");
+        setNoTPB();
     }
 
     Date yesterday() {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         return cal.getTime();
+    }
+
+    void setNoTPB() {
+        NumberFormat nf = new DecimalFormat("000000");
+        String NoTransaksi = null;
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.setQuery("SELECT `NoTpb` FROM `tbtpb` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
+        ArrayList<String> list = dRunSelctOne.excute();
+        if (list.get(0) != null) {
+            NoTransaksi = list.get(0);
+        } else {
+            RunSelct runSelct = new RunSelct();
+            runSelct.setQuery("SELECT `NoTpb` FROM `tbtpb` ORDER BY `NoTpb` DESC LIMIT 1");
+            try {
+                ResultSet rs = runSelct.excute();
+                if (!rs.isBeforeFirst()) {
+                    NoTransaksi = "GG-" + "000001" + "-TP";
+                }
+                while (rs.next()) {
+                    String nopenjualan = rs.getString("NoTpb");
+                    String number = nopenjualan.substring(3, 9);
+                    int p = 1 + parseInt(number);
+                    if (p != 999999) {
+                        NoTransaksi = "GG-" + nf.format(p) + "-TP";
+                    } else if (p == 999999) {
+                        p = 1;
+                        NoTransaksi = "GG-" + nf.format(p) + "-TP";
+                    }
+                }
+            } catch (SQLException e) {
+                out.println("E6" + e);
+                showMessageDialog(null, "Gagal Generate Nomor TPB");
+            } finally {
+                runSelct.closecon();
+            }
+        }
+        JTNoTPB.setText(NoTransaksi);
     }
 
     /**
@@ -89,7 +133,7 @@ public class PrintTPB extends javax.swing.JFrame {
         jbuttonF2 = new KomponenGUI.JbuttonF();
         JTPemasok = new KomponenGUI.JtextF();
         JDTanggal = new KomponenGUI.JdateCF();
-        JCNoPenerimaan = new KomponenGUI.JcomboboxF();
+        JTNoTPB = new KomponenGUI.JtextF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -98,7 +142,7 @@ public class PrintTPB extends javax.swing.JFrame {
             }
         });
 
-        LBNoTransaksi.setText("No. Penerimaan");
+        LBNoTransaksi.setText("No. TPB");
 
         jlableF26.setText(":");
 
@@ -125,7 +169,7 @@ public class PrintTPB extends javax.swing.JFrame {
         jScrollPane1.setViewportView(JTable);
         JTable.setrender(new int[]{3,4,5}, new String[]{"Number", "Number", "Number"});
 
-        jbuttonF1.setText("Print");
+        jbuttonF1.setText("Simpan & Print");
         jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbuttonF1ActionPerformed(evt);
@@ -154,12 +198,6 @@ public class PrintTPB extends javax.swing.JFrame {
             }
         });
 
-        JCNoPenerimaan.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                JCNoPenerimaanItemStateChanged(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,7 +205,7 @@ public class PrintTPB extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -181,20 +219,20 @@ public class PrintTPB extends javax.swing.JFrame {
                                 .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JTPemasok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(LBNoTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlableF23, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlableF24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF23, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlableF24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JDTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LBNoTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JCNoPenerimaan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(JTNoTPB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JDTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -211,10 +249,10 @@ public class PrintTPB extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBNoTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JCNoPenerimaan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBNoTransaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JTPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTNoTPB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                 .addGap(45, 45, 45)
@@ -236,7 +274,7 @@ public class PrintTPB extends javax.swing.JFrame {
     }//GEN-LAST:event_JTPemasokKeyPressed
 
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
-        printing();
+        tambahData();
     }//GEN-LAST:event_jbuttonF1ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -244,13 +282,9 @@ public class PrintTPB extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void JDTanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDTanggalPropertyChange
-        JCNoPenerimaan.load("SELECT `NoPenerimaan` FROM `tbpenerimaan` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NoPenerimaan`");
+        setNoTPB();
         load();
     }//GEN-LAST:event_JDTanggalPropertyChange
-
-    private void JCNoPenerimaanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNoPenerimaanItemStateChanged
-        load();
-    }//GEN-LAST:event_JCNoPenerimaanItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -288,8 +322,8 @@ public class PrintTPB extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private KomponenGUI.JcomboboxF JCNoPenerimaan;
     private KomponenGUI.JdateCF JDTanggal;
+    private KomponenGUI.JtextF JTNoTPB;
     private KomponenGUI.JtextF JTPemasok;
     private KomponenGUI.JtableF JTable;
     private KomponenGUI.JlableF LBNoTransaksi;
@@ -304,12 +338,33 @@ public class PrintTPB extends javax.swing.JFrame {
     private KomponenGUI.JlableF jlableF27;
     // End of variables declaration//GEN-END:variables
 
+    void tambahData() {
+        if (JTable.getRowCount() >= 1) {
+            DRunSelctOne dRunSelctOne = new DRunSelctOne();
+            dRunSelctOne.setQuery("SELECT COUNT(`NoTpb`) FROM `tbtpb` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
+            ArrayList<String> list = dRunSelctOne.excute();
+            boolean berhasil = true;
+            if (list.get(0).equals("0")) {
+                Insert insert = new Insert();
+                berhasil = insert.simpan("INSERT INTO `tbtpb` (`Tanggal`, `NoTpb`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "', '" + JTNoTPB.getText() + "')", "TPB", this);
+            } else {
+                Update update = new Update();
+                berhasil = update.Ubah("UPDATE `tbtpb` SET `NoTpb` = '" + JTNoTPB.getText() + "' WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'", "TPB", this);
+            }
+            if (berhasil) {
+                printing();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal Print Karena Tidak Ada Data Penerimaan Di Tanggal " + FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy"));
+        }
+    }
+
     void load() {
         String Pemasok = null;
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, REPLACE(FORMAT(`KarungPelita`,0),',','.'), REPLACE(FORMAT(`NettoPenjual`,0),',','.'), REPLACE(FORMAT(`NettoPelita`,0),',','.'), a.`Keterangan`, `Pemasok` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpemasok`d ON c.`IdPemasok`=d.`IdPemasok` WHERE `NoPenerimaan` = '" + JCNoPenerimaan.getSelectedItem() + "' ORDER BY `IdPenerimaan` ASC");
+        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, REPLACE(FORMAT(`KarungPelita`,0),',','.'), REPLACE(FORMAT(`NettoPenjual`,0),',','.'), REPLACE(FORMAT(`NettoPelita`,0),',','.'), a.`Keterangan`, `Pemasok` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpemasok`d ON c.`IdPemasok`=d.`IdPemasok` WHERE a.`Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' ORDER BY `IdPenerimaan` ASC");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -356,7 +411,7 @@ public class PrintTPB extends javax.swing.JFrame {
 
     void printing() {
         String Tanggal = FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy");
-        String NoPenerimaan = JCNoPenerimaan.getSelectedItem().toString();
+        String NoPenerimaan = JTNoTPB.getText();
         String Pemasok = JTPemasok.getText();
         String[] No = new String[JTable.getRowCount()];
         String[] Barang = new String[JTable.getRowCount()];

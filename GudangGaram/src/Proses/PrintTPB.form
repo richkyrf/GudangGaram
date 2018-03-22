@@ -29,7 +29,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="780" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -46,22 +46,23 @@
                               <Component id="JTPemasok" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="212" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jlableF23" min="-2" pref="124" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlableF24" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JDTanggal" min="-2" pref="183" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="LBNoTransaksi" min="-2" max="-2" attributes="0"/>
+                              <Component id="LBNoTransaksi" min="-2" pref="73" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jlableF26" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JCNoPenerimaan" max="32767" attributes="0"/>
                           </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jlableF23" min="-2" pref="73" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jlableF24" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="JTNoTPB" max="32767" attributes="0"/>
+                          <Component id="JDTanggal" pref="150" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -85,10 +86,10 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jlableF26" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LBNoTransaksi" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JCNoPenerimaan" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LBNoTransaksi1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF27" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTPemasok" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTNoTPB" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="163" max="32767" attributes="0"/>
@@ -105,7 +106,7 @@
   <SubComponents>
     <Component class="KomponenGUI.JlableF" name="LBNoTransaksi">
       <Properties>
-        <Property name="text" type="java.lang.String" value="No. Penerimaan"/>
+        <Property name="text" type="java.lang.String" value="No. TPB"/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF26">
@@ -209,7 +210,7 @@
     </Container>
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Print"/>
+        <Property name="text" type="java.lang.String" value="Simpan &amp; Print"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF1ActionPerformed"/>
@@ -242,10 +243,7 @@
         <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="JDTanggalPropertyChange"/>
       </Events>
     </Component>
-    <Component class="KomponenGUI.JcomboboxF" name="JCNoPenerimaan">
-      <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCNoPenerimaanItemStateChanged"/>
-      </Events>
+    <Component class="KomponenGUI.JtextF" name="JTNoTPB">
     </Component>
   </SubComponents>
 </Form>
