@@ -23,7 +23,7 @@
 
 (SELECT a.`IdBarang`, IF(`IdPartai` IS NULL,`NamaBarang`, CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')')) as 'NamaBarang', `IdJenisBarang`, `IdPartai` FROM `tbmbarang`a LEFT JOIN `tbmpartai`b ON a.`IdBarang`=b.`IdBarang` WHERE 1 GROUP BY a.`IdBarang`, `IdPartai`) a
     LEFT JOIN
-(SELECT b.`IdBarang`, SUM(`KarungPelita`) as 'Beli', null a, a.`IdPartai` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` WHERE 1  GROUP BY a.`IdPartai`) b
+(SELECT b.`IdBarang`, SUM(`KarungPelita`) as 'Beli', null a, a.`IdPartai` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` WHERE 1 AND a.`Tanggal` = $P{Tgl} GROUP BY a.`IdPartai`) b
     ON a.`IdPartai`=b.`IdPartai`
     LEFT JOIN
 (SELECT d.`IdBarang`, SUM(`Jumlah`) as 'Jual', null a, a.`IdPartai` FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` LEFT JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON IF(a.`IdPartai` IS NULL , a.`IdBarang`, c.`IdBarang`)=d.`IdBarang` WHERE `StatusRetur` = 0 AND b.`Tanggal` = $P{Tgl} AND b.`NoTransaksi` LIKE '%-PJ' GROUP BY `IdBarang`, `IdPartai`) c
@@ -59,15 +59,15 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 	(SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok Akhir', SUM(`Stokkg`) as 'Stok Akhir Kg', `IdPartai` FROM (
 SELECT a.`IdBarang`, IF(`IdPartai` IS NULL,`NamaBarang`, CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')')) as 'NamaBarang', 0 as 'Stok', 0 as 'Stokkg', b.`IdPartai` FROM `tbmbarang`a LEFT JOIN `tbmpartai`b ON a.`IdBarang`=b.`IdBarang` WHERE 1 GROUP BY `IdBarang`, `IdPartai`
 UNION ALL
-SELECT b.`IdBarang`, `NamaBarang`, SUM(ifnull(`KarungPelita`,0)) AS 'Stok', SUM((ifnull(`NettoPelita`,0))) AS 'Stokkg', a.`IdPartai` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} GROUP BY a.`IdPartai`
+SELECT b.`IdBarang`, `NamaBarang`, SUM(ifnull(`KarungPelita`,0)) AS 'Stok', SUM((ifnull(`NettoPelita`,0))) AS 'Stokkg', a.`IdPartai` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdPartai`
 UNION ALL
-SELECT d.`IdBarang`, `NamaBarang`, SUM(ifnull(`Jumlah`*-1,0)) AS 'Stok', SUM(ifnull(`Jumlah`*-1*`Satuan`,0)) AS 'Stokkg', a.`IdPartai` FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` LEFT JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON IF(a.`IdPartai` IS NULL , a.`IdBarang`, c.`IdBarang`)=d.`IdBarang` WHERE `StatusRetur` = 0 AND b.`Tanggal` < $P{Tgl} GROUP BY d.`IdBarang`, a.`IdPartai`
+SELECT d.`IdBarang`, `NamaBarang`, SUM(ifnull(`Jumlah`*-1,0)) AS 'Stok', SUM(ifnull(`Jumlah`*-1*`Satuan`,0)) AS 'Stokkg', a.`IdPartai` FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` LEFT JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` JOIN `tbmbarang`d ON IF(a.`IdPartai` IS NULL , a.`IdBarang`, c.`IdBarang`)=d.`IdBarang` WHERE `StatusRetur` = 0 AND b.`Tanggal` <= $P{Tgl} GROUP BY d.`IdBarang`, a.`IdPartai`
 UNION ALL
-SELECT  b.`IdBarang`, c.`NamaBarang`, (ROUND(SUM(`JumlahBahan`)))*-1, SUM(`JumlahHasil`*-1*d.`Satuan`), a.`IdPartai` FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} GROUP BY `IdPartai`
+SELECT  b.`IdBarang`, c.`NamaBarang`, (ROUND(SUM(`JumlahBahan`)))*-1, SUM(`JumlahHasil`*-1*d.`Satuan`), a.`IdPartai` FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY `IdPartai`
 UNION ALL
-SELECT  `IdBarangHasil`, `NamaBarang`, SUM(`JumlahHasil`), SUM(`JumlahHasil`*`Satuan`), null b FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE a.`IdPartai` IS NOT NULL AND a.`Tanggal` < $P{Tgl} GROUP BY `IdBarangHasil`
+SELECT  `IdBarangHasil`, `NamaBarang`, SUM(`JumlahHasil`), SUM(`JumlahHasil`*`Satuan`), null b FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` WHERE a.`IdPartai` IS NOT NULL AND a.`Tanggal` <= $P{Tgl} GROUP BY `IdBarangHasil`
 UNION ALL
-SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0)), a.`IdPartai` FROM `tbpenyesuaian`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON IF(a.`IdPartai` IS NULL,a.`IdBarang`,b.`IdBarang`)=c.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} GROUP BY c.`IdBarang`, `IdPartai`
+SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0)), a.`IdPartai` FROM `tbpenyesuaian`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON IF(a.`IdPartai` IS NULL,a.`IdBarang`,b.`IdBarang`)=c.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY c.`IdBarang`, `IdPartai`
 ) as tbTemp GROUP BY `IdBarang`, `IdPartai`) i
 	ON IF(i.`IdPartai` IS NULL, a.`IdBarang`=i.`IdBarang`, a.`IdPartai`=i.`IdPartai`)
 
