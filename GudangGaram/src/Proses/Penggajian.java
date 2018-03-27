@@ -105,7 +105,7 @@ public class Penggajian extends javax.swing.JFrame {
         if (JCBBonusBulanan.isSelected()) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
             dRunSelctOne.seterorm("Gagal panggil data bonus");
-            dRunSelctOne.setQuery("SELECT COUNT(`Hadir`) as 'Jebol' FROM `tbabsen` WHERE `IdKaryawan` = (SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jcomboboxF1.getSelectedItem() + "') AND `Tanggal` BETWEEN DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-01') AND DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m-31') AND `Hadir` = 0 ");
+            dRunSelctOne.setQuery("SELECT COUNT(`Hadir`) as 'Jebol' FROM `tbabsen` WHERE `IdKaryawan` = (SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jcomboboxF1.getSelectedItem() + "') AND `Tanggal` BETWEEN DATE_FORMAT('"+FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd")+"' - INTERVAL 1 MONTH, '%Y-%m-01') AND DATE_FORMAT('"+FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd")+"' - INTERVAL 1 MONTH, '%Y-%m-31') AND `Hadir` = 0 ");
             ArrayList<String> list = dRunSelctOne.excute();
             int bonus;
             if (Integer.valueOf(list.get(0)) <= 1) {

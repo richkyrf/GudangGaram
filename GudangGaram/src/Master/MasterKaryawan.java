@@ -372,15 +372,15 @@ public class MasterKaryawan extends javax.swing.JFrame {
                     if (dayOfWeek != Calendar.SUNDAY) {
                         if (isNotLibur(startDate.getTime())) {
                             if (i == 0) {
-                                values = "('" + FDateF.datetostr(startDate.getTime(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jtextF1.getText() + "'),0,'BELUM KERJA')";
+                                values = "('" + FDateF.datetostr(startDate.getTime(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jtextF1.getText() + "'),0,0,'BELUM KERJA')";
                             } else {
-                                values += ",('" + FDateF.datetostr(startDate.getTime(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jtextF1.getText() + "'),0,'BELUM KERJA')";
+                                values += ",('" + FDateF.datetostr(startDate.getTime(), "yyyy-MM-dd") + "',(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jtextF1.getText() + "'),0,0,'BELUM KERJA')";
                             }
                         }
                     }
                     startDate.add(Calendar.DATE, 1);
                 }
-                insertHistory.simpan("INSERT INTO `tbabsen`(`Tanggal`, `IdKaryawan`, `Hadir`, `Keterangan`) VALUES " + values, "Absen", this);
+                insertHistory.simpan("INSERT INTO `tbabsen`(`Tanggal`, `IdKaryawan`, `Hadir`, `SetengahHari`, `Keterangan`) VALUES " + values, "Absen", this);
                 if (tutup) {
                     dispose();
                 } else {
