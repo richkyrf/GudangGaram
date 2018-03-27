@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StokHarian" language="groovy" pageWidth="935" pageHeight="609" orientation="Landscape" columnWidth="895" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="acc8509b-a836-4b53-b178-b496671fd8c2">
-	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.zoom" value="0.90909090909091"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Title" class="java.lang.String" isForPrompting="false">
@@ -56,7 +56,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 ) as tbTemp GROUP BY `IdBarang`) h
 	ON a.`IdBarang`=h.`IdBarang`
 LEFT JOIN
-(SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok Akhir', SUM(`Stokkg`) as 'Stok Akhir Kg', `IdPartai` FROM (
+(SELECT `IdBarang`, `NamaBarang`, SUM(`Stok`) as 'Stok Akhir', SUM(`Stokkg`) as 'Stok Akhir Kg' FROM (
 SELECT a.`IdBarang`, IF(`IdPartai` IS NULL,`NamaBarang`, CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')')) as 'NamaBarang', 0 as 'Stok', 0 as 'Stokkg', `IdPartai` FROM `tbmbarang`a LEFT JOIN `tbmpartai`b ON a.`IdBarang`=b.`IdBarang` WHERE 1
 UNION ALL
 SELECT b.`IdBarang`, `NamaBarang`, SUM(ifnull(`KarungPelita`,0)) AS 'Stok', SUM((ifnull(`NettoPelita`,0))) AS 'Stokkg', a.`IdPartai` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdPartai`
@@ -99,9 +99,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="30" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="895" height="30" uuid="5c0fbdc4-2ef8-4c98-a95f-1bb4dd356913"/>
+				<reportElement x="0" y="15" width="895" height="30" uuid="5c0fbdc4-2ef8-4c98-a95f-1bb4dd356913"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -110,7 +110,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana" size="14" isBold="true"/>
+					<font fontName="Monospaced" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Title}]]></textFieldExpression>
 			</textField>
@@ -122,7 +122,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 				<reportElement x="0" y="3" width="895" height="20" uuid="6b3e52b1-2cd5-4749-9461-36875f2e5bb2"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font fontName="Monospaced" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TANGGAL]]></text>
 			</staticText>
@@ -130,7 +130,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 				<reportElement x="0" y="17" width="895" height="20" uuid="dc1a3974-9b1c-4ec0-aaff-660ad01cf4c7"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font fontName="Monospaced" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{FormatTgl}]]></textFieldExpression>
 			</textField>
@@ -144,7 +144,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana" isBold="true"/>
+					<font fontName="Monospaced" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NO]]></text>
 			</staticText>
@@ -158,7 +158,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Monospaced" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nama Barang]]></text>
 			</staticText>
@@ -172,7 +172,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Stok Awal]]></text>
 			</staticText>
@@ -186,7 +186,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Beli]]></text>
 			</staticText>
@@ -200,7 +200,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hasil]]></text>
 			</staticText>
@@ -214,7 +214,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
@@ -228,7 +228,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
@@ -242,7 +242,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sak]]></text>
 			</staticText>
@@ -256,7 +256,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[KG]]></text>
 			</staticText>
@@ -270,7 +270,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[KG]]></text>
 			</staticText>
@@ -284,7 +284,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Stok Akhir]]></text>
 			</staticText>
@@ -298,7 +298,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sak]]></text>
 			</staticText>
@@ -312,7 +312,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Jual]]></text>
 			</staticText>
@@ -326,7 +326,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mutasi]]></text>
 			</staticText>
@@ -340,7 +340,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Bahan]]></text>
 			</staticText>
@@ -354,7 +354,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font fontName="Monospaced" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Penye suaian]]></text>
 			</staticText>
@@ -368,7 +368,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Penerimaan]]></text>
 			</staticText>
@@ -382,7 +382,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font fontName="Monospaced" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pengeluaran]]></text>
 			</staticText>
@@ -400,7 +400,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Monospaced"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
@@ -413,7 +413,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{NamaBarang}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -425,7 +427,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Stok Awal KG}==0?null:$F{Stok Awal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -437,7 +441,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Beli}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -449,7 +455,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Hasil}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -461,7 +469,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Total Masuk}==0?null:$F{Total Masuk}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -473,7 +483,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Total Keluar}==0?null:$F{Total Keluar}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -485,7 +497,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[($F{Stok Awal}+($F{Total Masuk}==null?0:$F{Total Masuk})-$F{Total Keluar})==0?null:($F{Stok Awal}+($F{Total Masuk}==null?0:$F{Total Masuk})-$F{Total Keluar})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
@@ -497,7 +511,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Stok Awal KG}==0?null:$F{Stok Awal KG}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
@@ -509,7 +525,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[(($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})*($F{Stok Awal}==0?null:($F{Stok Awal KG}/$F{Stok Awal})))==0?null:(($F{Stok Awal}+$F{Total Masuk}-$F{Total Keluar})*($F{Stok Awal}==0?null:($F{Stok Awal KG}/$F{Stok Awal})))]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -521,7 +539,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Jual}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -533,7 +553,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Mutasi}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -545,7 +567,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Bahan}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -557,7 +581,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Penyesuaian}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
@@ -569,8 +595,10 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Stok Akhir}==0&&$F{Stok Akhir KG}==0?null:$F{Stok Akhir}]]></textFieldExpression>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Stok Akhir}==0?null:$F{Stok Akhir}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="840" y="0" width="55" height="20" uuid="3aa1dfce-5269-4178-a145-67472631cc2d"/>
@@ -581,7 +609,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Stok Akhir KG}==0?null:$F{Stok Akhir KG}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -592,7 +622,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 				<reportElement x="809" y="16" width="86" height="20" uuid="bf654a98-41fd-417b-ad19-f6a3282f207c"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 				<textElement>
-					<font isBold="true"/>
+					<font fontName="Monospaced" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dilaporkan Oleh:]]></text>
 			</staticText>
@@ -600,7 +630,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 				<reportElement x="809" y="78" width="86" height="20" uuid="c4e7aeb4-656a-4ae0-9220-53d60d5fb3eb"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font fontName="Monospaced" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hendri]]></text>
 			</staticText>
