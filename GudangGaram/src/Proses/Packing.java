@@ -178,11 +178,11 @@ public class Packing extends javax.swing.JFrame {
         JCNamaKaryawan1.setSelectedIndex(0);
         JCNamaKaryawan2.setSelectedIndex(0);
         JTJumlahHasil1.setText("0");
-        JTKeterangan1.setText("0");
+        JTKeterangan1.setText("");
         JCNamaKaryawan3.setSelectedIndex(0);
         JCNamaKaryawan4.setSelectedIndex(0);
         JTJumlahHasil2.setText("0");
-        JTKeterangan2.setText("0");
+        JTKeterangan2.setText("");
     }
 
     public String generateNoPoles() {
