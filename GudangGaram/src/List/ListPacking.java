@@ -217,7 +217,7 @@ public class ListPacking extends javax.swing.JFrame {
     
     public void load(){
         jcomCari1.setQuery("SELECT `IdPacking` as 'ID', `NoPacking`, DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoBak`, `NoPas`, `NoIndi`, IFNULL(`NamaKaryawan`,'') as 'Nama', CONCAT(d.`NamaBarang`,' (PARTAI ',a.`IdPartai`,')') as 'Bahan', `JumlahBahan`, e.`NamaBarang` as 'Hasil', `JumlahHasil`, `UpahPerPak` as 'Upah', a.`Keterangan` FROM `tbpacking`a LEFT JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` LEFT JOIN `tbmpartai`c ON a.`IdPartai`=c.`IdPartai` LEFT JOIN `tbmbarang`d ON c.`IdBarang`=d.`IdBarang` JOIN `tbmbarang`e ON a.`IdBarangHasil`=e.`IdBarang` WHERE 1");
-        jcomCari1.setOrder(" ORDER BY a.`Tanggal` DESC, `NoBak`, `NoPacking` DESC, `NoPas`, `NoIndi` ");
+        jcomCari1.setOrder(" ORDER BY a.`Tanggal` DESC, `NoBak`, `NoPas`, `NoIndi` ");
         jcomCari1.setRender(new int[]{8,10,11}, new String[]{"Decimal", "Decimal", "Number"});
         jcomCari1.tampilkan();
     }
