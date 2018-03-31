@@ -90,6 +90,9 @@
       </Events>
     </Component>
     <Component class="KomponenGUI.JcomCari" name="jcomCari1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jcomCari1.jtablef.useColor(true);"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

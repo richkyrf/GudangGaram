@@ -81,6 +81,8 @@ public class ListPacking extends javax.swing.JFrame {
             }
         });
 
+        jcomCari1.jtablef.useColor(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

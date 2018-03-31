@@ -88,17 +88,17 @@ public class PrintTPB extends javax.swing.JFrame {
             try {
                 ResultSet rs = runSelct.excute();
                 if (!rs.isBeforeFirst()) {
-                    NoTransaksi = "GG-" + "000001" + "-TP";
+                    NoTransaksi = "GG-" + "000001" + "-PG";
                 }
                 while (rs.next()) {
                     String nopenjualan = rs.getString("NoTpb");
                     String number = nopenjualan.substring(3, 9);
                     int p = 1 + parseInt(number);
                     if (p != 999999) {
-                        NoTransaksi = "GG-" + nf.format(p) + "-TP";
+                        NoTransaksi = "GG-" + nf.format(p) + "-PG";
                     } else if (p == 999999) {
                         p = 1;
-                        NoTransaksi = "GG-" + nf.format(p) + "-TP";
+                        NoTransaksi = "GG-" + nf.format(p) + "-PG";
                     }
                 }
             } catch (SQLException e) {
@@ -167,7 +167,7 @@ public class PrintTPB extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(JTable);
-        JTable.setrender(new int[]{3,4,5}, new String[]{"Number", "Number", "Number"});
+        JTable.setrender(new int[]{3,4,5,6}, new String[]{"Number", "Number", "Number", "Number"});
 
         jbuttonF1.setText("Simpan & Print");
         jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
@@ -364,7 +364,7 @@ public class PrintTPB extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, REPLACE(FORMAT(`KarungPelita`,0),',','.'), REPLACE(FORMAT(`NettoPenjual`,0),',','.'), REPLACE(FORMAT(`NettoPelita`,0),',','.'), a.`Keterangan`, `Pemasok` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpemasok`d ON c.`IdPemasok`=d.`IdPemasok` WHERE a.`Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' ORDER BY `IdPenerimaan` ASC");
+        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, REPLACE(FORMAT(`KarungPelita`,0),',','.'), REPLACE(FORMAT(`NettoPenjual`,0),',','.'), REPLACE(FORMAT(`NettoPelita`,0),',','.'), IF(`NettoPelita`-`NettoPenjual`<0, CONCAT(REPLACE(FORMAT(`NettoPelita`-`NettoPenjual`,0),',','.'), ' KG'),IF(`NettoPelita`-`NettoPenjual`>0, CONCAT('+',REPLACE(FORMAT(`NettoPelita`-`NettoPenjual`,0),',','.'),' KG'), '')) as `Keterangan`, `Pemasok` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpemasok`d ON c.`IdPemasok`=d.`IdPemasok` WHERE a.`Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' ORDER BY `IdPenerimaan` ASC");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -460,7 +460,7 @@ public class PrintTPB extends javax.swing.JFrame {
         OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
         for (int i = 0; i < 12; i++) {
             if (i < JTable.getRowCount()) {
-                OutFormat += format(leftAlignFormat, " | " + (i + 1), "| " + Barang[i], "| " + Plat[i], "|" + format("%4s", Karungs[i]), "|" + format("%7s", NettoPJLS[i]), "|" + format("%7s", NettoPLTS[i]), "|" + Ket[i], "|");
+                OutFormat += format(leftAlignFormat, " | " + (i + 1), "| " + Barang[i], "| " + Plat[i], "|" + format("%4s", Karungs[i]), "|" + format("%7s", NettoPJLS[i]), "|" + format("%7s", NettoPLTS[i]), "|" + format("%10s", Ket[i]), "|");
             } else {
                 OutFormat += format(leftAlignFormat, " | " + (i + 1), "|", "|", "|", "|", "|", "|", "|", "|");
             }
@@ -477,6 +477,7 @@ public class PrintTPB extends javax.swing.JFrame {
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         directprinting(OutFormat);
+        //System.out.println(OutFormat);
     }
 
     public static void directprinting(String Teks) {

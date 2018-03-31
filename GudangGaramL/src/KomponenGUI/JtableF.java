@@ -4,6 +4,7 @@ import Eror.LogEror;
 import FunctionGUI.FNumberRenderer;
 import FunctionGUI.FormatRenderer;
 import LSubProces.Koneksi;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.sql.Connection;
@@ -25,6 +26,7 @@ import javax.swing.table.TableColumnModel;
 
 public class JtableF extends JTable {
 
+    boolean usecolor = false;
     String SQL = "";
     Connection con;
     boolean bf = false;
@@ -43,6 +45,44 @@ public class JtableF extends JTable {
         setRowHeight(20);
         setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null);
         setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null);
+    }
+
+    public void useColor(boolean bool) {
+        usecolor = bool;
+    }
+
+    public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+        Component comp = super.prepareRenderer(renderer, row, col);
+        if (usecolor) {
+            if (getModel().getValueAt(row, 3).toString().equals("1")) {
+                comp.setBackground(new Color(255, 200, 200));
+            } else if (getModel().getValueAt(row, 3).toString().equals("2")) {
+                comp.setBackground(new Color(255, 225, 200));
+            } else if (getModel().getValueAt(row, 3).toString().equals("3")) {
+                comp.setBackground(new Color(225, 255, 200));
+            } else if (getModel().getValueAt(row, 3).toString().equals("4")) {
+                comp.setBackground(new Color(200, 255, 200));
+            } else if (getModel().getValueAt(row, 3).toString().equals("5")) {
+                comp.setBackground(new Color(200, 255, 225));
+            } else if (getModel().getValueAt(row, 3).toString().equals("6")) {
+                comp.setBackground(new Color(200, 225, 255));
+            } else if (getModel().getValueAt(row, 3).toString().equals("7")) {
+                comp.setBackground(new Color(225, 200, 255));
+            } else if (getModel().getValueAt(row, 3).toString().equals("8")) {
+                comp.setBackground(new Color(255, 200, 255));
+            } else if (getModel().getValueAt(row, 3).toString().equals("9")) {
+                comp.setBackground(new Color(255, 200, 225));
+            } else if (getModel().getValueAt(row, 3).toString().equals("10")) {
+                comp.setBackground(new Color(255, 200, 200));
+            }
+            if (isRowSelected(row)) {
+                comp.setBackground(Color.gray);
+                comp.setForeground(Color.white);
+            } else {
+                comp.setForeground(Color.black);
+            }
+        }
+        return comp;
     }
 
     public void setQuery(String Query) {
@@ -100,7 +140,7 @@ public class JtableF extends JTable {
     public void setbooleanfield(int i) {
         booleanfield = i;
     }
-    
+
     public void setbooleanfield2(int i) {
         booleanfield2 = i;
     }

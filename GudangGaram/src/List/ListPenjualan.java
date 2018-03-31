@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package List;
+
 import LSubProces.Delete;
 import Proses.Penjualan;
 import static java.awt.Frame.NORMAL;
@@ -18,7 +19,6 @@ public class ListPenjualan extends javax.swing.JFrame {
     /**
      * Creates new form ListPenjualan
      */
-    
     public ListPenjualan() {
         initComponents();
         setVisible(true);
@@ -45,6 +45,7 @@ public class ListPenjualan extends javax.swing.JFrame {
         jbuttonF3 = new KomponenGUI.JbuttonF();
         jbuttonF4 = new KomponenGUI.JbuttonF();
         jcomCari1 = new KomponenGUI.JcomCari();
+        jCheckBoxF1 = new KomponenGUI.JCheckBoxF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -81,6 +82,14 @@ public class ListPenjualan extends javax.swing.JFrame {
             }
         });
 
+        jCheckBoxF1.setSelected(false);
+        jCheckBoxF1.setText("Tampilkan Detail Penjualan");
+        jCheckBoxF1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxF1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,6 +98,8 @@ public class ListPenjualan extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBoxF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -106,7 +117,8 @@ public class ListPenjualan extends javax.swing.JFrame {
                     .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBoxF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -132,6 +144,10 @@ public class ListPenjualan extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         GlobalVar.Var.listPenjualan = null;
     }//GEN-LAST:event_formWindowClosed
+
+    private void jCheckBoxF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxF1ActionPerformed
+        load();
+    }//GEN-LAST:event_jCheckBoxF1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,6 +188,7 @@ public class ListPenjualan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private KomponenGUI.JCheckBoxF jCheckBoxF1;
     private KomponenGUI.JbuttonF jbuttonF1;
     private KomponenGUI.JbuttonF jbuttonF2;
     private KomponenGUI.JbuttonF jbuttonF3;
@@ -179,24 +196,24 @@ public class ListPenjualan extends javax.swing.JFrame {
     private KomponenGUI.JcomCari jcomCari1;
     // End of variables declaration//GEN-END:variables
 
-    void refreshAll(){
+    void refreshAll() {
         jcomCari1.refresh();
         load();
     }
-    
-    void hapus(){
+
+    void hapus() {
         if (jcomCari1.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
             Delete delete = new Delete();
-            Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbpenjualan` WHERE `IdPenjualan` = "+jcomCari1.GetIDTable(), "Penjualan", this);
-            if (berhasil){
+            Boolean berhasil = delete.Hapus("ID " + jcomCari1.GetIDTable(), "DELETE FROM `tbpenjualan` WHERE `IdPenjualan` = " + jcomCari1.GetIDTable(), "Penjualan", this);
+            if (berhasil) {
                 refreshAll();
             }
         }
     }
-    
-    void ubah(){
+
+    void ubah() {
         if (jcomCari1.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -208,10 +225,15 @@ public class ListPenjualan extends javax.swing.JFrame {
             }
         }
     }
-    
-    public void load(){
-        jcomCari1.setQuery("SELECT `IdPenjualan` as 'ID', `NoTransaksi` as 'No Transaksi', IF(`NoDO`='','-',`NoDo`) as 'No DO', DATE_FORMAT(`Tanggal`, '%d-%m-%Y') as 'Tanggal', `JenisPenjualan` as 'Jenis Penjualan', IFNULL(`Plat`,'-') as 'Plat', IFNULL(`JenisKendaraan`,'-') as 'Kendaraan', `NamaSupir` as 'Nama Supir', IFNULL(`Gudang`, IFNULL(`Penerima`, '')) as 'Tujuan', a.`Keterangan` FROM `tbpenjualan`a JOIN `tbsmjenispenjualan`b ON a.`IdJenisPenjualan`=b.`IdJenisPenjualan` LEFT JOIN `tbmkendaraan`c ON a.`IdKendaraan`=c.`IdKendaraan` LEFT JOIN `tbmgudang`d on a.`IdGudang`=d.`IdGudang` LEFT JOIN `tbmpenerima`e ON a.`IdPenerima`=e.`IdPenerima` WHERE 1");
-        jcomCari1.setOrder(" ORDER BY `Tanggal` DESC, `NoTransaksi` DESC ");
+
+    public void load() {
+        if (jCheckBoxF1.isSelected()) {
+            jcomCari1.setQuery("SELECT `IdPenjualanDetail` as 'ID', a.`NoTransaksi` as 'No. Transaksi', DATE_FORMAT(e.`Tanggal`, '%d-%m-%Y') as 'Tanggal', `NoKolom` as 'No', IF(`StatusRetur`=0 AND `StatusBarcode`=0,IF(a.`IdBarangLain` IS NULL,c.`NamaBarang`,d.`NamaBarangLain`),IF(`StatusRetur`=1 AND `StatusBarcode`=0,CONCAT(IF(a.`IdBarangLain` IS NULL,c.`NamaBarang`,d.`NamaBarangLain`),' (RETUR)'),IF(`StatusRetur`=0 AND `StatusBarcode`=1,CONCAT(IF(a.`IdBarangLain` IS NULL,c.`NamaBarang`,d.`NamaBarangLain`),' (BARCODE)'),CONCAT(IF(a.`IdBarangLain` IS NULL,c.`NamaBarang`,d.`NamaBarangLain`),' (RETUR) (BARCODE)')))) as 'Nama Barang', REPLACE(FORMAT(`Jumlah`,0),',','.') as 'Jumlah', REPLACE(IF(c.`Satuan` IS NOT NULL, c.`Satuan`, '-'),'.',',') as 'Berat Satuan', REPLACE(FORMAT(`Jumlah`*IF(c.`Satuan` IS NOT NULL, c.`Satuan`, 1)/1000,2),'.',',') as 'Tonase', REPLACE(FORMAT(`HargaSatuan`,0),',','.') as 'Harga', REPLACE(FORMAT(`Jumlah`*`HargaSatuan`,0),',','.') as 'Sub Total' , IF(`StatusRetur`=1,'Ya','Tidak') as 'Retur', IF(`StatusBarcode`=1,'Ya','Tidak') as 'Barcode' FROM `tbpenjualandetail`a LEFT JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON IF(a.`IdPartai` is null,a.`IdBarang`,b.`IdBarang`)=c.`IdBarang` LEFT JOIN `tbmbaranglain`d on a.`IdBarangLain`=d.`IdbarangLain` JOIN `tbpenjualan`e ON a.`NoTransaksi`=e.`NoTransaksi` WHERE 1");
+            jcomCari1.setOrder(" ORDER BY e.`Tanggal` DESC, a.`NoTransaksi` DESC, `NoKolom` ASC");
+        } else {
+            jcomCari1.setQuery("SELECT `IdPenjualan` as 'ID', `NoTransaksi` as 'No Transaksi', IF(`NoDO`='','-',`NoDo`) as 'No DO', DATE_FORMAT(`Tanggal`, '%d-%m-%Y') as 'Tanggal', `JenisPenjualan` as 'Jenis Penjualan', IFNULL(`Plat`,'-') as 'Plat', IFNULL(`JenisKendaraan`,'-') as 'Kendaraan', `NamaSupir` as 'Nama Supir', IFNULL(`Gudang`, IFNULL(`Penerima`, '')) as 'Tujuan', a.`Keterangan` FROM `tbpenjualan`a JOIN `tbsmjenispenjualan`b ON a.`IdJenisPenjualan`=b.`IdJenisPenjualan` LEFT JOIN `tbmkendaraan`c ON a.`IdKendaraan`=c.`IdKendaraan` LEFT JOIN `tbmgudang`d on a.`IdGudang`=d.`IdGudang` LEFT JOIN `tbmpenerima`e ON a.`IdPenerima`=e.`IdPenerima` WHERE 1");
+            jcomCari1.setOrder(" ORDER BY `Tanggal` DESC, `NoTransaksi` DESC ");
+        }
         jcomCari1.tampilkan();
     }
 

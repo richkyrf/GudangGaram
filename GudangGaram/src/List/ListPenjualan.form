@@ -30,6 +30,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="jCheckBoxF1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
@@ -50,6 +52,7 @@
                   <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxF1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -90,6 +93,15 @@
       </Events>
     </Component>
     <Component class="KomponenGUI.JcomCari" name="jcomCari1">
+    </Component>
+    <Component class="KomponenGUI.JCheckBoxF" name="jCheckBoxF1">
+      <Properties>
+        <Property name="selected" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Tampilkan Detail Penjualan"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxF1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
