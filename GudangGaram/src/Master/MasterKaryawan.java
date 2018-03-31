@@ -381,6 +381,12 @@ public class MasterKaryawan extends javax.swing.JFrame {
                     startDate.add(Calendar.DATE, 1);
                 }
                 insertHistory.simpan("INSERT INTO `tbabsen`(`Tanggal`, `IdKaryawan`, `Hadir`, `SetengahHari`, `Keterangan`) VALUES " + values, "Absen", this);
+                if (GlobalVar.Var.listKaryawan != null){
+                    GlobalVar.Var.listKaryawan.load();
+                }
+                if (GlobalVar.Var.absen != null){
+                    GlobalVar.Var.absen.load();
+                }
                 if (tutup) {
                     dispose();
                 } else {

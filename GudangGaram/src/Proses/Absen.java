@@ -11,6 +11,7 @@ import LSubProces.Delete;
 import LSubProces.FLaporan;
 import LSubProces.History;
 import LSubProces.MultiInsert;
+import Master.MasterKaryawan;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +35,7 @@ public class Absen extends javax.swing.JFrame {
         setVisible(true);
         load();
         hitungTotalHadir();
+        JTable.requestFocus();
     }
 
     Boolean isFirstSaturday(String year, String month) {
@@ -46,7 +48,7 @@ public class Absen extends javax.swing.JFrame {
         return date.equals(FDateF.datetostr(new Date(), "dd-MM-yyyy"));
     }
 
-    void load() {
+    public void load() {
         JTable.useboolean(true);
         JTable.setbooleanfield(2);
         JTable.setbooleanfield2(3);
@@ -58,19 +60,18 @@ public class Absen extends javax.swing.JFrame {
         cal.setTime(JDTanggal.getDate());
         if (!list.get(0).equals("0")) {
             if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                JTable.setQuery("SELECT `IdKaryawan`, `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`IdJenisKaryawan` = 1 AND x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
+                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`IdJenisKaryawan` = 1 AND x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
                 JLTitle.setText("DATA ABSEN TANGGAL " + FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy") + " (HARI MINGGU)");
             } else {
-                JTable.setQuery("SELECT `IdKaryawan`, `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
+                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
                 JLTitle.setText("DATA ABSEN TANGGAL " + FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy"));
             }
         } else {
             if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE a.`IdJenisKaryawan` = 1 AND `Status` = 1 ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
+                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE a.`IdJenisKaryawan` = 1 AND `Status` = 1 ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
                 JLTitle.setText("TAMBAH BARU DATA ABSEN KARYAWAN (HARI MINGGU)");
             } else {
-
-                JTable.setQuery("SELECT `IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
+                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
                 JLTitle.setText("TAMBAH BARU DATA ABSEN KARYAWAN");
             }
         }
@@ -109,6 +110,7 @@ public class Absen extends javax.swing.JFrame {
         jlableF3 = new KomponenGUI.JlableF();
         JLTitle = new KomponenGUI.JlableF();
         jbuttonF4 = new KomponenGUI.JbuttonF();
+        jbuttonF5 = new KomponenGUI.JbuttonF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -204,10 +206,19 @@ public class Absen extends javax.swing.JFrame {
         JLTitle.setText("TAMBAH DATA ABSEN BARU");
         JLTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
-        jbuttonF4.setText("Print Form Absensi Karyawan");
+        jbuttonF4.setForeground(new java.awt.Color(0, 255, 0));
+        jbuttonF4.setText("Print Form Absensi");
         jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbuttonF4ActionPerformed(evt);
+            }
+        });
+
+        jbuttonF5.setForeground(new java.awt.Color(0, 255, 0));
+        jbuttonF5.setText("Tambah Karyawan Baru");
+        jbuttonF5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbuttonF5ActionPerformed(evt);
             }
         });
 
@@ -220,14 +231,6 @@ public class Absen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(JLTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,7 +242,17 @@ public class Absen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(jtextF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jtextF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -265,7 +278,8 @@ public class Absen extends javax.swing.JFrame {
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -315,6 +329,15 @@ public class Absen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JTableMouseReleased
 
+    private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
+        if (GlobalVar.Var.tambahKaryawan == null){
+            GlobalVar.Var.tambahKaryawan = new MasterKaryawan();
+        } else {
+            GlobalVar.Var.tambahKaryawan.setState(NORMAL);
+            GlobalVar.Var.tambahKaryawan.toFront();
+        }
+    }//GEN-LAST:event_jbuttonF5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -359,6 +382,7 @@ public class Absen extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF jbuttonF2;
     private KomponenGUI.JbuttonF jbuttonF3;
     private KomponenGUI.JbuttonF jbuttonF4;
+    private KomponenGUI.JbuttonF jbuttonF5;
     private KomponenGUI.JlableF jlableF1;
     private KomponenGUI.JlableF jlableF2;
     private KomponenGUI.JlableF jlableF3;
