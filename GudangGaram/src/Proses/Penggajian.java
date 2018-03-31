@@ -43,6 +43,7 @@ import static javax.print.attribute.standard.MediaSize.findMedia;
 import static javax.print.attribute.standard.OrientationRequested.LANDSCAPE;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
@@ -105,7 +106,7 @@ public class Penggajian extends javax.swing.JFrame {
         if (JCBBonusBulanan.isSelected()) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
             dRunSelctOne.seterorm("Gagal panggil data bonus");
-            dRunSelctOne.setQuery("SELECT COUNT(`Hadir`) as 'Jebol' FROM `tbabsen` WHERE `IdKaryawan` = (SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jcomboboxF1.getSelectedItem() + "') AND `Tanggal` BETWEEN DATE_FORMAT('"+FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd")+"' - INTERVAL 1 MONTH, '%Y-%m-01') AND DATE_FORMAT('"+FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd")+"' - INTERVAL 1 MONTH, '%Y-%m-31') AND `Hadir` = 0 ");
+            dRunSelctOne.setQuery("SELECT COUNT(`Hadir`) as 'Jebol' FROM `tbabsen` WHERE `IdKaryawan` = (SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + jcomboboxF1.getSelectedItem() + "') AND `Tanggal` BETWEEN DATE_FORMAT('" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "', '%Y-%m-01') AND DATE_FORMAT('" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "', '%Y-%m-31') AND `Hadir` = 0 ");
             ArrayList<String> list = dRunSelctOne.excute();
             int bonus;
             if (Integer.valueOf(list.get(0)) <= 1) {
@@ -452,10 +453,9 @@ public class Penggajian extends javax.swing.JFrame {
 
     private void JCBBonusBulananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBBonusBulananActionPerformed
         loadBonus();
-        if(JCBBonusBulanan.isSelected()){
+        if (JCBBonusBulanan.isSelected()) {
             JTBonus.setEnabled(true);
-        }
-        else{
+        } else {
             JTBonus.setEnabled(false);
         }
     }//GEN-LAST:event_JCBBonusBulananActionPerformed
@@ -625,7 +625,7 @@ public class Penggajian extends javax.swing.JFrame {
                 OutFormat += format(leftAlignFormat, "| " + (i + 1), "| " + Tanggal[i], "| " + Barang[i], "|" + format("%7s", Jumlahs[i]), "|" + format("%7s", Upahs[i]), "|" + format("%10s", Subs[i]), "|");
             } else if (JTBonus.getInt() > 0 && i == JTable.getRowCount()) {
                 String keteranganBonus = "UANG BONUS FULL BEKERJA";
-                if (JTBonus.getInt() == 65000){
+                if (JTBonus.getInt() == 65000) {
                     keteranganBonus = "UANG BONUS 1/2 FULL BEKERJA";
                 }
                 OutFormat += format(leftAlignFormat, "| " + (i + 1), "| ", "| " + keteranganBonus, "|" + "", "|" + "", "|" + format("%10s", Decformatdigit(JTBonus.getInt())), "|");
@@ -644,7 +644,11 @@ public class Penggajian extends javax.swing.JFrame {
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         directprinting(OutFormat);
-        jcomboboxF1.setSelectedIndex(jcomboboxF1.getSelectedIndex() + 1);
+        if (jcomboboxF1.getSelectedIndex() == jcomboboxF1.getItemCount() - 1) {
+            JOptionPane.showMessageDialog(this, jcomboboxF1.getSelectedItem() + " Adalah Karyawan Terakhir.");
+        } else {
+            jcomboboxF1.setSelectedIndex(jcomboboxF1.getSelectedIndex() + 1);
+        }
     }
 
     /**
