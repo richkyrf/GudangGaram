@@ -634,7 +634,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF11.setText(":");
 
-        JCNamaKaryawan1.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ");
+        JCNamaKaryawan1.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` ASC ");
         JCNamaKaryawan1.setNextFocusableComponent(JCNamaKaryawan2);
         JCNamaKaryawan1.setSelectedItem("");
         JCNamaKaryawan1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -660,7 +660,7 @@ public class Packing extends javax.swing.JFrame {
 
         jlableF29.setText(":");
 
-        JCNamaKaryawan2.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ");
+        JCNamaKaryawan2.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` ASC ");
         JCNamaKaryawan2.setSelectedItem("");
         JCNamaKaryawan2.setNextFocusableComponent(JTJumlahHasil1);
         JCNamaKaryawan2.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -674,7 +674,7 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        JCNamaKaryawan3.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ");
+        JCNamaKaryawan3.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` ASC ");
         JCNamaKaryawan3.setSelectedItem("");
         JCNamaKaryawan3.setNextFocusableComponent(JCNamaKaryawan4);
         JCNamaKaryawan3.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -691,7 +691,7 @@ public class Packing extends javax.swing.JFrame {
             }
         });
 
-        JCNamaKaryawan4.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ");
+        JCNamaKaryawan4.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` ASC ");
         JCNamaKaryawan4.setSelectedItem("");
         JCNamaKaryawan4.setNextFocusableComponent(JTJumlahHasil2);
         JCNamaKaryawan4.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1393,28 +1393,28 @@ public class Packing extends javax.swing.JFrame {
 
     private void JCNamaKaryawan1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan1FocusGained
         String NamaKaryawan = JCNamaKaryawan1.getSelectedItem().toString();
-        JCNamaKaryawan1.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ");
+        JCNamaKaryawan1.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ORDER BY `NamaKaryawan` ASC ");
         JCNamaKaryawan1.setSelectedItem(NamaKaryawan);
         JCNamaKaryawan1.showPopup();
     }//GEN-LAST:event_JCNamaKaryawan1FocusGained
 
     private void JCNamaKaryawan2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan2FocusGained
         String NamaKaryawan = JCNamaKaryawan2.getSelectedItem().toString();
-        JCNamaKaryawan2.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ");
+        JCNamaKaryawan2.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ORDER BY `NamaKaryawan` ASC ");
         JCNamaKaryawan2.setSelectedItem(NamaKaryawan);
         JCNamaKaryawan2.showPopup();
     }//GEN-LAST:event_JCNamaKaryawan2FocusGained
 
     private void JCNamaKaryawan3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan3FocusGained
         String NamaKaryawan = JCNamaKaryawan3.getSelectedItem().toString();
-        JCNamaKaryawan3.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ");
+        JCNamaKaryawan3.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan4.getSelectedItem() + "' ORDER BY `NamaKaryawan` ASC ");
         JCNamaKaryawan3.setSelectedItem(NamaKaryawan);
         JCNamaKaryawan3.showPopup();
     }//GEN-LAST:event_JCNamaKaryawan3FocusGained
 
     private void JCNamaKaryawan4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JCNamaKaryawan4FocusGained
         String NamaKaryawan = JCNamaKaryawan4.getSelectedItem().toString();
-        JCNamaKaryawan4.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' ");
+        JCNamaKaryawan4.load("SELECT '' as 'NamaKaryawan' UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 AND `Namakaryawan` != '" + JCNamaKaryawan1.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan2.getSelectedItem() + "' AND `Namakaryawan` != '" + JCNamaKaryawan3.getSelectedItem() + "' ORDER BY `NamaKaryawan` ASC ");
         JCNamaKaryawan4.setSelectedItem(NamaKaryawan);
         JCNamaKaryawan4.showPopup();
     }//GEN-LAST:event_JCNamaKaryawan4FocusGained
