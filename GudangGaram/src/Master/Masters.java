@@ -31,6 +31,9 @@ public class Masters extends javax.swing.JFrame {
         IdEdit = idEdit.toString();
         Title = title;
         JLNama.setText("Nama " + Title);
+        if (Title.equals("Pemasok Lain")) {
+            JLNama.setText("Nama Pemasok");
+        }
         if (IdEdit.equals("0")) {
             setTitle("Tambah " + Title);
             JBUbah.setVisible(false);
@@ -214,6 +217,9 @@ public class Masters extends javax.swing.JFrame {
                 case "Pemasok":
                     GlobalVar.Var.tambahPemasok = null;
                     break;
+                case "Pemasok Lain":
+                    GlobalVar.Var.tambahPemasokLain = null;
+                    break;
                 case "Peminta":
                     GlobalVar.Var.tambahPeminta = null;
                     break;
@@ -239,6 +245,9 @@ public class Masters extends javax.swing.JFrame {
                     break;
                 case "Pemasok":
                     GlobalVar.Var.ubahPemasok = null;
+                    break;
+                case "Pemasok Lain":
+                    GlobalVar.Var.ubahPemasokLain = null;
                     break;
                 case "Peminta":
                     GlobalVar.Var.ubahPeminta = null;
@@ -323,6 +332,9 @@ public class Masters extends javax.swing.JFrame {
                 case "Pemasok":
                     simpan = insert.simpan("INSERT INTO `tbmpemasok`(`Pemasok`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
                     break;
+                case "Pemasok Lain":
+                    simpan = insert.simpan("INSERT INTO `tbmpemasoklain`(`PemasokLain`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
+                    break;
                 case "Peminta":
                     simpan = insert.simpan("INSERT INTO `tbmpeminta`(`Peminta`, `Keterangan`) VALUES ('" + JTNama.getText() + "', '" + JTKeterangan.getText() + "')", Title, this);
                     break;
@@ -362,6 +374,16 @@ public class Masters extends javax.swing.JFrame {
                             MasterBarang.JCPemasok.setSelectedItem(JTNama.getText());
                             MasterBarang.JCPemasok.requestFocus();
                         }
+                        break;
+                    case "Pemasok Lain":
+                        if (GlobalVar.Var.listPemasokLain != null) {
+                            GlobalVar.Var.listPemasokLain.refresh();
+                        }
+//                        if (GlobalVar.Var.tambahBarang != null || GlobalVar.Var.ubahBarang != null) {
+//                            MasterBarang.JCPemasok.load("SELECT `Pemasok` FROM `tbmpemasok`");
+//                            MasterBarang.JCPemasok.setSelectedItem(JTNama.getText());
+//                            MasterBarang.JCPemasok.requestFocus();
+//                        }
                         break;
                     case "Peminta":
                         if (GlobalVar.Var.listPeminta != null) {
@@ -441,6 +463,9 @@ public class Masters extends javax.swing.JFrame {
             case "Pemasok":
                 dRunSelctOne.setQuery("SELECT `IdPemasok`, `Pemasok`, `Keterangan` FROM `tbmpemasok` WHERE `IdPemasok`='" + IdEdit + "'");
                 break;
+            case "Pemasok Lain":
+                dRunSelctOne.setQuery("SELECT `IdPemasokLain`, `PemasokLain`, `Keterangan` FROM `tbmpemasoklain` WHERE `IdPemasokLain`='" + IdEdit + "'");
+                break;
             case "Peminta":
                 dRunSelctOne.setQuery("SELECT `IdPeminta`, `Peminta`, `Keterangan` FROM `tbmpeminta` WHERE `IdPeminta`='" + IdEdit + "'");
                 break;
@@ -475,6 +500,9 @@ public class Masters extends javax.swing.JFrame {
                 case "Pemasok":
                     ubah = update.Ubah("UPDATE `tbmpemasok` SET `Pemasok`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdPemasok`=" + IdEdit, Title, this);
                     break;
+                case "Pemasok Lain":
+                    ubah = update.Ubah("UPDATE `tbmpemasoklain` SET `PemasokLain`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdPemasokLain`=" + IdEdit, Title, this);
+                    break;
                 case "Peminta":
                     ubah = update.Ubah("UPDATE `tbmpeminta` SET `Peminta`='" + JTNama.getText() + "', `Keterangan`='" + JTKeterangan.getText() + "' WHERE `IdPeminta`=" + IdEdit, Title, this);
                     break;
@@ -501,6 +529,9 @@ public class Masters extends javax.swing.JFrame {
                         break;
                     case "Pemasok":
                         GlobalVar.Var.listPemasok.refresh();
+                        break;
+                    case "Pemasok Lain":
+                        GlobalVar.Var.listPemasokLain.refresh();
                         break;
                     case "Peminta":
                         GlobalVar.Var.listPeminta.refresh();

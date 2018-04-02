@@ -130,9 +130,17 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPemasokActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPemasok1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="9. Master Pemasok Barang Lain"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPemasok1ActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPeminta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="9. Master Peminta"/>
+                <Property name="text" type="java.lang.String" value="10. Master Peminta"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPemintaActionPerformed"/>
@@ -140,7 +148,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterGudang">
               <Properties>
-                <Property name="text" type="java.lang.String" value="10. Master Gudang"/>
+                <Property name="text" type="java.lang.String" value="11. Master Gudang"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterGudangActionPerformed"/>
@@ -148,7 +156,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterPenerima">
               <Properties>
-                <Property name="text" type="java.lang.String" value="11. Master Penerima (Customer)"/>
+                <Property name="text" type="java.lang.String" value="12. Master Penerima (Customer)"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterPenerimaActionPerformed"/>
@@ -156,7 +164,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIMasterKeterangan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="12. Master Keterangan"/>
+                <Property name="text" type="java.lang.String" value="13. Master Keterangan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIMasterKeteranganActionPerformed"/>
@@ -209,9 +217,17 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenerimaanActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenerimaan1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="6. Proses Penerimaan Barang Lain"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenerimaan1ActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPrintTandaPenerimaanBarang">
               <Properties>
-                <Property name="text" type="java.lang.String" value="6. Proses Print Tanda Penerimaan Barang (TPB)"/>
+                <Property name="text" type="java.lang.String" value="7. Proses Print Tanda Penerimaan Barang (TPB)"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPrintTandaPenerimaanBarangActionPerformed"/>
@@ -221,7 +237,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIDinasLuar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="7. Proses Dinas Luar"/>
+                <Property name="text" type="java.lang.String" value="8. Proses Dinas Luar"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIDinasLuarActionPerformed"/>
@@ -229,7 +245,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesRekapPenggajianKaryawan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="8. Proses Print Rekap Gaji Karyawan Borongan"/>
+                <Property name="text" type="java.lang.String" value="9. Proses Print Rekap Gaji Karyawan Borongan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesRekapPenggajianKaryawanActionPerformed"/>
@@ -237,7 +253,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenggajianKaryawan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="9. Proses Print Gaji Karyawan Borongan"/>
+                <Property name="text" type="java.lang.String" value="10. Proses Print Gaji Karyawan Borongan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenggajianKaryawanActionPerformed"/>
@@ -245,7 +261,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesRekapPenggajianKaryawan1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="10. Proses Print Rekap Gaji Karyawan Harian"/>
+                <Property name="text" type="java.lang.String" value="11. Proses Print Rekap Gaji Karyawan Harian"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesRekapPenggajianKaryawan1ActionPerformed"/>
@@ -255,7 +271,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenyesuaianStok">
               <Properties>
-                <Property name="text" type="java.lang.String" value="11. Proses Penyesuaian Stok"/>
+                <Property name="text" type="java.lang.String" value="12. Proses Penyesuaian Stok"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenyesuaianStokActionPerformed"/>
@@ -263,7 +279,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIProsesPenyesuaianStok1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="12. Proses Penyesuaian Stok Barang Lain"/>
+                <Property name="text" type="java.lang.String" value="13. Proses Penyesuaian Stok Barang Lain"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIProsesPenyesuaianStok1ActionPerformed"/>
@@ -300,9 +316,17 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenerimaanActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="JMIListPenerimaan1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="4. List Penerimaan Barang Lain"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenerimaan1ActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIListPenyesuaianStok">
               <Properties>
-                <Property name="text" type="java.lang.String" value="4. List Penyesuaian Stok"/>
+                <Property name="text" type="java.lang.String" value="5. List Penyesuaian Stok"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenyesuaianStokActionPerformed"/>
@@ -310,7 +334,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JMIListPenyesuaianStok1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="5. List Penyesuaian Stok Barang Lain"/>
+                <Property name="text" type="java.lang.String" value="6. List Penyesuaian Stok Barang Lain"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMIListPenyesuaianStok1ActionPerformed"/>

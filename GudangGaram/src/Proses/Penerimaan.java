@@ -1091,6 +1091,9 @@ public class Penerimaan extends javax.swing.JFrame {
                     JTPemasok.setText("");
                     JTNamaBarang.setText("");
                 }
+                if (GlobalVar.Var.listPenerimaan != null) {
+                    GlobalVar.Var.listPenerimaan.load();
+                }
                 if (tutup) {
                     GlobalVar.Var.tambahPenerimaan.dispose();
                     GlobalVar.Var.tambahPenerimaan = null;
@@ -1107,9 +1110,6 @@ public class Penerimaan extends javax.swing.JFrame {
                     JTAKeterangan.setText("");
                     JTKarungPenjual.requestFocus();
                 }
-                if (GlobalVar.Var.listPenerimaan != null) {
-                    GlobalVar.Var.listPenerimaan.load();
-                }
             }
         }
     }
@@ -1118,11 +1118,11 @@ public class Penerimaan extends javax.swing.JFrame {
         if (checkInput()) {
             Update update = new Update();
             Boolean berhasil = update.Ubah("UPDATE `tbpenerimaan` SET `NoPenerimaan`='" + JTNoPenerimaan.getText() + "',`Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdPartai`='" + JCNoPartai.getSelectedItem() + "',`IdPeminta`=(SELECT `IdPeminta` FROM `tbmpeminta` WHERE `Peminta` = '" + JCPeminta.getSelectedItem() + "'),`KarungPenjual`='" + JTKarungPenjual.getInt() + "',`NettoPenjual`='" + JTNettoPenjual.getInt() + "',`NoTimbang`='" + JTNoTimbang.getText() + "',`Plat`='" + JCPlat.getSelectedItem() + "',`KarungPelita`='" + JTKarungPelita.getInt() + "',`BruttoPelita`='" + JTBruttoPelita.getInt() + "',`TaraPelita`='" + JTTaraPelita.getInt() + "',`NettoPelita`='" + JTNettoPelita.getInt() + "',`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdPenerimaan` = " + IdEdit, "Penerimaan", this);
-            if (berhasil) {
-                dispose();
-            }
             if (GlobalVar.Var.listPenerimaan != null) {
                 GlobalVar.Var.listPenerimaan.load();
+            }
+            if (berhasil) {
+                dispose();
             }
         }
     }

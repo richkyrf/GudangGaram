@@ -28,12 +28,13 @@ public class Var {
     public static MasterBarang tambahBarang, ubahBarang;
     public static MasterBarangLain tambahBarangLain, ubahBarangLain;
     public static MasterKendaraan tambahKendaraan, ubahKendaraan;
-    public static Masters tambahGudang, ubahGudang, tambahPemasok, ubahPemasok, tambahPeminta, ubahPeminta, tambahPenerima, ubahPenerima, tambahJenisKaryawan, ubahJenisKaryawan, tambahJenisBarang, ubahJenisBarang, tambahJenisPenjualan, ubahJenisPenjualan;
+    public static Masters tambahGudang, ubahGudang, tambahPemasok, ubahPemasok, tambahPemasokLain, ubahPemasokLain, tambahPeminta, ubahPeminta, tambahPenerima, ubahPenerima, tambahJenisKaryawan, ubahJenisKaryawan, tambahJenisBarang, ubahJenisBarang, tambahJenisPenjualan, ubahJenisPenjualan;
     public static MasterHariLibur tambahHariLibur, ubahHariLibur;
     public static MasterKeterangan tambahKeterangan, ubahKeterangan;
 
     public static Absen absen;
     public static Penerimaan tambahPenerimaan, ubahPenerimaan;
+    public static PenerimaanLain tambahPenerimaanLain, ubahPenerimaanLain;
     public static Packing tambahPacking, ubahPacking;
     public static Penjualan tambahPenjualan, ubahPenjualan;
     public static Penyesuaian tambahPenyesuaian;
@@ -51,9 +52,10 @@ public class Var {
     public static ListBarang listBarang;
     public static ListBarangLain listBarangLain;
     public static ListKendaraan listKendaraan;
-    public static ListMasters listGudang, listPemasok, listPeminta, listPenerima, listJenisKaryawan, listJenisBarang, listJenisPenjualan;
+    public static ListMasters listGudang, listPemasokLain, listPemasok, listPeminta, listPenerima, listJenisKaryawan, listJenisBarang, listJenisPenjualan;
     public static ListHariLibur listHariLibur;
     public static ListPenerimaan listPenerimaan;
+    public static ListPenerimaanLain listPenerimaanLain;
     public static ListPacking listPacking;
     public static ListPenjualan listPenjualan;
     public static ListPenyesuaian listPenyesuaian;

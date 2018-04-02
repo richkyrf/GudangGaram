@@ -228,7 +228,7 @@
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF4">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="ff" red="0" type="rgb"/>
+          <Color blue="0" green="cc" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Print Form Absensi"/>
       </Properties>
@@ -239,7 +239,7 @@
     <Component class="KomponenGUI.JbuttonF" name="jbuttonF5">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="ff" red="0" type="rgb"/>
+          <Color blue="0" green="cc" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Tambah Karyawan Baru"/>
       </Properties>

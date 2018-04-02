@@ -8,6 +8,7 @@ package List;
 import LSubProces.Delete;
 import Master.*;
 import javax.swing.JOptionPane;
+import static GlobalVar.Var.*;
 
 /**
  *
@@ -149,25 +150,28 @@ public class ListMasters extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         switch (Title) {
             case "Gudang":
-                GlobalVar.Var.listGudang = null;
+                listGudang = null;
                 break;
             case "Pemasok":
-                GlobalVar.Var.listPemasok = null;
+                listPemasok = null;
+                break;
+            case "Pemasok Lain":
+                listPemasokLain = null;
                 break;
             case "Peminta":
-                GlobalVar.Var.listPeminta = null;
+                listPeminta = null;
                 break;
             case "Penerima":
-                GlobalVar.Var.listPenerima = null;
+                listPenerima = null;
                 break;
             case "Jenis Karyawan":
-                GlobalVar.Var.listJenisKaryawan = null;
+                listJenisKaryawan = null;
                 break;
             case "Jenis Barang":
-                GlobalVar.Var.listJenisBarang = null;
+                listJenisBarang = null;
                 break;
             case "Jenis Penjualan":
-                GlobalVar.Var.listJenisPenjualan = null;
+                listJenisPenjualan = null;
                 break;
             default:
                 break;
@@ -223,38 +227,43 @@ public class ListMasters extends javax.swing.JFrame {
     void tambah() {
         switch (Title) {
             case "Gudang":
-                if (GlobalVar.Var.tambahGudang == null) {
-                    GlobalVar.Var.tambahGudang = new Masters("0", "Gudang");
+                if (tambahGudang == null) {
+                    tambahGudang = new Masters("0", "Gudang");
                 }
                 break;
             case "Pemasok":
-                if (GlobalVar.Var.tambahPemasok == null) {
-                    GlobalVar.Var.tambahPemasok = new Masters("0", "Pemasok");
+                if (tambahPemasok == null) {
+                    tambahPemasok = new Masters("0", "Pemasok");
+                }
+                break;
+            case "Pemasok Lain":
+                if (tambahPemasokLain == null) {
+                    tambahPemasokLain = new Masters("0", "Pemasok Lain");
                 }
                 break;
             case "Peminta":
-                if (GlobalVar.Var.tambahPeminta == null) {
-                    GlobalVar.Var.tambahPeminta = new Masters("0", "Peminta");
+                if (tambahPeminta == null) {
+                    tambahPeminta = new Masters("0", "Peminta");
                 }
                 break;
             case "Penerima":
-                if (GlobalVar.Var.tambahPenerima == null) {
-                    GlobalVar.Var.tambahPenerima = new Masters("0", "Penerima");
+                if (tambahPenerima == null) {
+                    tambahPenerima = new Masters("0", "Penerima");
                 }
                 break;
             case "Jenis Karyawan":
-                if (GlobalVar.Var.tambahJenisKaryawan == null) {
-                    GlobalVar.Var.tambahJenisKaryawan = new Masters("0", "Jenis Karyawan");
+                if (tambahJenisKaryawan == null) {
+                    tambahJenisKaryawan = new Masters("0", "Jenis Karyawan");
                 }
                 break;
             case "Jenis Barang":
-                if (GlobalVar.Var.tambahJenisBarang == null) {
-                    GlobalVar.Var.tambahJenisBarang = new Masters("0", "Jenis Barang");
+                if (tambahJenisBarang == null) {
+                    tambahJenisBarang = new Masters("0", "Jenis Barang");
                 }
                 break;
             case "Jenis Penjualan":
-                if (GlobalVar.Var.tambahJenisPenjualan == null) {
-                    GlobalVar.Var.tambahJenisPenjualan = new Masters("0", "Jenis Penjualan");
+                if (tambahJenisPenjualan == null) {
+                    tambahJenisPenjualan = new Masters("0", "Jenis Penjualan");
                 }
                 break;
             default:
@@ -272,6 +281,9 @@ public class ListMasters extends javax.swing.JFrame {
                     break;
                 case "Pemasok":
                     berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmpemasok` WHERE `IdPemasok` = " + jcomCari1.GetIDTable(), "Pemasok", this);
+                    break;
+                case "Pemasok Lain":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmpemasoklain` WHERE `IdPemasoklain` = " + jcomCari1.GetIDTable(), "Pemasok Barang Lain", this);
                     break;
                 case "Peminta":
                     berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmpeminta` WHERE `IdPeminta` = " + jcomCari1.GetIDTable(), "Peminta", this);
@@ -303,38 +315,43 @@ public class ListMasters extends javax.swing.JFrame {
         if (jcomCari1.getSelectedRow() != -1) {
             switch (Title) {
                 case "Gudang":
-                    if (GlobalVar.Var.ubahGudang == null) {
-                        GlobalVar.Var.ubahGudang = new Masters(jcomCari1.GetIDTable(), "Gudang");
+                    if (ubahGudang == null) {
+                        ubahGudang = new Masters(jcomCari1.GetIDTable(), "Gudang");
                     }
                     break;
                 case "Pemasok":
-                    if (GlobalVar.Var.ubahPemasok == null) {
-                        GlobalVar.Var.ubahPemasok = new Masters(jcomCari1.GetIDTable(), "Pemasok");
+                    if (ubahPemasok == null) {
+                        ubahPemasok = new Masters(jcomCari1.GetIDTable(), "Pemasok");
+                    }
+                    break;
+                case "Pemasok Lain":
+                    if (ubahPemasokLain == null) {
+                        ubahPemasokLain = new Masters(jcomCari1.GetIDTable(), "Pemasok Lain");
                     }
                     break;
                 case "Peminta":
-                    if (GlobalVar.Var.ubahPeminta == null) {
-                        GlobalVar.Var.ubahPeminta = new Masters(jcomCari1.GetIDTable(), "Peminta");
+                    if (ubahPeminta == null) {
+                        ubahPeminta = new Masters(jcomCari1.GetIDTable(), "Peminta");
                     }
                     break;
                 case "Penerima":
-                    if (GlobalVar.Var.ubahPenerima == null) {
-                        GlobalVar.Var.ubahPenerima = new Masters(jcomCari1.GetIDTable(), "Penerima");
+                    if (ubahPenerima == null) {
+                        ubahPenerima = new Masters(jcomCari1.GetIDTable(), "Penerima");
                     }
                     break;
                 case "Jenis Karyawan":
-                    if (GlobalVar.Var.ubahJenisKaryawan == null) {
-                        GlobalVar.Var.ubahJenisKaryawan = new Masters(jcomCari1.GetIDTable(), "Jenis Karyawan");
+                    if (ubahJenisKaryawan == null) {
+                        ubahJenisKaryawan = new Masters(jcomCari1.GetIDTable(), "Jenis Karyawan");
                     }
                     break;
                 case "Jenis Barang":
-                    if (GlobalVar.Var.ubahJenisBarang == null) {
-                        GlobalVar.Var.ubahJenisBarang = new Masters(jcomCari1.GetIDTable(), "Jenis Barang");
+                    if (ubahJenisBarang == null) {
+                        ubahJenisBarang = new Masters(jcomCari1.GetIDTable(), "Jenis Barang");
                     }
                     break;
                 case "Jenis Penjualan":
-                    if (GlobalVar.Var.ubahJenisPenjualan == null) {
-                        GlobalVar.Var.ubahJenisPenjualan = new Masters(jcomCari1.GetIDTable(), "Jenis Penjualan");
+                    if (ubahJenisPenjualan == null) {
+                        ubahJenisPenjualan = new Masters(jcomCari1.GetIDTable(), "Jenis Penjualan");
                     }
                     break;
                 default:
@@ -352,6 +369,9 @@ public class ListMasters extends javax.swing.JFrame {
                 break;
             case "Pemasok":
                 jcomCari1.setQuery("SELECT `IdPemasok` as 'ID', `Pemasok`, `Keterangan` FROM `tbmpemasok` WHERE 1");
+                break;
+            case "Pemasok Lain":
+                jcomCari1.setQuery("SELECT `IdPemasokLain` as 'ID', `PemasokLain` as 'Pemasok', `Keterangan` FROM `tbmpemasoklain` WHERE 1");
                 break;
             case "Peminta":
                 jcomCari1.setQuery("SELECT `IdPeminta` as 'ID', `Peminta`, `Keterangan` FROM `tbmpeminta` WHERE 1");

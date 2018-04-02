@@ -68,10 +68,10 @@ public class Absen extends javax.swing.JFrame {
             }
         } else {
             if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE a.`IdJenisKaryawan` = 1 AND `Status` = 1 ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
+                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, (SELECT `NamaKaryawan` FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE a.`IdJenisKaryawan` = 1 AND `Status` = 1 GROUP BY `NamaKaryawan` ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ) as tbtemp");
                 JLTitle.setText("TAMBAH BARU DATA ABSEN KARYAWAN (HARI MINGGU)");
             } else {
-                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ");
+                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, (SELECT `NamaKaryawan` FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 GROUP BY `NamaKaryawan` ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ) as tbtemp");
                 JLTitle.setText("TAMBAH BARU DATA ABSEN KARYAWAN");
             }
         }
@@ -206,7 +206,7 @@ public class Absen extends javax.swing.JFrame {
         JLTitle.setText("TAMBAH DATA ABSEN BARU");
         JLTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
-        jbuttonF4.setForeground(new java.awt.Color(0, 255, 0));
+        jbuttonF4.setForeground(new java.awt.Color(0, 204, 0));
         jbuttonF4.setText("Print Form Absensi");
         jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,7 +214,7 @@ public class Absen extends javax.swing.JFrame {
             }
         });
 
-        jbuttonF5.setForeground(new java.awt.Color(0, 255, 0));
+        jbuttonF5.setForeground(new java.awt.Color(0, 204, 0));
         jbuttonF5.setText("Tambah Karyawan Baru");
         jbuttonF5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
