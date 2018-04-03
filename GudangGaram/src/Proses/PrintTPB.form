@@ -36,17 +36,17 @@
                       <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="LBNoTransaksi2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="LBNoTransaksi1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jlableF27" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JTPemasok" max="32767" attributes="0"/>
+                              <Component id="JCPemasok" min="-2" pref="250" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="205" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="LBNoTransaksi" min="-2" pref="73" max="-2" attributes="0"/>
@@ -88,12 +88,12 @@
                   <Component id="LBNoTransaksi" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LBNoTransaksi1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF27" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTPemasok" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTNoTPB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JCPemasok" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="163" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="202" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -224,14 +224,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF2ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="KomponenGUI.JtextF" name="JTPemasok">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTPemasokKeyPressed"/>
-      </Events>
-    </Component>
     <Component class="KomponenGUI.JdateCF" name="JDTanggal">
       <Properties>
         <Property name="date" type="java.util.Date" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -244,6 +236,11 @@
       </Events>
     </Component>
     <Component class="KomponenGUI.JtextF" name="JTNoTPB">
+    </Component>
+    <Component class="KomponenGUI.JcomboboxF" name="JCPemasok">
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCPemasokItemStateChanged"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

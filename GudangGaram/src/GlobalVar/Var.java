@@ -39,6 +39,7 @@ public class Var {
     public static Penjualan tambahPenjualan, ubahPenjualan;
     public static Penyesuaian tambahPenyesuaian;
     public static PenyesuaianLain tambahPenyesuaianLain;
+    public static TutupPartai tambahTutupPartai, ubahTutupPartai;
 
     public static Penggajian penggajian;
     public static RekapPenggajian rekapPenggajian;
@@ -62,6 +63,7 @@ public class Var {
     public static ListPenyesuaianLain listPenyesuaianLain;
     public static ListDinasLuar listDinasLuar;
     public static ListKeterangan listKeterangan;
+    public static ListTutupPartai listTutupPartai;
 
     public static LaporanStokHarian laporanStokHarian;
 

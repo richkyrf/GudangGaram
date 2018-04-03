@@ -1017,7 +1017,7 @@ public class Penerimaan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private KomponenGUI.JcomboboxF JCNoPartai;
     public static KomponenGUI.JcomboboxF JCPeminta;
-    public KomponenGUI.JcomboboxF JCPlat;
+    public static KomponenGUI.JcomboboxF JCPlat;
     private static KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JRibuanTextField JTBruttoPelita;

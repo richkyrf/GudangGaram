@@ -8,6 +8,7 @@ package Master;
 import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
 import LSubProces.Update;
+import Proses.PenerimaanLain;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -415,29 +416,21 @@ public class MasterBarangLain extends javax.swing.JFrame {
             Insert insert = new Insert();
             Boolean berhasil = insert.simpan("INSERT INTO `tbmbaranglain`(`NamaBarangLain`, `IdJenisBarangLain`, `BeratPembagi`, `Satuan`, `Keterangan`) VALUES ('" + JTNamaBarangLain.getText() + "',(SELECT `IdJenisBarangLain` FROM `tbsmjenisbaranglain` WHERE `JenisBarangLain` = '" + JCJenisBarangLain.getSelectedItem() + "'),'" + JTBeratPembagi.getInt() + "','" + JTSatuan.getText() + "','" + JTAKeterangan.getText() + "')", "Barang Lain", this);
             if (berhasil) {
-                if (GlobalVar.Var.tambahBarang != null) {
-                    if (JCJenisBarangLain.getSelectedIndex() == 0) {
-                        GlobalVar.Var.tambahBarang.JCPlastikDalam.load("SELECT '-- Pilih Plastik Dalam --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1");
-                        GlobalVar.Var.tambahBarang.JCPlastikDalam.setSelectedItem(JTNamaBarangLain.getText());
-                        GlobalVar.Var.tambahBarang.JCPlastikDalam.requestFocus();
-                    }
-                    else if(JCJenisBarangLain.getSelectedIndex() == 1){
-                        GlobalVar.Var.tambahBarang.JCPlastikLuar.load("SELECT '-- Pilih Plastik Luar --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 2");
-                        GlobalVar.Var.tambahBarang.JCPlastikLuar.setSelectedItem(JTNamaBarangLain.getText());
-                        GlobalVar.Var.tambahBarang.JCPlastikLuar.requestFocus();
+                if (GlobalVar.Var.tambahBarang != null || GlobalVar.Var.ubahBarang != null) {
+                    if (JCJenisBarangLain.getSelectedItem().equals("PLASTIK DALAM")) {
+                        MasterBarang.JCPlastikDalam.load("SELECT '-- Pilih Plastik Dalam --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1");
+                        MasterBarang.JCPlastikDalam.setSelectedItem(JTNamaBarangLain.getText());
+                        MasterBarang.JCPlastikDalam.requestFocus();
+                    } else if (JCJenisBarangLain.getSelectedItem().equals("PLASTIK LUAR")) {
+                        MasterBarang.JCPlastikLuar.load("SELECT '-- Pilih Plastik Luar --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 2");
+                        MasterBarang.JCPlastikLuar.setSelectedItem(JTNamaBarangLain.getText());
+                        MasterBarang.JCPlastikLuar.requestFocus();
                     }
                 }
-                if (GlobalVar.Var.ubahBarang != null) {
-                    if (JCJenisBarangLain.getSelectedIndex() == 0) {
-                        GlobalVar.Var.ubahBarang.JCPlastikDalam.load("SELECT '-- Pilih Plastik Dalam --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1");
-                        GlobalVar.Var.ubahBarang.JCPlastikDalam.setSelectedItem(JTNamaBarangLain.getText());
-                        GlobalVar.Var.ubahBarang.JCPlastikDalam.requestFocus();
-                    }
-                    else if(JCJenisBarangLain.getSelectedIndex() == 1){
-                        GlobalVar.Var.ubahBarang.JCPlastikLuar.load("SELECT '-- Pilih Plastik Luar --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 2");
-                        GlobalVar.Var.ubahBarang.JCPlastikLuar.setSelectedItem(JTNamaBarangLain.getText());
-                        GlobalVar.Var.ubahBarang.JCPlastikLuar.requestFocus();
-                    }
+                if (GlobalVar.Var.tambahPenerimaanLain != null || GlobalVar.Var.ubahPenerimaanLain != null) {
+                    PenerimaanLain.JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1 ");
+                    PenerimaanLain.JCNamaBarang.setSelectedItem(JTNamaBarangLain.getText());
+                    PenerimaanLain.JCNamaBarang.requestFocus();
                 }
                 if (GlobalVar.Var.listBarangLain != null) {
                     GlobalVar.Var.listBarangLain.load();

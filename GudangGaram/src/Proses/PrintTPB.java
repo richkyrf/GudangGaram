@@ -75,40 +75,65 @@ public class PrintTPB extends javax.swing.JFrame {
     }
 
     void setNoTPB() {
-        NumberFormat nf = new DecimalFormat("000000");
-        String NoTransaksi = null;
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `NoTpb` FROM `tbtpb` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
-        ArrayList<String> list = dRunSelctOne.excute();
-        if (list.get(0) != null) {
-            NoTransaksi = list.get(0);
-        } else {
-            RunSelct runSelct = new RunSelct();
-            runSelct.setQuery("SELECT `NoTpb` FROM `tbtpb` ORDER BY `NoTpb` DESC LIMIT 1");
-            try {
-                ResultSet rs = runSelct.excute();
-                if (!rs.isBeforeFirst()) {
-                    NoTransaksi = "GG-" + "000001" + "-PG";
-                }
-                while (rs.next()) {
-                    String nopenjualan = rs.getString("NoTpb");
-                    String number = nopenjualan.substring(3, 9);
-                    int p = 1 + parseInt(number);
-                    if (p != 999999) {
-                        NoTransaksi = "GG-" + nf.format(p) + "-PG";
-                    } else if (p == 999999) {
-                        p = 1;
-                        NoTransaksi = "GG-" + nf.format(p) + "-PG";
-                    }
-                }
-            } catch (SQLException e) {
-                out.println("E6" + e);
-                showMessageDialog(null, "Gagal Generate Nomor TPB");
-            } finally {
-                runSelct.closecon();
+        if (JCPemasok.getSelectedIndex() == 0) {
+            JTNoTPB.setText("");
+            DefaultTableModel dm = (DefaultTableModel) JTable.getModel();
+            int rowCount = dm.getRowCount();
+            for (int i = rowCount - 1; i >= 0; i--) {
+                dm.removeRow(i);
             }
+        } else {
+            NumberFormat nf = new DecimalFormat("000000");
+            String NoTransaksi = null;
+            DRunSelctOne dRunSelctOne = new DRunSelctOne();
+            dRunSelctOne.setQuery("SELECT `NoTpb` FROM `tbtpb` WHERE `Pemasok` = '" + JCPemasok.getSelectedItem() + "' AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
+            ArrayList<String> list = dRunSelctOne.excute();
+            if (list.get(0) != null) {
+                NoTransaksi = list.get(0);
+            } else {
+                RunSelct runSelct = new RunSelct();
+                runSelct.setQuery("SELECT `NoTpb` FROM `tbtpb` ORDER BY `NoTpb` DESC LIMIT 1");
+                try {
+                    ResultSet rs = runSelct.excute();
+                    if (!rs.isBeforeFirst()) {
+                        NoTransaksi = "GG-" + "000001" + "-PG";
+                    }
+                    while (rs.next()) {
+                        String nopenjualan = rs.getString("NoTpb");
+                        String number = nopenjualan.substring(3, 9);
+                        int p = 1 + parseInt(number);
+                        if (p != 999999) {
+                            NoTransaksi = "GG-" + nf.format(p) + "-PG";
+                        } else if (p == 999999) {
+                            p = 1;
+                            NoTransaksi = "GG-" + nf.format(p) + "-PG";
+                        }
+                    }
+                } catch (SQLException e) {
+                    out.println("E6" + e);
+                    showMessageDialog(null, "Gagal Generate Nomor TPB");
+                } finally {
+                    runSelct.closecon();
+                }
+            }
+            JTNoTPB.setText(NoTransaksi);
         }
-        JTNoTPB.setText(NoTransaksi);
+    }
+
+    void loadPemasok() {
+        JCPemasok.setEnabled(true);
+        JCPemasok.load("SELECT * FROM (SELECT '-- Pilih Nama Pemasok --' as 'Pemasok' UNION ALL SELECT `Pemasok` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpemasok`d ON c.`IdPemasok`=d.`IdPemasok` WHERE a.`Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `Pemasok` UNION ALL SELECT `PemasokLain` as 'Pemasok' FROM `tbpenerimaanlain`a JOIN `tbmpemasoklain`b ON a.`IdPemasokLain`=b.`IdPemasokLain` WHERE a.`IdPemasokLain` IS NOT NULL AND a.`Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `PemasokLain`) t1 GROUP BY `Pemasok` ");
+        if (JCPemasok.getItemCount() == 1) {
+            JCPemasok.load("SELECT '' ");
+            JCPemasok.setEnabled(false);
+        }
+        JTNoTPB.requestFocus();
+        JTNoTPB.setText("");
+        DefaultTableModel dm = (DefaultTableModel) JTable.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
     }
 
     /**
@@ -131,9 +156,9 @@ public class PrintTPB extends javax.swing.JFrame {
         JTable = new KomponenGUI.JtableF();
         jbuttonF1 = new KomponenGUI.JbuttonF();
         jbuttonF2 = new KomponenGUI.JbuttonF();
-        JTPemasok = new KomponenGUI.JtextF();
         JDTanggal = new KomponenGUI.JdateCF();
         JTNoTPB = new KomponenGUI.JtextF();
+        JCPemasok = new KomponenGUI.JcomboboxF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -183,18 +208,17 @@ public class PrintTPB extends javax.swing.JFrame {
             }
         });
 
-        JTPemasok.setEnabled(false);
-        JTPemasok.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JTPemasokKeyPressed(evt);
-            }
-        });
-
         JDTanggal.setDate(yesterday());
         JDTanggal.setDateFormatString("dd-MM-yyyy");
         JDTanggal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 JDTanggalPropertyChange(evt);
+            }
+        });
+
+        JCPemasok.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCPemasokItemStateChanged(evt);
             }
         });
 
@@ -211,15 +235,15 @@ public class PrintTPB extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LBNoTransaksi2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LBNoTransaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTPemasok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JCPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LBNoTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,11 +275,11 @@ public class PrintTPB extends javax.swing.JFrame {
                     .addComponent(LBNoTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBNoTransaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTNoTPB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JTNoTPB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JCPemasok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                .addGap(45, 45, 45)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -269,10 +293,6 @@ public class PrintTPB extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jbuttonF2ActionPerformed
 
-    private void JTPemasokKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPemasokKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTPemasokKeyPressed
-
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
         tambahData();
     }//GEN-LAST:event_jbuttonF1ActionPerformed
@@ -282,9 +302,13 @@ public class PrintTPB extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void JDTanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDTanggalPropertyChange
+        loadPemasok();
+    }//GEN-LAST:event_JDTanggalPropertyChange
+
+    private void JCPemasokItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCPemasokItemStateChanged
         setNoTPB();
         load();
-    }//GEN-LAST:event_JDTanggalPropertyChange
+    }//GEN-LAST:event_JCPemasokItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -322,9 +346,9 @@ public class PrintTPB extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private KomponenGUI.JcomboboxF JCPemasok;
     private KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JtextF JTNoTPB;
-    private KomponenGUI.JtextF JTPemasok;
     private KomponenGUI.JtableF JTable;
     private KomponenGUI.JlableF LBNoTransaksi;
     private KomponenGUI.JlableF LBNoTransaksi1;
@@ -341,15 +365,15 @@ public class PrintTPB extends javax.swing.JFrame {
     void tambahData() {
         if (JTable.getRowCount() >= 1) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
-            dRunSelctOne.setQuery("SELECT COUNT(`NoTpb`) FROM `tbtpb` WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
+            dRunSelctOne.setQuery("SELECT COUNT(`NoTpb`) FROM `tbtpb` WHERE `Pemasok` = '" + JCPemasok.getSelectedItem() + "' AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
             ArrayList<String> list = dRunSelctOne.excute();
             boolean berhasil = true;
             if (list.get(0).equals("0")) {
                 Insert insert = new Insert();
-                berhasil = insert.simpan("INSERT INTO `tbtpb` (`Tanggal`, `NoTpb`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "', '" + JTNoTPB.getText() + "')", "TPB", this);
+                berhasil = insert.simpan("INSERT INTO `tbtpb` (`Tanggal`, `Pemasok`, `NoTpb`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "', '" + JCPemasok.getSelectedItem() + "', '" + JTNoTPB.getText() + "')", "TPB", this);
             } else {
                 Update update = new Update();
-                berhasil = update.Ubah("UPDATE `tbtpb` SET `NoTpb` = '" + JTNoTPB.getText() + "' WHERE `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'", "TPB", this);
+                berhasil = update.Ubah("UPDATE `tbtpb` SET `NoTpb` = '" + JTNoTPB.getText() + "' WHERE `Pemasok` = '" + JCPemasok.getSelectedItem() + "' AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'", "TPB", this);
             }
             if (berhasil) {
                 printing();
@@ -360,124 +384,217 @@ public class PrintTPB extends javax.swing.JFrame {
     }
 
     void load() {
-        String Pemasok = null;
-        DefaultTableModel model = (DefaultTableModel) JTable.getModel();
-        model.getDataVector().removeAllElements();
-        RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NamaBarang`, `Plat`, REPLACE(FORMAT(`KarungPelita`,0),',','.'), REPLACE(FORMAT(`NettoPenjual`,0),',','.'), REPLACE(FORMAT(`NettoPelita`,0),',','.'), IF(`NettoPelita`-`NettoPenjual`<0, CONCAT(REPLACE(FORMAT(`NettoPelita`-`NettoPenjual`,0),',','.'), ' KG'),IF(`NettoPelita`-`NettoPenjual`>0, CONCAT('+',REPLACE(FORMAT(`NettoPelita`-`NettoPenjual`,0),',','.'),' KG'), '')) as `Keterangan`, `Pemasok` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpemasok`d ON c.`IdPemasok`=d.`IdPemasok` WHERE a.`Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' ORDER BY `IdPenerimaan` ASC");
-        try {
-            ResultSet rs = runSelct.excute();
-            int row = 0;
-            while (rs.next()) {
-                Pemasok = rs.getString(7);
-                model.addRow(new Object[]{" ", " ", "", "", "", "", ""});
-                JTable.setValueAt(row + 1, row, 0);
-                JTable.setValueAt(rs.getString(1), row, 1);
-                JTable.setValueAt(rs.getString(2), row, 2);
-                JTable.setValueAt(rs.getString(3), row, 3);
-                JTable.setValueAt(rs.getString(4), row, 4);
-                JTable.setValueAt(rs.getString(5), row, 5);
-                JTable.setValueAt(rs.getString(6), row, 6);
-                row++;
-            }
-            JTPemasok.setText(Pemasok);
-        } catch (SQLException e) {
-            out.println("E6" + e);
-            showMessageDialog(null, "Gagal Panggil Data Print TPB");
-        } finally {
-            runSelct.closecon();
-        }
-        for (int column = 0; column < JTable.getColumnCount(); column++) {
-            TableColumn tableColumn = JTable.getColumnModel().getColumn(column);
-            int preferredWidth = 50;
-            int maxWidth = 400;
-
-            for (int row = 0; row < JTable.getRowCount(); row++) {
-                TableCellRenderer cellRenderer = JTable.getCellRenderer(row, column);
-                Component c = JTable.prepareRenderer(cellRenderer, row, column);
-                int width = c.getPreferredSize().width + JTable.getIntercellSpacing().width;
-                preferredWidth = Math.max(preferredWidth, width);
-
-                //  We've exceeded the maximum width, no need to check other rows
-                if (preferredWidth >= maxWidth) {
-                    preferredWidth = maxWidth;
+        if (JCPemasok.getSelectedIndex() != 0) {
+            DefaultTableModel model = (DefaultTableModel) JTable.getModel();
+            model.getDataVector().removeAllElements();
+            RunSelct runSelct = new RunSelct();
+            runSelct.setQuery("(SELECT `NamaBarang`, `Plat`, REPLACE(FORMAT(`KarungPelita`,0),',','.') as 'Karung', REPLACE(FORMAT(`NettoPenjual`,0),',','.') as 'Netto PJL', REPLACE(FORMAT(`NettoPelita`,0),',','.') as 'Netto PLT', IF(`NettoPelita`-`NettoPenjual`<0, CONCAT(REPLACE(FORMAT(`NettoPelita`-`NettoPenjual`,0),',','.'), ' KG'),IF(`NettoPelita`-`NettoPenjual`>0, CONCAT('+',REPLACE(FORMAT(`NettoPelita`-`NettoPenjual`,0),',','.'),' KG'), '')) as `Keterangan`, `Pemasok` FROM `tbpenerimaan`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmpemasok`d ON c.`IdPemasok`=d.`IdPemasok` WHERE `Pemasok` = '" + JCPemasok.getSelectedItem() + "' AND  a.`Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' ORDER BY `IdPenerimaan` ASC) UNION ALL SELECT `NamaBarangLain`, IFNULL(`Plat`,'-') as 'Plat', IF(`Jumlah`=0,'',REPLACE(FORMAT(`Jumlah`,0),',','.')) as 'Karung', IF(`Brutto`=0,'',REPLACE(REPLACE(REPLACE(FORMAT(`Brutto`,1),',','*'),'.',','),'*','.')) as 'Netto PJL', REPLACE(REPLACE(REPLACE(FORMAT(`Netto`,1),',','*'),'.',','),'*','.') as 'Netto PLT', IF(`Netto`-`Brutto`<0, CONCAT(REPLACE(REPLACE(REPLACE(FORMAT(`Netto`-`Brutto`,1),',','*'),'.',','),'*','.'), ' KG'),IF(`Netto`-`Brutto`>0, CONCAT('+',REPLACE(REPLACE(REPLACE(FORMAT(`Netto`-`Brutto`,1),',','*'),'.',','),'*','.'),' KG'), '')) as `Keterangan`, `PemasokLain` FROM `tbpenerimaanlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` LEFT JOIN `tbmpemasoklain`c ON a.`IdPemasokLain`=c.`IdPemasokLain` LEFT JOIN `tbmkendaraan`d ON a.`IdKendaraan`=d.`IdKendaraan` WHERE `PemasokLain` = '" + JCPemasok.getSelectedItem() + "' AND a.`Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "'");
+            try {
+                ResultSet rs = runSelct.excute();
+                int row = 0;
+                while (rs.next()) {
+                    model.addRow(new Object[]{" ", " ", "", "", "", "", ""});
+                    JTable.setValueAt(row + 1, row, 0);
+                    JTable.setValueAt(rs.getString(1), row, 1);
+                    JTable.setValueAt(rs.getString(2), row, 2);
+                    JTable.setValueAt(rs.getString(3), row, 3);
+                    JTable.setValueAt(rs.getString(4), row, 4);
+                    JTable.setValueAt(rs.getString(5), row, 5);
+                    if (JTable.getValueAt(row, 1).toString().contains("ODIUM")) {
+                        JTable.setValueAt(rs.getString(5).split("\\,")[0], row, 5);
+                    }
+                    JTable.setValueAt(rs.getString(6), row, 6);
+                    if (JTable.getValueAt(row, 1).toString().contains("ODIUM")) {
+                        JTable.setValueAt("", row, 6);
+                    }
+                    row++;
                 }
+            } catch (SQLException e) {
+                out.println("E6" + e);
+                showMessageDialog(null, "Gagal Panggil Data Print TPB");
+            } finally {
+                runSelct.closecon();
             }
-            tableColumn.setPreferredWidth(preferredWidth + 15);
+            for (int column = 0; column < JTable.getColumnCount(); column++) {
+                TableColumn tableColumn = JTable.getColumnModel().getColumn(column);
+                int preferredWidth = 50;
+                int maxWidth = 400;
+
+                for (int row = 0; row < JTable.getRowCount(); row++) {
+                    TableCellRenderer cellRenderer = JTable.getCellRenderer(row, column);
+                    Component c = JTable.prepareRenderer(cellRenderer, row, column);
+                    int width = c.getPreferredSize().width + JTable.getIntercellSpacing().width;
+                    preferredWidth = Math.max(preferredWidth, width);
+
+                    //  We've exceeded the maximum width, no need to check other rows
+                    if (preferredWidth >= maxWidth) {
+                        preferredWidth = maxWidth;
+                    }
+                }
+                tableColumn.setPreferredWidth(preferredWidth + 15);
+            }
+            JTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+            JTable.getTableHeader().setReorderingAllowed(false);
         }
-        JTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        JTable.getTableHeader().setReorderingAllowed(false);
     }
 
     void printing() {
-        String Tanggal = FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy");
-        String NoPenerimaan = JTNoTPB.getText();
-        String Pemasok = JTPemasok.getText();
-        String[] No = new String[JTable.getRowCount()];
-        String[] Barang = new String[JTable.getRowCount()];
-        String[] Plat = new String[JTable.getRowCount()];
-        int[] Karung = new int[JTable.getRowCount()];
-        String[] Karungs = new String[JTable.getRowCount()];
-        int[] NettoPJL = new int[JTable.getRowCount()];
-        String[] NettoPJLS = new String[JTable.getRowCount()];
-        int[] NettoPLT = new int[JTable.getRowCount()];
-        String[] NettoPLTS = new String[JTable.getRowCount()];
-        String[] Ket = new String[JTable.getRowCount()];
-        for (int i = 0; i < JTable.getRowCount(); i++) {
-            No[i] = JTable.getValueAt(i, 0).toString();
-            Barang[i] = JTable.getValueAt(i, 1).toString();
-            if (JTable.getValueAt(i, 1).toString().length() > 23) {
-                Barang[i] = JTable.getValueAt(i, 1).toString().substring(0, 23);
+        if (JTable.getValueAt(0, 1).toString().contains("PLASTIK")) {
+            String Tanggal = FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy");
+            String NoPenerimaan = JTNoTPB.getText();
+            String Pemasok = JCPemasok.getSelectedItem().toString();
+            String[] No = new String[JTable.getRowCount()];
+            String[] Barang = new String[JTable.getRowCount()];
+            String[] Plat = new String[JTable.getRowCount()];
+            int[] Karung = new int[JTable.getRowCount()];
+            String[] Karungs = new String[JTable.getRowCount()];
+            double[] NettoPJL = new double[JTable.getRowCount()];
+            String[] NettoPJLS = new String[JTable.getRowCount()];
+            double[] NettoPLT = new double[JTable.getRowCount()];
+            String[] NettoPLTS = new String[JTable.getRowCount()];
+            String[] Ket = new String[JTable.getRowCount()];
+            for (int i = 0; i < JTable.getRowCount(); i++) {
+                No[i] = JTable.getValueAt(i, 0).toString();
+                Barang[i] = JTable.getValueAt(i, 1).toString();
+                if (JTable.getValueAt(i, 1).toString().length() > 23) {
+                    Barang[i] = JTable.getValueAt(i, 1).toString().substring(0, 23);
+                }
+                Plat[i] = JTable.getValueAt(i, 2).toString();
+                Karung[i] = Integer.parseInt(JTable.getValueAt(i, 3).toString().replace(".", ""));
+                Karungs[i] = Intformatdigit(Karung[i]);
+                NettoPJL[i] = Double.parseDouble(JTable.getValueAt(i, 4).toString().replace(".", "").replace(",", "."));
+                NettoPJLS[i] = Decformatdigit(NettoPJL[i]);
+                NettoPLT[i] = Double.parseDouble(JTable.getValueAt(i, 5).toString().replace(".", "").replace(",", "."));
+                NettoPLTS[i] = Decformatdigit(NettoPLT[i]);
+                Ket[i] = JTable.getValueAt(i, 6).toString();
+                if (JTable.getValueAt(i, 6).toString().length() > 11) {
+                    Ket[i] = JTable.getValueAt(i, 6).toString().substring(0, 11);
+                }
             }
-            Plat[i] = JTable.getValueAt(i, 2).toString();
-            Karung[i] = Integer.parseInt(JTable.getValueAt(i, 3).toString().replace(".", ""));
-            Karungs[i] = Intformatdigit(Karung[i]);
-            NettoPJL[i] = Integer.parseInt(JTable.getValueAt(i, 4).toString().replace(".", ""));
-            NettoPJLS[i] = Intformatdigit(NettoPJL[i]);
-            NettoPLT[i] = Integer.parseInt(JTable.getValueAt(i, 5).toString().replace(".", ""));
-            NettoPLTS[i] = Intformatdigit(NettoPLT[i]);
-            Ket[i] = JTable.getValueAt(i, 6).toString();
-            if (JTable.getValueAt(i, 6).toString().length() > 11) {
-                Ket[i] = JTable.getValueAt(i, 6).toString().substring(0, 11);
+
+            Double TotalPJL = getTotalPJLPlastik();
+            String TotalPJLS = Decformatdigit(TotalPJL);
+            Double TotalPLT = getTotalPLTPlastik();
+            String TotalPLTS = Decformatdigit(TotalPLT);
+            Double TotalSelisih = getTotalSelisihPlastik();
+            String TotalSelisihS = Decformatdigit(TotalSelisih);
+
+            String leftAlignFormat = "%-5s%-25s%-13s%-6s%-9s%-9s%-12s%-1s%n";
+            String OutFormat = "";
+            OutFormat += format("%-80s%n", " _____________________________________________________________________________");
+            OutFormat += format("%-80s%n", " Tanda Penerimaan Barang");
+            OutFormat += format("%-53s%-27s%n", " ", "     Tanggal : " + Tanggal);
+            OutFormat += format("%-53s%-27s%n", " Pemasok : " + Pemasok, "No Penerimaan: " + NoPenerimaan);
+            //                              12345678901234567890123456789012345678901234567890123456789012345678901234567890
+            //                              12341234567890123456789012345678901234567890123456712345678912345671234567890123
+            OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
+            OutFormat += format("%-80s%n", " | NO| NAMA BARANG            |    PLAT    | BAL | BRUTTO |  NETTO |    KET    |");
+            OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
+            for (int i = 0; i < 12; i++) {
+                if (i < JTable.getRowCount()) {
+                    OutFormat += format(leftAlignFormat, " | " + (i + 1), "| " + Barang[i], "| " + Plat[i], "|" + format("%4s", Karungs[i]), "|" + format("%8s", NettoPJLS[i]), "|" + format("%8s", NettoPLTS[i]), "|" + format("%10s", Ket[i]), "|");
+                } else {
+                    OutFormat += format(leftAlignFormat, " | " + (i + 1), "|", "|", "|", "|", "|", "|", "|", "|");
+                }
             }
-        }
+            OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
+            OutFormat += format("%-49s%-9s%-9s%-12s%-1s%n", " | TOTAL ", "|" + format("%8s", TotalPJLS), "|" + format("%8s", TotalPLTS), "| " + format("%9s", TotalSelisihS + " KG"), "|");
+            OutFormat += format("%-80s%n", " +-----------------------------------------------------------------+-----------+");
+            //OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
+            OutFormat += format("%n", "");
+            OutFormat += format("%-66s%-24s%n", " Disiapkan Oleh", "Diperiksa Oleh \n \n ");
+            OutFormat += format("%-66s%-24s%n", " " + "    HENDRI", " Stock Keeper");
+            OutFormat += format("%-80s%n", " _____________________________________________________________________________");
+            OutFormat += format("%n", "");
+            OutFormat += format("%n", "");
+            OutFormat += format("%n", "");
+            directprinting(OutFormat);
+            //System.out.println(OutFormat);
+        } else {
+            String Tanggal = FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy");
+            String NoPenerimaan = JTNoTPB.getText();
+            String Pemasok = JCPemasok.getSelectedItem().toString();
+            String[] No = new String[JTable.getRowCount()];
+            String[] Barang = new String[JTable.getRowCount()];
+            String[] Plat = new String[JTable.getRowCount()];
+            int[] Karung = new int[JTable.getRowCount()];
+            String[] Karungs = new String[JTable.getRowCount()];
+            int[] NettoPJL = new int[JTable.getRowCount()];
+            String[] NettoPJLS = new String[JTable.getRowCount()];
+            int[] NettoPLT = new int[JTable.getRowCount()];
+            String[] NettoPLTS = new String[JTable.getRowCount()];
+            String[] Ket = new String[JTable.getRowCount()];
+            for (int i = 0; i < JTable.getRowCount(); i++) {
+                No[i] = JTable.getValueAt(i, 0).toString();
+                Barang[i] = JTable.getValueAt(i, 1).toString();
+                if (JTable.getValueAt(i, 1).toString().length() > 23) {
+                    Barang[i] = JTable.getValueAt(i, 1).toString().substring(0, 23);
+                }
+                Plat[i] = JTable.getValueAt(i, 2).toString();
+                Karung[i] = 0;
+                Karungs[i] = "";
+                if (!JTable.getValueAt(i, 3).toString().replace(".", "").equals("")) {
+                    Karung[i] = Integer.parseInt(JTable.getValueAt(i, 3).toString().replace(".", ""));
+                    Karungs[i] = Intformatdigit(Karung[i]);
+                }
+                NettoPJL[i] = 0;
+                NettoPJLS[i] = "";
+                if (!JTable.getValueAt(i, 4).toString().replace(".", "").equals("")) {
+                    NettoPJL[i] = Integer.parseInt(JTable.getValueAt(i, 4).toString().replace(".", ""));
+                    NettoPJLS[i] = Intformatdigit(NettoPJL[i]);
+                }
+                NettoPLT[i] = Integer.parseInt(JTable.getValueAt(i, 5).toString().replace(".", ""));
+                NettoPLTS[i] = Intformatdigit(NettoPLT[i]);
+                Ket[i] = JTable.getValueAt(i, 6).toString();
+                if (JTable.getValueAt(i, 6).toString().length() > 11) {
+                    Ket[i] = JTable.getValueAt(i, 6).toString().substring(0, 11);
+                }
+            }
 
-        Integer TotalPJL = getTotalPJL();
-        String TotalPJLS = Intformatdigit(TotalPJL);
-        Integer TotalPLT = getTotalPLT();
-        String TotalPLTS = Intformatdigit(TotalPLT);
-
-        String leftAlignFormat = "%-5s%-25s%-13s%-6s%-9s%-9s%-12s%-1s%n";
-        String OutFormat = "";
-        OutFormat += format("%-80s%n", " _____________________________________________________________________________");
-        OutFormat += format("%-80s%n", " Tanda Penerimaan Barang");
-        OutFormat += format("%-53s%-27s%n", " ", "     Tanggal : " + Tanggal);
-        OutFormat += format("%-53s%-27s%n", " Pemasok : " + Pemasok, "No Penerimaan: " + NoPenerimaan);
-        //                              12345678901234567890123456789012345678901234567890123456789012345678901234567890
-        //                              12341234567890123456789012345678901234567890123456712345678912345671234567890123
-        OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
-        OutFormat += format("%-80s%n", " | NO| NAMA BARANG            |    PLAT    | SAK | NET PJL| NET PLT|    KET    |");
-        OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
-        for (int i = 0; i < 12; i++) {
-            if (i < JTable.getRowCount()) {
-                OutFormat += format(leftAlignFormat, " | " + (i + 1), "| " + Barang[i], "| " + Plat[i], "|" + format("%4s", Karungs[i]), "|" + format("%7s", NettoPJLS[i]), "|" + format("%7s", NettoPLTS[i]), "|" + format("%10s", Ket[i]), "|");
+            Integer TotalPJL = getTotalPJL();
+            String TotalPJLS = Intformatdigit(TotalPJL);
+            Integer TotalPLT = getTotalPLT();
+            String TotalPLTS = Intformatdigit(TotalPLT);
+            Integer TotalSelisih = getTotalSelisih();
+            String TotalSelisihS;
+            if (TotalSelisih <= 0) {
+                TotalSelisihS = Intformatdigit(TotalSelisih);
             } else {
-                OutFormat += format(leftAlignFormat, " | " + (i + 1), "|", "|", "|", "|", "|", "|", "|", "|");
+                TotalSelisihS = "+" + Intformatdigit(TotalSelisih);
             }
+
+            String leftAlignFormat = "%-5s%-25s%-13s%-6s%-9s%-9s%-12s%-1s%n";
+            String OutFormat = "";
+            OutFormat += format("%-80s%n", " _____________________________________________________________________________");
+            OutFormat += format("%-80s%n", " Tanda Penerimaan Barang");
+            OutFormat += format("%-53s%-27s%n", " ", "     Tanggal : " + Tanggal);
+            OutFormat += format("%-53s%-27s%n", " Pemasok : " + Pemasok, "No Penerimaan: " + NoPenerimaan);
+            //                              12345678901234567890123456789012345678901234567890123456789012345678901234567890
+            //                              12341234567890123456789012345678901234567890123456712345678912345671234567890123
+            OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
+            OutFormat += format("%-80s%n", " | NO| NAMA BARANG            |    PLAT    | SAK | NET PJL| NET PLT|    KET    |");
+            OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
+            for (int i = 0; i < 12; i++) {
+                if (i < JTable.getRowCount()) {
+                    OutFormat += format(leftAlignFormat, " | " + (i + 1), "| " + Barang[i], "| " + Plat[i], "|" + format("%4s", Karungs[i]), "|" + format("%7s", NettoPJLS[i]), "|" + format("%7s", NettoPLTS[i]), "|" + format("%10s", Ket[i]), "|");
+                } else {
+                    OutFormat += format(leftAlignFormat, " | " + (i + 1), "|", "|", "|", "|", "|", "|", "|", "|");
+                }
+            }
+            OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
+            OutFormat += format("%-49s%-9s%-9s%-12s%-1s%n", " | TOTAL ", "|" + format("%7s", TotalPJLS), "|" + format("%7s", TotalPLTS), "| " + format("%9s", TotalSelisihS + " KG"), "|");
+            OutFormat += format("%-80s%n", " +-----------------------------------------------------------------+-----------+");
+            //OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
+            OutFormat += format("%n", "");
+            OutFormat += format("%-66s%-24s%n", " Disiapkan Oleh", "Diperiksa Oleh \n \n ");
+            OutFormat += format("%-66s%-24s%n", " " + "    HENDRI", " Stock Keeper");
+            OutFormat += format("%-80s%n", " _____________________________________________________________________________");
+            OutFormat += format("%n", "");
+            OutFormat += format("%n", "");
+            OutFormat += format("%n", "");
+            directprinting(OutFormat);
+            //System.out.println(OutFormat);
         }
-        OutFormat += format("%-80s%n", " +---+------------------------+------------+-----+--------+--------+-----------+");
-        OutFormat += format("%-49s%-9s%-9s%-12s%-1s%n", " | TOTAL ", "|" + format("%7s", TotalPJLS), "|" + format("%7s", TotalPLTS), "| ", "|");
-        OutFormat += format("%-80s%n", " +-----------------------------------------------------------------+-----------+");
-        //OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
-        OutFormat += format("%n", "");
-        OutFormat += format("%-66s%-24s%n", " Disiapkan Oleh", "Diperiksa Oleh \n \n ");
-        OutFormat += format("%-66s%-24s%n", " " + "    HENDRI", " Stock Keeper");
-        OutFormat += format("%-80s%n", " _____________________________________________________________________________");
-        OutFormat += format("%n", "");
-        OutFormat += format("%n", "");
-        OutFormat += format("%n", "");
-        directprinting(OutFormat);
-        //System.out.println(OutFormat);
     }
 
     public static void directprinting(String Teks) {
@@ -563,23 +680,53 @@ public class PrintTPB extends javax.swing.JFrame {
         int value = 0;
         value = Number;
         String output;
-        if (value < 0) {
+        String pattern = "#,###,###";
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
+        if (value <= -1) {
             value = abs(value);
-            String pattern = "#,###,###";
-            DecimalFormat myFormatter = new DecimalFormat(pattern);
-            output = "(" + myFormatter.format(value) + ")";
+            return "-" + myFormatter.format(value);
+        } else if (value < 0 && value > -1) {
+            value = abs(value);
+            return "-0" + myFormatter.format(value);
+        } else if (value < 1 && value >= 0) {
+            return "0" + myFormatter.format(value);
         } else {
-            String pattern = "#,###,###";
-            DecimalFormat myFormatter = new DecimalFormat(pattern);
-            output = myFormatter.format(value);
+            return myFormatter.format(value);
         }
-        return output.replace(",", ".");
+    }
+
+    String Decformatdigit(double Number) {
+        double value = 0;
+        value = Number;
+        String pattern = "#,###,###.0";
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
+        if (value <= -1) {
+            value = abs(value);
+            return "-" + myFormatter.format(value);
+        } else if (value < 0 && value > -1) {
+            value = abs(value);
+            return "-0" + myFormatter.format(value);
+        } else if (value < 1 && value >= 0) {
+            return "0" + myFormatter.format(value);
+        } else {
+            return myFormatter.format(value);
+        }
     }
 
     Integer getTotalPLT() {
         int GrandTotal = 0;
         for (int x = 0; x < JTable.getRowCount(); x++) {
-            GrandTotal = GrandTotal + Integer.valueOf(JTable.getValueAt(x, 5).toString().replace(".", ""));
+            if (!JTable.getValueAt(x, 1).toString().contains("ODIUM")) {
+                GrandTotal = GrandTotal + Integer.valueOf(JTable.getValueAt(x, 5).toString().replace(".", ""));
+            }
+        }
+        return GrandTotal;
+    }
+
+    Double getTotalPLTPlastik() {
+        double GrandTotal = 0;
+        for (int x = 0; x < JTable.getRowCount(); x++) {
+            GrandTotal = GrandTotal + Double.valueOf(JTable.getValueAt(x, 5).toString().replace(".", "").replace(",", "."));
         }
         return GrandTotal;
     }
@@ -587,7 +734,47 @@ public class PrintTPB extends javax.swing.JFrame {
     Integer getTotalPJL() {
         int GrandTotal = 0;
         for (int x = 0; x < JTable.getRowCount(); x++) {
-            GrandTotal = GrandTotal + Integer.valueOf(JTable.getValueAt(x, 4).toString().replace(".", ""));
+            String PJL = JTable.getValueAt(x, 4).toString().replace(".", "");
+            if (PJL.equals("")) {
+                PJL = "0";
+            }
+            GrandTotal = GrandTotal + Integer.valueOf(PJL);
+        }
+        return GrandTotal;
+    }
+
+    double getTotalPJLPlastik() {
+        double GrandTotal = 0;
+        for (int x = 0; x < JTable.getRowCount(); x++) {
+            String PJL = JTable.getValueAt(x, 4).toString().replace(".", "").replace(",", ".");
+            if (PJL.equals("")) {
+                PJL = "0";
+            }
+            GrandTotal = GrandTotal + Double.valueOf(PJL);
+        }
+        return GrandTotal;
+    }
+
+    Integer getTotalSelisih() {
+        int GrandTotal = 0;
+        for (int x = 0; x < JTable.getRowCount(); x++) {
+            String selisih = JTable.getValueAt(x, 6).toString().replace(".", "").split("\\ KG")[0];
+            if (selisih.equals("")) {
+                selisih = "0";
+            }
+            GrandTotal = GrandTotal + Integer.valueOf(selisih);
+        }
+        return GrandTotal;
+    }
+
+    Double getTotalSelisihPlastik() {
+        double GrandTotal = 0;
+        for (int x = 0; x < JTable.getRowCount(); x++) {
+            String selisih = JTable.getValueAt(x, 6).toString().replace(".", "").replace(",", ".").split("\\ KG")[0];
+            if (selisih.equals("")) {
+                selisih = "0";
+            }
+            GrandTotal = GrandTotal + Double.valueOf(selisih);
         }
         return GrandTotal;
     }

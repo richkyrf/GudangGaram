@@ -756,8 +756,8 @@ public class MasterBarang extends javax.swing.JFrame {
     private KomponenGUI.JCheckBoxF JCBStatus;
     public static KomponenGUI.JcomboboxF JCJenisBarang;
     public static KomponenGUI.JcomboboxF JCPemasok;
-    public KomponenGUI.JcomboboxF JCPlastikDalam;
-    public KomponenGUI.JcomboboxF JCPlastikLuar;
+    public static KomponenGUI.JcomboboxF JCPlastikDalam;
+    public static KomponenGUI.JcomboboxF JCPlastikLuar;
     private KomponenGUI.JlableF JLIsi;
     private KomponenGUI.JlableF JLSatuan;
     private KomponenGUI.JTextAreaF JTAKeterangan;

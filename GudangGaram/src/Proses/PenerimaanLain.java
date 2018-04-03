@@ -10,6 +10,7 @@ import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
 import LSubProces.Update;
 import LSubProces.UpdateAll;
+import Master.MasterBarangLain;
 import Master.Masters;
 import static Proses.Penerimaan.JCPeminta;
 import java.awt.Color;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import Master.MasterKendaraan;
 
 /**
  *
@@ -77,10 +79,10 @@ public class PenerimaanLain extends javax.swing.JFrame {
         } else if (JCPemasok.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Silahkan Pilih Nama Pemasok");
             return false;
-        } else if (JTBal.getInt() == 0) {
+        } else if (JTBal.getInt() == 0 && JTBal.isVisible()) {
             JOptionPane.showMessageDialog(null, "Bal / Colly Tidak Boleh Kosong");
             return false;
-        } else if (JTBrutto.getInt() == 0) {
+        } else if (JTBrutto.getInt() == 0 && JTBrutto.isVisible()) {
             JOptionPane.showMessageDialog(null, "Brutto Tidak Boleh Kosong");
             return false;
         } else if (JTNetto.getInt() == 0) {
@@ -92,12 +94,21 @@ public class PenerimaanLain extends javax.swing.JFrame {
     }
 
     void setNetto() {
-        double Brutto = JTBrutto.getInt() + (JTKomaBrutto.getint() / 100);
+        String BruttoS = JTBrutto.getInt() + "." + (JTKomaBrutto.getint());
+        double Brutto = Double.parseDouble(BruttoS);
         double Bal = JTBal.getInt() * 0.2;
         double Netto = Brutto - Bal;
         String NettoStr = String.valueOf(Netto);
         JTNetto.setText(NettoStr.split("\\.")[0]);
         JTKomaNetto.setText(NettoStr.split("\\.")[1]);
+    }
+
+    String getJenisBarangLain() {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal getJenisBarangLain()");
+        dRunSelctOne.setQuery("SELECT `JenisBarangLain` FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBarangLain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'");
+        ArrayList<String> list = dRunSelctOne.excute();
+        return list.get(0);
     }
 
     /**
@@ -124,30 +135,36 @@ public class PenerimaanLain extends javax.swing.JFrame {
         jbuttonF7 = new KomponenGUI.JbuttonF();
         jlableF26 = new KomponenGUI.JlableF();
         jlableF5 = new KomponenGUI.JlableF();
-        jlableF27 = new KomponenGUI.JlableF();
-        jlableF28 = new KomponenGUI.JlableF();
+        JLBal = new KomponenGUI.JlableF();
+        JLBal2 = new KomponenGUI.JlableF();
         JTBal = new KomponenGUI.JRibuanTextField();
-        jlableF29 = new KomponenGUI.JlableF();
-        jlableF30 = new KomponenGUI.JlableF();
+        JLNetto = new KomponenGUI.JlableF();
+        JLNetto2 = new KomponenGUI.JlableF();
         JTNetto = new KomponenGUI.JRibuanTextField();
         jlableF3 = new KomponenGUI.JlableF();
         jlableF6 = new KomponenGUI.JlableF();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTAKeterangan = new KomponenGUI.JTextAreaF();
-        jlableF31 = new KomponenGUI.JlableF();
-        jlableF32 = new KomponenGUI.JlableF();
+        JLBrutto = new KomponenGUI.JlableF();
+        JLBrutto2 = new KomponenGUI.JlableF();
         JTBrutto = new KomponenGUI.JRibuanTextField();
         jlableF7 = new KomponenGUI.JlableF();
         jlableF33 = new KomponenGUI.JlableF();
         JCPlat = new KomponenGUI.JcomboboxF();
         jbuttonF8 = new KomponenGUI.JbuttonF();
         JTPlat = new KomponenGUI.JtextF();
-        jlableF15 = new KomponenGUI.JlableF();
+        JLKomaBrutto = new KomponenGUI.JlableF();
         JTKomaBrutto = new KomponenGUI.JtKoma();
-        jlableF16 = new KomponenGUI.JlableF();
+        JLKomaNetto = new KomponenGUI.JlableF();
         JTKomaNetto = new KomponenGUI.JtKoma();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jbuttonF1.setText("Tambah");
         jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
@@ -194,7 +211,7 @@ public class PenerimaanLain extends javax.swing.JFrame {
 
         jlableF24.setText(":");
 
-        JCPemasok.load("SELECT '-- Pilih Nama Pemasok --' as 'PemasokLain' UNION SELECT `PemasokLain` FROM `tbmpemasoklain`");
+        JCPemasok.load("SELECT '-- Pilih Nama Pemasok --' as 'PemasokLain' UNION SELECT '-' as 'PemasokLain' UNION SELECT `PemasokLain` FROM `tbmpemasoklain`");
         JCPemasok.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 JCPemasokItemStateChanged(evt);
@@ -240,9 +257,9 @@ public class PenerimaanLain extends javax.swing.JFrame {
 
         jlableF5.setText("Nama Barang");
 
-        jlableF27.setText("Bal / Colly");
+        JLBal.setText("Jumlah Bal / Colly");
 
-        jlableF28.setText(":");
+        JLBal2.setText(":");
 
         JTBal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -250,9 +267,9 @@ public class PenerimaanLain extends javax.swing.JFrame {
             }
         });
 
-        jlableF29.setText("Netto");
+        JLNetto.setText("Netto");
 
-        jlableF30.setText(":");
+        JLNetto2.setText(":");
 
         JTNetto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -273,9 +290,9 @@ public class PenerimaanLain extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(JTAKeterangan);
 
-        jlableF31.setText("Brutto");
+        JLBrutto.setText("Brutto");
 
-        jlableF32.setText(":");
+        JLBrutto2.setText(":");
 
         JTBrutto.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -325,7 +342,7 @@ public class PenerimaanLain extends javax.swing.JFrame {
             }
         });
 
-        jlableF15.setText(",");
+        JLKomaBrutto.setText(",");
 
         JTKomaBrutto.setText("00");
         JTKomaBrutto.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -339,7 +356,7 @@ public class PenerimaanLain extends javax.swing.JFrame {
             }
         });
 
-        jlableF16.setText(",");
+        JLKomaNetto.setText(",");
 
         JTKomaNetto.setText("00");
         JTKomaNetto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -356,68 +373,50 @@ public class PenerimaanLain extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlableF33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JTPlat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JCPlat, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jlableF3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jlableF29, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jlableF27, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JLNetto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JLBal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jlableF5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jlableF4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jlableF23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addComponent(jlableF23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JDTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JCNamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbuttonF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JDTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(JLBal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JTBal, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(JLNetto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JTNetto, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(2, 2, 2)
+                                        .addComponent(JLKomaNetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(2, 2, 2)
+                                        .addComponent(JTKomaNetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jlableF25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JCPemasok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbuttonF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTBal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTNetto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(2, 2, 2)
-                                .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
-                                .addComponent(JTKomaNetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlableF31, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlableF32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JTBrutto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(2, 2, 2)
-                        .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(JTKomaBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jbuttonF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -425,8 +424,29 @@ public class PenerimaanLain extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JLBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JLBrutto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(JLKomaBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(JTKomaBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlableF33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTPlat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JCPlat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbuttonF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,8 +461,8 @@ public class PenerimaanLain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jlableF26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JCNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbuttonF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JCNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -453,35 +473,35 @@ public class PenerimaanLain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jlableF33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTPlat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JCPlat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTPlat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbuttonF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLBal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLBal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTBal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLBrutto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTKomaBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLKomaBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTKomaBrutto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlableF29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLNetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLNetto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTNetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTKomaNetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLKomaNetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTKomaNetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -539,7 +559,27 @@ public class PenerimaanLain extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF6ActionPerformed
 
     private void JCNamaBarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBarangItemStateChanged
-        // TODO add your handling code here:
+        if (getJenisBarangLain().equals("PLASTIK DALAM") || getJenisBarangLain().equals("PLASTIK LUAR")) {
+            JLBal.setVisible(true);
+            JLBal2.setVisible(true);
+            JTBal.setVisible(true);
+            JLBrutto.setVisible(true);
+            JLBrutto2.setVisible(true);
+            JTBrutto.setVisible(true);
+            JLKomaBrutto.setVisible(true);
+            JTKomaBrutto.setVisible(true);
+            JLNetto.setText("Netto");
+        } else {
+            JLBal.setVisible(false);
+            JLBal2.setVisible(false);
+            JTBal.setVisible(false);
+            JLBrutto.setVisible(false);
+            JLBrutto2.setVisible(false);
+            JTBrutto.setVisible(false);
+            JLKomaBrutto.setVisible(false);
+            JTKomaBrutto.setVisible(false);
+            JLNetto.setText("Jumlah");
+        }
     }//GEN-LAST:event_JCNamaBarangItemStateChanged
 
     private void JCNamaBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaBarangKeyPressed
@@ -549,7 +589,12 @@ public class PenerimaanLain extends javax.swing.JFrame {
     }//GEN-LAST:event_JCNamaBarangKeyPressed
 
     private void jbuttonF7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF7ActionPerformed
-        // TODO add your handling code here:
+        if (GlobalVar.Var.tambahBarangLain == null) {
+            GlobalVar.Var.tambahBarangLain = new MasterBarangLain();
+        } else {
+            GlobalVar.Var.tambahBarangLain.setState(NORMAL);
+            GlobalVar.Var.tambahBarangLain.toFront();
+        }
     }//GEN-LAST:event_jbuttonF7ActionPerformed
 
     private void JTBalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTBalKeyPressed
@@ -586,18 +631,31 @@ public class PenerimaanLain extends javax.swing.JFrame {
 
     private void JCPlatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCPlatKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTBal.requestFocus();
+            if (JTBal.isVisible()) {
+                JTBal.requestFocus();
+            } else {
+                JTNetto.requestFocus();
+            }
             JCPlat.hidePopup();
         }
     }//GEN-LAST:event_JCPlatKeyPressed
 
     private void jbuttonF8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF8ActionPerformed
-        // TODO add your handling code here:
+        if (GlobalVar.Var.tambahKendaraan == null) {
+            GlobalVar.Var.tambahKendaraan = new MasterKendaraan("0");
+        } else {
+            GlobalVar.Var.tambahKendaraan.setState(NORMAL);
+            GlobalVar.Var.tambahKendaraan.toFront();
+        }
     }//GEN-LAST:event_jbuttonF8ActionPerformed
 
     private void JTPlatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPlatKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTBal.requestFocus();
+            if (JTBal.isVisible()) {
+                JTBal.requestFocus();
+            } else {
+                JTNetto.requestFocus();
+            }
             JCPlat.hidePopup();
         } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
             JCPlat.setSelectedIndex(JCPlat.getSelectedIndex() + 1);
@@ -635,6 +693,14 @@ public class PenerimaanLain extends javax.swing.JFrame {
     private void JTKomaBruttoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTKomaBruttoFocusLost
         setNetto();
     }//GEN-LAST:event_JTKomaBruttoFocusLost
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if (IdEdit == null){
+            GlobalVar.Var.tambahPenerimaanLain = null;
+        } else {
+            GlobalVar.Var.ubahPenerimaanLain = null;
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -676,6 +742,14 @@ public class PenerimaanLain extends javax.swing.JFrame {
     public static KomponenGUI.JcomboboxF JCPemasok;
     public static KomponenGUI.JcomboboxF JCPlat;
     private static KomponenGUI.JdateCF JDTanggal;
+    private KomponenGUI.JlableF JLBal;
+    private KomponenGUI.JlableF JLBal2;
+    private KomponenGUI.JlableF JLBrutto;
+    private KomponenGUI.JlableF JLBrutto2;
+    private KomponenGUI.JlableF JLKomaBrutto;
+    private KomponenGUI.JlableF JLKomaNetto;
+    private KomponenGUI.JlableF JLNetto;
+    private KomponenGUI.JlableF JLNetto2;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JRibuanTextField JTBal;
     private KomponenGUI.JRibuanTextField JTBrutto;
@@ -691,19 +765,11 @@ public class PenerimaanLain extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF jbuttonF6;
     private KomponenGUI.JbuttonF jbuttonF7;
     private KomponenGUI.JbuttonF jbuttonF8;
-    private KomponenGUI.JlableF jlableF15;
-    private KomponenGUI.JlableF jlableF16;
     private KomponenGUI.JlableF jlableF23;
     private KomponenGUI.JlableF jlableF24;
     private KomponenGUI.JlableF jlableF25;
     private KomponenGUI.JlableF jlableF26;
-    private KomponenGUI.JlableF jlableF27;
-    private KomponenGUI.JlableF jlableF28;
-    private KomponenGUI.JlableF jlableF29;
     private KomponenGUI.JlableF jlableF3;
-    private KomponenGUI.JlableF jlableF30;
-    private KomponenGUI.JlableF jlableF31;
-    private KomponenGUI.JlableF jlableF32;
     private KomponenGUI.JlableF jlableF33;
     private KomponenGUI.JlableF jlableF4;
     private KomponenGUI.JlableF jlableF5;
@@ -714,7 +780,12 @@ public class PenerimaanLain extends javax.swing.JFrame {
     void tambahData(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbpenerimaanlain`(`Tanggal`, `IdBarangLain`, `IdPemasokLain`, `IdKendaraan`, `Jumlah`, `Brutto`, `Netto`, `Keterangan`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'),(SELECT `IdPemasokLain` FROM `tbmpemasoklain` WHERE `PemasokLain` = '" + JCPemasok.getSelectedItem() + "'),(SELECT `IdKendaraan` FROM `tbmkendaraan` WHERE `Plat` = '" + JCPlat.getSelectedItem() + "'),'" + JTBal.getInt() + "','" + JTBrutto.getInt() + "." + JTKomaBrutto.getText() + "','" + JTNetto.getInt() + "." + JTKomaNetto.getText() + "','" + JTAKeterangan.getText() + "')", "Penerimaan Barang Lain", this);
+            Boolean berhasil = false;
+            if (getJenisBarangLain().equals("PLASTIK DALAM") || getJenisBarangLain().equals("PLASTIK LUAR")) {
+                berhasil = insert.simpan("INSERT INTO `tbpenerimaanlain`(`Tanggal`, `IdBarangLain`, `IdPemasokLain`, `IdKendaraan`, `Jumlah`, `Brutto`, `Netto`, `Keterangan`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'),(SELECT `IdPemasokLain` FROM `tbmpemasoklain` WHERE `PemasokLain` = '" + JCPemasok.getSelectedItem() + "'),(SELECT `IdKendaraan` FROM `tbmkendaraan` WHERE `Plat` = '" + JCPlat.getSelectedItem() + "'),'" + JTBal.getInt() + "','" + JTBrutto.getInt() + "." + JTKomaBrutto.getText() + "','" + JTNetto.getInt() + "." + JTKomaNetto.getText() + "','" + JTAKeterangan.getText() + "')", "Penerimaan Barang Lain", this);
+            } else {
+                berhasil = insert.simpan("INSERT INTO `tbpenerimaanlain`(`Tanggal`, `IdBarangLain`, `IdPemasokLain`, `IdKendaraan`, `Jumlah`, `Brutto`, `Netto`, `Keterangan`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'),(SELECT `IdPemasokLain` FROM `tbmpemasoklain` WHERE `PemasokLain` = '" + JCPemasok.getSelectedItem() + "'),(SELECT `IdKendaraan` FROM `tbmkendaraan` WHERE `Plat` = '" + JCPlat.getSelectedItem() + "'),'0','0','" + JTNetto.getInt() + "." + JTKomaNetto.getText() + "','" + JTAKeterangan.getText() + "')", "Penerimaan Barang Lain", this);
+            }
             if (berhasil) {
                 if (GlobalVar.Var.listPenerimaanLain != null) {
                     GlobalVar.Var.listPenerimaanLain.load();
@@ -737,7 +808,12 @@ public class PenerimaanLain extends javax.swing.JFrame {
     void ubahData() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbpenerimaanlain` SET `Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdBarangLain`=(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'),`IdPemasokLain`=(SELECT `IdPemasokLain` FROM `tbmpemasoklain` WHERE `PemasokLain` = '" + JCPemasok.getSelectedItem() + "'),`IdKendaraan`=(SELECT `IdKendaraan` FROM `tbmkendaraan` WHERE `Plat` = '" + JCPlat.getSelectedItem() + "'),`Jumlah`='" + JTBal.getInt() + "',`Brutto`='" + JTBrutto.getInt() + "." + JTKomaBrutto.getText() + "',`Netto`='" + JTNetto.getInt() + "." + JTKomaNetto.getText() + "',`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdPenerimaanLain` = " + IdEdit, "Penerimaan Barang Lain", this);
+            Boolean berhasil = false;
+            if (getJenisBarangLain().equals("PLASTIK DALAM") || getJenisBarangLain().equals("PLASTIK LUAR")) {
+                berhasil = update.Ubah("UPDATE `tbpenerimaanlain` SET `Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdBarangLain`=(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'),`IdPemasokLain`=(SELECT `IdPemasokLain` FROM `tbmpemasoklain` WHERE `PemasokLain` = '" + JCPemasok.getSelectedItem() + "'),`IdKendaraan`=(SELECT `IdKendaraan` FROM `tbmkendaraan` WHERE `Plat` = '" + JCPlat.getSelectedItem() + "'),`Jumlah`='" + JTBal.getInt() + "',`Brutto`='" + JTBrutto.getInt() + "." + JTKomaBrutto.getText() + "',`Netto`='" + JTNetto.getInt() + "." + JTKomaNetto.getText() + "',`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdPenerimaanLain` = " + IdEdit, "Penerimaan Barang Lain", this);
+            } else {
+                berhasil = update.Ubah("UPDATE `tbpenerimaanlain` SET `Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`IdBarangLain`=(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'),`IdPemasokLain`=(SELECT `IdPemasokLain` FROM `tbmpemasoklain` WHERE `PemasokLain` = '" + JCPemasok.getSelectedItem() + "'),`IdKendaraan`=(SELECT `IdKendaraan` FROM `tbmkendaraan` WHERE `Plat` = '" + JCPlat.getSelectedItem() + "'),`Jumlah`='0',`Brutto`='0',`Netto`='" + JTNetto.getInt() + "." + JTKomaNetto.getText() + "',`Keterangan`='" + JTAKeterangan.getText() + "' WHERE `IdPenerimaanLain` = " + IdEdit, "Penerimaan Barang Lain", this);
+            }
             if (GlobalVar.Var.listPenerimaanLain != null) {
                 GlobalVar.Var.listPenerimaanLain.load();
             }

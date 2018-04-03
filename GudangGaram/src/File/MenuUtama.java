@@ -73,6 +73,8 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIProsesRekapPenggajianKaryawan1 = new javax.swing.JMenuItem();
         SProses2 = new javax.swing.JPopupMenu.Separator();
         JMIProsesPenyesuaianStok = new javax.swing.JMenuItem();
+        JMIProsesPenyesuaianStok2 = new javax.swing.JMenuItem();
+        SProses3 = new javax.swing.JPopupMenu.Separator();
         JMIProsesPenyesuaianStok1 = new javax.swing.JMenuItem();
         JMList = new javax.swing.JMenu();
         JMIListPacking = new javax.swing.JMenuItem();
@@ -81,6 +83,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIListPenerimaan1 = new javax.swing.JMenuItem();
         JMIListPenyesuaianStok = new javax.swing.JMenuItem();
         JMIListPenyesuaianStok1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         JMLaporan = new javax.swing.JMenu();
         JMILaporanStokHarian = new javax.swing.JMenuItem();
 
@@ -342,7 +345,16 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMProses.add(JMIProsesPenyesuaianStok);
 
-        JMIProsesPenyesuaianStok1.setText("13. Proses Penyesuaian Stok Barang Lain");
+        JMIProsesPenyesuaianStok2.setText("13. Proses Penyesuaian Stok Barang Lain");
+        JMIProsesPenyesuaianStok2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIProsesPenyesuaianStok2ActionPerformed(evt);
+            }
+        });
+        JMProses.add(JMIProsesPenyesuaianStok2);
+        JMProses.add(SProses3);
+
+        JMIProsesPenyesuaianStok1.setText("14. Proses Tutup Partai");
         JMIProsesPenyesuaianStok1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIProsesPenyesuaianStok1ActionPerformed(evt);
@@ -370,7 +382,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMList.add(JMIListPenjualan);
 
-        JMIListPenerimaan.setText("3. List Penerimaan");
+        JMIListPenerimaan.setText("3. List Penerimaan Garam");
         JMIListPenerimaan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIListPenerimaanActionPerformed(evt);
@@ -386,7 +398,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMList.add(JMIListPenerimaan1);
 
-        JMIListPenyesuaianStok.setText("5. List Penyesuaian Stok");
+        JMIListPenyesuaianStok.setText("5. List Penyesuaian Stok Garam");
         JMIListPenyesuaianStok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMIListPenyesuaianStokActionPerformed(evt);
@@ -401,6 +413,14 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMList.add(JMIListPenyesuaianStok1);
+
+        jMenuItem2.setText("7. List Tutup Partai");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        JMList.add(jMenuItem2);
 
         JMenuBar.add(JMList);
 
@@ -716,11 +736,11 @@ public class MenuUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_JMIMasterBarang1ActionPerformed
 
     private void JMIProsesPenyesuaianStok1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIProsesPenyesuaianStok1ActionPerformed
-        if (GlobalVar.Var.tambahPenyesuaianLain == null) {
-            GlobalVar.Var.tambahPenyesuaianLain = new PenyesuaianLain();
+        if (GlobalVar.Var.tambahTutupPartai == null) {
+            GlobalVar.Var.tambahTutupPartai = new TutupPartai();
         } else {
-            GlobalVar.Var.tambahPenyesuaianLain.setState(NORMAL);
-            GlobalVar.Var.tambahPenyesuaianLain.toFront();
+            GlobalVar.Var.tambahTutupPartai.setState(NORMAL);
+            GlobalVar.Var.tambahTutupPartai.toFront();
         }
     }//GEN-LAST:event_JMIProsesPenyesuaianStok1ActionPerformed
 
@@ -759,6 +779,19 @@ public class MenuUtama extends javax.swing.JFrame {
             GlobalVar.Var.listPenerimaanLain.toFront();
         }
     }//GEN-LAST:event_JMIListPenerimaan1ActionPerformed
+
+    private void JMIProsesPenyesuaianStok2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIProsesPenyesuaianStok2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JMIProsesPenyesuaianStok2ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if (GlobalVar.Var.listTutupPartai == null) {
+            GlobalVar.Var.listTutupPartai = new ListTutupPartai();
+        } else {
+            GlobalVar.Var.listTutupPartai.setState(NORMAL);
+            GlobalVar.Var.listTutupPartai.toFront();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -826,6 +859,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIProsesPenjualan;
     private javax.swing.JMenuItem JMIProsesPenyesuaianStok;
     private javax.swing.JMenuItem JMIProsesPenyesuaianStok1;
+    private javax.swing.JMenuItem JMIProsesPenyesuaianStok2;
     private javax.swing.JMenuItem JMIProsesPoles;
     private javax.swing.JMenuItem JMIProsesPrintTandaPenerimaanBarang;
     private javax.swing.JMenuItem JMIProsesRekapPenggajianKaryawan;
@@ -843,7 +877,9 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator SMaster3;
     private javax.swing.JPopupMenu.Separator SProses1;
     private javax.swing.JPopupMenu.Separator SProses2;
+    private javax.swing.JPopupMenu.Separator SProses3;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }

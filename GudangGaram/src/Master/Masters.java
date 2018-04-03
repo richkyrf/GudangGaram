@@ -379,11 +379,11 @@ public class Masters extends javax.swing.JFrame {
                         if (GlobalVar.Var.listPemasokLain != null) {
                             GlobalVar.Var.listPemasokLain.refresh();
                         }
-//                        if (GlobalVar.Var.tambahBarang != null || GlobalVar.Var.ubahBarang != null) {
-//                            MasterBarang.JCPemasok.load("SELECT `Pemasok` FROM `tbmpemasok`");
-//                            MasterBarang.JCPemasok.setSelectedItem(JTNama.getText());
-//                            MasterBarang.JCPemasok.requestFocus();
-//                        }
+                        if (GlobalVar.Var.tambahPenerimaanLain != null || GlobalVar.Var.ubahPenerimaanLain != null) {
+                            PenerimaanLain.JCPemasok.load("SELECT `PemasokLain` FROM `tbmpemasoklain`");
+                            PenerimaanLain.JCPemasok.setSelectedItem(JTNama.getText());
+                            PenerimaanLain.JCPemasok.requestFocus();
+                        }
                         break;
                     case "Peminta":
                         if (GlobalVar.Var.listPeminta != null) {

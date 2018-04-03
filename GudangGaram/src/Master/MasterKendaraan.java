@@ -3,6 +3,9 @@ package Master;
 import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
 import LSubProces.Update;
+import Proses.Penerimaan;
+import Proses.PenerimaanLain;
+import Proses.Penjualan;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.awt.event.KeyEvent;
@@ -303,25 +306,20 @@ public class MasterKendaraan extends javax.swing.JFrame {
                 if (GlobalVar.Var.listKendaraan != null) {
                     GlobalVar.Var.listKendaraan.load();
                 }
-                if (GlobalVar.Var.tambahPenerimaan != null) {
-                    GlobalVar.Var.tambahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
-                    GlobalVar.Var.tambahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
-                    GlobalVar.Var.tambahPenerimaan.JCPlat.requestFocus();
+                if (GlobalVar.Var.tambahPenerimaan != null || GlobalVar.Var.ubahPenerimaan != null) {
+                    Penerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
+                    Penerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    Penerimaan.JCPlat.requestFocus();
                 }
-                if (GlobalVar.Var.ubahPenerimaan != null) {
-                    GlobalVar.Var.ubahPenerimaan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
-                    GlobalVar.Var.ubahPenerimaan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
-                    GlobalVar.Var.ubahPenerimaan.JCPlat.requestFocus();
+                if (GlobalVar.Var.tambahPenjualan != null || GlobalVar.Var.ubahPenjualan != null) {
+                    Penjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
+                    Penjualan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    Penjualan.JCPlat.requestFocus();
                 }
-                if (GlobalVar.Var.tambahPenjualan != null) {
-                    GlobalVar.Var.tambahPenjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
-                    GlobalVar.Var.tambahPenjualan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
-                    GlobalVar.Var.tambahPenjualan.JCPlat.requestFocus();
-                }
-                if (GlobalVar.Var.ubahPenjualan != null) {
-                    GlobalVar.Var.ubahPenjualan.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
-                    GlobalVar.Var.ubahPenjualan.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
-                    GlobalVar.Var.ubahPenjualan.JCPlat.requestFocus();
+                if (GlobalVar.Var.tambahPenerimaanLain != null || GlobalVar.Var.ubahPenerimaanLain != null) {
+                    PenerimaanLain.JCPlat.load("SELECT `Plat` FROM `tbmkendaraan` WHERE 1 ");
+                    PenerimaanLain.JCPlat.setSelectedItem(JTPlatKendaraan.getText());
+                    PenerimaanLain.JCPlat.requestFocus();
                 }
                 if (tutup) {
                     dispose();
