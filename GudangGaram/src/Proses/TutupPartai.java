@@ -37,6 +37,7 @@ public class TutupPartai extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         setTitle("Tutup Partai");
+        jbuttonF3.setVisible(false);
     }
 
     public TutupPartai(Object idEdit) {
@@ -46,16 +47,20 @@ public class TutupPartai extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         setTitle("Tutup Partai");
+        loadeditdata();
+        jbuttonF1.setVisible(false);
+        jbuttonF2.setVisible(false);
     }
 
     void loadeditdata() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.setQuery("SELECT `IdTutup` as 'ID', `IdPartai` as 'No. Partai', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `Keterangan`, IF(`Status`=1,'Ya','Tidak') as 'Tutup' FROM `tbtutuppartai` WHERE `IdTutup` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
-        JCNoPartai.load("SELECT a.`IdPartai` FROM `tbmpartai`a LEFT JOIN `tbtutuppartai`b ON a.`IdPartai`=b.`IdPartai` WHERE `IdTutup` IS NULL OR `IdTutup` = " + IdEdit);
+        JCNoPartai.load("SELECT '-- Pilih No. Partai --' as 'NoPartai' UNION SELECT a.`IdPartai` FROM `tbmpartai`a LEFT JOIN `tbtutuppartai`b ON a.`IdPartai`=b.`IdPartai` WHERE `IdTutup` IS NULL OR `IdTutup` = " + IdEdit);
         JCNoPartai.setSelectedItem(list.get(1));
         JDTanggal.setDate(FDateF.strtodate(list.get(2), "dd-MM-yyyy"));
         JTAKeterangan.setText(list.get(3));
+        JCBStatus.setSelected(list.get(4).equals("Ya"));
     }
 
     Boolean checkInput() {
@@ -90,7 +95,7 @@ public class TutupPartai extends javax.swing.JFrame {
         jlableF3 = new KomponenGUI.JlableF();
         jlableF4 = new KomponenGUI.JlableF();
         jlableF7 = new KomponenGUI.JlableF();
-        jCheckBoxF1 = new KomponenGUI.JCheckBoxF();
+        JCBStatus = new KomponenGUI.JCheckBoxF();
         jbuttonF1 = new KomponenGUI.JbuttonF();
         jbuttonF2 = new KomponenGUI.JbuttonF();
         jbuttonF4 = new KomponenGUI.JbuttonF();
@@ -154,7 +159,7 @@ public class TutupPartai extends javax.swing.JFrame {
 
         jlableF7.setText(":");
 
-        jCheckBoxF1.setText("Tutup");
+        JCBStatus.setText("Tutup");
 
         jbuttonF1.setText("Tambah");
         jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
@@ -219,7 +224,7 @@ public class TutupPartai extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jCheckBoxF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(JCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,7 +234,7 @@ public class TutupPartai extends javax.swing.JFrame {
                         .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +259,7 @@ public class TutupPartai extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBoxF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -357,11 +362,11 @@ public class TutupPartai extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private KomponenGUI.JCheckBoxF JCBStatus;
     private KomponenGUI.JcomboboxF JCNoPartai;
     private static KomponenGUI.JdateCF JDTanggal;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JlableF LBNoTransaksi1;
-    private KomponenGUI.JCheckBoxF jCheckBoxF1;
     private javax.swing.JScrollPane jScrollPane1;
     private KomponenGUI.JbuttonF jbuttonF1;
     private KomponenGUI.JbuttonF jbuttonF2;
@@ -379,7 +384,7 @@ public class TutupPartai extends javax.swing.JFrame {
     void tambahData(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbtutuppartai`(`IdPartai`, `Tanggal`, `Keterangan`, `Status`) VALUES ('" + JCNoPartai.getSelectedItem() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTAKeterangan.getText() + "'," + jCheckBoxF1.isSelected() + ")", "Barang", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbtutuppartai`(`IdPartai`, `Tanggal`, `Keterangan`, `Status`) VALUES ('" + JCNoPartai.getSelectedItem() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Barang", this);
             if (berhasil) {
                 if (GlobalVar.Var.listTutupPartai != null) {
                     GlobalVar.Var.listTutupPartai.load();
@@ -398,7 +403,7 @@ public class TutupPartai extends javax.swing.JFrame {
     void ubahData() {
         if (checkInput()) {
             Update update = new Update();
-            Boolean berhasil = update.Ubah("UPDATE `tbtutuppartai` SET `IdPartai`='" + JCNoPartai.getSelectedItem() + "',`Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`Keterangan`='" + JTAKeterangan.getText() + "',`Status`=" + jCheckBoxF1.isSelected() + " WHERE `IdTutup` = " + IdEdit, "Tutup Partai", this);
+            Boolean berhasil = update.Ubah("UPDATE `tbtutuppartai` SET `IdPartai`='" + JCNoPartai.getSelectedItem() + "',`Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`Keterangan`='" + JTAKeterangan.getText() + "',`Status`=" + JCBStatus.isSelected() + " WHERE `IdTutup` = " + IdEdit, "Tutup Partai", this);
             if (GlobalVar.Var.listTutupPartai != null) {
                 GlobalVar.Var.listTutupPartai.load();
             }

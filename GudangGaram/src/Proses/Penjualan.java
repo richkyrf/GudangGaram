@@ -253,14 +253,14 @@ public class Penjualan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong");
             JTJumlah.requestFocus();
             return false;
-        } else if (JTable.getRowCount() > 10) {
+        } else if (JTable.getRowCount() >= 10) {
             JOptionPane.showMessageDialog(this, "Jenis Barang Yang Diinput Tidak Bisa Lebih Dari 10");
             return false;
         } else if (Float.parseFloat(JTJumlah.getText()) > Float.parseFloat(JTStock.getText().replace(".", "").replace(",", ".")) && !getNamaBarang().contains("RETUR")) {
             JOptionPane.showMessageDialog(this, "Jumlah Permintaan Tidak Bisa Melebihi Stok");
             JTJumlah.requestFocus();
             return false;
-        } else if (JTHargaSatuan.getInt() == 0 && !getNamaBarang().contains("RETUR")) {
+        } else if (JTHargaSatuan.getInt() == 0 && (getNamaBarang().contains("KASAR") || getNamaBarang().contains("HALUS")) && !JCBRetur.isSelected()) {
             JOptionPane.showMessageDialog(this, "Harga Satuan Tidak Boleh Kosong");
             JTHargaSatuan.requestFocus();
             return false;
@@ -318,6 +318,7 @@ public class Penjualan extends javax.swing.JFrame {
     }
 
     void RefreshTbl() {
+        JCNamaBarang.setSelectedIndex(0);
         JTable.clearSelection();
         JTJumlah.setText("0");
         JTHargaSatuan.setText("0");
@@ -352,6 +353,29 @@ public class Penjualan extends javax.swing.JFrame {
         dRunSelctOne.setQuery("SELECT `JenisKendaraan` FROM `tbmkendaraan` WHERE `Plat`= '" + JCPlat.getSelectedItem() + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         JTJenisKendaraan.setText(list.get(0));
+    }
+
+    void setLabelJumlah() {
+        if (JCNamaBarang.getSelectedItem().toString().contains("PLASTIK DLM") || JCNamaBarang.getSelectedItem().toString().contains("PLASTIK 8 ONS")) {
+            JLJumlah.setText("BAL");
+            JLStock.setText("Stock (BAL)");
+            JCBRetur.setSelected(false);
+            JCBRetur.setEnabled(false);
+            JCBBarcode.setSelected(false);
+            JCBBarcode.setEnabled(false);
+        } else if (JCNamaBarang.getSelectedItem().toString().contains("PLASTIK LUAR")) {
+            JLJumlah.setText("Kilo");
+            JLStock.setText("Stock (Kilo)");
+            JCBRetur.setSelected(false);
+            JCBRetur.setEnabled(false);
+            JCBBarcode.setSelected(false);
+            JCBBarcode.setEnabled(false);
+        } else {
+            JLJumlah.setText("Jumlah");
+            JLStock.setText("Stock");
+            JCBRetur.setEnabled(true);
+            JCBBarcode.setEnabled(true);
+        }
     }
 
     /**
@@ -390,10 +414,10 @@ public class Penjualan extends javax.swing.JFrame {
         JTable = new KomponenGUI.JtableF();
         jlabelF7 = new KomponenGUI.JtextF();
         JCNamaBarang = new KomponenGUI.JcomboboxF();
-        jlabelF8 = new KomponenGUI.JtextF();
+        JLJumlah = new KomponenGUI.JtextF();
         JTJumlah = new KomponenGUI.JNumberOnly();
         jlabelF9 = new KomponenGUI.JtextF();
-        jlabelF10 = new KomponenGUI.JtextF();
+        JLStock = new KomponenGUI.JtextF();
         tambahtable = new KomponenGUI.JbuttonF();
         ubahtable = new KomponenGUI.JbuttonF();
         hapustable = new KomponenGUI.JbuttonF();
@@ -576,10 +600,10 @@ public class Penjualan extends javax.swing.JFrame {
             }
         });
 
-        jlabelF8.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jlabelF8.setText("Jumlah");
-        jlabelF8.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jlabelF8.setEnabled(false);
+        JLJumlah.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        JLJumlah.setText("Jumlah");
+        JLJumlah.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        JLJumlah.setEnabled(false);
 
         JTJumlah.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         JTJumlah.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -598,10 +622,10 @@ public class Penjualan extends javax.swing.JFrame {
         jlabelF9.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jlabelF9.setEnabled(false);
 
-        jlabelF10.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jlabelF10.setText("Stock");
-        jlabelF10.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jlabelF10.setEnabled(false);
+        JLStock.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        JLStock.setText("Stock");
+        JLStock.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        JLStock.setEnabled(false);
 
         tambahtable.setText("TAMBAH");
 
@@ -769,6 +793,11 @@ public class Penjualan extends javax.swing.JFrame {
 
         JCBRetur.setSelected(false);
         JCBRetur.setText("Retur");
+        JCBRetur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBReturActionPerformed(evt);
+            }
+        });
 
         JCBBarcode.setSelected(false);
         JCBBarcode.setText("Barcode");
@@ -870,7 +899,7 @@ public class Penjualan extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jlabelF8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(JLJumlah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(JTJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -883,7 +912,7 @@ public class Penjualan extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(JTStock, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                                            .addComponent(jlabelF10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addComponent(JLStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                             .addComponent(LBNoTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -954,7 +983,7 @@ public class Penjualan extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlabelF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlabelF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JLJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlabelF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlabelF11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JCBRetur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -966,7 +995,7 @@ public class Penjualan extends javax.swing.JFrame {
                             .addComponent(JTHargaSatuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlabelF10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JLStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JTStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
@@ -1216,6 +1245,7 @@ public class Penjualan extends javax.swing.JFrame {
     private void JCNamaBarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBarangItemStateChanged
         setHarga();
         setStok();
+        setLabelJumlah();
     }//GEN-LAST:event_JCNamaBarangItemStateChanged
 
     private void jbuttonF8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF8ActionPerformed
@@ -1248,6 +1278,14 @@ public class Penjualan extends javax.swing.JFrame {
             JCNamaBarang.requestFocus();
         }
     }//GEN-LAST:event_JTNoDOKeyPressed
+
+    private void JCBReturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBReturActionPerformed
+        if (JCBRetur.isSelected()) {
+            JTHargaSatuan.setText("0");
+        } else {
+            setHarga();
+        }
+    }//GEN-LAST:event_JCBReturActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1295,6 +1333,8 @@ public class Penjualan extends javax.swing.JFrame {
     public static KomponenGUI.JcomboboxF JCPlat;
     public static KomponenGUI.JcomboboxF JCTujuan;
     private KomponenGUI.JdateCF JDTanggal;
+    private KomponenGUI.JtextF JLJumlah;
+    private KomponenGUI.JtextF JLStock;
     private KomponenGUI.JTextAreaF JTAKeterangan;
     private KomponenGUI.JRibuanTextField JTGrandTotal;
     private KomponenGUI.JRibuanTextField JTHargaSatuan;
@@ -1322,10 +1362,8 @@ public class Penjualan extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF jbuttonF7;
     private KomponenGUI.JbuttonF jbuttonF8;
     private KomponenGUI.JbuttonF jbuttonF9;
-    private KomponenGUI.JtextF jlabelF10;
     private KomponenGUI.JtextF jlabelF11;
     private KomponenGUI.JtextF jlabelF7;
-    private KomponenGUI.JtextF jlabelF8;
     private KomponenGUI.JtextF jlabelF9;
     private KomponenGUI.JlableF jlableF10;
     private KomponenGUI.JlableF jlableF19;
@@ -1365,7 +1403,7 @@ public class Penjualan extends javax.swing.JFrame {
         if (checkTableUbah()) {
             JTable.setValueAt(getNamaBarang(), JTable.getSelectedRow(), 1);
             JTable.setValueAt(JTJumlah.getText(), JTable.getSelectedRow(), 2);
-            JTable.setValueAt(JTHargaSatuan.getText(), JTable.getSelectedRow(), 3);
+            JTable.setValueAt(Intformatdigit(JTHargaSatuan.getInt()), JTable.getSelectedRow(), 3);
             JTable.setValueAt(JTSubTotal.getText(), JTable.getSelectedRow(), 4);
             JOptionPane.showMessageDialog(this, "Berhasil Ubah Data");
             RefreshTbl();
@@ -1393,10 +1431,12 @@ public class Penjualan extends javax.swing.JFrame {
                     }
                     if (Berhasil) {
                         for (int i = 0; i < JTable.getRowCount(); i++) {
-                            if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PARTAI")) {
+                            if (JTable.getValueAt(i, 1).toString().toUpperCase().contains("PARTAI")) {
                                 Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdPartai`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
-                            } else if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PLASTIK")) {
+                            } else if (JTable.getValueAt(i, 1).toString().toUpperCase().contains("PLASTIK LUAR")) {
                                 Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarangLain`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
+                            } else if (JTable.getValueAt(i, 1).toString().toUpperCase().contains("PLASTIK DLM") || JCNamaBarang.getSelectedItem().toString().contains("PLASTIK 8 ONS")) {
+                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarangLain`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + Integer.valueOf(JTable.getValueAt(i, 2).toString().replace(".", "")) * 25 + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
                             } else {
                                 Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
                             }
@@ -1469,15 +1509,17 @@ public class Penjualan extends javax.swing.JFrame {
                     if (Berhasil) {
                         Berhasil = multiInsert.Excute("DELETE FROM `tbpenjualandetail` WHERE `NoTransaksi` = '" + JTNoTransaksi.getText() + "'", null);
                         if (Berhasil) {
-                             for (int i = 0; i < JTable.getRowCount(); i++) {
-                            if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PARTAI")) {
-                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdPartai`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
-                            } else if (JCNamaBarang.getSelectedItem().toString().toUpperCase().contains("PLASTIK")) {
-                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarangLain`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
-                            } else {
-                                Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
+                            for (int i = 0; i < JTable.getRowCount(); i++) {
+                                if (JTable.getValueAt(i, 1).toString().toUpperCase().contains("PARTAI")) {
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdPartai`, `Jumlah`, `HargaSatuan`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "','" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "')", null);
+                                } else if (JTable.getValueAt(i, 1).toString().toUpperCase().contains("PLASTIK LUAR")) {
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarangLain`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
+                                } else if (JTable.getValueAt(i, 1).toString().toUpperCase().contains("PLASTIK DLM") || JCNamaBarang.getSelectedItem().toString().contains("PLASTIK 8 ONS")) {
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarangLain`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + Integer.valueOf(JTable.getValueAt(i, 2).toString().replace(".", "")) * 25 + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
+                                } else {
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbpenjualandetail`(`NoTransaksi`, `NoKolom`, `IdBarang`, `Jumlah`, `HargaSatuan`, `StatusRetur`, `StatusBarcode`) VALUES ('" + JTNoTransaksi.getText() + "','" + JTable.getValueAt(i, 0) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 1).toString().split(" \\(")[0] + "'),'" + JTable.getValueAt(i, 2).toString().replace(".", "") + "','" + JTable.getValueAt(i, 3).toString().replace(".", "") + "'," + JTable.getValueAt(i, 1).toString().contains("RETUR") + "," + JTable.getValueAt(i, 1).toString().contains("BARCODE") + ")", null);
+                                }
                             }
-                        }
                         }
                     }
                 }
@@ -1563,6 +1605,10 @@ public class Penjualan extends javax.swing.JFrame {
                     String satuan;
                     if (Barang[i].toUpperCase().contains("PARTAI") || Barang[i].toUpperCase().contains("@50 KG")) {
                         satuan = " SAK";
+                    } else if (Barang[i].toUpperCase().contains("PLASTIK DLM") || JCNamaBarang.getSelectedItem().toString().contains("PLASTIK 8 ONS")) {
+                        satuan = " BAL";
+                    } else if (Barang[i].toUpperCase().contains("PLASTIK LUAR")) {
+                        satuan = "  KG";
                     } else {
                         satuan = " PAK";
                     }
@@ -1583,7 +1629,7 @@ public class Penjualan extends javax.swing.JFrame {
             //System.out.println(OutFormat);
             directprinting(OutFormat);
         } else {
-            String leftAlignFormat = "%-5s%-37s%-9s%-15s%-13s%-1s%n";
+            String leftAlignFormat = "%-5s%-37s%-11s%-12s%-14s%-1s%n";
             String OutFormat = "";
             OutFormat += format("%-81s%n", " _____________________________________________________________________________");
             OutFormat += format("%-54s%-26s%n", " FAKTUR PENJUALAN", "No Transaksi: " + NoTransaksi);
@@ -1597,19 +1643,29 @@ public class Penjualan extends javax.swing.JFrame {
             OutFormat += format("%-54s%-26s%n", " Kendaraan : " + JenisKendaraan, " ");
             //                              12341234567890123456789012345678901234567812345678912345678901234512345678901234
             //                              12345678901234567890123456789012345678901234567890123456789012345678901234567890
-            OutFormat += format("%-80s%n", " +---+------------------------------------+--------+--------------+------------+");
-            OutFormat += format("%-80s%n", " | NO| NAMA BARANG                        | JUMLAH | HARGA SATUAN |  SUB TOTAL |");
-            OutFormat += format("%-80s%n", " +---+------------------------------------+--------+--------------+------------+");
+            OutFormat += format("%-80s%n", " +---+------------------------------------+----------+-----------+-------------+");
+            OutFormat += format("%-80s%n", " | NO| NAMA BARANG                        |  JUMLAH  |   HARGA   |  SUB TOTAL  |");
+            OutFormat += format("%-80s%n", " +---+------------------------------------+----------+-----------+-------------+");
             for (int i = 0; i < 6; i++) {
                 if (i < JTable.getRowCount()) {
-                    OutFormat += format(leftAlignFormat, " | " + (i + 1), "| " + Barang[i], "|" + format("%7s", Jumlahs[i]), "|" + format("%13s", Hargas[i]), "|" + format("%11s", Subs[i]), "|");
+                    String satuan;
+                    if (Barang[i].toUpperCase().contains("PARTAI") || Barang[i].toUpperCase().contains("@50 KG")) {
+                        satuan = " SAK";
+                    } else if (Barang[i].toUpperCase().contains("PLASTIK DLM") || JCNamaBarang.getSelectedItem().toString().contains("PLASTIK 8 ONS")) {
+                        satuan = " BAL";
+                    } else if (Barang[i].toUpperCase().contains("PLASTIK LUAR")) {
+                        satuan = "  KG";
+                    } else {
+                        satuan = " PAK";
+                    }
+                    OutFormat += format(leftAlignFormat, " | " + (i + 1), "| " + Barang[i], "|" + format("%9s", Jumlahs[i] + satuan), "|" + format("%10s", Hargas[i]), "|" + format("%12s", Subs[i]), "|");
                 } else {
                     OutFormat += format(leftAlignFormat, " | " + (i + 1), "|" + " ", "|" + " ", "|" + " ", "|" + " ", "|");
                 }
             }
-            OutFormat += format("%-80s%n", " +---+------------------------------------+--------+--------------+------------+");
-            OutFormat += format("%-23s%-43s%-13s%-1s%n", " | GRAND TOTAL", " ", "|" + format("%11s", Totals), "|");
-            OutFormat += format("%-80s%n", " +----------------------------------------------------------------+------------+");
+            OutFormat += format("%-80s%n", " +---+------------------------------------+----------+-----------+-------------+");
+            OutFormat += format("%-23s%-42s%-14s%-1s%n", " | GRAND TOTAL", " ", "|" + format("%12s", Totals), "|");
+            OutFormat += format("%-80s%n", " +---------------------------------------------------------------+-------------+");
             OutFormat += format("%-80s%n", " Ket : " + Keterangan);
             OutFormat += format("%n", "");
             OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
@@ -1807,11 +1863,21 @@ public class Penjualan extends javax.swing.JFrame {
                         + "SELECT a.`IdPartai`, `NamaBarang`, ifnull(`Sak`,0) AS 'Stok', ifnull(`Jumlah`,0) AS 'KG' FROM `tbpenyesuaian`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE a.`IdPartai` = '" + JCNamaBarang.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'\n"
                         + ") as tbTemp GROUP BY `IdPartai`");
             } else if (getNamaBarang().contains("PLASTIK")) {
-                String where = " d.`NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'";
-                if (JCNamaBarang.getSelectedItem().toString().contains("DALAM")) {
-                    where = " c.`NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'";
-                }
-                dRunSelctOne.setQuery("SELECT `Namabarang`, SUM(`Total Dalam`), SUM(`Total Luar`) FROM ( SELECT `NamaBarang`, IFNULL(SUM(`JumlahHasil`)*-1*`Isi`/c.`BeratPembagi`,0) as 'Total Dalam', IFNULL(SUM(`JumlahHasil`)*-1*`Isi`/d.`BeratPembagi`,0) as 'Total Luar' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` JOIN `tbmbaranglain`d ON b.`IdPlastikLuar`=d.`IdBarangLain` WHERE " + where + " UNION ALL SELECT `NamaBarangLain`, IF(`IdJenisBarangLain`=1,ifnull(SUM(`Jumlah`),0),0) AS 'Berat Dalam', IF(`IdJenisBarangLain`=2,ifnull(SUM(`Jumlah`),0),0) AS 'Berat Luar' FROM `tbpenyesuaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "') tbtemp");
+                dRunSelctOne.setQuery("SELECT `IdBarangLain`, `NamaBarangLain`, IFNULL(SUM(`Stok`),0) as 'Stok' FROM (\n" +
+"SELECT a.`IdBarangLain`, `NamaBarangLain`, SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE `NamaBarangLain` = '" + getNamaBarang() + "' GROUP BY `IdBarangLain`\n" +
+"	UNION ALL\n" +
+"SELECT a.`IdBarangLain`, `NamaBarangLain`, SUM(`Jumlah`) as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE `NamaBarangLain` = '" + getNamaBarang() + "' AND c.`IdjenisBarangLain` = 2 GROUP BY `IdBarangLain`\n" +
+" 	UNION ALL\n" +
+"SELECT b.`IdPlastikDalam` as 'IdBarangLain', `NamaBarangLain`, SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`) as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE `NamaBarangLain` = '" + getNamaBarang() + "' AND `IdJenisBarangLain` = 1 GROUP BY b.`IdPlastikDalam`\n" +
+"	UNION ALL\n" +
+"SELECT b.`IdPlastikLuar` as 'IdBarangLain', `NamaBarangLain`, SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`) as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE `NamaBarangLain` = '" + getNamaBarang() + "' AND `IdJenisBarangLain` = 2 GROUP BY b.`IdPlastikLuar`\n" +
+"	UNION ALL\n" +
+"SELECT a.`IdBarangLain`, `NamaBarangLain`, SUM(`Jumlah`) as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikDalam`=d.`IdBarangLain` WHERE `NamaBarangLain` = '" + getNamaBarang() + "' AND a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 1 GROUP BY a.`IdBarangLain`\n" +
+"	UNION ALL\n" +
+"SELECT a.`IdBarangLain`, `NamaBarangLain`, SUM(`Jumlah`) as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE `NamaBarangLain` = '" + getNamaBarang() + "' AND a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 GROUP BY a.`IdBarangLain`\n" +
+"	UNION ALL\n" +
+"SELECT a.`IdBarangLain`, `NamaBarangLain`, SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE `NamaBarangLain` = '" + getNamaBarang() + "' GROUP BY `IdBarangLain`\n" +
+"    ) t1");
             } else if (getNamaBarang().contains("RETUR")) {
                 dRunSelctOne.setQuery("SELECT 0, 0, 0");
             } else {
@@ -1831,6 +1897,9 @@ public class Penjualan extends javax.swing.JFrame {
                 dobel = Double.valueOf(list.get(1));
             }
             JTStock.setText(Decformatdigit(dobel));
+            if (getNamaBarang().contains("PLASTIK DLM") || getNamaBarang().contains("PLASTIK 8 ONS")) {
+                JTStock.setText(Decformatdigit(dobel/25));
+            }
         }
     }
 

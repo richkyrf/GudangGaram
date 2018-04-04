@@ -138,7 +138,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jlabelF8" alignment="1" min="-2" pref="77" max="-2" attributes="0"/>
+                                          <Component id="JLJumlah" alignment="1" min="-2" pref="77" max="-2" attributes="0"/>
                                           <Component id="JTJumlah" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -154,7 +154,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="JTStock" pref="105" max="32767" attributes="0"/>
-                                          <Component id="jlabelF10" max="32767" attributes="0"/>
+                                          <Component id="JLStock" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
@@ -247,7 +247,7 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jlabelF7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlabelF8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JLJumlah" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jlabelF9" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jlabelF11" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="JCBRetur" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -262,7 +262,7 @@
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="jlabelF10" min="-2" max="-2" attributes="0"/>
+                      <Component id="JLStock" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="JTStock" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -528,7 +528,7 @@
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT &apos;-- Pilih Nama Barang --&apos; as &apos;NamaBarang&apos; UNION ALL (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2) UNION ALL (SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1 OR `IdJenisBarangLain` = 2) ORDER BY `NamaBarang`&quot;);"/>
       </AuxValues>
     </Component>
-    <Component class="KomponenGUI.JtextF" name="jlabelF8">
+    <Component class="KomponenGUI.JtextF" name="JLJumlah">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Jumlah"/>
@@ -557,7 +557,7 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="KomponenGUI.JtextF" name="jlabelF10">
+    <Component class="KomponenGUI.JtextF" name="JLStock">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Stock"/>
@@ -777,6 +777,9 @@
         <Property name="selected" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="Retur"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JCBReturActionPerformed"/>
+      </Events>
     </Component>
     <Component class="KomponenGUI.JCheckBoxF" name="JCBBarcode">
       <Properties>

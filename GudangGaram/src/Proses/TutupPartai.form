@@ -63,7 +63,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jCheckBoxF1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="JCBStatus" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -81,7 +81,7 @@
                       <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -112,7 +112,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jlableF4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCheckBoxF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JCBStatus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -216,7 +216,7 @@
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
-    <Component class="KomponenGUI.JCheckBoxF" name="jCheckBoxF1">
+    <Component class="KomponenGUI.JCheckBoxF" name="JCBStatus">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tutup"/>
       </Properties>

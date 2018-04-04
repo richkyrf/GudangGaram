@@ -1,0 +1,24 @@
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, `Terima`, `Mutasi`, `Produksi`, `Packing Ulang`, `Penyesuaian` FROM (
+(SELECT a.`IdBarangLain`, `NamaBarangLain`, `JenisBarangLain`, `BeratPembagi`, `Satuan` FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1) a
+	LEFT JOIN 
+(SELECT `IdBarangLain`, SUM(`Netto`) as 'Terima' FROM `tbpenerimaanlain` WHERE 1 GROUP BY `IdBarangLain` ) b
+    ON a.`IdBarangLain`=b.`IdBarangLain`
+	LEFT JOIN
+(SELECT a.`IdBarangLain`, SUM(`Jumlah`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 GROUP BY `IdBarangLain`) c
+    ON a.`IdBarangLain`=c.`IdBarangLain`
+    LEFT JOIN
+(SELECT b.`IdPlastikDalam` as 'IdBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`) as 'Produksi' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`) as 'Produksi' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '14' as 'IdBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001) as 'Produksi' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` WHERE 1 AND c.`NamaBarang` LIKE '%KSR%' ) d
+    ON a.`IdBarangLain`=d.`IdBarangLain`
+	LEFT JOIN
+(SELECT a.`IdBarangLain`, SUM(`Jumlah`) as 'Packing Ulang' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikDalam`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 1 GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT a.`IdBarangLain`, SUM(`Jumlah`) as 'Packing Ulang' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 GROUP BY a.`IdBarangLain`) e
+    ON a.`IdBarangLain`=e.`IdBarangLain`
+    LEFT JOIN
+(SELECT `IdBarangLain`, SUM(`Jumlah`) as 'Penyesuaian' FROM `tbpenyesuaianlain` WHERE 1 GROUP BY `IdBarangLain` ) f
+    ON a.`IdBarangLain`=f.`IdBarangLain`
+    ) ORDER BY a.`JenisBarangLain`, a.`NamaBarangLain`

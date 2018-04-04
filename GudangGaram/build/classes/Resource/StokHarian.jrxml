@@ -71,7 +71,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 ) as tbTemp GROUP BY `IdBarang`, `IdPartai`) i
 	ON IF(i.`IdPartai` IS NULL, a.`IdBarang`=i.`IdBarang`, a.`IdPartai`=i.`IdPartai`)
 
-) ORDER BY a.`IdJenisBarang`, IF(a.`IdPartai` IS NULL, a.`NamaBarang`, a.`IdPartai`)]]>
+) LEFT JOIN `tbtutuppartai`z ON a.`IdPartai`=z.`IdPartai` LEFT JOIN `tbmpartai`y ON a.`IdPartai`=y.`IdPartai` WHERE (z.`IdTutup` IS NULL OR (z.`Status` = 0 AND z.`IdTutup` IS NOT NULL) OR z.`Tanggal` > $P{Tgl}) AND (y.`IdPartai` IS NULL OR y.`Tanggal` <= $P{Tgl}) ORDER BY a.`IdJenisBarang`, IF(a.`IdPartai` IS NULL, a.`NamaBarang`, a.`IdPartai`)]]>
 	</queryString>
 	<field name="IdBarang" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
