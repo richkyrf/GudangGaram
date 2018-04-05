@@ -86,6 +86,7 @@ public class MenuUtama extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         JMLaporan = new javax.swing.JMenu();
         JMILaporanStokHarian = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -434,6 +435,14 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMLaporan.add(JMILaporanStokHarian);
 
+        jMenuItem4.setText("Laporan Stok Plastik");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        JMLaporan.add(jMenuItem4);
+
         JMenuBar.add(JMLaporan);
 
         setJMenuBar(JMenuBar);
@@ -781,7 +790,12 @@ public class MenuUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_JMIListPenerimaan1ActionPerformed
 
     private void JMIProsesPenyesuaianStok2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIProsesPenyesuaianStok2ActionPerformed
-        // TODO add your handling code here:
+        if (GlobalVar.Var.tambahPenyesuaianLain == null) {
+            GlobalVar.Var.tambahPenyesuaianLain = new PenyesuaianLain();
+        } else {
+            GlobalVar.Var.tambahPenyesuaianLain.setState(NORMAL);
+            GlobalVar.Var.tambahPenyesuaianLain.toFront();
+        }
     }//GEN-LAST:event_JMIProsesPenyesuaianStok2ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -792,6 +806,15 @@ public class MenuUtama extends javax.swing.JFrame {
             GlobalVar.Var.listTutupPartai.toFront();
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        if (GlobalVar.Var.laporanStokPlastik == null) {
+            GlobalVar.Var.laporanStokPlastik = new LaporanStokPlastik();
+        } else {
+            GlobalVar.Var.laporanStokPlastik.setState(NORMAL);
+            GlobalVar.Var.laporanStokPlastik.toFront();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -881,5 +904,6 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }

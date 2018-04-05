@@ -66,6 +66,7 @@ public class Var {
     public static ListTutupPartai listTutupPartai;
 
     public static LaporanStokHarian laporanStokHarian;
+    public static LaporanStokPlastik laporanStokPlastik;
 
     public static Jcari jcari;
 }

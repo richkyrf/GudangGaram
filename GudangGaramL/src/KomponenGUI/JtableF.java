@@ -207,7 +207,7 @@ public class JtableF extends JTable {
             for (int column = 0; column < getColumnCount(); column++) {
                 TableColumn tableColumn = getColumnModel().getColumn(column);
                 int preferredWidth = 50;
-                int maxWidth = 1000;
+                int maxWidth = 275;
 
                 for (int row = 0; row < getRowCount(); row++) {
                     TableCellRenderer cellRenderer = getCellRenderer(row, column);
