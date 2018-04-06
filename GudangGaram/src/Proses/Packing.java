@@ -1346,9 +1346,13 @@ public class Packing extends javax.swing.JFrame {
 
     private void JCNamaBahan2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaBahan2KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            JTJumlahBahan2.requestFocus();
+            if (JTJumlahBahan2.isEnabled()) {
+                JTJumlahBahan2.requestFocus();
+            } else {
+                JTJumlahHasil1.requestFocus();
+            }
         } else if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            JCNamaBahan2.setSelectedItem("");
+            JCNamaBahan2.setSelectedIndex(0);
         }
     }//GEN-LAST:event_JCNamaBahan2KeyPressed
 

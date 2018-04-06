@@ -105,24 +105,24 @@ public class LaporanStokPlastik extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JDTanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JDTanggalKeyPressed
-        
+
     }//GEN-LAST:event_JDTanggalKeyPressed
 
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
-//        FLaporan fLaporan = new FLaporan();
-//        HashMap hashs = new HashMap();
-//        hashs.put("PrintedBy", "Di Print Oleh " + GlobalVar.VarL.username + " Pada " + FDateF.datetostr(new Date(), "dd/MM/yyyy HH:mm"));
-//        hashs.put("Title", "LAPORAN STOK PLASTIK");
-//        hashs.put("Tgl", FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd"));
-//        hashs.put("FormatTgl", JDTanggal.getDate());
-//        java.util.Locale locale = new Locale("id", "ID");
-//        hashs.put(JRParameter.REPORT_LOCALE, locale);
-//        fLaporan.sethashmap(hashs);
-//        fLaporan.setfilename("StokPlastik");
-//        fLaporan.setErorm("Gagal Menampilkan Laporan " + this.getTitle());
-//        fLaporan.excute();
-//        History.simpanhistory(GlobalVar.VarL.username, "StokPlastik");
-JOptionPane.showMessageDialog(this, "Belum siap :D");
+        FLaporan fLaporan = new FLaporan();
+        HashMap hashs = new HashMap();
+        hashs.put("PrintedBy", "Di Print Oleh " + GlobalVar.VarL.username + " Pada " + FDateF.datetostr(new Date(), "dd/MM/yyyy HH:mm"));
+        hashs.put("Title", "LAPORAN STOK PLASTIK");
+        hashs.put("Tgl", FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd"));
+        hashs.put("FormatTgl", JDTanggal.getDate());
+        java.util.Locale locale = new Locale("id", "ID");
+        hashs.put(JRParameter.REPORT_LOCALE, locale);
+        fLaporan.sethashmap(hashs);
+        fLaporan.setfilename("StokPlastik");
+        fLaporan.setErorm("Gagal Menampilkan Laporan " + this.getTitle());
+        fLaporan.excute();
+        History.simpanhistory(GlobalVar.VarL.username, "StokPlastik");
+//      JOptionPane.showMessageDialog(this, "Belum siap :D");
     }//GEN-LAST:event_jbuttonF1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

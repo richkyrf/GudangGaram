@@ -434,19 +434,29 @@ public class PenyesuaianLain extends javax.swing.JFrame {
     }
 
     void setStok() {
-        if (JCNamaBarang.getSelectedIndex() != 0 && JCNamaBarang.getSelectedItem().toString().contains("PLASTIK")) {
+        if (JCNamaBarang.getSelectedIndex() != 0) {
             DRunSelctOne dRunSelctOne = new DRunSelctOne();
             dRunSelctOne.seterorm("Gagal setStok()");
-            String where = " d.`NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'";
-            if (JCNamaBarang.getSelectedItem().toString().contains("DALAM")) {
-                where = " c.`NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "'";
-            }
-            dRunSelctOne.setQuery("SELECT `Namabarang`, SUM(`Total Dalam`), SUM(`Total Luar`) FROM ( SELECT `NamaBarang`, IFNULL(SUM(`JumlahHasil`)*-1*`Isi`/c.`BeratPembagi`,0) as 'Total Dalam', IFNULL(SUM(`JumlahHasil`)*-1*`Isi`/d.`BeratPembagi`,0) as 'Total Luar' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` JOIN `tbmbaranglain`d ON b.`IdPlastikLuar`=d.`IdBarangLain` WHERE " + where + " AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' UNION ALL SELECT `NamaBarangLain`, IF(`IdJenisBarangLain`=1,ifnull(SUM(`Jumlah`),0),0) AS 'Berat Dalam', IF(`IdJenisBarangLain`=2,ifnull(SUM(`Jumlah`),0),0) AS 'Berat Luar' FROM `tbpenyesuaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "' AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' ) tbtemp");
+            dRunSelctOne.setQuery("SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (\n"
+                    + "SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1\n"
+                    + "	UNION ALL\n"
+                    + "SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY `IdBarangLain`\n"
+                    + "    UNION ALL\n"
+                    + "SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND b.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY `IdBarangLain`\n"
+                    + "    UNION ALL\n"
+                    + "SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`IdPlastikDalam`\n"
+                    + "	UNION ALL\n"
+                    + "SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY b.`IdPlastikLuar`\n"
+                    + "	UNION ALL\n"
+                    + "SELECT '14' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'\n"
+                    + "    UNION ALL\n"
+                    + "SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*c.`Isi`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikDalam`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 1 AND b.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY a.`IdBarangLain`\n"
+                    + "	UNION ALL\n"
+                    + "SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY a.`IdBarangLain`\n"
+                    + "    UNION ALL\n"
+                    + "SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "') GROUP BY `IdBaranglain`");
             ArrayList<String> list = dRunSelctOne.excute();
             double StokLamaKG = Double.valueOf(list.get(2));
-            if (JCNamaBarang.getSelectedItem().toString().contains("DALAM")) {
-                StokLamaKG = Double.valueOf(list.get(1));
-            }
             JTStokLamaKG.setText(Decformatdigit(StokLamaKG));
         }
     }

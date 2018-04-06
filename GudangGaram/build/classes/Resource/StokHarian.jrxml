@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StokHarian" language="groovy" pageWidth="935" pageHeight="609" orientation="Landscape" columnWidth="895" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="acc8509b-a836-4b53-b178-b496671fd8c2">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="163"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Title" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["Laporan Permintaan Barang"]]></defaultValueExpression>
@@ -71,7 +71,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 ) as tbTemp GROUP BY `IdBarang`, `IdPartai`) i
 	ON IF(i.`IdPartai` IS NULL, a.`IdBarang`=i.`IdBarang`, a.`IdPartai`=i.`IdPartai`)
 
-) LEFT JOIN `tbtutuppartai`z ON a.`IdPartai`=z.`IdPartai` LEFT JOIN `tbmpartai`y ON a.`IdPartai`=y.`IdPartai` WHERE (z.`IdTutup` IS NULL OR (z.`Status` = 0 AND z.`IdTutup` IS NOT NULL) OR z.`Tanggal` > $P{Tgl}) AND (y.`IdPartai` IS NULL OR y.`Tanggal` <= $P{Tgl}) ORDER BY a.`IdJenisBarang`, IF(a.`IdPartai` IS NULL, a.`NamaBarang`, a.`IdPartai`)]]>
+) LEFT JOIN `tbtutuppartai`z ON a.`IdPartai`=z.`IdPartai` LEFT JOIN `tbmpartai`y ON a.`IdPartai`=y.`IdPartai` WHERE (z.`IdTutup` IS NULL OR (z.`Status` = 0 AND z.`IdTutup` IS NOT NULL) OR z.`Tanggal` > $P{Tgl}) AND (y.`IdPartai` IS NULL OR y.`Tanggal` <= $P{Tgl}) ORDER BY a.`IdJenisBarang`, IF(a.`IdPartai` IS NULL, a.`IdBarang`, a.`IdPartai`)]]>
 	</queryString>
 	<field name="IdBarang" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -99,9 +99,9 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="30" splitType="Stretch">
+		<band height="44" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="895" height="30" uuid="5c0fbdc4-2ef8-4c98-a95f-1bb4dd356913"/>
+				<reportElement x="0" y="14" width="895" height="30" uuid="5c0fbdc4-2ef8-4c98-a95f-1bb4dd356913"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>

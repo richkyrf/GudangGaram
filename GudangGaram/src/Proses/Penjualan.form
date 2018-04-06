@@ -525,7 +525,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBarangKeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT &apos;-- Pilih Nama Barang --&apos; as &apos;NamaBarang&apos; UNION ALL (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,`IdPartai`,&apos;)&apos;) FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2) UNION ALL (SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdJenisBarangLain` = 1 OR `IdJenisBarangLain` = 2) ORDER BY `NamaBarang`&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaBarang.load(&quot;SELECT &apos;-- Pilih Nama Barang --&apos; as &apos;NamaBarang&apos; UNION ALL (SELECT CONCAT(`NamaBarang`,&apos; (PARTAI &apos;,a.`IdPartai`,&apos;)&apos;) FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` LEFT JOIN `tbtutuppartai`c ON a.`IdPartai`=c.`IdPartai` WHERE c.`IdTutup` IS NULL GROUP BY a.`IdPartai` ORDER BY a.`IdPartai`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2) UNION ALL (SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1)&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JtextF" name="JLJumlah">
