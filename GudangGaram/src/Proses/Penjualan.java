@@ -1955,7 +1955,7 @@ public class Penjualan extends javax.swing.JFrame {
                         + "	UNION ALL\n"
                         + "SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 GROUP BY b.`IdPlastikLuar`\n"
                         + "	UNION ALL\n"
-                        + "SELECT '14' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'\n"
+                        + "SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'\n"
                         + "    UNION ALL\n"
                         + "SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*c.`Isi`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikDalam`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 1 GROUP BY a.`IdBarangLain`\n"
                         + "	UNION ALL\n"
