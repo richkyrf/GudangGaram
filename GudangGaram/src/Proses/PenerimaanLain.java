@@ -80,7 +80,7 @@ public class PenerimaanLain extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Silahkan Pilih Nama Pemasok");
             return false;
         } else if (JTBal.getInt() == 0 && JTBal.isVisible()) {
-            JOptionPane.showMessageDialog(null, "Bal / Colly Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, "Jumlah Bal / Colly Tidak Boleh Kosong");
             return false;
         } else if (JTBrutto.getInt() == 0 && JTBrutto.isVisible()) {
             JOptionPane.showMessageDialog(null, "Brutto Tidak Boleh Kosong");

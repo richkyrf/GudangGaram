@@ -3,28 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPenjualan.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterBarangLain.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/File/MenuUtama.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Penerimaan.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListTutupPartai.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/PrintTPB.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/PenyesuaianLain.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPenerimaan.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/File/Login.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/TutupPartai.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Packing.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/Masters.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Laporan/LaporanStokPlastik.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListMasters.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterKendaraan.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/GlobalVar/Var.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterBarang.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/PenerimaanLain.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/List/ListPenerimaanLain.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Penjualan.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Proses/Penyesuaian.java</file>
-            <file>file:/E:/PROJECTS/GudangGaram/GudangGaram/src/Master/MasterKaryawan.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/Proses/RekapPenggajianHarian.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/Proses/PenerimaanLain.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/List/ListPenjualan.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/Proses/PenyesuaianLain.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/GlobalVar/Var.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/Master/MasterBarangLain.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/Proses/PrintTPB.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/Proses/Penyesuaian.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/Proses/PemakaianLain.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/File/MenuUtama.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/Proses/Penjualan.java</file>
+            <file>file:/E:/GudangGaram/GudangGaram/src/List/ListPemakaianLain.java</file>
         </group>
     </open-files>
 </project-private>

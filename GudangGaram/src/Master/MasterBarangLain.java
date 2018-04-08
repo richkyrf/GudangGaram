@@ -8,6 +8,7 @@ package Master;
 import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
 import LSubProces.Update;
+import Proses.PemakaianLain;
 import Proses.PenerimaanLain;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -431,6 +432,11 @@ public class MasterBarangLain extends javax.swing.JFrame {
                     PenerimaanLain.JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1 ");
                     PenerimaanLain.JCNamaBarang.setSelectedItem(JTNamaBarangLain.getText());
                     PenerimaanLain.JCNamaBarang.requestFocus();
+                }
+                if (GlobalVar.Var.tambahPemakaianLain != null || GlobalVar.Var.ubahPemakaianLain != null) {
+                    PemakaianLain.JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1 ");
+                    PemakaianLain.JCNamaBarang.setSelectedItem(JTNamaBarangLain.getText());
+                    PemakaianLain.JCNamaBarang.requestFocus();
                 }
                 if (GlobalVar.Var.listBarangLain != null) {
                     GlobalVar.Var.listBarangLain.load();

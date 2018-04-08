@@ -76,6 +76,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIProsesPenyesuaianStok2 = new javax.swing.JMenuItem();
         SProses3 = new javax.swing.JPopupMenu.Separator();
         JMIProsesPenyesuaianStok1 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         JMList = new javax.swing.JMenu();
         JMIListPacking = new javax.swing.JMenuItem();
         JMIListPenjualan = new javax.swing.JMenuItem();
@@ -362,6 +363,14 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMProses.add(JMIProsesPenyesuaianStok1);
+
+        jMenuItem5.setText("15. Pemakaian Barang Lain");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        JMProses.add(jMenuItem5);
 
         JMenuBar.add(JMProses);
 
@@ -816,6 +825,15 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        if (GlobalVar.Var.tambahPemakaianLain == null) {
+            GlobalVar.Var.tambahPemakaianLain = new PemakaianLain();
+        } else {
+            GlobalVar.Var.ubahPemakaianLain.setState(NORMAL);
+            GlobalVar.Var.ubahPemakaianLain.toFront();
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -905,5 +923,6 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }

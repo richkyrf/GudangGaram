@@ -35,6 +35,7 @@ public class Var {
     public static Absen absen;
     public static Penerimaan tambahPenerimaan, ubahPenerimaan;
     public static PenerimaanLain tambahPenerimaanLain, ubahPenerimaanLain;
+    public static PemakaianLain tambahPemakaianLain, ubahPemakaianLain;
     public static Packing tambahPacking, ubahPacking;
     public static Penjualan tambahPenjualan, ubahPenjualan;
     public static Penyesuaian tambahPenyesuaian;
@@ -57,6 +58,7 @@ public class Var {
     public static ListHariLibur listHariLibur;
     public static ListPenerimaan listPenerimaan;
     public static ListPenerimaanLain listPenerimaanLain;
+    public static ListPemakaianLain listPemakaianLain;
     public static ListPacking listPacking;
     public static ListPenjualan listPenjualan;
     public static ListPenyesuaian listPenyesuaian;
