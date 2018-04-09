@@ -253,7 +253,11 @@ public class Penjualan extends javax.swing.JFrame {
     }
 
     boolean checkTable() {
-        if (JTJumlah.getText().replace("0", "").isEmpty()) {
+        if (JCNamaBarang.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Nama Barang");
+            JCNamaBarang.requestFocus();
+            return false;
+        } else if (JTJumlah.getText().replace("0", "").isEmpty()) {
             JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong");
             JTJumlah.requestFocus();
             return false;
@@ -291,7 +295,11 @@ public class Penjualan extends javax.swing.JFrame {
     }
 
     boolean checkTableUbah() {
-        if (JTJumlah.getText().replace("0", "").isEmpty()) {
+        if (JCNamaBarang.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Nama Barang");
+            JCNamaBarang.requestFocus();
+            return false;
+        } else if (JTJumlah.getText().replace("0", "").isEmpty()) {
             JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong");
             JTJumlah.requestFocus();
             return false;
@@ -371,6 +379,13 @@ public class Penjualan extends javax.swing.JFrame {
         } else if (JCNamaBarang.getSelectedItem().toString().contains("PLASTIK LUAR")) {
             JLJumlah.setText("Kilo");
             JLStock.setText("Stock (Kilo)");
+            JCBRetur.setSelected(false);
+            JCBRetur.setEnabled(false);
+            JCBBarcode.setSelected(false);
+            JCBBarcode.setEnabled(false);
+        } else if (JCNamaBarang.getSelectedItem().toString().contains("PARTAI")) {
+            JLJumlah.setText("Jumlah");
+            JLStock.setText("Stock");
             JCBRetur.setSelected(false);
             JCBRetur.setEnabled(false);
             JCBBarcode.setSelected(false);
@@ -1185,7 +1200,11 @@ public class Penjualan extends javax.swing.JFrame {
 
     private void JTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMouseClicked
         if (JTable.getSelectedRow() != -1) {
-            JCNamaBarang.setSelectedItem(JTable.getValueAt(JTable.getSelectedRow(), 1).toString().split(" \\(")[0]);
+            if (JTable.getValueAt(JTable.getSelectedRow(), 1).toString().contains("PARTAI")) {
+                JCNamaBarang.setSelectedItem(JTable.getValueAt(JTable.getSelectedRow(), 1).toString());
+            } else {
+                JCNamaBarang.setSelectedItem(JTable.getValueAt(JTable.getSelectedRow(), 1).toString().split(" \\(")[0]);
+            }
             if (JTable.getValueAt(JTable.getSelectedRow(), 1).toString().contains("RETUR")) {
                 JCBRetur.setSelected(true);
             } else {
