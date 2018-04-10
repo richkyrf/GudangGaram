@@ -219,7 +219,7 @@ public class ListPemakaianLain extends javax.swing.JFrame {
     public void load() {
         jcomCari1.setQuery("SELECT `IdPemakaianLain` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaBarangLain` as 'Nama Barang', `Jumlah`, a.`Keterangan` FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 ");
         jcomCari1.setOrder(" ORDER BY a.`Tanggal` DESC");
-        jcomCari1.setRender(new int[]{3}, new String[]{"Number"});
+        jcomCari1.setRender(new int[]{3}, new String[]{"Decimal"});
         jcomCari1.tampilkan();
     }
 

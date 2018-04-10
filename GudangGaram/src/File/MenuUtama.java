@@ -85,6 +85,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMIListPenyesuaianStok = new javax.swing.JMenuItem();
         JMIListPenyesuaianStok1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        JMIListPenyesuaianStok2 = new javax.swing.JMenuItem();
         JMLaporan = new javax.swing.JMenu();
         JMILaporanStokHarian = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -431,6 +432,14 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMList.add(jMenuItem2);
+
+        JMIListPenyesuaianStok2.setText("8. List Pemakaian Barang Lain");
+        JMIListPenyesuaianStok2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMIListPenyesuaianStok2ActionPerformed(evt);
+            }
+        });
+        JMList.add(JMIListPenyesuaianStok2);
 
         JMenuBar.add(JMList);
 
@@ -834,6 +843,15 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void JMIListPenyesuaianStok2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIListPenyesuaianStok2ActionPerformed
+        if (GlobalVar.Var.listPemakaianLain == null) {
+            GlobalVar.Var.listPemakaianLain = new ListPemakaianLain();
+        } else {
+            GlobalVar.Var.listPemakaianLain.setState(NORMAL);
+            GlobalVar.Var.listPemakaianLain.toFront();
+        }
+    }//GEN-LAST:event_JMIListPenyesuaianStok2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -881,6 +899,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMIListPenjualan;
     private javax.swing.JMenuItem JMIListPenyesuaianStok;
     private javax.swing.JMenuItem JMIListPenyesuaianStok1;
+    private javax.swing.JMenuItem JMIListPenyesuaianStok2;
     private javax.swing.JMenuItem JMIMasterBarang;
     private javax.swing.JMenuItem JMIMasterBarang1;
     private javax.swing.JMenuItem JMIMasterGudang;

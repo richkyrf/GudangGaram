@@ -25,7 +25,11 @@
 (SELECT `IdBarangLain`, SUM(`Netto`) as 'Terima' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarangLain` ) b
     ON a.`IdBarangLain`=b.`IdBarangLain`
 	LEFT JOIN
-(SELECT a.`IdBarangLain`, SUM(`Jumlah`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND b.`Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`) c
+(SELECT a.`IdBarangLain`, SUM(`Jumlah`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`
+UNION ALL
+SELECT a.`IdBarangLain`, SUM(`Jumlah`/`BeratPembagi`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2  AND `StatusLembar` = 1 AND b.`Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`
+UNION ALL
+SELECT a.`IdBarangLain`, SUM(`Jumlah`*`Isi`/`BeratPembagi`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 0 AND b.`Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`) c
     ON a.`IdBarangLain`=c.`IdBarangLain`
     LEFT JOIN
 (SELECT b.`IdPlastikDalam` as 'IdBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`) as 'Produksi' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND a.`Tanggal` = $P{Tgl} AND `IdJenisBarangLain` = 1 GROUP BY b.`IdPlastikDalam`
@@ -37,9 +41,7 @@ SELECT '4' as 'IdBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001) as 'Produksi' F
 SELECT a.`IdBarangLain`, SUM(a.`Jumlah`) as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` = $P{Tgl} GROUP BY a.`IdBarangLain`) d
     ON a.`IdBarangLain`=d.`IdBarangLain`
 	LEFT JOIN
-(SELECT a.`IdBarangLain`, SUM(`Jumlah`*c.`Isi`/d.`BeratPembagi`) as 'Packing Ulang' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikDalam`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 1 AND b.`Tanggal` = $P{Tgl} GROUP BY a.`IdBarangLain`
-	UNION ALL
-SELECT a.`IdBarangLain`, SUM(`Jumlah`/d.`BeratPembagi`) as 'Packing Ulang' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` = $P{Tgl} GROUP BY a.`IdBarangLain`) e
+(SELECT a.`IdBarangLain`, SUM(a.`Jumlah`) as 'Packing Ulang' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` = $P{Tgl} GROUP BY a.`IdBarangLain`) e
     ON a.`IdBarangLain`=e.`IdBarangLain`
     LEFT JOIN
 (SELECT `IdBarangLain`, SUM(`Jumlah`) as 'Penyesuaian' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarangLain` ) f
@@ -50,7 +52,11 @@ SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a J
 	UNION ALL
 SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < $P{Tgl} GROUP BY `IdBarangLain`
     UNION ALL
-SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND b.`Tanggal` < $P{Tgl} GROUP BY `IdBarangLain`
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < $P{Tgl} GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < $P{Tgl} GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < $P{Tgl} GROUP BY `IdBarangLain`
     UNION ALL
 SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < $P{Tgl} GROUP BY b.`IdPlastikDalam`
 	UNION ALL
@@ -60,19 +66,21 @@ SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0
 	UNION ALL
 SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < $P{Tgl} GROUP BY a.`IdBarangLain`
     	UNION ALL
-SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*c.`Isi`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikDalam`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 1 AND b.`Tanggal` < $P{Tgl} GROUP BY a.`IdBarangLain`
-	UNION ALL
-SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < $P{Tgl} GROUP BY a.`IdBarangLain`
+SELECT a.`IdBarangLain`,null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < $P{Tgl} GROUP BY a.`IdBarangLain`
     UNION ALL
 SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < $P{Tgl} GROUP BY `IdBarangLain` ) t1 GROUP BY `IdBaranglain`) g
     ON a.`IdBarangLain`=g.`IdBarangLain`
     LEFT JOIN
-(SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Akhir', IF(`IdJenisBarangLain`<3,SUM(`Stok`)/24.8,NULL) as 'BAL' FROM (
+(SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Akhir', IF(`IdJenisBarangLain`<3 AND `IdBarangLain`!=5,SUM(`Stok`)/24.8,NULL) as 'BAL' FROM (
 SELECT a.`IdBarangLain`, a.`NamaBarangLain`, a.`IdJenisBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
 	UNION ALL
 SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` <= $P{Tgl} GROUP BY `IdBarangLain`
     UNION ALL
-SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND b.`Tanggal` <= $P{Tgl} GROUP BY `IdBarangLain`
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` <= $P{Tgl} GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` <= $P{Tgl} GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` <= $P{Tgl} GROUP BY `IdBarangLain`
     UNION ALL
 SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` <= $P{Tgl} GROUP BY b.`IdPlastikDalam`
 	UNION ALL
@@ -82,9 +90,7 @@ SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLa
 	UNION ALL
 SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdBarangLain`
     UNION ALL
-SELECT d.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(`Jumlah`*c.`Isi`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikDalam`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 1 AND b.`Tanggal` <= $P{Tgl} GROUP BY a.`IdBarangLain`
-	UNION ALL
-SELECT d.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` <= $P{Tgl} GROUP BY a.`IdBarangLain`
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdBarangLain`
     UNION ALL
 SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` <= $P{Tgl} GROUP BY `IdBarangLain` ) t1 GROUP BY `IdBaranglain`) h
     ON a.`IdBarangLain`=h.`IdBarangLain`
