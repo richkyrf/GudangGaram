@@ -10198,3 +10198,1033 @@ java.text.ParseException: Unparseable date: ""
 	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
 
 ==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@10b7995b: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = < AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '< AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`' at line 20
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:464)
+	at Proses.PenyesuaianLain.JCNamaBarangItemStateChanged(PenyesuaianLain.java:308)
+	at Proses.PenyesuaianLain.access$300(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$4.itemStateChanged(PenyesuaianLain.java:152)
+	at javax.swing.JComboBox.fireItemStateChanged(JComboBox.java:1223)
+	at javax.swing.JComboBox.selectedItemChanged(JComboBox.java:1271)
+	at javax.swing.JComboBox.contentsChanged(JComboBox.java:1330)
+	at javax.swing.AbstractListModel.fireContentsChanged(AbstractListModel.java:118)
+	at javax.swing.DefaultComboBoxModel.setSelectedItem(DefaultComboBoxModel.java:93)
+	at javax.swing.JComboBox.setSelectedItem(JComboBox.java:576)
+	at javax.swing.JComboBox.setSelectedIndex(JComboBox.java:622)
+	at javax.swing.plaf.basic.BasicComboPopup$Handler.mouseReleased(BasicComboPopup.java:861)
+	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:290)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at javax.swing.plaf.basic.BasicComboPopup$1.processMouseEvent(BasicComboPopup.java:510)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@580d8153: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = < AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '< AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`' at line 20
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:464)
+	at Proses.PenyesuaianLain.JDTanggalPenyesuaianPropertyChange(PenyesuaianLain.java:341)
+	at Proses.PenyesuaianLain.access$200(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$3.propertyChange(PenyesuaianLain.java:144)
+	at java.beans.PropertyChangeSupport.fire(PropertyChangeSupport.java:335)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:327)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:263)
+	at java.awt.Component.firePropertyChange(Component.java:8428)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4762)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at javax.swing.JRootPane.removeNotify(JRootPane.java:765)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at java.awt.Window.removeNotify(Window.java:782)
+	at java.awt.Frame.removeNotify(Frame.java:1041)
+	at java.awt.Window$1DisposeAction.run(Window.java:1190)
+	at java.awt.Window.doDispose(Window.java:1206)
+	at java.awt.Window.dispose(Window.java:1147)
+	at javax.swing.JFrame.processWindowEvent(JFrame.java:313)
+	at java.awt.Window.processEvent(Window.java:2013)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at com.jtattoo.plaf.BaseTitlePane.close(BaseTitlePane.java:295)
+	at com.jtattoo.plaf.BaseTitlePane$CloseAction.actionPerformed(BaseTitlePane.java:581)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at com.jtattoo.plaf.BaseButtonListener.mouseReleased(BaseButtonListener.java:60)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@3e7559d5: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'StatusLembar' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:464)
+	at Proses.PenyesuaianLain.JCNamaBarangItemStateChanged(PenyesuaianLain.java:308)
+	at Proses.PenyesuaianLain.access$300(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$4.itemStateChanged(PenyesuaianLain.java:152)
+	at javax.swing.JComboBox.fireItemStateChanged(JComboBox.java:1223)
+	at javax.swing.JComboBox.selectedItemChanged(JComboBox.java:1271)
+	at javax.swing.JComboBox.contentsChanged(JComboBox.java:1330)
+	at javax.swing.AbstractListModel.fireContentsChanged(AbstractListModel.java:118)
+	at javax.swing.DefaultComboBoxModel.setSelectedItem(DefaultComboBoxModel.java:93)
+	at javax.swing.JComboBox.setSelectedItem(JComboBox.java:576)
+	at javax.swing.JComboBox.setSelectedIndex(JComboBox.java:622)
+	at javax.swing.plaf.basic.BasicComboPopup$Handler.mouseReleased(BasicComboPopup.java:861)
+	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:290)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at javax.swing.plaf.basic.BasicComboPopup$1.processMouseEvent(BasicComboPopup.java:510)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@59b3d09a: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'StatusLembar' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:464)
+	at Proses.PenyesuaianLain.JDTanggalPenyesuaianPropertyChange(PenyesuaianLain.java:341)
+	at Proses.PenyesuaianLain.access$200(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$3.propertyChange(PenyesuaianLain.java:144)
+	at java.beans.PropertyChangeSupport.fire(PropertyChangeSupport.java:335)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:327)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:263)
+	at java.awt.Component.firePropertyChange(Component.java:8428)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4762)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at javax.swing.JRootPane.removeNotify(JRootPane.java:765)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at java.awt.Window.removeNotify(Window.java:782)
+	at java.awt.Frame.removeNotify(Frame.java:1041)
+	at java.awt.Window$1DisposeAction.run(Window.java:1190)
+	at java.awt.Window.doDispose(Window.java:1206)
+	at java.awt.Window.dispose(Window.java:1147)
+	at javax.swing.JFrame.processWindowEvent(JFrame.java:313)
+	at java.awt.Window.processEvent(Window.java:2013)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at com.jtattoo.plaf.BaseTitlePane.close(BaseTitlePane.java:295)
+	at com.jtattoo.plaf.BaseTitlePane$CloseAction.actionPerformed(BaseTitlePane.java:581)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at com.jtattoo.plaf.BaseButtonListener.mouseReleased(BaseButtonListener.java:60)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@6c11eb0a: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'StatusLembar' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:488)
+	at Proses.PenyesuaianLain.JCNamaBarangItemStateChanged(PenyesuaianLain.java:308)
+	at Proses.PenyesuaianLain.access$300(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$4.itemStateChanged(PenyesuaianLain.java:152)
+	at javax.swing.JComboBox.fireItemStateChanged(JComboBox.java:1223)
+	at javax.swing.JComboBox.selectedItemChanged(JComboBox.java:1271)
+	at javax.swing.JComboBox.contentsChanged(JComboBox.java:1330)
+	at javax.swing.AbstractListModel.fireContentsChanged(AbstractListModel.java:118)
+	at javax.swing.DefaultComboBoxModel.setSelectedItem(DefaultComboBoxModel.java:93)
+	at javax.swing.JComboBox.setSelectedItem(JComboBox.java:576)
+	at javax.swing.JComboBox.setSelectedIndex(JComboBox.java:622)
+	at javax.swing.plaf.basic.BasicComboPopup$Handler.mouseReleased(BasicComboPopup.java:861)
+	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:290)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at javax.swing.plaf.basic.BasicComboPopup$1.processMouseEvent(BasicComboPopup.java:510)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@404c429b: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'StatusLembar' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:488)
+	at Proses.PenyesuaianLain.JDTanggalPenyesuaianPropertyChange(PenyesuaianLain.java:341)
+	at Proses.PenyesuaianLain.access$200(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$3.propertyChange(PenyesuaianLain.java:144)
+	at java.beans.PropertyChangeSupport.fire(PropertyChangeSupport.java:335)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:327)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:263)
+	at java.awt.Component.firePropertyChange(Component.java:8428)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4762)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at javax.swing.JRootPane.removeNotify(JRootPane.java:765)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at java.awt.Window.removeNotify(Window.java:782)
+	at java.awt.Frame.removeNotify(Frame.java:1041)
+	at java.awt.Window$1DisposeAction.run(Window.java:1190)
+	at java.awt.Window.doDispose(Window.java:1206)
+	at java.awt.Window.dispose(Window.java:1147)
+	at javax.swing.JFrame.processWindowEvent(JFrame.java:313)
+	at java.awt.Window.processEvent(Window.java:2013)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at com.jtattoo.plaf.BaseTitlePane.close(BaseTitlePane.java:295)
+	at com.jtattoo.plaf.BaseTitlePane$CloseAction.actionPerformed(BaseTitlePane.java:581)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at com.jtattoo.plaf.BaseButtonListener.mouseReleased(BaseButtonListener.java:60)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@1ee4dce2: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'StatusLembar' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:464)
+	at Proses.PenyesuaianLain.JCNamaBarangItemStateChanged(PenyesuaianLain.java:308)
+	at Proses.PenyesuaianLain.access$300(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$4.itemStateChanged(PenyesuaianLain.java:152)
+	at javax.swing.JComboBox.fireItemStateChanged(JComboBox.java:1223)
+	at javax.swing.JComboBox.selectedItemChanged(JComboBox.java:1271)
+	at javax.swing.JComboBox.contentsChanged(JComboBox.java:1330)
+	at javax.swing.AbstractListModel.fireContentsChanged(AbstractListModel.java:118)
+	at javax.swing.DefaultComboBoxModel.setSelectedItem(DefaultComboBoxModel.java:93)
+	at javax.swing.JComboBox.setSelectedItem(JComboBox.java:576)
+	at javax.swing.JComboBox.setSelectedIndex(JComboBox.java:622)
+	at javax.swing.plaf.basic.BasicComboPopup$Handler.mouseReleased(BasicComboPopup.java:861)
+	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:290)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at javax.swing.plaf.basic.BasicComboPopup$1.processMouseEvent(BasicComboPopup.java:510)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@7569c11e: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'StatusLembar' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:464)
+	at Proses.PenyesuaianLain.JDTanggalPenyesuaianPropertyChange(PenyesuaianLain.java:341)
+	at Proses.PenyesuaianLain.access$200(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$3.propertyChange(PenyesuaianLain.java:144)
+	at java.beans.PropertyChangeSupport.fire(PropertyChangeSupport.java:335)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:327)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:263)
+	at java.awt.Component.firePropertyChange(Component.java:8428)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4762)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at javax.swing.JRootPane.removeNotify(JRootPane.java:765)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at java.awt.Window.removeNotify(Window.java:782)
+	at java.awt.Frame.removeNotify(Frame.java:1041)
+	at java.awt.Window$1DisposeAction.run(Window.java:1190)
+	at java.awt.Window.doDispose(Window.java:1206)
+	at java.awt.Window.dispose(Window.java:1147)
+	at javax.swing.JFrame.processWindowEvent(JFrame.java:313)
+	at java.awt.Window.processEvent(Window.java:2013)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at com.jtattoo.plaf.BaseTitlePane.close(BaseTitlePane.java:295)
+	at com.jtattoo.plaf.BaseTitlePane$CloseAction.actionPerformed(BaseTitlePane.java:581)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at com.jtattoo.plaf.BaseButtonListener.mouseReleased(BaseButtonListener.java:60)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@119f6edd: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'StatusLembar' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:462)
+	at Proses.PenyesuaianLain.JCNamaBarangItemStateChanged(PenyesuaianLain.java:308)
+	at Proses.PenyesuaianLain.access$300(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$4.itemStateChanged(PenyesuaianLain.java:152)
+	at javax.swing.JComboBox.fireItemStateChanged(JComboBox.java:1223)
+	at javax.swing.JComboBox.selectedItemChanged(JComboBox.java:1271)
+	at javax.swing.JComboBox.contentsChanged(JComboBox.java:1330)
+	at javax.swing.AbstractListModel.fireContentsChanged(AbstractListModel.java:118)
+	at javax.swing.DefaultComboBoxModel.setSelectedItem(DefaultComboBoxModel.java:93)
+	at javax.swing.JComboBox.setSelectedItem(JComboBox.java:576)
+	at javax.swing.JComboBox.setSelectedIndex(JComboBox.java:622)
+	at javax.swing.plaf.basic.BasicComboPopup$Handler.mouseReleased(BasicComboPopup.java:861)
+	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:290)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at javax.swing.plaf.basic.BasicComboPopup$1.processMouseEvent(BasicComboPopup.java:510)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================
+
+==============================================================
+STRING = com.mysql.jdbc.JDBC4PreparedStatement@611f48ef: SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (
+SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1
+	UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY `IdBarangLain`
+    UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikDalam`
+	UNION ALL
+SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < '2018-04-11' GROUP BY b.`IdPlastikLuar`
+	UNION ALL
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < '2018-04-11' AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+	UNION ALL
+SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 AND b.`Tanggal` < '2018-04-11' GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '2018-04-11' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = 'PLASTIK LUAR GRM 1 KG') GROUP BY `IdBaranglain` LIMIT 1
+==============================================================
+
+==============================================================
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'StatusLembar' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.Util.getInstance(Util.java:386)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1053)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4120)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4052)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2503)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2664)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2794)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2155)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2322)
+	at LSubProces.DRunSelctOne.excute(DRunSelctOne.java:41)
+	at Proses.PenyesuaianLain.setStok(PenyesuaianLain.java:462)
+	at Proses.PenyesuaianLain.JDTanggalPenyesuaianPropertyChange(PenyesuaianLain.java:341)
+	at Proses.PenyesuaianLain.access$200(PenyesuaianLain.java:31)
+	at Proses.PenyesuaianLain$3.propertyChange(PenyesuaianLain.java:144)
+	at java.beans.PropertyChangeSupport.fire(PropertyChangeSupport.java:335)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:327)
+	at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:263)
+	at java.awt.Component.firePropertyChange(Component.java:8428)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4762)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at javax.swing.JComponent.removeNotify(JComponent.java:4758)
+	at javax.swing.JRootPane.removeNotify(JRootPane.java:765)
+	at java.awt.Container.removeNotify(Container.java:2804)
+	at java.awt.Window.removeNotify(Window.java:782)
+	at java.awt.Frame.removeNotify(Frame.java:1041)
+	at java.awt.Window$1DisposeAction.run(Window.java:1190)
+	at java.awt.Window.doDispose(Window.java:1206)
+	at java.awt.Window.dispose(Window.java:1147)
+	at javax.swing.JFrame.processWindowEvent(JFrame.java:313)
+	at java.awt.Window.processEvent(Window.java:2013)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at com.jtattoo.plaf.BaseTitlePane.close(BaseTitlePane.java:295)
+	at com.jtattoo.plaf.BaseTitlePane$CloseAction.actionPerformed(BaseTitlePane.java:581)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at com.jtattoo.plaf.BaseButtonListener.mouseReleased(BaseButtonListener.java:60)
+	at java.awt.Component.processMouseEvent(Component.java:6533)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6298)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2746)
+	at java.awt.Component.dispatchEvent(Component.java:4711)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:90)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:80)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+==============================================================

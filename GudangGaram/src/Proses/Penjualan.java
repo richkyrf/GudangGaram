@@ -616,7 +616,7 @@ public class Penjualan extends javax.swing.JFrame {
         jlabelF7.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jlabelF7.setEnabled(false);
 
-        JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarang' UNION ALL (SELECT CONCAT(`NamaBarang`,' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` LEFT JOIN `tbtutuppartai`c ON a.`IdPartai`=c.`IdPartai` WHERE c.`IdTutup` IS NULL GROUP BY a.`IdPartai` ORDER BY a.`IdPartai`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2) UNION ALL (SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1)");
+        JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarang' UNION ALL (SELECT CONCAT(`NamaBarang`,' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` LEFT JOIN `tbtutuppartai`c ON a.`IdPartai`=c.`IdPartai` WHERE c.`IdTutup` IS NULL GROUP BY a.`IdPartai` ORDER BY a.`IdPartai`) UNION ALL (SELECT `NamaBarang`FROM `tbmbarang` WHERE `IdJenisBarang` = 2) UNION ALL (SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1 GROUP BY `IdBaranglain` ORDER BY `IdBarangLain`)");
         JCNamaBarang.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 JCNamaBarangItemStateChanged(evt);
@@ -2023,30 +2023,28 @@ public class Penjualan extends javax.swing.JFrame {
             } else if (getNamaBarang().contains("RETUR")) {
                 dRunSelctOne.setQuery("SELECT 0, 0, 0");
             } else {
-                dRunSelctOne.setQuery("SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (\n"
-                        + "SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1\n"
-                        + "	UNION ALL\n"
-                        + "SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 GROUP BY `IdBarangLain`\n"
-                        + "    UNION ALL\n"
-                        + "SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 GROUP BY `IdBarangLain`\n"
-                        + "    UNION ALL\n"
-                        + "SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 GROUP BY `IdBarangLain`\n"
-                        + "    UNION ALL\n"
-                        + "SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBaranglain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 GROUP BY a.`IdBarangLain`\n"
-                        + "    UNION ALL\n"
-                        + "SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 GROUP BY b.`IdPlastikDalam`\n"
-                        + "	UNION ALL\n"
-                        + "SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 GROUP BY b.`IdPlastikLuar`\n"
-                        + "	UNION ALL\n"
-                        + "SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'\n"
-                        + "	UNION ALL\n"
-                        + "SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Produksi' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 GROUP BY a.`IdBarangLain`\n"
-                        + "    UNION ALL\n"
-                        + "SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*c.`Isi`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikDalam`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 1 GROUP BY a.`IdBarangLain`\n"
-                        + "	UNION ALL\n"
-                        + "SELECT d.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/d.`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbarang`c ON a.`IdBarang`=c.`IdBarang` JOIN `tbmbaranglain`d ON c.`IdPlastikLuar`=d.`IdBarangLain` WHERE a.`StatusRetur` = 1 AND d.`IdJenisBarangLain` = 2 GROUP BY a.`IdBarangLain`\n"
-                        + "    UNION ALL\n"
-                        + "SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "') GROUP BY `IdBaranglain`");
+                dRunSelctOne.setQuery("SELECT `IdBarangLain`, `NamaBarangLain`, SUM(`Stok`) as 'Stok Awal' FROM (\n" +
+"SELECT a.`IdBarangLain`, a.`NamaBarangLain`, 0 as 'Stok' FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1\n" +
+"	UNION ALL\n" +
+"SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Netto`) as 'Stok' FROM `tbpenerimaanlain` WHERE 1 GROUP BY `IdBarangLain`\n" +
+"    UNION ALL\n" +
+"SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 GROUP BY `IdBarangLain`\n" +
+"    UNION ALL\n" +
+"SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2 AND `StatusLembar` = 1 GROUP BY `IdBarangLain`\n" +
+"    UNION ALL\n" +
+"SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`*`Isi`/`BeratPembagi`)*-1 as 'Stok' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBaranglain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 GROUP BY a.`IdBarangLain`\n" +
+"    UNION ALL\n" +
+"SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 1 GROUP BY b.`IdPlastikDalam`\n" +
+"	UNION ALL\n" +
+"SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahHasil`/c.`BeratPembagi`)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 GROUP BY b.`IdPlastikLuar`\n" +
+"	UNION ALL\n" +
+"SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0.5*0.0001)*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'\n" +
+"	UNION ALL\n" +
+"SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 GROUP BY a.`IdBarangLain`\n" +
+"    UNION ALL\n" +
+"SELECT a.`IdBarangLain`,null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 GROUP BY a.`IdBarangLain`\n" +
+"    UNION ALL\n" +
+"SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "') GROUP BY `IdBaranglain`");
             }
             ArrayList<String> list = dRunSelctOne.excute();
             double dobel = Double.valueOf(list.get(2));

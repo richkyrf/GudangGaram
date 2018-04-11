@@ -29,7 +29,7 @@
 UNION ALL
 SELECT a.`IdBarangLain`, SUM(`Jumlah`/`BeratPembagi`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE c.`IdjenisBarangLain` = 2  AND `StatusLembar` = 1 AND b.`Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`
 UNION ALL
-SELECT a.`IdBarangLain`, SUM(`Jumlah`*`Isi`/`BeratPembagi`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 0 AND b.`Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`) c
+SELECT a.`IdBarangLain`, SUM(`Jumlah`*`Isi`/`BeratPembagi`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` JOIN `tbmbarang`d ON c.`IdBarangLain`=d.`IdPlastikDalam` WHERE c.`IdjenisBarangLain` = 1 AND `StatusLembar` = 1 AND b.`Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`) c
     ON a.`IdBarangLain`=c.`IdBarangLain`
     LEFT JOIN
 (SELECT b.`IdPlastikDalam` as 'IdBarangLain', SUM(a.`JumlahHasil`*b.`Isi`/c.`BeratPembagi`) as 'Produksi' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikDalam`=c.`IdBarangLain` WHERE 1 AND a.`Tanggal` = $P{Tgl} AND `IdJenisBarangLain` = 1 GROUP BY b.`IdPlastikDalam`
