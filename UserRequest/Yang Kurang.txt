@@ -1,0 +1,4 @@
+- Potong Gaji Karyawan Harian Jika Sabtu Masuk Setengah Hari (Potong Di Minggu Depan)
+- Cek Stok Di Packing ???
+- Partai Yg Sudah Tutup Dihilangkan / Tidak Di Menu Penyesuaian Stok
+- Ada Selisih Antara Laporan Plastik dan Stok Saat Penyesuain Barang Lain

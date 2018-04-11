@@ -587,9 +587,9 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
             int row = 0;
             while (rs.next()) {
                 model.addRow(new Object[]{"", "", "", "", "", ""});
-                if(rs.getString(1).length()<5){
+                if (rs.getString(1).length() < 5) {
                     JTable.setValueAt(rs.getString(1), row, 0);
-                }else{
+                } else {
                     JTable.setValueAt(rs.getString(1).substring(0, 5), row, 0);
                 }
                 JTable.setValueAt(rs.getString(2), row, 1);

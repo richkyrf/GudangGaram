@@ -155,7 +155,7 @@ public class MasterKeterangan extends javax.swing.JFrame {
                 JTKeteranganKeyPressed(evt);
             }
         });
-        JTKeterangan.setMaxText(30);
+        JTKeterangan.setMaxText(27);
 
         JTSatuan.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
