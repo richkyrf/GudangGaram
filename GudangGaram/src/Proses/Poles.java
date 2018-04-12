@@ -119,6 +119,14 @@ public class Poles extends javax.swing.JFrame {
         }
         return TotalBahan;
     }
+    
+    Double getTotalBahanSak() {
+        double TotalBahanSak = 0;
+        for (int x = 0; x < JTableBahan.getRowCount(); x++) {
+            TotalBahanSak = TotalBahanSak + Double.valueOf(JTableBahan.getValueAt(x, 2).toString().replace(".", ""));
+        }
+        return TotalBahanSak;
+    }
 
     Double getTotalHasil() {
         double TotalHasil = 0;
@@ -126,6 +134,14 @@ public class Poles extends javax.swing.JFrame {
             TotalHasil = TotalHasil + Double.valueOf(JTableHasil.getValueAt(x, 4).toString().replace(".", "").replace(",", "."));
         }
         return TotalHasil;
+    }
+    
+    Double getTotalHasilSak() {
+        double TotalHasilSak = 0;
+        for (int x = 0; x < JTableHasil.getRowCount(); x++) {
+            TotalHasilSak = TotalHasilSak + Double.valueOf(JTableHasil.getValueAt(x, 2).toString().replace(".", ""));
+        }
+        return TotalHasilSak;
     }
 
     boolean checkPacking() {
@@ -542,9 +558,15 @@ public class Poles extends javax.swing.JFrame {
 
         Double TotalBahan = getTotalBahan();
         String TotalBahans = Decformatdigit(TotalBahan);
+        
+        Double TotalBahanSak = getTotalBahanSak();
+        String TotalBahanSaks = Decformatdigit(TotalBahanSak);
 
         Double TotalHasil = getTotalHasil();
         String TotalHasils = Decformatdigit(TotalHasil);
+        
+        Double TotalHasilSak = getTotalHasilSak();
+        String TotalHasilSaks = Decformatdigit(TotalHasilSak);
 
         String leftAlignFormat = "%-5s%-44s%-9s%-9s%-12s%-1s%n";
         String OutFormat = "";
@@ -564,7 +586,7 @@ public class Poles extends javax.swing.JFrame {
             }
         }
         OutFormat += format("%-80s%n", " +---+-------------------------------------------+--------+--------+-----------+");
-        OutFormat += format("%-49s%-31s%n", " ", "|   TOTAL BAHAN   | " + format("%10s", TotalBahans) + "|");
+        OutFormat += format("%-49s%-31s%n", " | ", "|   TOTAL BAHAN   | " + format("%10s", TotalBahans) + "|");
         OutFormat += format("%-49s%-31s%n", " HASIL PROSES:", "+--------+--------+-----------+");
         OutFormat += format("%-80s%n", " +---+-------------------------------------------+--------+--------+-----------+");
         OutFormat += format("%-80s%n", " | NO| NAMA BARANG                               | JUMLAH | KG/ZAK | SUB TOTAL |");
