@@ -119,11 +119,11 @@ public class Poles extends javax.swing.JFrame {
         }
         return TotalBahan;
     }
-    
-    Double getTotalBahanSak() {
-        double TotalBahanSak = 0;
+
+    Integer getTotalBahanSak() {
+        int TotalBahanSak = 0;
         for (int x = 0; x < JTableBahan.getRowCount(); x++) {
-            TotalBahanSak = TotalBahanSak + Double.valueOf(JTableBahan.getValueAt(x, 2).toString().replace(".", ""));
+            TotalBahanSak = TotalBahanSak + Integer.valueOf(JTableBahan.getValueAt(x, 2).toString().replace(".", ""));
         }
         return TotalBahanSak;
     }
@@ -135,11 +135,11 @@ public class Poles extends javax.swing.JFrame {
         }
         return TotalHasil;
     }
-    
-    Double getTotalHasilSak() {
-        double TotalHasilSak = 0;
+
+    Integer getTotalHasilSak() {
+        int TotalHasilSak = 0;
         for (int x = 0; x < JTableHasil.getRowCount(); x++) {
-            TotalHasilSak = TotalHasilSak + Double.valueOf(JTableHasil.getValueAt(x, 2).toString().replace(".", ""));
+            TotalHasilSak = TotalHasilSak + Integer.valueOf(JTableHasil.getValueAt(x, 2).toString().replace(".", ""));
         }
         return TotalHasilSak;
     }
@@ -558,15 +558,15 @@ public class Poles extends javax.swing.JFrame {
 
         Double TotalBahan = getTotalBahan();
         String TotalBahans = Decformatdigit(TotalBahan);
-        
-        Double TotalBahanSak = getTotalBahanSak();
-        String TotalBahanSaks = Decformatdigit(TotalBahanSak);
+
+        Integer TotalBahanSak = getTotalBahanSak();
+        String TotalBahanSaks = Intformatdigit(TotalBahanSak);
 
         Double TotalHasil = getTotalHasil();
         String TotalHasils = Decformatdigit(TotalHasil);
-        
-        Double TotalHasilSak = getTotalHasilSak();
-        String TotalHasilSaks = Decformatdigit(TotalHasilSak);
+
+        Integer TotalHasilSak = getTotalHasilSak();
+        String TotalHasilSaks = Intformatdigit(TotalHasilSak);
 
         String leftAlignFormat = "%-5s%-44s%-9s%-9s%-12s%-1s%n";
         String OutFormat = "";
@@ -586,7 +586,8 @@ public class Poles extends javax.swing.JFrame {
             }
         }
         OutFormat += format("%-80s%n", " +---+-------------------------------------------+--------+--------+-----------+");
-        OutFormat += format("%-49s%-31s%n", " | ", "|   TOTAL BAHAN   | " + format("%10s", TotalBahans) + "|");
+        OutFormat += format("%-37s%-12s%-9s%-9s%-12s%-1s%n", " ", "TOTAL BAHAN ", "|" + format("%7s", TotalBahanSaks), "|", "|" + format("%10s", TotalBahans), "|");
+        //OutFormat += format("%-49s%-31s%n", " ", "|   TOTAL BAHAN   | " + format("%10s", TotalBahans) + "|");
         OutFormat += format("%-49s%-31s%n", " HASIL PROSES:", "+--------+--------+-----------+");
         OutFormat += format("%-80s%n", " +---+-------------------------------------------+--------+--------+-----------+");
         OutFormat += format("%-80s%n", " | NO| NAMA BARANG                               | JUMLAH | KG/ZAK | SUB TOTAL |");
@@ -599,7 +600,8 @@ public class Poles extends javax.swing.JFrame {
             }
         }
         OutFormat += format("%-80s%n", " +---+-------------------------------------------+--------+--------+-----------+");
-        OutFormat += format("%-49s%-31s%n", " ", "|   TOTAL HASIL   | " + format("%10s", TotalHasils) + "|");
+        OutFormat += format("%-37s%-12s%-9s%-9s%-12s%-1s%n", " ", "TOTAL HASIL ", "|" + format("%7s", TotalHasilSaks), "|","|" + format("%10s", TotalHasils) , "|");
+        //OutFormat += format("%-49s%-31s%n", " ", "|   TOTAL HASIL   | " + format("%10s", TotalHasils) + "|");
         OutFormat += format("%-49s%-31s%n", " ", "+--------+--------+-----------+");
         OutFormat += format("%n", "");
         OutFormat += format("%-80s%n", " Disiapkan Oleh");
@@ -620,8 +622,7 @@ public class Poles extends javax.swing.JFrame {
      */
     public static void directprinting(String Teks) {
         String testprint = Teks;
-        String defaultPrinter
-                = lookupDefaultPrintService().getName();
+        String defaultPrinter = lookupDefaultPrintService().getName();
         PrintService service = lookupDefaultPrintService();
         try {
             InputStream in = new ByteArrayInputStream(testprint.getBytes());
