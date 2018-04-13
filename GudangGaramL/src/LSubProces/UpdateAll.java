@@ -21,10 +21,10 @@ public class UpdateAll {
             int no = 0;
             no = pstmt.executeUpdate();
             if (no > 0) {
-                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil Ubah Data" + JenisData);
+                LSubProces.History.simpanhistory(GlobalVar.VarL.username, "Berhasil Ubah Data " + JenisData);
                 BerhasilSimpan = true;
             } else {
-                showMessageDialog(Parent, "Gagal Ubah Data" + JenisData);
+                showMessageDialog(Parent, "Gagal Ubah Data " + JenisData);
             }
         } catch (SQLException e) {
             LogEror.SaveString(pstmt.toString());

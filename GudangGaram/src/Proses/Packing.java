@@ -144,7 +144,7 @@ public class Packing extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Hasil Packing Terlebih Dahulu");
             JCNamaHasil.requestFocus();
             return false;
-        } else if (JCNamaKaryawan1.getSelectedItem().equals("") && !JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+        } else if (JCNamaKaryawan1.getSelectedItem().equals("") && !JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("GRM KOTOR @50 KG")) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Karyawan No.1");
             JCNamaKaryawan1.requestFocus();
             return false;
@@ -259,7 +259,7 @@ public class Packing extends javax.swing.JFrame {
     }
 
     void tableToComponent() {
-        if (JTable.getValueAt(0, 4).equals("GRM KSR NON YOD @50 KG") || JTable.getValueAt(0, 4).equals("G. KOTOR @50 KG")) {
+        if (JTable.getValueAt(0, 4).equals("GRM KSR NON YOD @50 KG") || JTable.getValueAt(0, 4).equals("GRM KOTOR @50 KG")) {
             JTNoBak.setText(JTable.getValueAt(0, 0).toString());
             JCNamaBahan1.setSelectedItem(JTable.getValueAt(0, 4));
             JTJumlahBahan1.setText(String.valueOf(Math.round(Double.valueOf(JTable.getValueAt(0, 6).toString()))));
@@ -1303,7 +1303,7 @@ public class Packing extends javax.swing.JFrame {
 
     private void JCNamaHasilItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaHasilItemStateChanged
         loadUpah();
-        if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+        if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("GRM KOTOR @50 KG")) {
             JCNamaKaryawan1.setSelectedItem("");
             JCNamaKaryawan1.setEnabled(false);
             JCNamaKaryawan2.setSelectedItem("");
@@ -1329,7 +1329,7 @@ public class Packing extends javax.swing.JFrame {
             JTJumlahBahan2.setEnabled(true);
         }
         if (JCNamaHasil.getSelectedItem().toString().contains("KASAR") || JCNamaHasil.getSelectedItem().toString().contains("@50 KG")) {
-            JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdJenisBarang` = 1 AND `SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%KSR%' UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
+            JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdJenisBarang` = 1 AND `SelesaiProduksi` = 0  UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
             JCNamaBahan1.setSelectedIndex(1);
         } else if (JCNamaHasil.getSelectedItem().toString().contains("HALUS")) {
             JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdJenisBarang` = 1 AND `SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%HLS%' UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
@@ -1444,7 +1444,7 @@ public class Packing extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void JCNamaBahan1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCNamaBahan1ItemStateChanged
-        //if (!JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+        //if (!JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("GRM KOTOR @50 KG")) {
         if (JCNamaBahan1.getSelectedIndex() != 0 && JCNamaBahan1.getSelectedIndex() != JCNamaBahan1.getItemCount() - 1) {
             String like = " AND `NamaBarang` LIKE '%KSR%' ";
             if (JCNamaBahan1.getSelectedItem().toString().contains("HLS")) {
@@ -1610,7 +1610,7 @@ public class Packing extends javax.swing.JFrame {
     void TambahTabel() {
         if (checkTable()) {
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
-            if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+            if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("GRM KOTOR @50 KG")) {
                 model.addRow(new Object[]{0, 0, 0, "", JCNamaBahan1.getSelectedItem(), 100.0, JTJumlahBahan1.getInt(), JCNamaHasil.getSelectedItem(), JTJumlahHasil1.getInt(), 0, JTKeterangan1.getText()});
             } else {
                 if (JCNamaBahan2.getSelectedIndex() == 0) {
@@ -1690,23 +1690,29 @@ public class Packing extends javax.swing.JFrame {
                             if (!JTable.getValueAt(i, 4).equals("GARAM RETUR")) {
                                 idPartai = "'" + JTable.getValueAt(i, 4).toString().split(" \\(PARTAI ")[1].split("\\)")[0] + "'";
                             }
-                            if (!JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+                            if (!JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") && !JCNamaHasil.getSelectedItem().equals("GRM KOTOR @50 KG")) {
                                 idKaryawan = "(SELECT `IdKaryawan` FROM `tbmkaryawan` WHERE `NamaKaryawan` = '" + JTable.getValueAt(i, 3) + "')";
                             }
                             Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "'," + idKaryawan + "," + idPartai + ",'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                         }
                         if (Berhasil) {
-                            if (Integer.valueOf(JTJumlahBahan1.getText().replace(".", "")) == Integer.valueOf(JLTotalPackingBahan1.getText().split("\\(Sisa Bahan: ")[1].split(" ")[0].replace(".", "")) && !JCNamaBahan1.getSelectedItem().equals("GARAM RETUR")) {
-                                UpdateAll updateAll = new UpdateAll();
-                                updateAll.Ubah("UPDATE `tbmpartai` SET `SelesaiProduksi`=1 WHERE `IdPartai`='" + JCNamaBahan1.getSelectedItem().toString().split("\\ (PARTAI ")[1].split(" ")[0].replace(".", "") + "'", "Partai", this);
-                                JOptionPane.showMessageDialog(this, "Partai No." + JCNamaBahan1.getSelectedItem().toString().split("\\ (PARTAI ")[1].split(" ")[0].replace(".", "") + " Telah Ditutup Karena Jumlah Packing Telah Pas");
-                                JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `NamaBarang`)");
+                            if ((Integer.valueOf(JTJumlahBahan1.getText().replace(".", "")) == Integer.valueOf(JLTotalPackingBahan1.getText().split("\\(Sisa Bahan: ")[1].split(" ")[0].replace(".", ""))) && !JCNamaBahan1.getSelectedItem().equals("GARAM RETUR")) {
+                                Berhasil = multiInsert.Excute("UPDATE `tbmpartai` SET `SelesaiProduksi`=1 WHERE `IdPartai`='" + JCNamaBahan1.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0].replace(".", "") + "'", null);
+                                if (Berhasil) {
+                                    JOptionPane.showMessageDialog(this, "Partai No." + JCNamaBahan1.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0].replace(".", "") + " Telah Ditutup Karena Jumlah Packing Telah Pas");
+                                    JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `NamaBarang`)");
+                                    JCNamaBahan2.setSelectedIndex(1);
+                                    JTJumlahBahan1.setText("0");
+                                    JCNamaBahan2.setSelectedIndex(0);
+                                    JTJumlahBahan2.setText("0");
+                                }
                             }
                             if (JCNamaBahan2.getSelectedIndex() != 0 && (Integer.valueOf(JTJumlahBahan2.getText().replace(".", "")) == Integer.valueOf(JLTotalPackingBahan2.getText().split("\\(Sisa Bahan: ")[1].split(" ")[0].replace(".", ""))) && !JCNamaBahan1.getSelectedItem().equals("GARAM RETUR")) {
-                                UpdateAll updateAll = new UpdateAll();
-                                updateAll.Ubah("UPDATE `tbmpartai` SET `SelesaiProduksi`=1 WHERE `IdPartai`='" + JCNamaBahan2.getSelectedItem().toString().split("\\ (PARTAI ")[1].split(" ")[0].replace(".", "") + "'", "Partai", this);
-                                JOptionPane.showMessageDialog(this, "Partai No." + JCNamaBahan2.getSelectedItem().toString().split("\\ (PARTAI ")[1].split(" ")[0].replace(".", "") + " Telah Ditutup Karena Jumlah Packing Telah Pas");
-                                JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campuran --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') != '" + JCNamaBahan1.getSelectedItem() + "' GROUP BY `NamaBarang`)");
+                                Berhasil = multiInsert.Excute("UPDATE `tbmpartai` SET `SelesaiProduksi`=1 WHERE `IdPartai`='" + JCNamaBahan2.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0].replace(".", "") + "'", null);
+                                if (Berhasil) {
+                                    JOptionPane.showMessageDialog(this, "Partai No." + JCNamaBahan2.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0].replace(".", "") + " Telah Ditutup Karena Jumlah Packing Telah Pas");
+                                    JCNamaBahan2.load("SELECT '-- Pilih Bahan Ke 2 Jika Campuran --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') != '" + JCNamaBahan1.getSelectedItem() + "' GROUP BY `NamaBarang`)");
+                                }
                             }
                         }
                     }
@@ -1775,7 +1781,7 @@ public class Packing extends javax.swing.JFrame {
                                 if (JTable.getValueAt(i, 4).equals("GARAM RETUR")) {
                                     idPartai = "null";
                                 }
-                                if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("G. KOTOR @50 KG")) {
+                                if (JCNamaHasil.getSelectedItem().equals("GRM KSR NON YOD @50 KG") || JCNamaHasil.getSelectedItem().equals("GRM KOTOR @50 KG")) {
                                     idKaryawan = "null";
                                 }
                                 Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "'," + idKaryawan + "," + idPartai + ",'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);

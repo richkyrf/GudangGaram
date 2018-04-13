@@ -426,13 +426,80 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="800" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jlableF1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF5" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF4" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="579" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlableF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jlableF5" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jlableF3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jlableF4" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="406" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
+  <SubComponents>
+    <Component class="KomponenGUI.JlableF" name="jlableF1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="*Note :"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1. Untuk Print Rekapan Gaji Borongan, Tambahin Selisih Uang Makan (17,500)."/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="3. Kertas Untuk Print Rekapan, Pakai Kertas Yg Panjang (Full), Yang Putih Hadap Bawah."/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="4. Kertas Untuk Print Gaji Ibu-Ibu, Pakai Kertas Rangkap 2 (Putih Merah)."/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="2. Untuk Print Rekapan Gaji Harian, Tambahin Lembur Dan Uang Makan Lembur."/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="5. Jika Ada Masalah Yang Tidak Terduga, 08989159691 (WA, Telepon Jika Penting)."/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="6. Goodluck."/>
+      </Properties>
+    </Component>
+  </SubComponents>
 </Form>
