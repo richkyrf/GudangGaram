@@ -35,7 +35,6 @@ public class MenuUtama extends javax.swing.JFrame {
     private void initComponents() {
 
         jlableF1 = new KomponenGUI.JlableF();
-        jlableF2 = new KomponenGUI.JlableF();
         jlableF3 = new KomponenGUI.JlableF();
         jlableF4 = new KomponenGUI.JlableF();
         jlableF5 = new KomponenGUI.JlableF();
@@ -102,17 +101,15 @@ public class MenuUtama extends javax.swing.JFrame {
 
         jlableF1.setText("*Note :");
 
-        jlableF2.setText("1. Untuk Print Rekapan Gaji Borongan, Tambahin Selisih Uang Makan (17,500).");
+        jlableF3.setText("2. Kertas Untuk Print Rekapan, Pakai Kertas Yg Panjang (Full), Yang Putih Hadap Bawah.");
 
-        jlableF3.setText("3. Kertas Untuk Print Rekapan, Pakai Kertas Yg Panjang (Full), Yang Putih Hadap Bawah.");
+        jlableF4.setText("3. Kertas Untuk Print Gaji Ibu-Ibu, Pakai Kertas Rangkap 2 (Putih Merah).");
 
-        jlableF4.setText("4. Kertas Untuk Print Gaji Ibu-Ibu, Pakai Kertas Rangkap 2 (Putih Merah).");
+        jlableF5.setText("1. Untuk Print Rekapan Gaji Harian, Tambahin Lembur Dan Uang Makan Lembur.");
 
-        jlableF5.setText("2. Untuk Print Rekapan Gaji Harian, Tambahin Lembur Dan Uang Makan Lembur.");
+        jlableF6.setText("4. Jika Ada Masalah Yang Tidak Terduga, 08989159691 (WA, Telepon Jika Penting).");
 
-        jlableF6.setText("5. Jika Ada Masalah Yang Tidak Terduga, 08989159691 (WA, Telepon Jika Penting).");
-
-        jlableF7.setText("6. Goodluck.");
+        jlableF7.setText("5. Goodluck.");
 
         JMFile.setText("File");
 
@@ -499,8 +496,7 @@ public class MenuUtama extends javax.swing.JFrame {
                     .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -509,9 +505,7 @@ public class MenuUtama extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlableF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -520,7 +514,7 @@ public class MenuUtama extends javax.swing.JFrame {
                 .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(406, Short.MAX_VALUE))
+                .addContainerGap(434, Short.MAX_VALUE))
         );
 
         pack();
@@ -991,7 +985,6 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private KomponenGUI.JlableF jlableF1;
-    private KomponenGUI.JlableF jlableF2;
     private KomponenGUI.JlableF jlableF3;
     private KomponenGUI.JlableF jlableF4;
     private KomponenGUI.JlableF jlableF5;
