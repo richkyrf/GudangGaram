@@ -503,7 +503,7 @@ public class PrintTPB extends javax.swing.JFrame {
             //OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
             OutFormat += format("%n", "");
             OutFormat += format("%-66s%-24s%n", " Disiapkan Oleh", "Diperiksa Oleh \n \n ");
-            OutFormat += format("%-66s%-24s%n", " " + "    HENDRI", " Stock Keeper");
+            OutFormat += format("%-66s%-24s%n", " " + "    ARMAN", " Stock Keeper");
             OutFormat += format("%-80s%n", " _____________________________________________________________________________");
             OutFormat += format("%n", "");
             OutFormat += format("%n", "");
@@ -587,7 +587,7 @@ public class PrintTPB extends javax.swing.JFrame {
             //OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
             OutFormat += format("%n", "");
             OutFormat += format("%-66s%-24s%n", " Disiapkan Oleh", "Diperiksa Oleh \n \n ");
-            OutFormat += format("%-66s%-24s%n", " " + "    HENDRI", " Stock Keeper");
+            OutFormat += format("%-66s%-24s%n", " " + "    ARMAN", " Stock Keeper");
             OutFormat += format("%-80s%n", " _____________________________________________________________________________");
             OutFormat += format("%n", "");
             OutFormat += format("%n", "");

@@ -722,7 +722,7 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
         OutFormat += format("%n", "");
         OutFormat += format("%-80s%n", format("%79s", "TL. DUKU, " + datetostr(new Date(), "dd MMMM yyyy")));
         OutFormat += format("%-33s%-33s%-24s%n", "Disetujui Oleh,", "Diperiksa Oleh,", "Dibuat Oleh,\n \n \n \n ");
-        OutFormat += format("%-33s%-33s%-24s%n", "    SUBAGIO", "    ADIANTO", "   HENDRI");
+        OutFormat += format("%-33s%-33s%-24s%n", "    SUBAGIO", "    ADIANTO", "   ARMAN");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");

@@ -607,7 +607,7 @@ public class Poles extends javax.swing.JFrame {
         OutFormat += format("%-80s%n", " Disiapkan Oleh");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
-        OutFormat += format("%-80s%n", " " + "HENDRI");
+        OutFormat += format("%-80s%n", " " + "ARMAN");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");

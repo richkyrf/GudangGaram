@@ -1766,7 +1766,7 @@ public class Penjualan extends javax.swing.JFrame {
             OutFormat += format("%-80s%n", " Ket : " + Keterangan);
             OutFormat += format("%n", "");
             OutFormat += format("%-67s%-24s%n", " Disiapkan Oleh", "Diterima Oleh \n \n ");
-            OutFormat += format("%-67s%-24s%n", " HENDRI", NamaSupir);
+            OutFormat += format("%-67s%-24s%n", " ARMAN", NamaSupir);
             OutFormat += format("%-80s%n", " ______________________________________________________________________________");
             OutFormat += format("%n", "");
             OutFormat += format("%n", "");
@@ -1816,7 +1816,7 @@ public class Penjualan extends javax.swing.JFrame {
             OutFormat += format("%-80s%n", " Terbilang : " + terbilang);
             OutFormat += format("%n", "");
             OutFormat += format("%-67s%-24s%n", " Disiapkan Oleh", "Diterima Oleh \n \n ");
-            OutFormat += format("%-67s%-24s%n", " HENDRI", NamaSupir);
+            OutFormat += format("%-67s%-24s%n", " ARMAN", NamaSupir);
             OutFormat += format("%-80s%n", " ______________________________________________________________________________");
             OutFormat += format("%n", "");
             OutFormat += format("%n", "");

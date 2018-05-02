@@ -638,7 +638,7 @@ public class Penggajian extends javax.swing.JFrame {
         OutFormat += format("%-80s%n", "+------------------------------------------------------------------+-----------+");
         OutFormat += format("%n", "");
         OutFormat += format("%-66s%-24s%n", "Disiapkan Oleh", "Diterima Oleh \n \n ");
-        OutFormat += format("%-66s%-24s%n", "" + "HENDRI", Penerima);
+        OutFormat += format("%-66s%-24s%n", "" + "ARMAN", Penerima);
         OutFormat += format("%-80s%n", " _____________________________________________________________________________");
         OutFormat += format("%n", "");
         OutFormat += format("%n", "");
