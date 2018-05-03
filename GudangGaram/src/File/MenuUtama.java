@@ -40,6 +40,8 @@ public class MenuUtama extends javax.swing.JFrame {
         jlableF5 = new KomponenGUI.JlableF();
         jlableF6 = new KomponenGUI.JlableF();
         jlableF7 = new KomponenGUI.JlableF();
+        jlableF8 = new KomponenGUI.JlableF();
+        jlableF9 = new KomponenGUI.JlableF();
         JMenuBar = new javax.swing.JMenuBar();
         JMFile = new javax.swing.JMenu();
         JMITambahUser = new javax.swing.JMenuItem();
@@ -107,9 +109,13 @@ public class MenuUtama extends javax.swing.JFrame {
 
         jlableF5.setText("1. Untuk Print Rekapan Gaji Harian, Tambahin Lembur Dan Uang Makan Lembur.");
 
-        jlableF6.setText("4. Jika Ada Masalah Yang Tidak Terduga, 08989159691 (WA, Telepon Jika Penting).");
+        jlableF6.setText("6. Jika Ada Masalah Yang Tidak Terduga, 08989159691 (WA, Telepon Jika Penting).");
 
-        jlableF7.setText("5. Goodluck.");
+        jlableF7.setText("7. Goodluck.");
+
+        jlableF8.setText("5. Kertas Untuk Print TPB dan Penjualan, Pakai Kertas Rangkap 3 (Putih Merah Kuning).");
+
+        jlableF9.setText("4. Kertas Untuk Print Poles, Pakai Kertas Rangkap 2 (Putih Merah).");
 
         JMFile.setText("File");
 
@@ -492,6 +498,8 @@ public class MenuUtama extends javax.swing.JFrame {
                 .addComponent(jlableF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -511,10 +519,14 @@ public class MenuUtama extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlableF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(434, Short.MAX_VALUE))
+                .addContainerGap(378, Short.MAX_VALUE))
         );
 
         pack();
@@ -990,5 +1002,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private KomponenGUI.JlableF jlableF5;
     private KomponenGUI.JlableF jlableF6;
     private KomponenGUI.JlableF jlableF7;
+    private KomponenGUI.JlableF jlableF8;
+    private KomponenGUI.JlableF jlableF9;
     // End of variables declaration//GEN-END:variables
 }

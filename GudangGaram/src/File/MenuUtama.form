@@ -431,6 +431,8 @@
               <Component id="jlableF1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jlableF9" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
                   <Component id="jlableF5" min="-2" max="-2" attributes="0"/>
@@ -454,10 +456,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jlableF4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jlableF9" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="434" max="32767" attributes="0"/>
+              <EmptySpace pref="378" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -485,12 +491,22 @@
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="4. Jika Ada Masalah Yang Tidak Terduga, 08989159691 (WA, Telepon Jika Penting)."/>
+        <Property name="text" type="java.lang.String" value="6. Jika Ada Masalah Yang Tidak Terduga, 08989159691 (WA, Telepon Jika Penting)."/>
       </Properties>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF7">
       <Properties>
-        <Property name="text" type="java.lang.String" value="5. Goodluck."/>
+        <Property name="text" type="java.lang.String" value="7. Goodluck."/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="5. Kertas Untuk Print TPB dan Penjualan, Pakai Kertas Rangkap 3 (Putih Merah Kuning)."/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="4. Kertas Untuk Print Poles, Pakai Kertas Rangkap 2 (Putih Merah)."/>
       </Properties>
     </Component>
   </SubComponents>
