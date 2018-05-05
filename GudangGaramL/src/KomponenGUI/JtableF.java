@@ -54,27 +54,28 @@ public class JtableF extends JTable {
     public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
         Component comp = super.prepareRenderer(renderer, row, col);
         if (usecolor) {
-             if (getModel().getValueAt(row, 3).toString().equals("0")) {
+            int modelRow = convertRowIndexToModel(row);
+             if (getModel().getValueAt(modelRow, 3).toString().equals("0")) {
                 comp.setBackground(new Color(255, 200, 255));
-            } else if (getModel().getValueAt(row, 3).toString().equals("1")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("1")) {
                 comp.setBackground(new Color(255, 200, 200));
-            } else if (getModel().getValueAt(row, 3).toString().equals("2")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("2")) {
                 comp.setBackground(new Color(255, 225, 200));
-            } else if (getModel().getValueAt(row, 3).toString().equals("3")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("3")) {
                 comp.setBackground(new Color(225, 255, 200));
-            } else if (getModel().getValueAt(row, 3).toString().equals("4")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("4")) {
                 comp.setBackground(new Color(200, 255, 200));
-            } else if (getModel().getValueAt(row, 3).toString().equals("5")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("5")) {
                 comp.setBackground(new Color(200, 255, 225));
-            } else if (getModel().getValueAt(row, 3).toString().equals("6")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("6")) {
                 comp.setBackground(new Color(200, 225, 255));
-            } else if (getModel().getValueAt(row, 3).toString().equals("7")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("7")) {
                 comp.setBackground(new Color(225, 200, 255));
-            } else if (getModel().getValueAt(row, 3).toString().equals("8")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("8")) {
                 comp.setBackground(new Color(255, 200, 255));
-            } else if (getModel().getValueAt(row, 3).toString().equals("9")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("9")) {
                 comp.setBackground(new Color(255, 200, 225));
-            } else if (getModel().getValueAt(row, 3).toString().equals("10")) {
+            } else if (getModel().getValueAt(modelRow, 3).toString().equals("10")) {
                 comp.setBackground(new Color(255, 200, 200));
             }
             if (isRowSelected(row)) {
