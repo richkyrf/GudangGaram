@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StokHarian" language="groovy" pageWidth="935" pageHeight="609" orientation="Landscape" columnWidth="895" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="acc8509b-a836-4b53-b178-b496671fd8c2">
 	<property name="ireport.zoom" value="1.3310000000000015"/>
-	<property name="ireport.x" value="491"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Title" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["Laporan Permintaan Barang"]]></defaultValueExpression>
@@ -122,9 +122,9 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="49" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="19" width="895" height="30" uuid="5c0fbdc4-2ef8-4c98-a95f-1bb4dd356913"/>
+				<reportElement x="0" y="10" width="895" height="30" uuid="5c0fbdc4-2ef8-4c98-a95f-1bb4dd356913"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -314,9 +314,9 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="19">
 			<textField>
-				<reportElement x="25" y="0" width="223" height="20" uuid="f59a473a-0bdd-45bb-beaa-63a1ea33da58"/>
+				<reportElement x="25" y="0" width="223" height="19" uuid="f59a473a-0bdd-45bb-beaa-63a1ea33da58"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -328,7 +328,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{NamaBarangLain}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="248" y="0" width="77" height="20" uuid="ceac6e9e-53f3-449b-bcde-dd1a99c7e086"/>
+				<reportElement x="248" y="0" width="77" height="19" uuid="ceac6e9e-53f3-449b-bcde-dd1a99c7e086"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -340,7 +340,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Stok Awal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="357" y="0" width="67" height="20" uuid="7d116a53-e49c-43ea-a90e-5afa64c443d6"/>
+				<reportElement x="357" y="0" width="67" height="19" uuid="7d116a53-e49c-43ea-a90e-5afa64c443d6"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -352,7 +352,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Terima}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="560" y="0" width="68" height="20" uuid="6a58abb4-6a1d-4867-aab6-64212416c346"/>
+				<reportElement x="560" y="0" width="68" height="19" uuid="6a58abb4-6a1d-4867-aab6-64212416c346"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -364,7 +364,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Mutasi}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.000;-#,##0.000" isBlankWhenNull="true">
-				<reportElement x="424" y="0" width="68" height="20" uuid="256117a7-854b-4c3d-b250-499f457bafc3"/>
+				<reportElement x="424" y="0" width="68" height="19" uuid="256117a7-854b-4c3d-b250-499f457bafc3"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -376,7 +376,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Produksi}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="492" y="0" width="68" height="20" uuid="a849c9c5-e050-4a06-97f1-8954f47e0eab"/>
+				<reportElement x="492" y="0" width="68" height="19" uuid="a849c9c5-e050-4a06-97f1-8954f47e0eab"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -388,7 +388,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Packing Ulang}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="628" y="0" width="66" height="20" uuid="e13214f1-654b-416b-a6ca-9b3184d8bf9e"/>
+				<reportElement x="628" y="0" width="66" height="19" uuid="e13214f1-654b-416b-a6ca-9b3184d8bf9e"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -400,7 +400,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Penyesuaian}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="694" y="0" width="77" height="20" uuid="bc367efc-93a8-44d4-92c1-0d59aeb49891"/>
+				<reportElement x="694" y="0" width="77" height="19" uuid="bc367efc-93a8-44d4-92c1-0d59aeb49891"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -412,7 +412,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Stok Akhir}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="25" height="20" isPrintWhenDetailOverflows="true" uuid="992d8171-82ab-442e-82dc-eb21fb04abcf"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="25" height="19" isPrintWhenDetailOverflows="true" uuid="992d8171-82ab-442e-82dc-eb21fb04abcf"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -426,7 +426,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="803" y="0" width="68" height="20" uuid="64fd7a5b-ed32-4acb-a02e-af6b04c9c7e6"/>
+				<reportElement x="803" y="0" width="68" height="19" uuid="64fd7a5b-ed32-4acb-a02e-af6b04c9c7e6"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -438,7 +438,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{BAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="325" y="0" width="32" height="20" uuid="82dc4228-a86d-449e-8b1e-d569a2ac5342"/>
+				<reportElement x="325" y="0" width="32" height="19" uuid="82dc4228-a86d-449e-8b1e-d569a2ac5342"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -450,7 +450,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Satuan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="771" y="0" width="32" height="20" uuid="485f3f49-8656-4a98-b3dc-f7573c53062a"/>
+				<reportElement x="771" y="0" width="32" height="19" uuid="485f3f49-8656-4a98-b3dc-f7573c53062a"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -462,7 +462,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textFieldExpression><![CDATA[$F{Satuan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="871" y="0" width="24" height="20" uuid="a5be820b-396a-4b6c-872b-af12f5468090"/>
+				<reportElement x="871" y="0" width="24" height="19" uuid="a5be820b-396a-4b6c-872b-af12f5468090"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
