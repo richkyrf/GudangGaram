@@ -71,7 +71,7 @@ SELECT c.`IdBarang`, `NamaBarang`, SUM(ifnull(`Sak`,0)), SUM(ifnull(`Jumlah`,0))
 ) as tbTemp GROUP BY `IdBarang`, `IdPartai`) i
 	ON IF(i.`IdPartai` IS NULL, a.`IdBarang`=i.`IdBarang`, a.`IdPartai`=i.`IdPartai`)
 
-) LEFT JOIN `tbtutuppartai`z ON a.`IdPartai`=z.`IdPartai` LEFT JOIN `tbmpartai`y ON a.`IdPartai`=y.`IdPartai` WHERE (z.`IdTutup` IS NULL OR (z.`Status` = 0 AND z.`IdTutup` IS NOT NULL) OR z.`Tanggal` > $P{Tgl}) AND (y.`IdPartai` IS NULL OR y.`Tanggal` <= $P{Tgl}) ORDER BY IF(a.`NamaBarang` LIKE '%KSR NON YOD BHN GARINDO%', 1, IF(a.`NamaBarang` LIKE '%KSR NON YOD BHN PERSERO%', 2, IF(a.`NamaBarang` LIKE '%HLS YOD BHN%', 3, IF(a.`NamaBarang` LIKE '%50%', 4, 5)))), IF(a.`IdPartai` IS NULL, a.`IdBarang`, a.`IdPartai`)]]>
+) LEFT JOIN `tbtutuppartai`z ON a.`IdPartai`=z.`IdPartai` LEFT JOIN `tbmpartai`y ON a.`IdPartai`=y.`IdPartai` WHERE (z.`IdTutup` IS NULL OR (z.`Status` = 0 AND z.`IdTutup` IS NOT NULL) OR z.`Tanggal` > $P{Tgl}) AND (y.`IdPartai` IS NULL OR y.`Tanggal` <= $P{Tgl}) ORDER BY IF(a.`NamaBarang` LIKE '%KSR NON YOD BHN GARINDO%', 1, IF(a.`NamaBarang` LIKE '%KSR NON YOD BHN PERSERO%', 2, IF(a.`NamaBarang` LIKE '%HLS YOD BHN%', 3, IF(a.`NamaBarang` LIKE '%@50%', 4, IF(a.`NamaBarang` LIKE '%G. KASAR%', 5, IF(a.`NamaBarang` LIKE '%G. HALUS%', 6, 7 ) ) ) ) ) ),  IF(a.`IdPartai` IS NULL, a.`IdBarang`, a.`IdPartai`)]]>
 	</queryString>
 	<field name="IdBarang" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
