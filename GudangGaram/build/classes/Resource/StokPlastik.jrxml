@@ -94,7 +94,7 @@ SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', 
     UNION ALL
 SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` <= $P{Tgl} GROUP BY `IdBarangLain` ) t1 GROUP BY `IdBaranglain`) h
     ON a.`IdBarangLain`=h.`IdBarangLain`
-    ) ORDER BY a.`IdBarangLain`]]>
+    ) ORDER BY IF(a.`NamaBarangLain` LIKE '%ARTHESS%' OR a.`NamaBarangLain` LIKE '%JERIGENT%' OR a.`NamaBarangLain` LIKE '%LAKBAN%' OR a.`NamaBarangLain` LIKE '%IODIUM%', 1, IF(a.`NamaBarangLain` LIKE '%PLASTIK LUAR GRM 1 KG%', 2, IF(a.`NamaBarangLain` LIKE '%PLASTIK DLM GRM 1KG%', 3, IF(a.`NamaBarangLain` LIKE '%PLASTIK DLM GRM 8ONS%', 4, IF(a.`NamaBarangLain` LIKE '%PLASTIK DLM GRM 1/2KG%', 5, IF(a.`NamaBarangLain` LIKE '%PLASTIK LUAR GRM 1/4KG%', 6, IF(a.`NamaBarangLain` LIKE '%PLASTIK DLM GRM 1/4KG%', 7, IF(a.`NamaBarangLain` LIKE '%PLASTIK LUAR GRM 150GR%', 8, IF(a.`NamaBarangLain` LIKE '%PLASTIK DLM GRM 150GR%', 9, IF(a.`NamaBarangLain` LIKE '%PLASTIK 8 ONS DLM MESIN%', 10, 11 ) ) ) ) ) ) ) ) ) ), a.`IdBarangLain`]]>
 	</queryString>
 	<field name="IdBarangLain" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
