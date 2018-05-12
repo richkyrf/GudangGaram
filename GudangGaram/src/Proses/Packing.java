@@ -1696,7 +1696,7 @@ public class Packing extends javax.swing.JFrame {
                             Berhasil = multiInsert.Excute("INSERT INTO `tbpacking`(`NoPoles`, `NoPacking`, `Tanggal`, `NoBak`, `NoPas`, `NoIndi`, `IdKaryawan`, `IdPartai`, `JumlahBahan`, `IdBarangHasil`, `JumlahHasil`, `UpahPerPak`, `Keterangan`) VALUES ('" + JTNoPoles.getText() + "','" + JTNoPacking.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTable.getValueAt(i, 0) + "','" + JTable.getValueAt(i, 1) + "','" + JTable.getValueAt(i, 2) + "'," + idKaryawan + "," + idPartai + ",'" + JTable.getValueAt(i, 6) + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTable.getValueAt(i, 7) + "'),'" + JTable.getValueAt(i, 8) + "','" + JTable.getValueAt(i, 9).toString().replace(".", "") + "', '" + JTable.getValueAt(i, 10) + "')", null);
                         }
                         if (Berhasil) {
-                            if ((Integer.valueOf(JTJumlahBahan1.getText().replace(".", "")) == Integer.valueOf(JLTotalPackingBahan1.getText().split("\\(Sisa Bahan: ")[1].split(" ")[0].replace(".", ""))) && !JCNamaBahan1.getSelectedItem().equals("GARAM RETUR")) {
+                            if (!JCNamaBahan1.getSelectedItem().equals("GARAM RETUR") && (Integer.parseInt(JTJumlahBahan1.getText().replace(".", "")) == Integer.parseInt(JLTotalPackingBahan1.getText().split("\\(Sisa Bahan: ")[1].split(" ")[0].replace(".", "")))) {
                                 Berhasil = multiInsert.Excute("UPDATE `tbmpartai` SET `SelesaiProduksi`=1 WHERE `IdPartai`='" + JCNamaBahan1.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0].replace(".", "") + "'", null);
                                 if (Berhasil) {
                                     JOptionPane.showMessageDialog(this, "Partai No." + JCNamaBahan1.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0].replace(".", "") + " Telah Ditutup Karena Jumlah Packing Telah Pas");
@@ -1707,7 +1707,7 @@ public class Packing extends javax.swing.JFrame {
                                     JTJumlahBahan2.setText("0");
                                 }
                             }
-                            if (JCNamaBahan2.getSelectedIndex() != 0 && (Integer.valueOf(JTJumlahBahan2.getText().replace(".", "")) == Integer.valueOf(JLTotalPackingBahan2.getText().split("\\(Sisa Bahan: ")[1].split(" ")[0].replace(".", ""))) && !JCNamaBahan1.getSelectedItem().equals("GARAM RETUR")) {
+                            if (!JCNamaBahan1.getSelectedItem().equals("GARAM RETUR") && JCNamaBahan2.getSelectedIndex() != 0 && (Integer.parseInt(JTJumlahBahan2.getText().replace(".", "")) == Integer.parseInt(JLTotalPackingBahan2.getText().split("\\(Sisa Bahan: ")[1].split(" ")[0].replace(".", "")))) {
                                 Berhasil = multiInsert.Excute("UPDATE `tbmpartai` SET `SelesaiProduksi`=1 WHERE `IdPartai`='" + JCNamaBahan2.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0].replace(".", "") + "'", null);
                                 if (Berhasil) {
                                     JOptionPane.showMessageDialog(this, "Partai No." + JCNamaBahan2.getSelectedItem().toString().split(" \\(PARTAI ")[1].split("\\)")[0].replace(".", "") + " Telah Ditutup Karena Jumlah Packing Telah Pas");

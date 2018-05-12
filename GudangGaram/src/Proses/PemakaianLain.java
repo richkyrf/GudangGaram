@@ -162,7 +162,7 @@ public class PemakaianLain extends javax.swing.JFrame {
 
         jlableF24.setText(":");
 
-        JCNamaBarang.load("(SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain') UNION ALL (SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1 GROUP BY `IdBarangLain` ORDER BY `IdBarangLain`)");
+        JCNamaBarang.load("(SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain') UNION ALL (SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdBarangLain` != 2 AND `IdBarangLain` != 4 GROUP BY `IdBarangLain` ORDER BY `IdBarangLain`)");
         JCNamaBarang.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 JCNamaBarangItemStateChanged(evt);
