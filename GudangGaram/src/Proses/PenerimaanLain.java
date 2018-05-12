@@ -55,7 +55,7 @@ public class PenerimaanLain extends javax.swing.JFrame {
 
     void loadEditData() {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.setQuery("SELECT `IdPenerimaanLain` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaBarangLain` as 'Nama Barang', `PemasokLain` as 'Pemasok', IF(a.`IdKendaraan` IS NULL,'-',`Plat`) as 'Plat', `Jumlah`, `Brutto`, `Netto`, a.`Keterangan` FROM `tbpenerimaanlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` JOIN `tbmpemasoklain`c ON a.`IdPemasokLain`=c.`IdPemasokLain` LEFT JOIN `tbmkendaraan`d ON a.`IdKendaraan`=d.`IdKendaraan` WHERE `IdPenerimaanLain` = " + IdEdit);
+        dRunSelctOne.setQuery("SELECT `IdPenerimaanLain` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaBarangLain` as 'Nama Barang', IF(`PemasokLain` IS NULL,'-',`PemasokLain`) as 'Pemasok', IF(a.`IdKendaraan` IS NULL,'-',`Plat`) as 'Plat', `Jumlah`, `Brutto`, `Netto`, a.`Keterangan` FROM `tbpenerimaanlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` LEFT JOIN `tbmpemasoklain`c ON a.`IdPemasokLain`=c.`IdPemasokLain` LEFT JOIN `tbmkendaraan`d ON a.`IdKendaraan`=d.`IdKendaraan` WHERE `IdPenerimaanLain` = " + IdEdit);
         ArrayList<String> list = dRunSelctOne.excute();
         JDTanggal.setDate(FDateF.strtodate(list.get(1), "dd-MM-yyyy"));
         JCNamaBarang.setSelectedItem(list.get(2));

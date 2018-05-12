@@ -212,7 +212,7 @@ public class ListPenerimaanLain extends javax.swing.JFrame {
     }
 
     public void load() {
-        jcomCari1.setQuery("SELECT `IdPenerimaanLain` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaBarangLain` as 'Nama Barang', `PemasokLain` as 'Pemasok', IF(a.`IdKendaraan` IS NULL,'-',`Plat`) as 'Plat', `Jumlah`, `Brutto`, `Netto`, a.`Keterangan` FROM `tbpenerimaanlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` JOIN `tbmpemasoklain`c ON a.`IdPemasokLain`=c.`IdPemasokLain` LEFT JOIN `tbmkendaraan`d ON a.`IdKendaraan`=d.`IdKendaraan` WHERE 1 ");
+        jcomCari1.setQuery("SELECT `IdPenerimaanLain` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaBarangLain` as 'Nama Barang', IF(`PemasokLain` IS NULL,'-',`PemasokLain`) as 'Pemasok', IF(a.`IdKendaraan` IS NULL,'-',`Plat`) as 'Plat', `Jumlah`, `Brutto`, `Netto`, a.`Keterangan` FROM `tbpenerimaanlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` LEFT JOIN `tbmpemasoklain`c ON a.`IdPemasokLain`=c.`IdPemasokLain` LEFT JOIN `tbmkendaraan`d ON a.`IdKendaraan`=d.`IdKendaraan` WHERE 1 ");
         jcomCari1.setOrder(" ORDER BY a.`Tanggal` DESC");
         jcomCari1.setRender(new int[]{5,6,7}, new String[]{"Number", "Decimal", "Decimal"});
         jcomCari1.tampilkan();
