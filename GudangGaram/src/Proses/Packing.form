@@ -397,6 +397,9 @@
           <ComponentRef name="JTJumlahBahan1"/>
         </Property>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="tambahtable" sourcePath="${enabled}" target="JCNamaBahan1" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCNamaBahan1ItemStateChanged"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBahan1KeyPressed"/>
@@ -411,6 +414,9 @@
           <ComponentRef name="JCNamaBahan2"/>
         </Property>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="tambahtable" sourcePath="${enabled}" target="JTJumlahBahan1" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJumlahBahan1KeyPressed"/>
       </Events>
@@ -453,6 +459,9 @@
           <ComponentRef name="JTUpahPerPack"/>
         </Property>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="tambahtable" sourcePath="${enabled}" target="JCNamaHasil" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCNamaHasilItemStateChanged"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaHasilKeyPressed"/>
@@ -483,7 +492,7 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="JCNamaKaryawan1.setSelectedItem(&quot;&quot;);"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan1.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` ASC &quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="if (NoPacking == null) {&#xa;            JCNamaKaryawan1.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan2.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan3.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan4.getSelectedItem() + &quot;&apos; ORDER BY `NamaKaryawan` ASC &quot;);&#xa;        } else {&#xa;            JCNamaKaryawan1.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan2.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan3.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan4.getSelectedItem() + &quot;&apos; ORDER BY `NamaKaryawan` ASC &quot;);&#xa;        }"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF12">
@@ -527,7 +536,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan2KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan2.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` ASC &quot;);&#xa;JCNamaKaryawan2.setSelectedItem(&quot;&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="if (NoPacking == null) {&#xa;            JCNamaKaryawan2.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan1.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan3.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan4.getSelectedItem() + &quot;&apos; ORDER BY `NamaKaryawan` ASC &quot;);&#xa;        } else {&#xa;            JCNamaKaryawan2.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan1.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan3.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan4.getSelectedItem() + &quot;&apos; ORDER BY `NamaKaryawan` ASC &quot;);&#xa;        }&#xa;JCNamaKaryawan2.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCNamaKaryawan3">
@@ -542,7 +551,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan3KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan3.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` ASC &quot;);&#xa;JCNamaKaryawan3.setSelectedItem(&quot;&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="if (NoPacking == null) {&#xa;            JCNamaKaryawan3.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan1.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan2.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan4.getSelectedItem() + &quot;&apos; ORDER BY `NamaKaryawan` ASC &quot;);&#xa;        } else {&#xa;            JCNamaKaryawan3.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan1.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan2.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan4.getSelectedItem() + &quot;&apos; ORDER BY `NamaKaryawan` ASC &quot;);&#xa;        }&#xa;JCNamaKaryawan3.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JcomboboxF" name="JCNamaKaryawan4">
@@ -556,7 +565,7 @@
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaKaryawan4KeyPressed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JCNamaKaryawan4.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 ORDER BY `NamaKaryawan` ASC &quot;);&#xa;JCNamaKaryawan4.setSelectedItem(&quot;&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="if (NoPacking == null) {&#xa;            JCNamaKaryawan4.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Status` = 1 AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan1.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan2.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan3.getSelectedItem() + &quot;&apos; ORDER BY `NamaKaryawan` ASC &quot;);&#xa;        } else {&#xa;            JCNamaKaryawan4.load(&quot;SELECT &apos;&apos; as &apos;NamaKaryawan&apos; UNION SELECT `NamaKaryawan` FROM `tbmkaryawan` WHERE `IdJenisKaryawan` = 2 AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan1.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan2.getSelectedItem() + &quot;&apos; AND `Namakaryawan` != &apos;&quot; + JCNamaKaryawan3.getSelectedItem() + &quot;&apos; ORDER BY `NamaKaryawan` ASC &quot;);&#xa;        }&#xa;JCNamaKaryawan4.setSelectedItem(&quot;&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="KomponenGUI.JlableF" name="jlableF13">
@@ -804,6 +813,9 @@
           <ComponentRef name="JTJumlahBahan2"/>
         </Property>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="tambahtable" sourcePath="${enabled}" target="JCNamaBahan2" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="JCNamaBahan2ItemStateChanged"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JCNamaBahan2KeyPressed"/>
@@ -818,6 +830,9 @@
           <ComponentRef name="JCNamaHasil"/>
         </Property>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="enabled" source="tambahtable" sourcePath="${enabled}" target="JTJumlahBahan2" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
       <Events>
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JTJumlahBahan2FocusGained"/>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JTJumlahBahan2FocusLost"/>

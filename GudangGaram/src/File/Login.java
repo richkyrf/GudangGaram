@@ -7,6 +7,7 @@ package File;
 
 import static File.EncMD5.getMD5;
 import LSubProces.DRunSelctOne;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.BindException;
@@ -14,6 +15,7 @@ import static java.net.InetAddress.getLocalHost;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import static javax.swing.UIManager.setLookAndFeel;
 
 /**
@@ -30,6 +32,7 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Silahkan Login");
         setVisible(true);
+        UIManager.put("ComboBox.disabledForeground", Color.blue);
     }
 
     /**
