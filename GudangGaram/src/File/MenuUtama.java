@@ -389,7 +389,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMProses.add(JMIProsesPenyesuaianStok1);
 
-        jMenuItem5.setText("15. Pemakaian Barang Lain");
+        jMenuItem5.setText("15. Pengeluaran Barang Lain");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);

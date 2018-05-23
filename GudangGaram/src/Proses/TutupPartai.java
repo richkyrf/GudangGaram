@@ -319,7 +319,7 @@ public class TutupPartai extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF3ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        if (IdEdit == null){
+        if (IdEdit == null) {
             GlobalVar.Var.tambahTutupPartai = null;
         } else {
             GlobalVar.Var.ubahTutupPartai = null;
@@ -384,7 +384,7 @@ public class TutupPartai extends javax.swing.JFrame {
     void tambahData(Boolean tutup) {
         if (checkInput()) {
             Insert insert = new Insert();
-            Boolean berhasil = insert.simpan("INSERT INTO `tbtutuppartai`(`IdPartai`, `Tanggal`, `Keterangan`, `Status`) VALUES ('" + JCNoPartai.getSelectedItem() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Barang", this);
+            Boolean berhasil = insert.simpan("INSERT INTO `tbtutuppartai`(`IdPartai`, `Tanggal`, `Keterangan`, `Status`) VALUES ('" + JCNoPartai.getSelectedItem() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTAKeterangan.getText() + "'," + JCBStatus.isSelected() + ")", "Tutup Partai", this);
             if (berhasil) {
                 if (GlobalVar.Var.listTutupPartai != null) {
                     GlobalVar.Var.listTutupPartai.load();
@@ -395,6 +395,7 @@ public class TutupPartai extends javax.swing.JFrame {
                     JCNoPartai.setSelectedIndex(0);
                     JDTanggal.setDate(new Date());
                     JTAKeterangan.setText("");
+                    JCNoPartai.load("SELECT '-- Pilih No. Partai --' as 'NoPartai' UNION SELECT a.`IdPartai` FROM `tbmpartai`a LEFT JOIN `tbtutuppartai`b ON a.`IdPartai`=b.`IdPartai` WHERE `IdTutup` IS NULL ");
                 }
             }
         }

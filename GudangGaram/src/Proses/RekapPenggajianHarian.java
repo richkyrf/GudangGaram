@@ -32,9 +32,11 @@ import static javax.print.DocFlavor.INPUT_STREAM.AUTOSENSE;
 import javax.print.DocPrintJob;
 import javax.print.PrintException;
 import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 import static javax.print.PrintServiceLookup.lookupDefaultPrintService;
 import javax.print.SimpleDoc;
 import javax.print.attribute.DocAttributeSet;
+import javax.print.attribute.HashAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
@@ -42,6 +44,7 @@ import static javax.print.attribute.Size2DSyntax.INCH;
 import javax.print.attribute.standard.Copies;
 import static javax.print.attribute.standard.MediaSize.findMedia;
 import static javax.print.attribute.standard.OrientationRequested.LANDSCAPE;
+import javax.print.attribute.standard.PrinterName;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
 import javax.swing.JOptionPane;
@@ -736,9 +739,6 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
      */
     public static void directprinting(String Teks) {
         String testprint = Teks;
-        String defaultPrinter
-                = lookupDefaultPrintService().getName();
-        PrintService service = lookupDefaultPrintService();
         try {
             InputStream in = new ByteArrayInputStream(testprint.getBytes());
             PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
@@ -749,10 +749,13 @@ public class RekapPenggajianHarian extends javax.swing.JFrame {
             docs.add(LANDSCAPE);
             docs.add(findMedia(8.5f, 5.5f, INCH));
             try {
+                HashAttributeSet aset = new HashAttributeSet();
+                aset.add(new PrinterName("EPSON LX-310", null));
+                PrintService[] pservices = PrintServiceLookup.lookupPrintServices(null, aset);
                 DocFlavor flavor = AUTOSENSE;
                 Doc doc = new SimpleDoc(in, flavor, docs);
-                DocPrintJob job = service.createPrintJob();
-                PrintJobWatcher pjw = new PrintJobWatcher(job);
+                DocPrintJob job = pservices[0].createPrintJob();
+                Poles.PrintJobWatcher pjw = new Poles.PrintJobWatcher(job);
                 job.print(doc, pras);
                 pjw.waitForDone();
                 in.close();

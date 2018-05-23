@@ -458,6 +458,10 @@ public class PenyesuaianLain extends javax.swing.JFrame {
                     + "	UNION ALL\n"
                     + "SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY a.`IdBarangLain`\n"
                     + "    	UNION ALL\n"
+                    + "SELECT 15 as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`Jumlah`) as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE a.`IdBarangLain` = 16 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY a.`IdBarangLain`\n"
+                    + "    	UNION ALL\n"
+                    + "SELECT 17 as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`Jumlah`) as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE a.`IdBarangLain` = 15 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY a.`IdBarangLain`\n"
+                    + "    	UNION ALL\n"
                     + "SELECT a.`IdBarangLain`,null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY a.`IdBarangLain`\n"
                     + "    UNION ALL\n"
                     + "SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "' GROUP BY `IdBarangLain` ) t1 WHERE `IdBarangLain` = (SELECT `IdBarangLain` FROM `tbmbaranglain` WHERE `NamaBarangLain` = '" + JCNamaBarang.getSelectedItem() + "') GROUP BY `IdBaranglain`");

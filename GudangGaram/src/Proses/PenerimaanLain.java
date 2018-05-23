@@ -234,7 +234,7 @@ public class PenerimaanLain extends javax.swing.JFrame {
 
         jlableF4.setText("Pemasok");
 
-        JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION SELECT `NamaBarangLain` FROM `tbmbaranglain`");
+        JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdBarangLain` != 15 AND `IdBarangLain` != 17");
         JCNamaBarang.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 JCNamaBarangItemStateChanged(evt);

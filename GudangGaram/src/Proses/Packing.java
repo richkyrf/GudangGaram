@@ -39,7 +39,7 @@ public class Packing extends javax.swing.JFrame {
     /**
      * Creates new form MasterPacking
      */
-    String NoPacking;
+    String NoPacking, IdPartai, Id;
 
     public Packing() {
         initComponents();
@@ -259,6 +259,7 @@ public class Packing extends javax.swing.JFrame {
     }
 
     void tableToComponent() {
+        IdPartai = JTable.getValueAt(0, 4).toString();
         JTNoBak.setText(JTable.getValueAt(0, 0).toString());
         JCNamaHasil.setSelectedItem(JTable.getValueAt(0, 7));
         JCNamaBahan1.setSelectedItem(JTable.getValueAt(0, 4));
@@ -1358,14 +1359,43 @@ public class Packing extends javax.swing.JFrame {
             JCNamaBahan2.setEnabled(true);
             JTJumlahBahan2.setEnabled(true);
         }
-        if (JCNamaHasil.getSelectedItem().toString().contains("KASAR") || JCNamaHasil.getSelectedItem().toString().contains("@50 KG")) {
-            JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdJenisBarang` = 1 AND `SelesaiProduksi` = 0  UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
-            JCNamaBahan1.setSelectedIndex(1);
-        } else if (JCNamaHasil.getSelectedItem().toString().contains("HALUS")) {
-            JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdJenisBarang` = 1 AND `SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%HLS%' UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
-            JCNamaBahan1.setSelectedIndex(1);
+        if (NoPacking != null) {
+            if (JTable.getRowCount() > 0) {
+                if (JTable.getValueAt(0, 7).toString().contains("KASAR")) {
+                    JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE (`IdJenisBarang` = 1 AND `NamaBarang` LIKE '%KSR%' AND `SelesaiProduksi` = 0) OR a.`IdPartai`='" + JTable.getValueAt(0, 4).toString().split("\\(PARTAI ")[1].split("\\)")[0] + "' UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
+                    JCNamaBahan1.setSelectedIndex(1);
+                } else if (JTable.getValueAt(0, 7).toString().contains("HALUS")) {
+                    JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE (`IdJenisBarang` = 1 AND `NamaBarang` LIKE '%HLS%' AND `SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%HLS%') OR a.`IdPartai`='" + JTable.getValueAt(0, 4).toString().split("\\(PARTAI ")[1].split("\\)")[0] + "' UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
+                    JCNamaBahan1.setSelectedIndex(1);
+                } else {
+                    JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE (`SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%KSR%') OR a.`IdPartai`='" + JTable.getValueAt(0, 4).toString().split("\\(PARTAI ")[1].split("\\)")[0] + "' GROUP BY `NamaBarang`) UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE (`SelesaiProduksi` = 0  AND `NamaBarang` LIKE '%HLS%') OR a.`IdPartai`='" + JTable.getValueAt(0, 4).toString().split("\\(PARTAI ")[1].split("\\)")[0] + "' GROUP BY `NamaBarang`) UNION SELECT 'GARAM RETUR' as 'NamaBarang'");
+                    JCNamaBahan1.setSelectedIndex(1);
+                }
+            } else {
+                if (JCNamaHasil.getSelectedItem().toString().contains("KASAR")) {
+                Id = IdPartai.contains("KSR") ? IdPartai.split("\\(PARTAI ")[1].split("\\)")[0] : "0";
+                JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE (`IdJenisBarang` = 1 AND `NamaBarang` LIKE '%KSR%' AND `SelesaiProduksi` = 0) OR a.`IdPartai`='" + Id + "' UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
+                    JCNamaBahan1.setSelectedIndex(1);
+                } else if (JCNamaHasil.getSelectedItem().toString().contains("HALUS")) {
+                Id = IdPartai.contains("HLS") ? IdPartai.split("\\(PARTAI ")[1].split("\\)")[0] : "0";
+                    JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE (`IdJenisBarang` = 1 AND `NamaBarang` LIKE '%HLS%' AND `SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%HLS%') OR a.`IdPartai`='" + Id + "' UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
+                    JCNamaBahan1.setSelectedIndex(1);
+                } else {
+                    JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'NamaBarang' UNION ALL (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE (`SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%KSR%') OR a.`IdPartai`='" + IdPartai.split("\\(PARTAI ")[1].split("\\)")[0] + "') UNION ALL (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE (`SelesaiProduksi` = 0  AND `NamaBarang` LIKE '%HLS%') OR a.`IdPartai`='" + IdPartai.split("\\(PARTAI ")[1].split("\\)")[0] + "') UNION SELECT 'GARAM RETUR' as 'NamaBarang'");
+                    JCNamaBahan1.setSelectedIndex(1);
+                }
+            }
         } else {
-            JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 GROUP BY `NamaBarang`) UNION SELECT 'GARAM RETUR' as 'NamaBarang'");
+            if (JCNamaHasil.getSelectedItem().toString().contains("KASAR")) {
+                JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdJenisBarang` = 1 AND `NamaBarang` LIKE '%KSR%' AND `SelesaiProduksi` = 0  UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
+                JCNamaBahan1.setSelectedIndex(1);
+            } else if (JCNamaHasil.getSelectedItem().toString().contains("HALUS")) {
+                JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke-1 --' as 'NamaBarang' UNION ALL SELECT CONCAT(`NamaBarang`, ' (PARTAI ',a.`IdPartai`,')') FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`IdBarang` WHERE `IdJenisBarang` = 1 AND `NamaBarang` LIKE '%HLS%' AND `SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%HLS%' UNION ALL SELECT 'GARAM RETUR' as 'NamaBarang' ");
+                JCNamaBahan1.setSelectedIndex(1);
+            } else {
+                JCNamaBahan1.load("SELECT '-- Pilih Bahan Ke 1 --'  as 'NamaBarang' UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0 AND `NamaBarang` LIKE '%KSR%' GROUP BY `NamaBarang`) UNION (SELECT CONCAT(`NamaBarang`,' (PARTAI ',`IdPartai`,')') as 'NamaBarang' FROM `tbmpartai`a JOIN `tbmbarang`b ON a.`IdBarang`=b.`Idbarang` WHERE `SelesaiProduksi` = 0  AND `NamaBarang` LIKE '%HLS%' GROUP BY `NamaBarang`) UNION SELECT 'GARAM RETUR' as 'NamaBarang'");
+                JCNamaBahan1.setSelectedIndex(1);
+            }
         }
         if (JCNamaBahan1.getSelectedIndex() != 0 && JCNamaBahan1.getSelectedIndex() != JCNamaBahan1.getItemCount() - 1) {
             loadTotalPackingBahan1();

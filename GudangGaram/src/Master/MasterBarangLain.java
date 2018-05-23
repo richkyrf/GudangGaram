@@ -429,12 +429,12 @@ public class MasterBarangLain extends javax.swing.JFrame {
                     }
                 }
                 if (GlobalVar.Var.tambahPenerimaanLain != null || GlobalVar.Var.ubahPenerimaanLain != null) {
-                    PenerimaanLain.JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1 ");
+                    PenerimaanLain.JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdBarangLain` != 15 AND `IdBarangLain` != 17 ");
                     PenerimaanLain.JCNamaBarang.setSelectedItem(JTNamaBarangLain.getText());
                     PenerimaanLain.JCNamaBarang.requestFocus();
                 }
                 if (GlobalVar.Var.tambahPemakaianLain != null || GlobalVar.Var.ubahPemakaianLain != null) {
-                    PemakaianLain.JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE 1 ");
+                    PemakaianLain.JCNamaBarang.load("SELECT '-- Pilih Nama Barang --' as 'NamaBarangLain' UNION ALL SELECT `NamaBarangLain` FROM `tbmbaranglain` WHERE `IdBarangLain` != 15 AND `IdBarangLain` != 17 ");
                     PemakaianLain.JCNamaBarang.setSelectedItem(JTNamaBarangLain.getText());
                     PemakaianLain.JCNamaBarang.requestFocus();
                 }

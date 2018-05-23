@@ -19,10 +19,14 @@
 		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT a.`IdBarangLain`, a.`NamaBarangLain`, `Stok Awal`, `Satuan`, `Terima`, `Mutasi`, SUM(`Produksi`) as 'Produksi', `Packing Ulang`, `Penyesuaian`, `Stok Akhir`, `BAL`, IF(`BAL` is null,'','BAL') as 'SatuanBal' FROM (
+		<![CDATA[SELECT a.`IdBarangLain`, a.`NamaBarangLain`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA'  ,REPLACE(FORMAT(`Stok Awal`,0),'.',','),REPLACE(FORMAT(`Stok Awal`,2),'.',',')) as 'Stok Awal', `Satuan`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA'  ,REPLACE(REPLACE(REPLACE(FORMAT(`Terima`,0),'.','*'),',','.'),'*',','),REPLACE(REPLACE(REPLACE(FORMAT(`Terima`,2),'.','*'),',','.'),'*',',')) as 'Terima', `Mutasi`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA'  ,REPLACE(FORMAT(SUM(`Produksi`),0),'.',','),REPLACE(FORMAT(SUM(`Produksi`),2),'.',',')) as 'Produksi', `Packing Ulang`, `Penyesuaian`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA'  ,REPLACE(FORMAT(`Stok Akhir`,0),'.',','),REPLACE(FORMAT(`Stok Akhir`,2),'.',',')) as 'Stok Akhir', `BAL`, IF(`BAL` is null,'','BAL') as 'SatuanBal' FROM (
 (SELECT a.`IdBarangLain`, `NamaBarangLain`, `JenisBarangLain`, `BeratPembagi`, `Satuan` FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1) a
 	LEFT JOIN
-(SELECT `IdBarangLain`, SUM(`Netto`) as 'Terima' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarangLain` ) b
+(SELECT `IdBarangLain`, SUM(`Netto`) as 'Terima' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`
+	UNION ALL
+SELECT '15' as 'IdBarangLain', SUM(a.`Jumlah`) as 'Terima' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE a.`IdBarangLain`=16 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` = $P{Tgl} GROUP BY a.`IdBarangLain`
+	UNION ALL
+SELECT '17' as 'IdBarangLain', SUM(a.`Jumlah`) as 'Terima' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE a.`IdBarangLain`=15 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` = $P{Tgl} GROUP BY a.`IdBarangLain`) b
     ON a.`IdBarangLain`=b.`IdBarangLain`
 	LEFT JOIN
 (SELECT a.`IdBarangLain`, SUM(`Jumlah`) as 'Mutasi' FROM `tbpenjualandetail`a JOIN `tbpenjualan`b ON a.`NoTransaksi`=b.`NoTransaksi` JOIN `tbmbaranglain`c ON a.`IdBarangLain`=c.`IdBarangLain` WHERE (c.`IdjenisBarangLain` = 2 OR c.`NamaBarangLain` = 'LAKBAN') AND `StatusLembar` = 0 AND b.`Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`
@@ -70,6 +74,10 @@ SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`JumlahBahan`*50*0
 	UNION ALL
 SELECT a.`IdBarangLain`, null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < $P{Tgl} GROUP BY a.`IdBarangLain`
     	UNION ALL
+SELECT 15 as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`Jumlah`) as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE a.`IdBarangLain` = 16 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < $P{Tgl} GROUP BY a.`IdBarangLain`
+    	UNION ALL
+SELECT 17 as 'IdBarangLain', null as 'NamaBarangLain', SUM(a.`Jumlah`) as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE a.`IdBarangLain` = 15 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` < $P{Tgl} GROUP BY a.`IdBarangLain`
+    	UNION ALL
 SELECT a.`IdBarangLain`,null as 'NamaBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` < $P{Tgl} GROUP BY a.`IdBarangLain`
     UNION ALL
 SELECT `IdBarangLain`, null as 'NamaBarangLain', SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` < $P{Tgl} GROUP BY `IdBarangLain` ) t1 GROUP BY `IdBaranglain`) g
@@ -96,6 +104,10 @@ SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLa
 	UNION ALL
 SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdBarangLain`
     UNION ALL
+SELECT 15 as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(a.`Jumlah`) as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE a.`IdBarangLain` = 16 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdBarangLain`
+    UNION ALL
+SELECT 17 as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(a.`Jumlah`) as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE a.`IdBarangLain` = 15 AND `IdJenisBarangLain` = 3 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdBarangLain`
+    UNION ALL
 SELECT a.`IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(a.`Jumlah`)*-1 as 'Stok' FROM `tbpemakaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` < 3 AND a.`Tanggal` <= $P{Tgl} GROUP BY a.`IdBarangLain`
     UNION ALL
 SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(`Jumlah`) as 'Stok' FROM `tbpenyesuaianlain` WHERE 1 AND `Tanggal` <= $P{Tgl} GROUP BY `IdBarangLain` ) t1 GROUP BY `IdBaranglain`) h
@@ -108,16 +120,16 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 	<field name="NamaBarangLain" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Stok Awal" class="java.math.BigDecimal"/>
+	<field name="Stok Awal" class="java.lang.String"/>
 	<field name="Satuan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Terima" class="java.math.BigDecimal"/>
+	<field name="Terima" class="java.lang.String"/>
 	<field name="Mutasi" class="java.math.BigDecimal"/>
-	<field name="Produksi" class="java.math.BigDecimal"/>
+	<field name="Produksi" class="java.lang.String"/>
 	<field name="Packing Ulang" class="java.math.BigDecimal"/>
 	<field name="Penyesuaian" class="java.math.BigDecimal"/>
-	<field name="Stok Akhir" class="java.math.BigDecimal"/>
+	<field name="Stok Akhir" class="java.lang.String"/>
 	<field name="BAL" class="java.math.BigDecimal"/>
 	<field name="SatuanBal" class="java.lang.String"/>
 	<variable name="Stok Akhir" class="java.lang.String"/>
@@ -345,7 +357,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Stok Awal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="357" y="0" width="67" height="19" uuid="7d116a53-e49c-43ea-a90e-5afa64c443d6"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
@@ -369,7 +381,7 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Mutasi}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.000;-#,##0.000" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="424" y="0" width="68" height="19" uuid="256117a7-854b-4c3d-b250-499f457bafc3"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
