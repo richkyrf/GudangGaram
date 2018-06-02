@@ -236,7 +236,7 @@ public class JtableF extends JTable {
                     pstmt.close();
                 }
                 if (con != null) {
-                    con.close();
+//404                    con.close();
                 }
             } catch (SQLException ex) {
                 LogEror.SaveEror(ex);

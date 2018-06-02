@@ -129,13 +129,13 @@ public class MultiInsert {
     }
 
     public void closecon() {
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (Exception e) {
-            Eror.LogEror.SaveEror(e);
-            //System.out.println("EX:CloseCon " + e);
-        }
+//        try {
+//            if (con != null) {
+//                con.close();
+//            }
+//        } catch (Exception e) {
+//            Eror.LogEror.SaveEror(e);
+//            //System.out.println("EX:CloseCon " + e);
+//        }
     }
 }

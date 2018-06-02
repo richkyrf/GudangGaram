@@ -152,7 +152,7 @@ public class JcomCari extends javax.swing.JPanel {
                     pstmt.close();
                 }
                 if (con != null) {
-                    con.close();
+//404                    con.close();
                 }
             } catch (SQLException ex) {
                 //System.out.println("Eror Close Con/Prep");

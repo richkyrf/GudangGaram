@@ -33,11 +33,11 @@ public class RunSelct {
     }
 
     public void closecon() {
-        try {
-            con.close();
-        } catch (Exception ex) {
-            out.println("E37" + ex);
-        }
+//        try {
+//            con.close();
+//        } catch (Exception ex) {
+//            out.println("E37" + ex);
+//        }
     }
 
     public boolean iskosong() {

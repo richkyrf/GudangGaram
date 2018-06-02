@@ -39,7 +39,7 @@ public class Delete {
                         pstmt.close();
                     }
                     if (con != null) {
-                        con.close();
+//404                        con.close();
                     }
                 } catch (SQLException ex) {
                     Eror.LogEror.SaveEror(ex);
