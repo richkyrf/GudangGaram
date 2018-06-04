@@ -176,6 +176,7 @@ public class ListPenyesuaianLain extends javax.swing.JFrame {
 
     public void refresh() {
         jcomCariBarang.setQuery("SELECT `IdPenyesuaian` as 'ID', `NoPenyesuaian` as 'No. Penyesuaian', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NamaBarangLain` as 'Nama Barang', `Jumlah`, a.`Keterangan` FROM `tbpenyesuaianlain`a JOIN `tbmbaranglain`b ON a.`IdBarangLain`=b.`IdBarangLain` WHERE 1");
+        jcomCariBarang.setOrder(" ORDER BY a.`Tanggal` DESC ");
         jcomCariBarang.setRender(new int[]{4}, new String[]{"Decimal"});
         jcomCariBarang.tampilkan();
     }

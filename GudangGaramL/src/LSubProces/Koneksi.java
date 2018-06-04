@@ -12,9 +12,9 @@ public class Koneksi {
     String url = "jdbc:mysql://192.168.7.32:1358/";
     String user = "databasedo";
     String pass = "Win32&serVer";
-//    String url = "jdbc:mysql://localhost/";
-//    String user = "root";
-//    String pass = "";
+    String url2 = "jdbc:mysql://118.97.150.178:33333/";
+//    String user2 = "root";
+//    String pass2 = "";
     String db = "dbgaram";
 
     public String GetUrl() {
@@ -38,13 +38,21 @@ public class Koneksi {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Con = DriverManager.getConnection(url + db, user, pass);
+                GlobalVar.VarL.koneksi = Con;
+                return Con;
             } catch (ClassNotFoundException | SQLException ex) {
-                LogEror.SaveEror(ex);
-                JOptionPane.showMessageDialog(null, "Koneksi Ke Server Database Gagal !!!");
-
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Con = DriverManager.getConnection(url2 + db, user, pass);
+                    GlobalVar.VarL.koneksi = Con;
+                    return Con;
+                } catch (ClassNotFoundException | SQLException ex2) {
+                    LogEror.SaveEror(ex2);
+                    JOptionPane.showMessageDialog(null, "Koneksi Ke Server Database Gagal !!!");
+                    GlobalVar.VarL.koneksi = null;
+                    return null;
+                }
             }
-            GlobalVar.VarL.koneksi = Con;
-            return Con;
         } else {
             return GlobalVar.VarL.koneksi;
         }
