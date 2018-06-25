@@ -13,10 +13,10 @@ public class Koneksi {
     String url2 = "jdbc:mysql://118.97.150.178:33333/";
     String user = "databasedo";
     String pass = "Win32&serVer";
-    //String url = "jdbc:mysql://localhost/";
-    //String url2 = "jdbc:mysql://localhost/";
-    //String user = "root";
-    //String pass = "";
+//    String url = "jdbc:mysql://localhost/";
+//    String url2 = "jdbc:mysql://localhost/";
+//    String user = "root";
+//    String pass = "";
     String db = "dbgaram";
 
     public String GetUrl() {
