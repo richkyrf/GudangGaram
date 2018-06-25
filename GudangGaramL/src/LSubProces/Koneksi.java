@@ -10,11 +10,13 @@ public class Koneksi {
 
     private Connection Con = null;
     String url = "jdbc:mysql://192.168.7.32:1358/";
+    String url2 = "jdbc:mysql://118.97.150.178:33333/";
     String user = "databasedo";
     String pass = "Win32&serVer";
-    String url2 = "jdbc:mysql://118.97.150.178:33333/";
-//    String user2 = "root";
-//    String pass2 = "";
+    //String url = "jdbc:mysql://localhost/";
+    //String url2 = "jdbc:mysql://localhost/";
+    //String user = "root";
+    //String pass = "";
     String db = "dbgaram";
 
     public String GetUrl() {

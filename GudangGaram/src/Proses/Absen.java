@@ -7,7 +7,6 @@ package Proses;
 
 import KomponenGUI.FDateF;
 import LSubProces.DRunSelctOne;
-import LSubProces.Delete;
 import LSubProces.FLaporan;
 import LSubProces.History;
 import LSubProces.MultiInsert;
@@ -60,7 +59,7 @@ public class Absen extends javax.swing.JFrame {
         cal.setTime(JDTanggal.getDate());
         if (!list.get(0).equals("0")) {
             if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`IdJenisKaryawan` = 1 AND x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
+                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
                 JLTitle.setText("DATA ABSEN TANGGAL " + FDateF.datetostr(JDTanggal.getDate(), "dd-MM-yyyy") + " (HARI MINGGU)");
             } else {
                 JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan`, IFNULL(`Hadir`,0) as 'Hadir', IFNULL(`Setengah Hari`,0) as 'Setengah Hari', IFNULL(y.`Keterangan`,'') as 'Keterangan' FROM (SELECT @no:=0) as no, `tbmkaryawan`x LEFT JOIN (SELECT b.`IdKaryawan` as 'ID', `NamaKaryawan` as 'Nama Karyawan', `Hadir`, `SetengahHari` as 'Setengah Hari', a.`Keterangan` FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` JOIN `tbsmjeniskaryawan`c ON b.`IdJenisKaryawan`=c.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaKaryawan`)y ON x.`IdKaryawan`=y.`ID` WHERE x.`Status` = 1 ORDER BY x.`IdJenisKaryawan`, x.`NamaKaryawan`");
@@ -68,7 +67,7 @@ public class Absen extends javax.swing.JFrame {
             }
         } else {
             if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, (SELECT `NamaKaryawan` FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE a.`IdJenisKaryawan` = 1 AND `Status` = 1 GROUP BY `NamaKaryawan` ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ) as tbtemp");
+                JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, (SELECT `NamaKaryawan` FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 GROUP BY `NamaKaryawan` ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ) as tbtemp");
                 JLTitle.setText("TAMBAH BARU DATA ABSEN KARYAWAN (HARI MINGGU)");
             } else {
                 JTable.setQuery("SELECT FORMAT(@no:=@no+1,0) as 'No', `NamaKaryawan` as 'Nama Karyawan', 1 as 'Hadir', 0 as 'Setengah Hari', '' as 'Keterangan' FROM (SELECT @no:=0) as no, (SELECT `NamaKaryawan` FROM `tbmkaryawan`a JOIN `tbsmjeniskaryawan`b ON a.`IdJenisKaryawan`=b.`IdJenisKaryawan` WHERE 1 AND `Status` = 1 GROUP BY `NamaKaryawan` ORDER BY a.`IdJenisKaryawan`, `NamaKaryawan` ) as tbtemp");

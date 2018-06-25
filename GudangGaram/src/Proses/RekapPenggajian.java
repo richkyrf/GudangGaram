@@ -8,9 +8,7 @@ package Proses;
 import GlobalVar.Terbilang;
 import KomponenGUI.FDateF;
 import static KomponenGUI.FDateF.datetostr;
-import LSubProces.DRunSelctOne;
 import LSubProces.RunSelct;
-import static Proses.Penjualan.angkaToTerbilang;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.io.ByteArrayInputStream;
@@ -22,7 +20,6 @@ import static java.lang.System.out;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.print.Doc;
@@ -32,7 +29,6 @@ import javax.print.DocPrintJob;
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
-import static javax.print.PrintServiceLookup.lookupDefaultPrintService;
 import javax.print.SimpleDoc;
 import javax.print.attribute.DocAttributeSet;
 import javax.print.attribute.HashAttributeSet;
@@ -562,11 +558,11 @@ public class RekapPenggajian extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        String queryBonus = " UNION ALL (SELECT IF(`Bonus`=130000,'BONUS FULL BEKERJA ','BONUS TIDAK FULL BEKERJA ') as 'Keterangan', COUNT(`Bonus`) as 'Jumlah', FORMAT(`Bonus`,0) as 'Upah', FORMAT(COUNT(`Bonus`)*`Bonus`,0) as 'Sub Total' FROM (SELECT a.`IdKaryawan`, IF(COUNT(`Hadir`)<=1,130000,IF(COUNT(`Hadir`)=2,65000,0)) as 'Bonus', `IdJenisKaryawan`, a.`Keterangan`, `Status` FROM `tbmkaryawan`a LEFT JOIN (SELECT `IdKaryawan`, `Hadir` FROM `tbabsen` WHERE hadir=0 AND `Tanggal` BETWEEN DATE_FORMAT('"+FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd")+"', '%Y-%m-01') AND DATE_FORMAT('"+FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd")+"', '%Y-%m-31'))b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE 1  AND `IdJenisKaryawan` = 2 AND `Status` = 1 GROUP BY a.`IdKaryawan`) AS `tbtemp` WHERE `Bonus` != 0 GROUP BY `Bonus`) ";
+        String queryBonus = " UNION ALL (SELECT IF(`Bonus`=130000,'BONUS FULL BEKERJA ','BONUS TIDAK FULL BEKERJA ') as 'Keterangan', COUNT(`Bonus`) as 'Jumlah', FORMAT(`Bonus`,0) as 'Upah', FORMAT(COUNT(`Bonus`)*`Bonus`,0) as 'Sub Total' FROM (SELECT a.`IdKaryawan`, IF(COUNT(`Hadir`)<=1,130000,IF(COUNT(`Hadir`)=2,65000,0)) as 'Bonus', `IdJenisKaryawan`, a.`Keterangan`, `Status` FROM `tbmkaryawan`a LEFT JOIN (SELECT `IdKaryawan`, `Hadir` FROM `tbabsen` WHERE hadir=0 AND `Tanggal` BETWEEN DATE_FORMAT('"+FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd")+"', '%Y-%m-01') AND DATE_FORMAT('"+FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd")+"', '%Y-%m-31') AND WEEKDAY(`Tanggal`)!=6)b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE 1  AND `IdJenisKaryawan` = 2 AND `Status` = 1 GROUP BY a.`IdKaryawan`) AS `tbtemp` WHERE `Bonus` != 0 GROUP BY `Bonus`) ";
         if (!JCBBonus.isSelected()) {
             queryBonus = "";
         }
-        runSelct.setQuery("SELECT * FROM (SELECT CONCAT('UPAH PACKING ',a.`NamaBarang`) as `Keterangan`, FORMAT(IFNULL(SUM(`JumlahHasil`),0),0) as 'JumlahHasil', FORMAT(IFNULL(`UpahPerPak`,0),0) as 'UpahPerPak', FORMAT(IFNULL(SUM(`JumlahHasil`)*`UpahPerPak`,0),0) as 'SubTotal' FROM `tbmbarang`a LEFT JOIN `tbpacking`b ON a.`IdBarang`=b.`IdBarangHasil`  WHERE a.`NamaBarang` NOT LIKE '%@50%' AND `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaBarang` ORDER BY `NamaBarang`) AS A UNION ALL SELECT a.`Keterangan`, COUNT(a.`Keterangan`) as 'Jumlah',  FORMAT(`UangDinas`,0) as 'Rupiah', FORMAT(SUM(`UangDinas`),0) as 'Sub Total' FROM `tbdinasluar`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' GROUP BY `Keterangan` UNION ALL SELECT 'TUNJ. TRANSPORT & UANG MAKAN ' as 'Keterangan', FORMAT(SUM(`Hadir`),0) as 'Jumlah', FORMAT(17500,0) as 'Upah', FORMAT((SUM(`Hadir`) * 17500),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 2 AND `Status` = 1 " + queryBonus);
+        runSelct.setQuery("SELECT * FROM (SELECT CONCAT('UPAH PACKING ',a.`NamaBarang`) as `Keterangan`, FORMAT(IFNULL(SUM(`JumlahHasil`),0),0) as 'JumlahHasil', FORMAT(IFNULL(`UpahPerPak`,0),0) as 'UpahPerPak', FORMAT(IFNULL(SUM(`JumlahHasil`)*`UpahPerPak`,0),0) as 'SubTotal' FROM `tbmbarang`a LEFT JOIN `tbpacking`b ON a.`IdBarang`=b.`IdBarangHasil`  WHERE a.`NamaBarang` NOT LIKE '%@50%' AND `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' GROUP BY `NamaBarang` ORDER BY `NamaBarang`) AS A UNION ALL SELECT a.`Keterangan`, COUNT(a.`Keterangan`) as 'Jumlah',  FORMAT(`UangDinas`,0) as 'Rupiah', FORMAT(SUM(`UangDinas`),0) as 'Sub Total' FROM `tbdinasluar`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE `Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' GROUP BY `Keterangan` UNION ALL SELECT 'TUNJ. TRANSPORT & UANG MAKAN ' as 'Keterangan', FORMAT(SUM(IF(WEEKDAY(`Tanggal`)=6,`Hadir`+1,`Hadir`)),0) as 'Jumlah', FORMAT(17500,0) as 'Upah', FORMAT((SUM(IF(WEEKDAY(`Tanggal`)=6,`Hadir`+1,`Hadir`)) * 17500),0) as 'Sub Total' FROM `tbabsen`a JOIN `tbmkaryawan`b ON a.`IdKaryawan`=b.`IdKaryawan` WHERE a.`Tanggal` BETWEEN '" + FDateF.datetostr(JDTanggal1.getDate(), "yyyy-MM-dd") + "' AND '" + FDateF.datetostr(JDTanggal2.getDate(), "yyyy-MM-dd") + "' AND `Hadir` = 1 AND `StatusUangMakan` = 0 AND `IdJenisKaryawan` = 2 AND `Status` = 1 " + queryBonus);
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
