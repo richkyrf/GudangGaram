@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StokHarian" language="groovy" pageWidth="935" pageHeight="609" orientation="Landscape" columnWidth="895" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="9" uuid="acc8509b-a836-4b53-b178-b496671fd8c2">
-	<property name="ireport.zoom" value="1.3310000000000015"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Title" class="java.lang.String" isForPrompting="false">
@@ -19,7 +19,7 @@
 		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT a.`IdBarangLain`, a.`NamaBarangLain`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(`Stok Awal`,0),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(`Stok Awal`,2),'.','*'),',','.'),'*',',')) as 'Stok Awal', `Satuan`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(`Terima`,0),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(`Terima`,2),'.','*'),',','.'),'*',',')) as 'Terima', `Mutasi`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Produksi`),0),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Produksi`),2),'.','*'),',','.'),'*',',')) as 'Produksi', `Packing Ulang`, `Penyesuaian`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(`Stok Akhir`,0),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(`Stok Akhir`,2),'.','*'),',','.'),'*',',')) as 'Stok Akhir', `BAL`, IF(`BAL` is null,'','BAL') as 'SatuanBal' FROM (
+		<![CDATA[SELECT a.`IdBarangLain`, a.`NamaBarangLain`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(`Stok Awal`,0),'.','*'),',','.'),'*',','), IF(a.`NamaBarangLain`='IODIUM', REPLACE(REPLACE(REPLACE(FORMAT(`Stok Awal`,4),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(`Stok Awal`,2),'.','*'),',','.'),'*',','))) as 'Stok Awal', `Satuan`, IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(`Terima`,0),'.','*'),',','.'),'*',','), IF(a.`NamaBarangLain`='IODIUM', REPLACE(REPLACE(REPLACE(FORMAT(`Terima`,4),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(`Terima`,2),'.','*'),',','.'),'*',','))) as 'Terima', IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(`Mutasi`,0),'.','*'),',','.'),'*',','), IF(a.`NamaBarangLain`='IODIUM', REPLACE(REPLACE(REPLACE(FORMAT(`Mutasi`,4),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(`Mutasi`,2),'.','*'),',','.'),'*',','))) as 'Mutasi', IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Produksi`),0),'.','*'),',','.'),'*',','), IF(a.`NamaBarangLain`='IODIUM', REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Produksi`),4),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Produksi`),2),'.','*'),',','.'),'*',','))) as 'Produksi', IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Packing Ulang`),0),'.','*'),',','.'),'*',','), IF(a.`NamaBarangLain`='IODIUM', REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Packing Ulang`),4),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Packing Ulang`),2),'.','*'),',','.'),'*',','))) as 'Packing Ulang', IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Penyesuaian`),0),'.','*'),',','.'),'*',','), IF(a.`NamaBarangLain`='IODIUM', REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Penyesuaian`),4),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(SUM(`Penyesuaian`),2),'.','*'),',','.'),'*',','))) as 'Penyesuaian', IF(a.`NamaBarangLain`='JERIGENT' OR a.`NamaBarangLain`='LAKBAN' OR a.`NamaBarangLain` LIKE '%TIMBANGAN%' OR a.`NamaBarangLain`='TALI RAFIA', REPLACE(REPLACE(REPLACE(FORMAT(`Stok Akhir`,0),'.','*'),',','.'),'*',','), IF(a.`NamaBarangLain`='IODIUM', REPLACE(REPLACE(REPLACE(FORMAT(`Stok Akhir`,4),'.','*'),',','.'),'*',','), REPLACE(REPLACE(REPLACE(FORMAT(`Stok Akhir`,2),'.','*'),',','.'),'*',','))) as 'Stok Akhir', `BAL`, IF(`BAL` is null,'','BAL') as 'SatuanBal' FROM (
 (SELECT a.`IdBarangLain`, `NamaBarangLain`, `JenisBarangLain`, `BeratPembagi`, `Satuan` FROM `tbmbaranglain`a JOIN `tbsmjenisbaranglain`b ON a.`IdJenisBarangLain`=b.`IdJenisBaranglain` WHERE 1) a
 	LEFT JOIN
 (SELECT `IdBarangLain`, SUM(`Netto`) as 'Terima' FROM `tbpenerimaanlain` WHERE 1 AND `Tanggal` = $P{Tgl} GROUP BY `IdBarangLain`
@@ -40,7 +40,7 @@ SELECT a.`IdBarangLain`, SUM(ROUND(`Jumlah`/`BeratPembagi`,2)) as 'Mutasi' FROM 
 	UNION ALL
 SELECT b.`IdPlastikLuar` as 'IdBarangLain', SUM(ROUND(a.`JumlahHasil`/c.`BeratPembagi`,2)) as 'Produksi' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND a.`Tanggal` = $P{Tgl} AND `IdJenisBarangLain` = 2 GROUP BY b.`IdPlastikLuar`
 	UNION ALL
-SELECT '4' as 'IdBarangLain', SUM(ROUND(a.`JumlahBahan`*50*0.5*0.0001,2)) as 'Produksi' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` = $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+SELECT '4' as 'IdBarangLain', SUM(ROUND(a.`JumlahBahan`*50*0.5*0.0001,4)) as 'Produksi' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` = $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
 	UNION ALL
  SELECT '2' as 'IdBarangLain', SUM(ROUND((a.`JumlahBahan`*0.05)/18,2)) as 'Produksi' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` >= '2018-05-12' AND a.`Tanggal` = $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
 	UNION ALL
@@ -68,7 +68,7 @@ SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', SUM(ROUND
 	UNION ALL
 SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', SUM(ROUND(a.`JumlahHasil`/c.`BeratPembagi`,2))*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` < $P{Tgl} GROUP BY b.`IdPlastikLuar`
 	UNION ALL
-SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(ROUND(a.`JumlahBahan`*50*0.5*0.0001,2))*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', SUM(ROUND(a.`JumlahBahan`*50*0.5*0.0001,4))*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` < $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
 	UNION ALL
  SELECT '2' as 'IdBarangLain', null as 'NamaBarangLain', SUM(ROUND((a.`JumlahBahan`*0.05)/18,2))*-1 as 'Produksi' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` >= '2018-05-12' AND a.`Tanggal` < $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
 	UNION ALL
@@ -98,7 +98,7 @@ SELECT b.`IdPlastikDalam` as 'IdBarangLain', null as 'NamaBarangLain', null as '
 	UNION ALL
 SELECT b.`IdPlastikLuar` as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(ROUND(a.`JumlahHasil`/c.`BeratPembagi`,2))*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmbarang`b ON a.`IdBarangHasil`=b.`IdBarang` JOIN `tbmbaranglain`c ON b.`IdPlastikLuar`=c.`IdBarangLain` WHERE 1 AND `IdJenisBarangLain` = 2 AND a.`Tanggal` <= $P{Tgl} GROUP BY b.`IdPlastikLuar`
 	UNION ALL
-SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(ROUND(a.`JumlahBahan`*50*0.5*0.0001,2))*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
+SELECT '4' as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLain',  SUM(ROUND(a.`JumlahBahan`*50*0.5*0.0001,4))*-1 as 'Stok' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` <= $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
 	UNION ALL
  SELECT '2' as 'IdBarangLain', null as 'NamaBarangLain', null as 'IdJenisBarangLain', SUM(ROUND((a.`JumlahBahan`*0.05)/18,2))*-1 as 'Produksi' FROM `tbpacking`a JOIN `tbmpartai`b ON a.`IdPartai`=b.`IdPartai` JOIN `tbmbarang`c ON b.`IdBarang`=c.`IdBarang` JOIN `tbmbarang`d ON a.`IdBarangHasil`=d.`IdBarang` WHERE 1 AND a.`Tanggal` >= '2018-05-12' AND a.`Tanggal` <= $P{Tgl} AND c.`NamaBarang` LIKE '%KSR%' AND d.`NamaBarang` NOT LIKE '%@50 KG%'
 	UNION ALL
@@ -125,10 +125,10 @@ SELECT `IdBarangLain`, null as 'NamaBarangLain', null as 'IdJenisBarangLain',  S
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Terima" class="java.lang.String"/>
-	<field name="Mutasi" class="java.math.BigDecimal"/>
+	<field name="Mutasi" class="java.lang.String"/>
 	<field name="Produksi" class="java.lang.String"/>
-	<field name="Packing Ulang" class="java.math.BigDecimal"/>
-	<field name="Penyesuaian" class="java.math.BigDecimal"/>
+	<field name="Packing Ulang" class="java.lang.String"/>
+	<field name="Penyesuaian" class="java.lang.String"/>
 	<field name="Stok Akhir" class="java.lang.String"/>
 	<field name="BAL" class="java.math.BigDecimal"/>
 	<field name="SatuanBal" class="java.lang.String"/>
